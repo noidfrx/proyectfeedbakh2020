@@ -1,0 +1,57 @@
+<div class="col-md-4 offset-md-4">
+  <div class="card">
+    <h3 class="text-center pt-5">Iniciar sesión</h3>
+    <div class="card-body">
+      <!-- Se exporta formulario como un ngForm -->
+      <form
+        class="pb-5 pl-3 pr-3"
+        *ngIf="!ingresado"
+        (ngSubmit)="onSubmit()"
+        #loginForm="ngForm"
+        novalidate
+      >
+        <!-- Value se pasa en json, luego a cada input se le pone ngModel 
+        **Se requiere que cada input tenga un name="" **-->
+        <div class="form-group">
+          <label for="exampleInputEmail1">Correo electrónico</label>
+          <!-- El campo será invalido cuando no tiene nada, y cuando el usuario toca algo -->
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            [(ngModel)]="loginModel.email"
+            required
+            
+            name="email"
+            #email="ngModel"
+            [class.is-invalid]="email.invalid && email.touched"
+          />
+          <small class="text-danger" [class.d-none]="email.valid || email.untouched">Ingrese correo válido</small>
+        </div>
+
+
+        <div class="form-group">
+          <label for="exampleInputPassword1">Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            [(ngModel)]="loginModel.password"
+            required
+            name="password"
+            #password="ngModel"
+            [class.is-invalid]="password.invalid && password.touched"
+          />
+          <small class="text-danger" [class.d-none]="password.valid || password.untouched">Ingrese contraseña</small>
+        </div>
+        <button
+          [disabled]="loginForm.form.invalid"
+          type="submit"
+          class="btn btn-primary"
+        >
+          Ingresar
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
