@@ -1,0 +1,107 @@
+<div class="col-md-6 offset-md-3">
+  <div class="card">
+    <h3 class="text-center pt-5">Registrarse</h3>
+    <div class="card-body">
+      <!-- Se exporta formulario como un ngForm -->
+      <form
+        class="pb-5 pl-3 pr-3"
+        *ngIf="!registrado"
+        (ngSubmit)="onSubmit()"
+        #registerForm="ngForm"
+        novalidate
+      >
+
+
+      
+        <div class="form-group">
+          <label for="formGroupExampleInput">Nombre</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nombre"
+            required
+            name="nombre"
+            [(ngModel)]="registerModel.nombre"
+            #nombre="ngModel"
+            [class.is-invalid]="nombre.invalid && nombre.touched"
+          />
+        </div>
+        <div class="form-group">
+          <label for="formGroupExampleInput">Apellido paterno</label>
+          <input
+            type="text"
+            class="form-control"
+            id="apellidoPaterno"
+            required
+            name="apellidoPaterno"
+            [(ngModel)]="registerModel.apellidoPaterno"
+            #apellidoPaterno="ngModel"
+            [class.is-invalid]="apellidoPaterno.invalid && apellidoPaterno.touched"
+          />
+        </div>
+        <div class="form-group">
+          <label for="formGroupExampleInput">Apellido materno</label>
+          <input
+            type="text"
+            class="form-control"
+            id="apellidoMaterno"
+            required
+            name="apellidoMaterno"
+            [(ngModel)]="registerModel.apellidoMaterno"
+            #apellidoMaterno="ngModel"
+            [class.is-invalid]="apellidoMaterno.invalid && apellidoMaterno.touched"
+          />
+        </div>
+        <!-- Value se pasa en json, luego a cada input se le pone ngModel 
+          **Se requiere que cada input tenga un name="" **-->
+        <div class="form-group">
+          <label for="exampleInputEmail1">Correo electrónico</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            [(ngModel)]="registerModel.email"
+            required
+            name="email"
+            #email="ngModel"
+            [class.is-invalid]="email.invalid && email.touched"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="exampleInputPassword1">Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            [(ngModel)]="registerModel.password"
+            required
+            name="password"
+            #password="ngModel"
+            [class.is-invalid]="password.invalid && password.touched"
+          />
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Repetir contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            id="repetirPassword"
+            [(ngModel)]="registerModel.repetirPassword"
+            required
+            name="repetirPassword"
+            #repetirPassword="ngModel"
+            [class.is-invalid]="repetirPassword.invalid && repetirPassword.touched"
+          />
+        </div>
+        <button
+          [disabled]="registerForm.form.invalid"
+          type="submit"
+          class="btn btn-primary"
+        >
+          Registrarse
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
