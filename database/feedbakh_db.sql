@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-10-2020 a las 22:07:10
+-- Tiempo de generación: 30-10-2020 a las 18:11:15
 -- Versión del servidor: 10.1.40-MariaDB
 -- Versión de PHP: 7.3.5
 
@@ -69,18 +69,19 @@ CREATE TABLE `colaborador` (
 CREATE TABLE `credencial` (
   `idCredencial` int(100) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `fechaCreacion` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `credencial`
 --
 
-INSERT INTO `credencial` (`idCredencial`, `email`, `password`) VALUES
-(1, 'admin@admin.com', 'admin'),
-(5, 'eduardo@gmail.com', '123'),
-(6, 'eduardo@gmail.com', '123'),
-(7, 'admin@admin.com', '123');
+INSERT INTO `credencial` (`idCredencial`, `email`, `password`, `fechaCreacion`) VALUES
+(1, 'admin@admin.com', 'admin', '2020-10-30 16:59:16.330046'),
+(5, 'eduardo@gmail.com', '123', '2020-10-30 16:59:16.330046'),
+(6, 'eduardo@gmail.com', '123', '2020-10-30 16:59:16.330046'),
+(7, 'admin@admin.com', '123', '2020-10-30 16:59:16.330046');
 
 -- --------------------------------------------------------
 
@@ -91,7 +92,8 @@ INSERT INTO `credencial` (`idCredencial`, `email`, `password`) VALUES
 CREATE TABLE `equipo` (
   `idEquipo` int(255) NOT NULL,
   `nombre` varchar(255) NOT NULL,
-  `objetivo` varchar(255) DEFAULT NULL
+  `objetivo` varchar(255) DEFAULT NULL,
+  `fechaCreacion` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -106,8 +108,10 @@ CREATE TABLE `evento` (
   `descripcion` varchar(255) NOT NULL,
   `fecha` date NOT NULL,
   `hora` int(255) NOT NULL,
+  `fechaCreacion` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `enlaceVideoconferencia` varchar(255) DEFAULT NULL,
   `idCategoria` int(255) DEFAULT NULL,
+  `idEquipo` int(255) NOT NULL,
   `privacidad` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -158,8 +162,10 @@ CREATE TABLE `tarea` (
   `idTarea` int(255) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `fecha` date NOT NULL,
+  `fechaCreacion` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `descripcion` varchar(255) NOT NULL,
-  `idCategoria` int(255) DEFAULT NULL
+  `idCategoria` int(255) DEFAULT NULL,
+  `idEquipo` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -204,7 +210,8 @@ ALTER TABLE `equipo`
 --
 ALTER TABLE `evento`
   ADD PRIMARY KEY (`idEvento`),
-  ADD KEY `idCategoria` (`idCategoria`);
+  ADD KEY `idCategoria` (`idCategoria`),
+  ADD KEY `idEquipo` (`idEquipo`);
 
 --
 -- Indices de la tabla `listaequipo`
@@ -235,7 +242,8 @@ ALTER TABLE `listatareas`
 --
 ALTER TABLE `tarea`
   ADD PRIMARY KEY (`idTarea`),
-  ADD KEY `idCategoria` (`idCategoria`);
+  ADD KEY `idCategoria` (`idCategoria`),
+  ADD KEY `idEquipo` (`idEquipo`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -322,7 +330,8 @@ ALTER TABLE `colaborador`
 -- Filtros para la tabla `evento`
 --
 ALTER TABLE `evento`
-  ADD CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`);
+  ADD CONSTRAINT `evento_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`),
+  ADD CONSTRAINT `evento_ibfk_2` FOREIGN KEY (`idEquipo`) REFERENCES `equipo` (`idEquipo`);
 
 --
 -- Filtros para la tabla `listaequipo`
@@ -349,7 +358,8 @@ ALTER TABLE `listatareas`
 -- Filtros para la tabla `tarea`
 --
 ALTER TABLE `tarea`
-  ADD CONSTRAINT `tarea_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`);
+  ADD CONSTRAINT `tarea_ibfk_1` FOREIGN KEY (`idCategoria`) REFERENCES `categoria` (`idCategoria`),
+  ADD CONSTRAINT `tarea_ibfk_2` FOREIGN KEY (`idEquipo`) REFERENCES `equipo` (`idEquipo`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
