@@ -1,6 +1,15 @@
 <div class="col-md-6 offset-md-3">
   <div class="card">
     <h3 class="text-center pt-5">Registrarse</h3>
+    <!-- Si existe mensaje de error se mostrará alerta -->
+    <div class="alert alert-danger" *ngIf="errorMsg">
+      {{ errorMsg }}
+      <a class="nav-link" href="/register">
+        <i class="fas fa-clipboard-list"></i>
+        Volver a intentarlo
+      </a>
+    </div>
+
     <div class="card-body">
       <!-- Se exporta formulario como un ngForm -->
       <form
@@ -10,11 +19,8 @@
         #registerForm="ngForm"
         novalidate
       >
-
-
-      
         <div class="form-group">
-          <label for="formGroupExampleInput">Nombre</label>
+          <label for="nombre" class="control-label">Nombre</label>
           <input
             type="text"
             class="form-control"
@@ -25,6 +31,11 @@
             #nombre="ngModel"
             [class.is-invalid]="nombre.invalid && nombre.touched"
           />
+          <small
+            class="text-danger"
+            [class.d-none]="nombre.valid || nombre.untouched"
+            >Por favor, ingrese nombre</small
+          >
         </div>
         <div class="form-group">
           <label for="formGroupExampleInput">Apellido paterno</label>
@@ -36,8 +47,15 @@
             name="apellidoPaterno"
             [(ngModel)]="registerModel.apellidoPaterno"
             #apellidoPaterno="ngModel"
-            [class.is-invalid]="apellidoPaterno.invalid && apellidoPaterno.touched"
+            [class.is-invalid]="
+              apellidoPaterno.invalid && apellidoPaterno.touched
+            "
           />
+          <small
+            class="text-danger"
+            [class.d-none]="apellidoPaterno.valid || apellidoPaterno.untouched"
+            >Por favor, ingrese apellido paterno</small
+          >
         </div>
         <div class="form-group">
           <label for="formGroupExampleInput">Apellido materno</label>
@@ -49,8 +67,15 @@
             name="apellidoMaterno"
             [(ngModel)]="registerModel.apellidoMaterno"
             #apellidoMaterno="ngModel"
-            [class.is-invalid]="apellidoMaterno.invalid && apellidoMaterno.touched"
+            [class.is-invalid]="
+              apellidoMaterno.invalid && apellidoMaterno.touched
+            "
           />
+          <small
+            class="text-danger"
+            [class.d-none]="apellidoMaterno.valid || apellidoMaterno.untouched"
+            >Por favor, ingrese apellido materno</small
+          >
         </div>
         <!-- Value se pasa en json, luego a cada input se le pone ngModel 
           **Se requiere que cada input tenga un name="" **-->
@@ -62,12 +87,26 @@
             id="email"
             [(ngModel)]="registerModel.email"
             required
+            email
             name="email"
             #email="ngModel"
             [class.is-invalid]="email.invalid && email.touched"
           />
+          <!-- ERRORES -->
+          <!-- No ingresado -->
+          <small
+            class="text-danger"
+            *ngIf="email.errors && email.errors.required && email.touched"
+            >Por favor, ingrese correo electrónico</small
+          >
+          <!-- No valido -->
+          <small
+            class="text-danger"
+            *ngIf="email.errors && email.errors.email && email.touched"
+            >El correo ingresado no es válido</small
+          >
         </div>
-
+        <!-- CONTRASEÑA -->
         <div class="form-group">
           <label for="exampleInputPassword1">Contraseña</label>
           <input
@@ -80,7 +119,14 @@
             #password="ngModel"
             [class.is-invalid]="password.invalid && password.touched"
           />
+          <!-- VALIDACIONES -->
+          <small
+            class="text-danger"
+            [class.d-none]="password.valid || password.untouched"
+            >Por favor, ingrese contraseña</small
+          >
         </div>
+        <!-- REPETIR CONTRASEÑA -->
         <div class="form-group">
           <label for="exampleInputPassword1">Repetir contraseña</label>
           <input
@@ -91,8 +137,22 @@
             required
             name="repetirPassword"
             #repetirPassword="ngModel"
-            [class.is-invalid]="repetirPassword.invalid && repetirPassword.touched"
+            [class.is-invalid]="
+              repetirPassword.invalid && repetirPassword.touched
+            "
+            appConfirmEqualValidator="password"
           />
+          <!-- VALIDACIONES -->
+          <small
+            class="text-danger"
+            *ngIf="repetirPassword.touched && repetirPassword.errors?.required"
+            >Por favor, repita su contraseña</small
+          >
+          <small
+            class="text-danger"
+            *ngIf="repetirPassword.touched && repetirPassword.errors?.notEqual && !repetirPassword.errors?.required"
+            >Las contraseñas no coinciden</small
+          >
         </div>
         <button
           [disabled]="registerForm.form.invalid"

@@ -22,8 +22,20 @@ class IndexController {
     register(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
-            yield database_1.default.query("INSERT INTO credencial (email,password) VALUES (?,?)", [req.body.email, req.body.password]);
-            res.json({ message: 'Credencial guardada' });
+            // Comprobamos contraseñas iguales
+            if (req.body.password == req.body.repetirPassword) {
+                //Se crea objeto en COLABORADOR
+                yield database_1.default.query("INSERT INTO colaborador (nombre, apellidos, email, password) VALUES (?,?,?,?)", [
+                    req.body.nombre,
+                    req.body.apellidoPaterno + " " + req.body.apellidoMaterno,
+                    req.body.email,
+                    req.body.password,
+                ]);
+                res.json({ message: "Colaborador guardado" });
+            }
+            else {
+                res.status(401).send({ message: "Las contraseñas son iguales" });
+            }
         });
     }
     //Se comprueba que exista el usuario

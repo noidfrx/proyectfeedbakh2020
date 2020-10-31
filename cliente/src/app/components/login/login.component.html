@@ -21,12 +21,24 @@
             id="email"
             [(ngModel)]="loginModel.email"
             required
-            
+            email
             name="email"
             #email="ngModel"
             [class.is-invalid]="email.invalid && email.touched"
           />
-          <small class="text-danger" [class.d-none]="email.valid || email.untouched">Ingrese correo válido</small>
+          <!-- ERRORES -->
+          <!-- No ingresado -->
+          <small
+            class="text-danger"
+            *ngIf="email.errors && email.errors.required && email.touched"
+            >Por favor, ingrese correo electrónico</small
+          >
+          <!-- No valido -->
+          <small
+            class="text-danger"
+            *ngIf="email.errors && email.errors.email && email.touched"
+            >El correo ingresado no es válido</small
+          >
         </div>
 
 

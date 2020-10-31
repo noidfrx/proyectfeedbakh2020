@@ -8,11 +8,25 @@ class IndexController {
   }
 
   //Se registra nuevo usuario
-  public async register(req:Request, res:Response):Promise<any>{
+  public async register(req: Request, res: Response): Promise<any> {
     console.log(req.body);
-    await pool.query("INSERT INTO credencial (email,password) VALUES (?,?)", [req.body.email,req.body.password]);
-    res.json({message:'Credencial guardada'});
 
+    // Comprobamos contraseñas iguales
+    if (req.body.password == req.body.repetirPassword) {
+      //Se crea objeto en COLABORADOR
+      await pool.query(
+        "INSERT INTO colaborador (nombre, apellidos, email, password) VALUES (?,?,?,?)",
+        [
+          req.body.nombre,
+          req.body.apellidoPaterno + " " + req.body.apellidoMaterno,
+          req.body.email,
+          req.body.password,
+        ]
+      );
+      res.json({ message: "Colaborador guardado" });
+    } else {
+      res.status(401).send({ message: "Las contraseñas son iguales" });
+    }
   }
 
   //Se comprueba que exista el usuario
@@ -32,7 +46,6 @@ class IndexController {
       //Cuando todo sale bien se manda código de OK
       res.status(200).send({ message: "Autenticación OK" });
     }
-    
   }
 }
 

@@ -2,12 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import {Register} from '../../models/Register';
 import {RegisterService} from '../../services/registerService/register.service';
 
+//Para validación de formulario
+import {FormControl,FormGroup,Validators} from '@angular/forms';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  errorMsg='';
 
   constructor(private _registerService:RegisterService) { }
 
@@ -24,7 +28,8 @@ export class RegisterComponent implements OnInit {
     this._registerService.registrar(this.registerModel)
     .subscribe(
       data => console.log("Data correcta!", data),
-      error => console.error("Error :c", error)
+      error => this.errorMsg = error.statusText
+      // Manejo de errores ^
     )
   }
 

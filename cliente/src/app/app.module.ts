@@ -15,19 +15,26 @@ import {LoginService} from './services/loginService/login.service';
 import { RegisterComponent } from './components/register/register.component';
 import {FormsModule} from '@angular/forms';
 
+//Para validación de formulario
+import {ReactiveFormsModule} from '@angular/forms';
+import {ConfirmEqualValidatorDirective} from './shared/confirm-equal-validator.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     NavigationComponent,
     WelcomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    ConfirmEqualValidatorDirective
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     LoginService
