@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-10-2020 a las 18:11:15
+-- Tiempo de generación: 01-11-2020 a las 22:44:15
 -- Versión del servidor: 10.1.40-MariaDB
 -- Versión de PHP: 7.3.5
 
@@ -56,32 +56,19 @@ CREATE TABLE `colaborador` (
   `idColaborador` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `apellidos` varchar(255) NOT NULL,
-  `fotoPerfil` varchar(255) DEFAULT NULL,
-  `idCredencial` int(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `credencial`
---
-
-CREATE TABLE `credencial` (
-  `idCredencial` int(100) NOT NULL,
+  `fotoPerfil` varchar(255) DEFAULT '0',
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `fechaCreacion` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `credencial`
+-- Volcado de datos para la tabla `colaborador`
 --
 
-INSERT INTO `credencial` (`idCredencial`, `email`, `password`, `fechaCreacion`) VALUES
-(1, 'admin@admin.com', 'admin', '2020-10-30 16:59:16.330046'),
-(5, 'eduardo@gmail.com', '123', '2020-10-30 16:59:16.330046'),
-(6, 'eduardo@gmail.com', '123', '2020-10-30 16:59:16.330046'),
-(7, 'admin@admin.com', '123', '2020-10-30 16:59:16.330046');
+INSERT INTO `colaborador` (`idColaborador`, `nombre`, `apellidos`, `fotoPerfil`, `email`, `password`, `fechaCreacion`) VALUES
+(1, 'admin', 'admin', '0', 'admin@admin.com', 'admin', '2020-10-31 17:40:06.000000'),
+(5, 'Eduardo', 'Ibacache González', '0', 'eduardo@gmail.com', '1235', '2020-10-31 17:40:50.430169');
 
 -- --------------------------------------------------------
 
@@ -190,14 +177,7 @@ ALTER TABLE `categoria`
 -- Indices de la tabla `colaborador`
 --
 ALTER TABLE `colaborador`
-  ADD PRIMARY KEY (`idColaborador`),
-  ADD KEY `idCredencial` (`idCredencial`);
-
---
--- Indices de la tabla `credencial`
---
-ALTER TABLE `credencial`
-  ADD PRIMARY KEY (`idCredencial`);
+  ADD PRIMARY KEY (`idColaborador`);
 
 --
 -- Indices de la tabla `equipo`
@@ -265,13 +245,7 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `colaborador`
 --
 ALTER TABLE `colaborador`
-  MODIFY `idColaborador` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `credencial`
---
-ALTER TABLE `credencial`
-  MODIFY `idCredencial` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idColaborador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `equipo`
@@ -319,12 +293,6 @@ ALTER TABLE `tarea`
 ALTER TABLE `amigo`
   ADD CONSTRAINT `amigo_ibfk_1` FOREIGN KEY (`idColaborador1`) REFERENCES `colaborador` (`idColaborador`),
   ADD CONSTRAINT `amigo_ibfk_2` FOREIGN KEY (`idColaborador2`) REFERENCES `colaborador` (`idColaborador`);
-
---
--- Filtros para la tabla `colaborador`
---
-ALTER TABLE `colaborador`
-  ADD CONSTRAINT `colaborador_ibfk_1` FOREIGN KEY (`idCredencial`) REFERENCES `credencial` (`idCredencial`);
 
 --
 -- Filtros para la tabla `evento`
