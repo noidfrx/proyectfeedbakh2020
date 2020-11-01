@@ -25,9 +25,17 @@ export class LoginComponent implements OnInit {
     this.ingresado=true;
     this._loginService.ingresar(this.loginModel)
       .subscribe(
+
         //Si me devuelve okay
-        data => this.router.navigateByUrl('/home'),
+        //data => this.router.navigateByUrl('/home'),
+        data => {
+          //La sesión ha sido iniciada correctamente
+          console.log(data.message);
+          console.log("works");
+          this.router.navigateByUrl('/home', {state: {id:data.message}});
+        },
         error => this.errorMsg = error.statusText
+      
       );
 
   }

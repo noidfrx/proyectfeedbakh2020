@@ -47,8 +47,11 @@ class IndexController {
     //Cuando hay un dato que coincide con el email y la contraseña
     if (datoComprobacion.length == 1) {
       //Cuando todo sale bien se manda código de OK
-      
-      res.status(200).send({message: "Credenciales coinciden"});
+      const idDatoComprobacion = await pool.query(
+        "SELECT idColaborador FROM colaborador WHERE email=? AND password=?",
+        [email, password]
+      );
+      res.status(200).send({message: idDatoComprobacion[0].idColaborador});
 
     }
     else{
