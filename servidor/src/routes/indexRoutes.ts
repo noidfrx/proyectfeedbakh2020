@@ -1,5 +1,7 @@
 import {Router} from 'express';
 import {indexController} from '../controllers/indexController';
+import session from 'express-session';
+
 
 class IndexRoutes{
     //Instanciamos router

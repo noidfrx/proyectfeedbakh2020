@@ -2,6 +2,8 @@
 import { Request, Response } from "express";
 import pool from "../database";
 
+
+
 class IndexController {
   public index(req: Request, res: Response) {
     res.send("Hello from indexController");
@@ -35,24 +37,26 @@ class IndexController {
     const email = req.body.email;
     const password = req.body.password;
 
+
     //Obtenemos objetos con los valores de petición
     const datoComprobacion = await pool.query(
       "SELECT * FROM colaborador WHERE email=? AND password=?",
       [email, password]
     );
 
-    console.log(datoComprobacion);
-    console.log(datoComprobacion.length);
-
     //Cuando hay un dato que coincide con el email y la contraseña
     if (datoComprobacion.length == 1) {
       //Cuando todo sale bien se manda código de OK
-      res.status(200).send({ message: "Autenticación correcta" });
+      
+      res.status(200).send({message: "Credenciales coinciden"});
+
     }
     else{
       res.status(401).send({message: "Credenciales no coinciden"});
     }
+
   }
+
 }
 
 //Instanciamos y exportamos toda la clase

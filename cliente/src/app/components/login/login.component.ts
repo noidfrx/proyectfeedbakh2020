@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Login } from 'src/app/models/Login';
 import {LoginService} from '../../services/loginService/login.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,7 @@ export class LoginComponent implements OnInit {
 
   errorMsg='';
 
-  constructor(private _loginService:LoginService) { }
+  constructor(private _loginService:LoginService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -24,9 +25,11 @@ export class LoginComponent implements OnInit {
     this.ingresado=true;
     this._loginService.ingresar(this.loginModel)
       .subscribe(
-        data => console.log('Data de login correcta', data),
+        //Si me devuelve okay
+        data => this.router.navigateByUrl('/home'),
         error => this.errorMsg = error.statusText
-        )
+      );
+
   }
 
 }

@@ -6,6 +6,9 @@ import indexRoutes from './routes/indexRoutes';
 import bodyParser from 'body-parser';
 import cors from 'cors'; 
 
+//Manejo de sesiones
+import session from 'express-session';
+
 class Server{
     public appExpress : Application;
 
@@ -26,9 +29,14 @@ class Server{
     //Configuración de rutas para el servidor
     routes():void{
         //Usaremos rutas importadas (import archivos ts al inicio)
+        
         this.appExpress.use(bodyParser.json());
         this.appExpress.use(cors());
         this.appExpress.use('/', indexRoutes);
+        
+        
+        
+
     }
 
     //Conexión a servidor

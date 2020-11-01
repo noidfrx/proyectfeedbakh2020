@@ -4,9 +4,9 @@ import { from } from 'rxjs';
 
 //Importamos componentes de archivo login
 import {LoginComponent} from './components/login/login.component';
-import {NavigationComponent} from './components/navigation/navigation.component';
 import {WelcomeComponent} from './components/welcome/welcome.component';
 import {RegisterComponent} from './components/register/register.component';
+import {HomeComponent} from './components/home/home.component';
 
 const routes: Routes = [
 
@@ -27,6 +27,10 @@ const routes: Routes = [
   {
     path:'register',
     component: RegisterComponent
+  },
+  {
+    path:'home',
+    component: HomeComponent
   }
 
 ];

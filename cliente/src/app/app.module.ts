@@ -18,6 +18,8 @@ import {FormsModule} from '@angular/forms';
 //Para validación de formulario
 import {ReactiveFormsModule} from '@angular/forms';
 import {ConfirmEqualValidatorDirective} from './shared/confirm-equal-validator.directive';
+import { HomeComponent } from './components/home/home.component';
+import { NavigationHomeComponent } from './components/navigation-home/navigation-home.component';
 
 @NgModule({
   declarations: [
@@ -26,8 +28,9 @@ import {ConfirmEqualValidatorDirective} from './shared/confirm-equal-validator.d
     NavigationComponent,
     WelcomeComponent,
     RegisterComponent,
-    ConfirmEqualValidatorDirective
-
+    ConfirmEqualValidatorDirective,
+    HomeComponent,
+    NavigationHomeComponent
   ],
   imports: [
     BrowserModule,
