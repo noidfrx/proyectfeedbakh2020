@@ -9,6 +9,8 @@ import {LoginService} from '../../services/loginService/login.service';
 })
 export class LoginComponent implements OnInit {
 
+  errorMsg='';
+
   constructor(private _loginService:LoginService) { }
 
   ngOnInit(): void {
@@ -22,9 +24,9 @@ export class LoginComponent implements OnInit {
     this.ingresado=true;
     this._loginService.ingresar(this.loginModel)
       .subscribe(
-        data => console.log('Data success!', data),
-        error => console.error('Error :c', error)
-      )
+        data => console.log('Data de login correcta', data),
+        error => this.errorMsg = error.statusText
+        )
   }
 
 }

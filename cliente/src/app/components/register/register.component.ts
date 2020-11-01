@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
     this.registrado=true;
     this._registerService.registrar(this.registerModel)
     .subscribe(
-      data => console.log("Data correcta!", data),
+      data => console.log("Data registro correcta!", data),
       error => this.errorMsg = error.statusText
       // Manejo de errores ^
     )

@@ -44,12 +44,17 @@ class IndexController {
             //Hacer validaciones con req.body.email req.body.password
             const email = req.body.email;
             const password = req.body.password;
-            const datoComprobacion = yield database_1.default.query("SELECT * FROM credencial WHERE email=? AND password=?", [email, password]);
+            //Obtenemos objetos con los valores de petición
+            const datoComprobacion = yield database_1.default.query("SELECT * FROM colaborador WHERE email=? AND password=?", [email, password]);
             console.log(datoComprobacion);
             console.log(datoComprobacion.length);
+            //Cuando hay un dato que coincide con el email y la contraseña
             if (datoComprobacion.length == 1) {
                 //Cuando todo sale bien se manda código de OK
-                res.status(200).send({ message: "Autenticación OK" });
+                res.status(200).send({ message: "Autenticación correcta" });
+            }
+            else {
+                res.status(401).send({ message: "Credenciales no coinciden" });
             }
         });
     }

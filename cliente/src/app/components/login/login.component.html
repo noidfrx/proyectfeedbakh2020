@@ -1,6 +1,15 @@
 <div class="col-md-4 offset-md-4">
   <div class="card">
     <h3 class="text-center pt-5">Iniciar sesión</h3>
+    <!-- Si existe mensaje de error se mostrará alerta -->
+    <div class="alert alert-danger pt-4 pl-3 pr-3 pt-4" *ngIf="errorMsg">
+      <!-- {{ errorMsg }} -->
+      <p class="text-center">Hemos tenido problemas con su autenticación</p>
+      <a class="nav-link text-center" href="/login">
+        <i class="fas fa-clipboard-list"></i>
+        Volver a intentarlo
+      </a>
+    </div>
     <div class="card-body">
       <!-- Se exporta formulario como un ngForm -->
       <form
