@@ -2,4 +2,15 @@ footer{
    color:white;
    background-color: gray;
    margin-top: 20px;
+   width: 101.1%;
+}
+
+#ayuda{
+    font-weight: bold;
+    font-size: 20px;
+    padding-left: 40px;
+}
+
+#ayuda:link{
+    color:white;
 }
