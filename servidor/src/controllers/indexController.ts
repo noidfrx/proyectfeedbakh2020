@@ -37,7 +37,7 @@ class IndexController {
     const email = req.body.email;
     const password = req.body.password;
 
-
+    
     //Obtenemos objetos con los valores de petición
     const datoComprobacion = await pool.query(
       "SELECT * FROM colaborador WHERE email=? AND password=?",

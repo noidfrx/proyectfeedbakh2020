@@ -35,8 +35,6 @@ class Server{
         this.appExpress.use('/', indexRoutes);
         
         
-        
-
     }
 
     //Conexión a servidor
