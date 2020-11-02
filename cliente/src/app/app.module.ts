@@ -20,6 +20,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ConfirmEqualValidatorDirective} from './shared/confirm-equal-validator.directive';
 import { HomeComponent } from './components/home/home.component';
 import { NavigationHomeComponent } from './components/navigation-home/navigation-home.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { NavigationHomeComponent } from './components/navigation-home/navigation
     RegisterComponent,
     ConfirmEqualValidatorDirective,
     HomeComponent,
-    NavigationHomeComponent
+    NavigationHomeComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
