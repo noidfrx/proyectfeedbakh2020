@@ -34,7 +34,10 @@ export class LoginComponent implements OnInit {
           console.log("works");
           this.router.navigateByUrl('/home', {state: {id:data.message}});
         },
-        error => this.errorMsg = error.statusText
+        error => {
+          this.errorMsg = error.statusText
+          console.log("Error")
+        }
       
       );
 
