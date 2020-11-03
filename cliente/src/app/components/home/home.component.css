@@ -18,3 +18,53 @@ nav{
 a:hover{
     cursor: pointer;
 }
+h1{
+    padding-left: 24px;
+}
+
+
+ul, ol {
+    list-style:none;
+}
+
+#navbarNav > li {
+    float:left;
+}
+
+.nav li a {
+    background-color:#000;
+    color:#fff;
+    text-decoration:none;
+    padding:10px 12px;
+    display:block;
+}
+
+
+#navbarNav li ul {
+    display:none;
+    position:absolute;
+    min-width:50px;
+}
+
+#navbarNav li:hover > ul {
+    display:block;
+}
+
+#navbarNav ul li ul li a{
+    position:relative;
+    color:white;
+}
+#navbarNav ul li ul li a:hover{
+    color:gray;
+    text-decoration: none;
+}
+#navbarNav ul li ul li{
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#equipos{
+    background-color: rgb(231, 170, 170);
+    width: 140px;
+    padding-left: 30px;
+}
