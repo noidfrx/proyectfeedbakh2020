@@ -11,17 +11,41 @@ export class HomeComponent implements OnInit {
   idIngresado:any;
   nombreIngresado:any;
   errorMsg='';
+  nombreUsuario='';
 
+  constructor(private _homeService: HomeServiceService,private router: Router) { 
+    this.obtenerNombreUsuario();
 
-  constructor(private _homeService: HomeServiceService,private router: Router) { }
+  }
+
 
   ngOnInit(): void {
     this.idIngresado=history.state.id;
     this.nombreIngresado=history.state.nombre;
-
     console.log(this.idIngresado+" "+this.nombreIngresado);
   }
 
+
+  obtenerNombreUsuario(){
+    this._homeService.obtenerNombreUsuario()
+      .subscribe(
+
+        //Si me devuelve okay
+        data => {
+          //La sesión ha sido iniciada correctamente
+          console.log(data);
+          this.nombreUsuario=data.message;
+
+        },
+        error => {
+          this.errorMsg = error.statusText;
+          console.log("Error, no se recibió nombre de usuario")
+        }
+      
+      );
+
+  }
+  
 
   cerrarSesion(){
     this._homeService.logout().subscribe(

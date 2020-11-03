@@ -13,6 +13,7 @@ export class HomeServiceService {
   // URL para la petición a servidor
   _url = 'http://localhost:3000/login';
   _urlLogout = 'http://localhost:3000/logout';
+  _urlObtenerData = 'http://localhost:3000/dataUser';
 
   constructor(private _http: HttpClient) {}
 
@@ -24,6 +25,12 @@ export class HomeServiceService {
   ingresar(login: Login) {
     return this._http
       .post<any>(this._url, login, { withCredentials: true })
+      .pipe(catchError(this.errorHandler));
+  }
+
+  obtenerNombreUsuario() {
+    return this._http
+      .get<any>(this._urlObtenerData, { withCredentials: true })
       .pipe(catchError(this.errorHandler));
   }
 

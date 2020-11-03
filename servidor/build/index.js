@@ -9,6 +9,7 @@ const express_1 = __importDefault(require("express"));
 const connect_flash_1 = __importDefault(require("connect-flash"));
 //Importamos archivos TS para manejo de rutas
 const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
+const perfilRoutes_1 = __importDefault(require("./routes/perfilRoutes"));
 const bodyParser = require("body-parser");
 const cors = require("cors");
 //Manejo de sesiones
@@ -44,6 +45,7 @@ class Server {
         }));
         this.appExpress.use(connect_flash_1.default());
         this.appExpress.use('/', indexRoutes_1.default);
+        this.appExpress.use('/perfil', perfilRoutes_1.default);
     }
     //Conexión a servidor
     start() {

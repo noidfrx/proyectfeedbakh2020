@@ -14,16 +14,31 @@ class IndexRoutes {
     //Se define ruta inicial de la aplicación enviando mensaje
     config() {
         //Ejecutamos método index de controlador para enviar mensaje
-        this.router.get('/', indexController_1.indexController.index);
-        this.router.post('/login', indexController_1.indexController.login);
-        this.router.get('/logout', (req, res) => {
+        this.router.get("/", indexController_1.indexController.index);
+        this.router.post("/login", indexController_1.indexController.login);
+        this.router.get("/logout", (req, res) => {
             delete req.session.idUserIniciado;
+            delete req.session.nombreUserIniciado;
             console.log("Sesion cerrada");
             res.status(200).send({ message: "Sesión cerrada" });
         });
-        this.router.post('/register', indexController_1.indexController.register);
-        this.router.get('/sesionactual', (req, res) => {
-            res.send("Sesión actual como id: " + req.session.idUserIniciado);
+        this.router.post("/register", indexController_1.indexController.register);
+        this.router.get("/dataUser", (req, res) => {
+            //SI EXISTE USUARIO INGRESADO SE MANDA
+            if (req.session.nombreUserIniciado) {
+                res.status(200).send({
+                    message: req.session.nombreUserIniciado,
+                });
+            }
+            else {
+                res.status(404).send({ message: "No hay nombre de usuario" });
+            }
+        });
+        this.router.get("/sesionactual", (req, res) => {
+            res.send("Sesión actual como : " +
+                req.session.idUserIniciado +
+                " " +
+                req.session.nombreUserIniciado);
         });
         // this.router.get('/sesion', (req:Request,res:Response)=>{
         //     res.send("Inició sesion como: "+req!.session!.sesion);

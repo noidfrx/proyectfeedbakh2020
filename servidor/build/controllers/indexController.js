@@ -57,7 +57,8 @@ class IndexController {
                     req.session.viewCount += 1;
                 }
                 req.session.idUserIniciado = idDatoComprobacion[0].idColaborador;
-                console.log("Sesión iniciada como: " + req.session.idUserIniciado);
+                req.session.nombreUserIniciado = datoComprobacion[0].nombre;
+                console.log("Sesión iniciada como: " + req.session.idUserIniciado + " " + req.session.nombreUserIniciado);
                 console.log("Veces iniciadas en el dispositivo: " + req.session.viewCount);
                 res.status(200).send({
                     id: idDatoComprobacion[0].idColaborador,
