@@ -8,11 +8,15 @@ import {Router} from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   idIngresado:any;
+  nombreIngresado:any;
+
   constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.idIngresado=history.state.id;
-    console.log(this.idIngresado);
+    this.nombreIngresado=history.state.nombre;
+
+    console.log(this.idIngresado+" "+this.nombreIngresado);
   }
 
   inicio(){

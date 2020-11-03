@@ -51,7 +51,12 @@ class IndexController {
         "SELECT idColaborador FROM colaborador WHERE email=? AND password=?",
         [email, password]
       );
-      res.status(200).send({message: idDatoComprobacion[0].idColaborador});
+      res.status(200).send({
+        id:idDatoComprobacion[0].idColaborador,
+        nombre: datoComprobacion[0].nombre,
+        apellidoPaterno: datoComprobacion[0].apellidoPaterno,
+        message: datoComprobacion[0]
+      });
 
     }
     else{

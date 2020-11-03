@@ -32,7 +32,10 @@ export class LoginComponent implements OnInit {
           //La sesión ha sido iniciada correctamente
           console.log(data.message);
           console.log("works");
-          this.router.navigateByUrl('/home', {state: {id:data.message}});
+          this.router.navigateByUrl('/home', {state: {
+            id:data.id,
+            nombre:data.nombre
+          }});
         },
         error => {
           this.errorMsg = error.statusText
