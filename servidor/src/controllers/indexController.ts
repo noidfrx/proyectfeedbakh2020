@@ -2,8 +2,6 @@
 import { Request, Response } from "express";
 import pool from "../database";
 
-
-
 class IndexController {
   public index(req: Request, res: Response) {
     res.send("Hello from indexController");
@@ -32,12 +30,11 @@ class IndexController {
   }
 
   //Se comprueba que exista el usuario
-  public async login(req: Request, res: Response): Promise<any> {
+  public async login(req: Request, res: Response,): Promise<any> {
     //Hacer validaciones con req.body.email req.body.password
     const email = req.body.email;
     const password = req.body.password;
 
-    
     //Obtenemos objetos con los valores de petición
     const datoComprobacion = await pool.query(
       "SELECT * FROM colaborador WHERE email=? AND password=?",
@@ -51,20 +48,30 @@ class IndexController {
         "SELECT idColaborador FROM colaborador WHERE email=? AND password=?",
         [email, password]
       );
+
+      
+
+       if (!req!.session!.viewCount) {
+         req!.session!.viewCount = 1;
+       } else {
+         req!.session!.viewCount += 1;
+      }
+      req!.session!.idUserIniciado = idDatoComprobacion[0].idColaborador;
+      console.log("Sesión iniciada como: "+req!.session!.idUserIniciado)
+      console.log("Veces iniciadas en el dispositivo: "+req!.session!.viewCount)
+
       res.status(200).send({
-        id:idDatoComprobacion[0].idColaborador,
-        nombre: datoComprobacion[0].nombre,
-        apellidoPaterno: datoComprobacion[0].apellidoPaterno,
-        message: datoComprobacion[0]
-      });
+          id:idDatoComprobacion[0].idColaborador,
+          nombre: datoComprobacion[0].nombre,
+          apellidoPaterno: datoComprobacion[0].apellidoPaterno,
+          message: datoComprobacion[0]
+       });
 
+      //res.redirect("/loginCorrecto");
+    } else {
+      res.status(401).send({ message: "Credenciales no coinciden" });
     }
-    else{
-      res.status(401).send({message: "Credenciales no coinciden"});
-    }
-
   }
-
 }
 
 //Instanciamos y exportamos toda la clase

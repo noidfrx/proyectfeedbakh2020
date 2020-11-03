@@ -50,12 +50,22 @@ class IndexController {
             if (datoComprobacion.length == 1) {
                 //Cuando todo sale bien se manda código de OK
                 const idDatoComprobacion = yield database_1.default.query("SELECT idColaborador FROM colaborador WHERE email=? AND password=?", [email, password]);
+                if (!req.session.viewCount) {
+                    req.session.viewCount = 1;
+                }
+                else {
+                    req.session.viewCount += 1;
+                }
+                req.session.idUserIniciado = idDatoComprobacion[0].idColaborador;
+                console.log("Sesión iniciada como: " + req.session.idUserIniciado);
+                console.log("Veces iniciadas en el dispositivo: " + req.session.viewCount);
                 res.status(200).send({
                     id: idDatoComprobacion[0].idColaborador,
                     nombre: datoComprobacion[0].nombre,
                     apellidoPaterno: datoComprobacion[0].apellidoPaterno,
                     message: datoComprobacion[0]
                 });
+                //res.redirect("/loginCorrecto");
             }
             else {
                 res.status(401).send({ message: "Credenciales no coinciden" });

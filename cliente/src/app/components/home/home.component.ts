@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
+import {HomeServiceService} from '../../services/homeService/home-service.service'
 
 @Component({
   selector: 'app-home',
@@ -9,8 +10,10 @@ import {Router} from '@angular/router';
 export class HomeComponent implements OnInit {
   idIngresado:any;
   nombreIngresado:any;
+  errorMsg='';
 
-  constructor(private router: Router) { }
+
+  constructor(private _homeService: HomeServiceService,private router: Router) { }
 
   ngOnInit(): void {
     this.idIngresado=history.state.id;
@@ -19,9 +22,18 @@ export class HomeComponent implements OnInit {
     console.log(this.idIngresado+" "+this.nombreIngresado);
   }
 
-  inicio(){
-    this.router.navigateByUrl('/welcome');
 
+  cerrarSesion(){
+    this._homeService.logout().subscribe(
+      data=>{
+        console.log("Dato recibido de servidor: "+data.message);
+        this.router.navigateByUrl('/welcome');
+      },
+      error=>{
+        this.errorMsg = error.statusText
+        console.log("Error, no se recibe data")
+      }
+    );
   }
 
 }

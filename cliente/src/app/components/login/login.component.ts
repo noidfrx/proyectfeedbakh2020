@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
         },
         error => {
           this.errorMsg = error.statusText
-          console.log("Error")
+          console.log("Error, no se recibe data")
         }
       
       );

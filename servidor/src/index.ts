@@ -1,13 +1,17 @@
 //Importamos express y tipo de dato Application para la app
 import express, {Application} from 'express';
 
+//Para pasar data entre rutas
+import flash from 'connect-flash';
+
 //Importamos archivos TS para manejo de rutas
 import indexRoutes from './routes/indexRoutes';
-import bodyParser from 'body-parser';
-import cors from 'cors'; 
+import bodyParser = require('body-parser');
+import cors = require('cors'); 
 
 //Manejo de sesiones
-import session from 'express-session';
+import session = require('express-session');
+import cookieParser = require('cookie-parser');
 
 class Server{
     public appExpress : Application;
@@ -31,7 +35,19 @@ class Server{
         //Usaremos rutas importadas (import archivos ts al inicio)
         
         this.appExpress.use(bodyParser.json());
-        this.appExpress.use(cors());
+        this.appExpress.use(cors({
+            origin:[
+                "http://localhost:4200"
+            ],
+            credentials:true
+        }));
+        this.appExpress.use(cookieParser());
+        this.appExpress.use(session({
+            secret: 'secret-key',
+            resave: false,
+            saveUninitialized: false,
+        }));
+        this.appExpress.use(flash());
         this.appExpress.use('/', indexRoutes);
         
         

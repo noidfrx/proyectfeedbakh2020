@@ -5,10 +5,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 //Importamos express y tipo de dato Application para la app
 const express_1 = __importDefault(require("express"));
+//Para pasar data entre rutas
+const connect_flash_1 = __importDefault(require("connect-flash"));
 //Importamos archivos TS para manejo de rutas
 const indexRoutes_1 = __importDefault(require("./routes/indexRoutes"));
-const body_parser_1 = __importDefault(require("body-parser"));
-const cors_1 = __importDefault(require("cors"));
+const bodyParser = require("body-parser");
+const cors = require("cors");
+//Manejo de sesiones
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 class Server {
     constructor() {
         this.appExpress = express_1.default();
@@ -24,8 +29,20 @@ class Server {
     //Configuración de rutas para el servidor
     routes() {
         //Usaremos rutas importadas (import archivos ts al inicio)
-        this.appExpress.use(body_parser_1.default.json());
-        this.appExpress.use(cors_1.default());
+        this.appExpress.use(bodyParser.json());
+        this.appExpress.use(cors({
+            origin: [
+                "http://localhost:4200"
+            ],
+            credentials: true
+        }));
+        this.appExpress.use(cookieParser());
+        this.appExpress.use(session({
+            secret: 'secret-key',
+            resave: false,
+            saveUninitialized: false,
+        }));
+        this.appExpress.use(connect_flash_1.default());
         this.appExpress.use('/', indexRoutes_1.default);
     }
     //Conexión a servidor

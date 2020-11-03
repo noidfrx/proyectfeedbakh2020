@@ -7,21 +7,28 @@ import {catchError} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class LoginService {
-
+export class HomeServiceService {
   // URL para la petición a servidor
   _url = 'http://localhost:3000/login';
-  constructor(private _http: HttpClient) { }
+  _urlLogout = 'http://localhost:3000/logout';
 
-  ingresar(login:Login){
-    return this._http.post<any>(this._url,login,{withCredentials:true})
+  constructor(private _http: HttpClient) {}
+
+  logout(){
+    return this._http.get<any>(this._urlLogout,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
+  }
+  
+  ingresar(login: Login) {
+    return this._http
+      .post<any>(this._url, login, { withCredentials: true })
+      .pipe(catchError(this.errorHandler));
   }
 
   //Manejo de errores
-  errorHandler(error: HttpErrorResponse){
+  errorHandler(error: HttpErrorResponse) {
     return throwError(error);
   }
 }
