@@ -24,6 +24,7 @@ class IndexRoutes {
       console.log("Sesion cerrada");
       res.status(200).send({ message: "Sesión cerrada" });
     });
+    
 
     this.router.post("/register", indexController.register);
 
