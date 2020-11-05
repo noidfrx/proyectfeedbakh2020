@@ -2,17 +2,17 @@
 
 <h1 class="pt-4 text-left" *ngIf="nombreUsuario">Bienvenido a Feedbakh, {{nombreUsuario}} <i class="far fa-grin-beam"></i></h1>
 
-<div class="container text-center" *ngFor="let equipo of equipos">
+<div id="equipo" class="container text-center" *ngFor="let equipo of equipos">
     
-    <h2>Equipo: {{equipo.nombreEquipo[0].nombre}}</h2>
+    <h2><a href="/home">Equipo: {{equipo.nombreEquipo[0].nombre}}</a></h2>
 
     <h3> Tareas </h3>
     <span *ngIf="equipo.tareas.length">
-        <div> Nombre | Fecha | Categoría </div>
+        <div class="indice"><span id="indices"> Nombre </span> <span id="indices">Fecha </span> <span id="indicecategoria">Categoría</span></div>
         <div *ngFor="let tarea of equipo.tareas">
-            <a>{{tarea.nombre}}</a>
-            <a> {{tarea.date}}</a>
-            <a> {{tarea.nombreCategoria}}</a>
+            <a href="/home">{{tarea.nombre}}</a>
+            <span> {{tarea.date}}</span>
+            <span> {{tarea.nombreCategoria}}</span>
         </div>
     </span>
     <span *ngIf="!equipo.tareas.length">
@@ -23,7 +23,7 @@
     <span *ngIf="equipo.eventos.length">
         <div>Nombre | Fecha | Categoría </div>
         <div *ngFor="let evento of equipo.eventos">
-            <a>{{evento.nombre}}</a>
+            <a href="/home">{{evento.nombre}}</a>
             <a> {{evento.date}}</a>
             <a> {{evento.nombreCategoria}}</a>
         </div>
@@ -32,3 +32,5 @@
         Sin Eventos
     </span>
 </div>
+
+<app-footer></app-footer>

@@ -3,3 +3,30 @@ h1{
     padding-left: 24px;
 }
 
+#equipo{
+    border: 2px solid rgb(73, 73, 73);
+    padding: 20px 0 20px 0;
+    margin-bottom: 20px;
+}
+
+h2{
+    border-bottom: 2px solid gray;
+    padding-bottom: 10px;
+}
+
+h3{
+    border-bottom: 2px solid gray;
+    padding-bottom: 5px;
+}
+
+.indice{
+    border-bottom:2px solid gray;
+}
+#indices{
+    font-size: 20px;
+    padding: 0 200px 0 0px;
+}
+#indicecategoria{
+    font-size: 20px;
+    font-size: 20px;
+}
