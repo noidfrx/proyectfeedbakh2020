@@ -6,31 +6,29 @@
     
     <h2><a href="/home">Equipo: {{equipo.nombreEquipo[0].nombre}}</a></h2>
 
-    <h3> Tareas </h3>
+    <h3>Tareas</h3>
     <span *ngIf="equipo.tareas.length">
-        <div class="indice"><span id="indices"> Nombre </span> <span id="indices">Fecha </span> <span id="indicecategoria">Categoría</span></div>
-        <div *ngFor="let tarea of equipo.tareas">
-            <a href="/home">{{tarea.nombre}}</a>
-            <span> {{tarea.date}}</span>
-            <span> {{tarea.nombreCategoria}}</span>
+        <div id="superior" class="indice text-left"><span id="indiceNombre"> Nombre</span> <span id="indiceFecha">Fecha</span> <span id="indicecategoria">Categoría</span></div>
+        <div class="indice text-left" *ngFor="let tarea of equipo.tareas">
+            <a id="indiceNombre" href="/home">{{tarea.nombre}}</a>
+            <span id="indiceFecha"> {{tarea.date}}</span>
+            <span id="indicecategoria"> {{tarea.nombreCategoria}}</span>
         </div>
     </span>
-    <span *ngIf="!equipo.tareas.length">
-        Sin Tareas
-    </span>
+    <span *ngIf="!equipo.tareas.length" style="font-size: 25px; display: block; padding:10px 0 10px 0; border-bottom:2px solid gray;">
+        Sin Tareas</span>
 
-    <h3> Eventos </h3>
+    <h3>Eventos</h3>
     <span *ngIf="equipo.eventos.length">
-        <div>Nombre | Fecha | Categoría </div>
-        <div *ngFor="let evento of equipo.eventos">
-            <a href="/home">{{evento.nombre}}</a>
-            <a> {{evento.date}}</a>
-            <a> {{evento.nombreCategoria}}</a>
+        <div id="superior" class="indice text-left"><span id="indiceNombre"> Nombre</span> <span id="indiceFecha">Fecha</span> <span id="indicecategoria">Categoría</span></div>
+        <div class="indice text-left" *ngFor="let evento of equipo.eventos">
+            <a id="indiceNombre" href="/home">{{evento.nombre}}</a>
+            <a id="indiceFecha"> {{evento.date}}</a>
+            <a id="indicecategoria"> {{evento.nombreCategoria}}</a>
         </div>
     </span>
-    <span *ngIf="!equipo.eventos.length">
-        Sin Eventos
-    </span>
+    <span *ngIf="!equipo.eventos.length" style="font-size: 25px; display: block; padding-top:10px;">
+        Sin Eventos</span>
 </div>
 
 <app-footer></app-footer>

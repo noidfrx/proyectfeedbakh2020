@@ -4,29 +4,63 @@ h1{
 }
 
 #equipo{
-    border: 2px solid rgb(73, 73, 73);
-    padding: 20px 0 20px 0;
+    border: 6px solid rgb(95, 93, 93);
+    padding: 0 0 20px 0;
     margin-bottom: 20px;
+    border-radius: 10px;
 }
 
 h2{
     border-bottom: 2px solid gray;
     padding-bottom: 10px;
+    margin-bottom: 0;
+    padding-top:20px;
+    background-color: #f9d3f2;
+    font-weight: bold;
+}
+h2 a{
+    text-decoration: none;
+    color:rgb(102, 124, 123);
+}
+h2 a:hover{
+    color:rgb(255, 255, 255);
 }
 
 h3{
     border-bottom: 2px solid gray;
-    padding-bottom: 5px;
+    padding: 10px 0 10px 0;
+    background-color: #f9d3f2;
+    margin-bottom: 0;
 }
 
 .indice{
     border-bottom:2px solid gray;
 }
-#indices{
-    font-size: 20px;
-    padding: 0 200px 0 0px;
+
+#indicecategoria,#indiceNombre,#indiceFecha{
+    font-size: 25px;
+    display:inline-block;
+    padding: 10px 0 10px 10;
+}
+
+#superior{
+    background-color:rgb(189, 189, 189);
+    color:white;
+}
+
+#indiceNombre{
+    width: 35%;
+    text-align: center;
+    border-right: 2px solid gray;
+    text-decoration: none;
+}
+#indiceFecha{
+    width: 30%;
+    text-align: center;
+    border-right: 2px solid gray;
+    
 }
 #indicecategoria{
-    font-size: 20px;
-    font-size: 20px;
+    width: 35%;
+    text-align: center;
 }
