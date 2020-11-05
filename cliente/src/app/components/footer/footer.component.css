@@ -5,12 +5,12 @@ footer{
    width: 101.1%;
 }
 
+a{
+    color:white;
+}
 #ayuda{
     font-weight: bold;
     font-size: 20px;
     padding-left: 40px;
 }
 
-#ayuda:link{
-    color:white;
-}

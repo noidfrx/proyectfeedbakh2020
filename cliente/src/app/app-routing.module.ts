@@ -10,6 +10,7 @@ import {HomeComponent} from './components/home/home.component';
 import {TeamViewComponent} from './components/team-view/team-view.component';
 import {TaskMakerComponent} from './components/task-maker/task-maker.component';
 import {EventMakerComponent} from './components/event-maker/event-maker.component';
+import { TutorialComponent } from './components/tutorial/tutorial.component';
 
 const routes: Routes = [
 
@@ -46,6 +47,10 @@ const routes: Routes = [
   {
     path:'eventmaker',
     component: EventMakerComponent
+  },
+  {
+    path:'tutorial',
+    component: TutorialComponent
   }
 
 ];

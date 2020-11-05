@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { YouTubePlayerModule } from "@angular/youtube-player";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -24,6 +25,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { TeamViewComponent } from './components/team-view/team-view.component';
 import { TaskMakerComponent } from './components/task-maker/task-maker.component';
 import { EventMakerComponent } from './components/event-maker/event-maker.component';
+import { TutorialComponent } from './components/tutorial/tutorial.component';
 
 @NgModule({
   declarations: [
@@ -38,14 +40,16 @@ import { EventMakerComponent } from './components/event-maker/event-maker.compon
     FooterComponent,
     TeamViewComponent,
     TaskMakerComponent,
-    EventMakerComponent
+    EventMakerComponent,
+    TutorialComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    YouTubePlayerModule
   ],
   providers: [
     LoginService
