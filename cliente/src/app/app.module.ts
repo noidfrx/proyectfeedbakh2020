@@ -21,6 +21,9 @@ import {ConfirmEqualValidatorDirective} from './shared/confirm-equal-validator.d
 import { HomeComponent } from './components/home/home.component';
 import { NavigationHomeComponent } from './components/navigation-home/navigation-home.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { TeamViewComponent } from './components/team-view/team-view.component';
+import { TaskMakerComponent } from './components/task-maker/task-maker.component';
+import { EventMakerComponent } from './components/event-maker/event-maker.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { FooterComponent } from './components/footer/footer.component';
     ConfirmEqualValidatorDirective,
     HomeComponent,
     NavigationHomeComponent,
-    FooterComponent
+    FooterComponent,
+    TeamViewComponent,
+    TaskMakerComponent,
+    EventMakerComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,18 @@
+h1{
+    font-size: 24px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+h6{
+    font-size: 12px;
+    color:black;
+}
+
+p{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px;
+}
+
+#zona_maker{
+    background-color: rgb(255, 235, 235);
+}

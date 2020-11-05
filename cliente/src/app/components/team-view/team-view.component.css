@@ -1,0 +1,41 @@
+/* general */
+
+h1{
+    font-size: 32px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: bolder;
+    color: black;
+}
+
+h6{
+    font-size: 12px;
+    color:black;
+}
+
+p{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 30px;
+}
+
+
+/* izquierda */
+
+#filter{
+    background-color: darkred;
+}
+
+#sec_tareas{
+    background-color: #ffe0ee;
+}
+
+
+/* derecha */
+
+#solic_eventos{
+    background-color: gray;
+}
+
+#eventos{
+    background-color: gray;
+}
+

@@ -7,6 +7,9 @@ import {LoginComponent} from './components/login/login.component';
 import {WelcomeComponent} from './components/welcome/welcome.component';
 import {RegisterComponent} from './components/register/register.component';
 import {HomeComponent} from './components/home/home.component';
+import {TeamViewComponent} from './components/team-view/team-view.component';
+import {TaskMakerComponent} from './components/task-maker/task-maker.component';
+import {EventMakerComponent} from './components/event-maker/event-maker.component';
 
 const routes: Routes = [
 
@@ -31,6 +34,18 @@ const routes: Routes = [
   {
     path:'home',
     component: HomeComponent
+  },
+  {
+    path:'teamview',
+    component: TeamViewComponent
+  },
+  {
+    path:'taskmaker',
+    component: TaskMakerComponent
+  },
+  {
+    path:'eventmaker',
+    component: EventMakerComponent
   }
 
 ];
