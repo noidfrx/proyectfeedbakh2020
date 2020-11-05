@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.idIngresado=history.state.id;
     this.nombreIngresado=history.state.nombre;
-    console.log(this.idIngresado+" "+this.nombreIngresado);
+    /*console.log(this.idIngresado+" "+this.nombreIngresado);*/
   }
 
 
@@ -51,7 +51,10 @@ export class HomeComponent implements OnInit {
   obtenerEquipoUsuario(){
     this._homeService.obtenerEquiposUsuario()
     .subscribe(
-      data => {(this.equipos = data),console.log(this.equipos)},
+      data => {
+        this.equipos = data;
+        console.log(this.equipos);
+      },
       error => {
         this.errorMsg=error.statusText;
         console.log("Error al recibir los equipos");

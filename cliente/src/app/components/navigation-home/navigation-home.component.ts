@@ -21,7 +21,7 @@ export class NavigationHomeComponent implements OnInit {
   obtenerEquipoUsuario(){
     this._homeService.obtenerEquiposUsuario()
     .subscribe(
-      data => {(this.equipos = data),console.log(this.equipos)},
+      data => {(this.equipos = data)},
       error => {
         this.errorMsg=error.statusText;
         console.log("Error al recibir los equipos");

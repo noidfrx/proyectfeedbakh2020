@@ -95,14 +95,14 @@ class IndexController {
         const nombreEquipo = await pool.query("SELECT nombre FROM equipo WHERE idEquipo = ?",[equipo.idEquipo]);
         
         if (equipo.encargado){
-          tareas = await pool.query("SELECT tarea.nombre, tarea.fecha, categoria.nombreCategoria FROM tarea INNER JOIN categoria ON tarea.idCategoria = categoria.idCategoria AND idEquipo = ?",[equipo.idEquipo]);
-          eventos = await pool.query("SELECT evento.nombre, evento.fecha, categoria.nombreCategoria FROM evento INNER JOIN categoria ON evento.idCategoria = categoria.idCategoria AND idEquipo = ?",[equipo.idEquipo]);
+          tareas = await pool.query("SELECT tarea.nombre, DATE_FORMAT(tarea.fecha, '%d/%m/%Y') AS date, categoria.nombreCategoria FROM tarea INNER JOIN categoria ON tarea.idCategoria = categoria.idCategoria AND idEquipo = ? ORDER BY date LIMIT 5",[equipo.idEquipo]);
+          eventos = await pool.query("SELECT evento.nombre, DATE_FORMAT(evento.fecha, '%d/%m/%Y') AS date, categoria.nombreCategoria FROM evento INNER JOIN categoria ON evento.idCategoria = categoria.idCategoria AND idEquipo = ? ORDER BY date LIMIT 5",[equipo.idEquipo]);
         }
         else{
           tareas = await pool.query(
-            "SELECT sincategorias.nombre, sincategorias.fecha, categoria.nombreCategoria FROM categoria INNER JOIN (SELECT tarea.nombre, tarea.fecha, tarea.idCategoria FROM tarea INNER JOIN (SELECT idTarea FROM listatareas WHERE idColaborador = ?) AS tareaspersonales ON tarea.idTarea = tareaspersonales.idTarea AND tarea.idEquipo = ? ) AS sincategorias ON categoria.idCategoria = sincategorias.idCategoria", [req!.session!.idUserIniciado,equipo.idEquipo]);
+            "SELECT sincategorias.nombre, DATE_FORMAT(sincategorias.fecha, '%d/%m/%Y') AS date, categoria.nombreCategoria FROM categoria INNER JOIN (SELECT tarea.nombre, DATE_FORMAT(tarea.fecha, '%d-%m-%Y'), tarea.idCategoria FROM tarea INNER JOIN (SELECT idTarea FROM listatareas WHERE idColaborador = ?) AS tareaspersonales ON tarea.idTarea = tareaspersonales.idTarea AND tarea.idEquipo = ? ) AS sincategorias ON categoria.idCategoria = sincategorias.idCategoria ORDER BY date LIMIT 5", [req!.session!.idUserIniciado,equipo.idEquipo]);
           eventos =  await pool.query(
-            "SELECT sincategorias.nombre, sincategorias.fecha, categoria.nombreCategoria FROM categoria INNER JOIN (SELECT evento.nombre, evento.fecha, evento.idCategoria FROM evento INNER JOIN (SELECT idEvento FROM listaeventos WHERE idColaborador = ?) AS eventospersonales ON evento.idEvento = eventospersonales.idEvento AND evento.idEquipo = ? ) AS sincategorias ON categoria.idCategoria = sincategorias.idCategoria",[req!.session!.idUserIniciado,equipo.idEquipo]);
+            "SELECT sincategorias.nombre, DATE_FORMAT(sincategorias.fecha, '%d/%m/%Y') AS date, categoria.nombreCategoria FROM categoria INNER JOIN (SELECT evento.nombre, DATE_FORMAT(evento.fecha, '%d-%m-%Y'), evento.idCategoria FROM evento INNER JOIN (SELECT idEvento FROM listaeventos WHERE idColaborador = ?) AS eventospersonales ON evento.idEvento = eventospersonales.idEvento AND evento.idEquipo = ? ) AS sincategorias ON categoria.idCategoria = sincategorias.idCategoria ORDER BY date LIMIT 5",[req!.session!.idUserIniciado,equipo.idEquipo]);
         }
 
         vistaEquipos[aux]={nombreEquipo, tareas, eventos};
