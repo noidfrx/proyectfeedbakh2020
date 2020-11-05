@@ -73,6 +73,44 @@ class IndexController {
             }
         });
     }
+    /* Pide los equipos a los que pertenezca el usuario logeado y retorna todos los datos:
+       Nombre del Equipo, las tareas y eventos vinculadas a ese equipo con la fecha y la categoría
+       
+       Se crea un arreglo tipo:
+       [Equipo:{
+         nombre,
+         {tareas: {nombre, categoria}},
+         {evento: {nombre, categoria}}
+        }]
+       */
+    equipos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let vistaEquipos = [];
+            let tareas;
+            let eventos;
+            const datos = yield database_1.default.query("SELECT * FROM listaequipo WHERE idColaborador=?", [req.session.idUserIniciado]);
+            if (datos.length >= 1) {
+                let aux = 0;
+                for (let equipo of datos) {
+                    const nombreEquipo = yield database_1.default.query("SELECT nombre FROM equipo WHERE idEquipo = ?", [equipo.idEquipo]);
+                    if (equipo.encargado) {
+                        tareas = yield database_1.default.query("SELECT tarea.nombre, tarea.fecha, categoria.nombreCategoria FROM tarea INNER JOIN categoria ON tarea.idCategoria = categoria.idCategoria AND idEquipo = ?", [equipo.idEquipo]);
+                        eventos = yield database_1.default.query("SELECT evento.nombre, evento.fecha, categoria.nombreCategoria FROM evento INNER JOIN categoria ON evento.idCategoria = categoria.idCategoria AND idEquipo = ?", [equipo.idEquipo]);
+                    }
+                    else {
+                        tareas = yield database_1.default.query("SELECT sincategorias.nombre, sincategorias.fecha, categoria.nombreCategoria FROM categoria INNER JOIN (SELECT tarea.nombre, tarea.fecha, tarea.idCategoria FROM tarea INNER JOIN (SELECT idTarea FROM listatareas WHERE idColaborador = ?) AS tareaspersonales ON tarea.idTarea = tareaspersonales.idTarea AND tarea.idEquipo = ? ) AS sincategorias ON categoria.idCategoria = sincategorias.idCategoria", [req.session.idUserIniciado, equipo.idEquipo]);
+                        eventos = yield database_1.default.query("SELECT sincategorias.nombre, sincategorias.fecha, categoria.nombreCategoria FROM categoria INNER JOIN (SELECT evento.nombre, evento.fecha, evento.idCategoria FROM evento INNER JOIN (SELECT idEvento FROM listaeventos WHERE idColaborador = ?) AS eventospersonales ON evento.idEvento = eventospersonales.idEvento AND evento.idEquipo = ? ) AS sincategorias ON categoria.idCategoria = sincategorias.idCategoria", [req.session.idUserIniciado, equipo.idEquipo]);
+                    }
+                    vistaEquipos[aux] = { nombreEquipo, tareas, eventos };
+                    aux = aux + 1;
+                }
+                res.status(200).json(vistaEquipos);
+            }
+            else {
+                res.status(204).send({ message: "No hay equipos para el Usuario Ingresado" });
+            }
+        });
+    }
 }
 //Instanciamos y exportamos toda la clase
 exports.indexController = new IndexController();

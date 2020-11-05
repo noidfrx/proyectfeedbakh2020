@@ -64,6 +64,11 @@ class IndexRoutes {
         //     console.log("Contando vistas: "+req!.session!.viewCount);
         //     res.send("Contando vistas: "+message);
         // });
+        /*this.router.get('/equiposUsuario', (req: Request, res: Response) => {
+          //SI EXISTE USUARIO INGRESADO SE MANDA
+          res.send({ message: "No hay nombre de usuario" });
+        });*/
+        this.router.get("/equiposUsuario", indexController_1.indexController.equipos);
     }
 }
 const indexRoutes = new IndexRoutes();

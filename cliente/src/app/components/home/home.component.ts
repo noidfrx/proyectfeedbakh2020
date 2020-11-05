@@ -12,9 +12,11 @@ export class HomeComponent implements OnInit {
   nombreIngresado:any;
   errorMsg='';
   nombreUsuario='';
+  equipos=null;
 
   constructor(private _homeService: HomeServiceService,private router: Router) { 
     this.obtenerNombreUsuario();
+    this.obtenerEquipoUsuario();
 
   }
 
@@ -44,6 +46,17 @@ export class HomeComponent implements OnInit {
       
       );
 
+  }
+
+  obtenerEquipoUsuario(){
+    this._homeService.obtenerEquiposUsuario()
+    .subscribe(
+      data => {(this.equipos = data),console.log(this.equipos)},
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir los equipos");
+      }
+    )
   }
   
 

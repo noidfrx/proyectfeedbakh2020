@@ -29,10 +29,7 @@
                     <i class="fas fa-angle-down"></i>
                 </a>
                 <ul id="equipos">
-                    <li><a href="">Equipo 1</a></li>
-                    <li><a href="">Equipo 2</a></li>
-                    <li><a href="">Equipo 3</a></li>
-                    <li><a href="">Equipo 4</a></li>
+                    <li *ngFor="let equipo of equipos"><a href="#">{{equipo.nombreEquipo[0].nombre}}</a></li>
                 </ul>  
             </li>
             <li class="nav-item p-4">
