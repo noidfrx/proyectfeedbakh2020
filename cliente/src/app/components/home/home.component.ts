@@ -7,12 +7,13 @@ import {HomeServiceService} from '../../services/homeService/home-service.servic
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit { 
   idIngresado:any;
   nombreIngresado:any;
   errorMsg='';
   nombreUsuario='';
-  equipos=null;
+  equipos='';
+  hayEquipos=1;
 
   constructor(private _homeService: HomeServiceService,private router: Router) { 
     this.obtenerNombreUsuario();
@@ -52,7 +53,11 @@ export class HomeComponent implements OnInit {
     this._homeService.obtenerEquiposUsuario()
     .subscribe(
       data => {
-        this.equipos = data;
+        if (data!=null){  
+          this.equipos = data;
+        }else{
+          this.hayEquipos = 0;
+        }
         console.log(this.equipos);
       },
       error => {

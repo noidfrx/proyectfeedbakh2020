@@ -64,3 +64,15 @@ h3{
     width: 35%;
     text-align: center;
 }
+#noequipo h1{
+    font-size: 30px;
+}
+#noequipo a{
+    text-decoration: none;
+    font-size: 25px;
+}
+#noequipo{
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 21.6%;
+}

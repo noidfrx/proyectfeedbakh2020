@@ -2,33 +2,40 @@
 
 <h1 class="pt-4 text-left" *ngIf="nombreUsuario">Bienvenido a Feedbakh, {{nombreUsuario}} <i class="far fa-grin-beam"></i></h1>
 
-<div id="equipo" class="container text-center" *ngFor="let equipo of equipos">
-    
-    <h2><a href="/home">Equipo: {{equipo.nombreEquipo[0].nombre}}</a></h2>
+<div *ngIf="hayEquipos">
+    <div id="equipo" class="container text-center" *ngFor="let equipo of equipos">
+            
+        <h2><a href="/home">Equipo: {{equipo.nombreEquipo[0].nombre}}</a></h2>
 
-    <h3>Tareas</h3>
-    <span *ngIf="equipo.tareas.length">
-        <div id="superior" class="indice text-left"><span id="indiceNombre"> Nombre</span> <span id="indiceFecha">Fecha</span> <span id="indicecategoria">Categoría</span></div>
-        <div class="indice text-left" *ngFor="let tarea of equipo.tareas">
-            <a id="indiceNombre" href="/home">{{tarea.nombre}}</a>
-            <span id="indiceFecha"> {{tarea.date}}</span>
-            <span id="indicecategoria"> {{tarea.nombreCategoria}}</span>
-        </div>
-    </span>
-    <span *ngIf="!equipo.tareas.length" style="font-size: 25px; display: block; padding:10px 0 10px 0; border-bottom:2px solid gray;">
-        Sin Tareas</span>
+        <h3>Tareas</h3>
+        <span *ngIf="equipo.tareas.length">
+            <div id="superior" class="indice text-left"><span id="indiceNombre"> Nombre</span> <span id="indiceFecha">Fecha</span> <span id="indicecategoria">Categoría</span></div>
+            <div class="indice text-left" *ngFor="let tarea of equipo.tareas">
+                <a id="indiceNombre" href="/home">{{tarea.nombre}}</a>
+                <span id="indiceFecha"> {{tarea.date}}</span>
+                <span id="indicecategoria"> {{tarea.nombreCategoria}}</span>
+            </div>
+        </span>
+        <span *ngIf="!equipo.tareas.length" style="font-size: 25px; display: block; padding:10px 0 10px 0; border-bottom:2px solid gray;">
+            Sin Tareas</span>
 
-    <h3>Eventos</h3>
-    <span *ngIf="equipo.eventos.length">
-        <div id="superior" class="indice text-left"><span id="indiceNombre"> Nombre</span> <span id="indiceFecha">Fecha</span> <span id="indicecategoria">Categoría</span></div>
-        <div class="indice text-left" *ngFor="let evento of equipo.eventos">
-            <a id="indiceNombre" href="/home">{{evento.nombre}}</a>
-            <a id="indiceFecha"> {{evento.date}}</a>
-            <a id="indicecategoria"> {{evento.nombreCategoria}}</a>
-        </div>
-    </span>
-    <span *ngIf="!equipo.eventos.length" style="font-size: 25px; display: block; padding-top:10px;">
-        Sin Eventos</span>
+        <h3>Eventos</h3>
+        <span *ngIf="equipo.eventos.length">
+            <div id="superior" class="indice text-left"><span id="indiceNombre"> Nombre</span> <span id="indiceFecha">Fecha</span> <span id="indicecategoria">Categoría</span></div>
+            <div class="indice text-left" *ngFor="let evento of equipo.eventos">
+                <a id="indiceNombre" href="/home">{{evento.nombre}}</a>
+                <a id="indiceFecha"> {{evento.date}}</a>
+                <a id="indicecategoria"> {{evento.nombreCategoria}}</a>
+            </div>
+        </span>
+        <span *ngIf="!equipo.eventos.length" style="font-size: 25px; display: block; padding-top:10px;">
+            Sin Eventos</span>
+    </div>
+</div>
+
+<div id="noequipo" *ngIf="!hayEquipos">
+    <h1>Todavía no perteneces a ningún equipo.</h1>
+    <a href="/home"><i class="fas fa-plus"></i> Crear Equipo</a>
 </div>
 
 <app-footer></app-footer>
