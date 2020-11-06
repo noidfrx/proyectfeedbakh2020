@@ -76,3 +76,7 @@ h3{
     margin-top: 5%;
     margin-bottom: 21.6%;
 }
+
+#todoContenido{
+    min-height: 498px;
+}
