@@ -1,141 +1,257 @@
 <app-navigation-home></app-navigation-home>
 
-<div class='col-md-8 offset-md-2' id='zona_maker'>
+<div class='col-md-7'>
 
-    <div class='col-md-10 offset-md-1'>
-        <h1 class='text-center'>Agregar nueva tarea</h1>
+    <div class='pt-3'></div>
 
-        <div class='form-group col-md-12'>
-            <label for='inputNombreTarea'>Nombre de tarea</label>
-            <input type='text' class='form-control' id='inputNombreTarea'>
-        </div>
+    <div class='card' id='zona_maker'>
+        <h1 class='text-center pt-3'>Agregar nuevo evento</h1>
+
+        <form
+            class="pb-5 pl-3 pr-3"
+            #registerForm="ngForm"
+            novalidate
+        >
+            <div class='card-body'>
+                <div class='form-group col-md-12'>
+                    <label for='inputNombreEvento'>Nombre de evento</label>
+                    <input 
+                        type='text' 
+                        class='form-control' 
+                        id='inputNombreEvento'
+                        required 
+                        name='nombre' 
+                        [(ngModel)]='eventModel.nombre' 
+                        #nombre="ngModel"
+                        [class.is-invalid]="nombre.invalid && nombre.touched"
+                        placeholder='(Obligatorio)'
+                    >
+                </div>
+                
+                <label for='inputEncargadoTarea' class='col-md-12'>Encargado de tarea</label>
+                <div class='row offset-md-0' >
+                    <div class='col-md-11'>
+                        <select 
+                            id='inputEncargadoEvento'
+                            class='custom-select'
+                            required 
+                            name='encargado' 
+                            [(ngModel)]='eventModel.encargado' 
+                            #encargado="ngModel"
+                        >
+                            <option selected>Seleccione un encargado</option>
+                            <!-- ngFor de cada integrante -->
+                        </select>
+                    </div>
+                </div>
         
-        <label for='inputEncargadoTarea' class='col-md-12'>Encargado de tarea</label>
-        <div class='row offset-md-0' id='inputEncargadoTarea'>
-            <div class='col-md-12'>
-                <select class='custom-select'>
-                    <option selected>Seleccione un encargado</option>
-                    <!-- ngFor de cada integrante -->
-                </select>
-            </div>
-        </div>
-
-        <br/>
+                <br/>
+                
+                <label for='inputFechaTarea' class='col-md-12'>Fecha del evento</label>
+                <div class='row offset-md-0' id='inputFechaTarea'>
+                    <div class='form-group col-md-3'>
+                        <input 
+                            type='text' 
+                            class='form-control' 
+                            id='inputDiaTarea' 
+                            required 
+                            name='dia' 
+                            [(ngModel)]='eventModel.dia' 
+                            #dia="ngModel"
+                            [class.is-invalid]="dia.invalid && dia.touched"
+                            placeholder='Día'
+                        >
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <select 
+                            class="custom-select"
+                            id='inputMesTarea'
+                            name='mes' 
+                            [(ngModel)]='eventModel.mes' 
+                            #mes="ngModel"
+                        >
+                            <option selected>Mes</option>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                    </div>
+            
+                    <div class='form-group col-md-3'>
+                        <input 
+                            type='text' 
+                            class='form-control' 
+                            id='inputAnioTarea' 
+                            required 
+                            name='anio' 
+                            [(ngModel)]='eventModel.anio' 
+                            #anio="ngModel"
+                            [class.is-invalid]="anio.invalid && anio.touched"
+                            placeholder='Año'
+                        >
+                    </div>
+                    
         
-        <label for='inputFechaTarea' class='col-md-12'>Fecha del evento</label>
-        <div class='row offset-md-0' id='inputFechaTarea'>
-            <div class='form-group col-md-3'>
-                <input type='text' class='form-control' id='inputDiaTarea' placeholder='Día'>
-            </div>
+                    <div class="custom-control custom-switch col-md-3 mt-2">
+                        <input 
+                            type="checkbox" 
+                            class="custom-control-input" 
+                            id="sinFecha"
+                        >
+                        <label class="custom-control-label" for="sinFecha">Sin fecha</label>
+                    </div>
+                </div>
+        
+                <label for='inputHoraEvento' class='col-md-12'>Hora del evento</label>
+                <div class='row offset-md-0' id='inputHoraEvento'>
+                    <div class='form-group col-md-2'>
+                        <input 
+                            type='text' 
+                            class='form-control' 
+                            id='inputHora' 
+                            required 
+                            name='hora' 
+                            [(ngModel)]='eventModel.hora' 
+                            #hora="ngModel"
+                            [class.is-invalid]="hora.invalid && hora.touched"
+                            placeholder='Hora'
+                        >
+                    </div>
+                    
+                    <div class='form-group col-md-2'>
+                        <input 
+                            type='text' 
+                            class='form-control' 
+                            id='inputMinuto' 
+                            required 
+                            name='minuto' 
+                            [(ngModel)]='eventModel.minuto' 
+                            #minuto="ngModel"
+                            [class.is-invalid]="minuto.invalid && minuto.touched"
+                            placeholder='Minuto'
+                        >
+                    </div>
+                    
+                    <div class="custom-control custom-switch col-md-8 mt-2">
+                        <input 
+                            type="checkbox" 
+                            class="custom-control-input" 
+                            id="sinHora"
+                        >
+                        <label class="custom-control-label" for="sinHora">Sin Hora</label>
+                    </div>
+                </div>
+        
+                <label for='inputCategoria' class='col-md-12 pt-2'>Categoría</label>
+                <div class='row offset-md-0'>
+                    <div class='col-md-9'>
+                        <select 
+                            class='custom-select'
+                            id='inputCategoria'
+                            required 
+                            name='categoria' 
+                            [(ngModel)]='eventModel.categoria' 
+                            #categoria="ngModel"
+                        >
+                            <option selected>Seleccione una categoría</option>
+                            <!-- ngFor de cada categoría -->
+                        </select>
+                    </div>
             
-            <div class="col-md-3">
-                <select class="custom-select ">
-                    <option selected>Mes</option>
-                    <option value="1">Enero</option>
-                    <option value="2">Febrero</option>
-                    <option value="3">Marzo</option>
-                    <option value="4">Abril</option>
-                    <option value="5">Mayo</option>
-                    <option value="6">Junio</option>
-                    <option value="7">Julio</option>
-                    <option value="8">Agosto</option>
-                    <option value="9">Septiembre</option>
-                    <option value="10">Octubre</option>
-                    <option value="11">Noviembre</option>
-                    <option value="12">Diciembre</option>
-                </select>
+                    <div class="custom-control custom-switch col-md-3 mt-2">
+                        <input 
+                            type="checkbox" 
+                            class="custom-control-input" 
+                            id="sinCategoria"
+                        >
+                        <label class="custom-control-label" for="sinCategoria">Sin categoría</label>
+                    </div>
+                </div>
+        
+                <label for='inputColaboradores' class='col-md-12 pt-3'>Colaboradores</label>
+                <div class='row offset-md-0'>
+                    <div class='col-md-9'>
+                        <select 
+                            class='custom-select'
+                            id='inputColaboradores'
+                            required 
+                            name='colaboradores' 
+                            [(ngModel)]='eventModel.colaboradores' 
+                            #colaboradores="ngModel"
+                        >
+                            <option selected>Seleccione un colaborador</option>
+                            <!-- ngFor de cada categoría -->
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary col-md-2">Agregar</button>
+        
+                    <!-- Sección con lista de colaboradores -->
+                    
+                </div>
+        
+                <label for='inputPrivacidad' class='col-md-3 pt-3'>Privacidad</label>
+                <div class='row offset-md-0' >
+                    <div class='col-md-9'>
+                        <select 
+                            class='custom-select'
+                            id='inputPrivacidad'
+                            required 
+                            name='privacidad' 
+                            [(ngModel)]='eventModel.privacidad' 
+                            #privacidad="ngModel"
+                        >
+                            <option selected>Seleccione la privacidad</option>
+                            <option value="1">Público</option>
+                            <option value="2">Privado</option>
+                        </select>
+                    </div>
+                </div>
+        
+                <div class='form-group col-md-12 pt-3'>
+                    <label for='inputDescripcionEvento'>Descripción de tarea</label>
+                    <input type='text' 
+                        class='form-control' 
+                        id='inputDescripcionEvento'
+                        name='descripcion' 
+                        [(ngModel)]='eventModel.descripcion' 
+                        #descripcion="ngModel"
+                        placeholder='(Opcional)'
+                    >
+                </div>
+        
+                <div class='form-group col-md-12 pt-2'>
+                    <label for='inputEnlace'>Enlace de videoconferencia</label>
+                    <input 
+                        type='text' 
+                        class='form-control' 
+                        id='inputEnlace'
+                        required
+                        name='enlace' 
+                        [(ngModel)]='eventModel.enlace' 
+                        #enlace="ngModel"
+                        placeholder='Inserte aquí el link de la videoconferencia'
+                        [class.is-invalid]="enlace.invalid && enlace.touched"
+                    >
+                </div>
+        
+                <div class='btn-group d-flex col-md-12'>
+                    <button type="submit" class="btn btn-primary">Aceptar</button>
+                    <button type="submit" class="btn btn-danger">Cancelar</button>
+                </div>
             </div>
-    
-            <div class='form-group col-md-3'>
-                <input type='text' class='form-control' id='inputAnioTarea' placeholder='Año'>
-            </div>
-            
-
-            <div class="custom-control custom-switch col-md-3 mt-2">
-                <input type="checkbox" class="custom-control-input" id="sinFecha">
-                <label class="custom-control-label" for="sinFecha">Sin fecha</label>
-            </div>
-        </div>
-
-        <label for='inputHoraTarea' class='col-md-12'>Hora del evento</label>
-        <div class='row offset-md-0' id='inputHoraTarea'>
-            <div class='form-group col-md-2'>
-                <input type='text' class='form-control' id='inputHora' placeholder='Hora'>
-            </div>
-            
-            <div class='form-group col-md-2'>
-                <input type='text' class='form-control' id='inputMinuto' placeholder='Minuto'>
-            </div>
-            
-            <div class="custom-control custom-switch col-md-8 mt-2">
-                <input type="checkbox" class="custom-control-input" id="sinHora">
-                <label class="custom-control-label" for="sinHora">Sin Hora</label>
-            </div>
-        </div>
-
-        <label for='inputCategoria' class='col-md-12'>Categoría</label>
-        <div class='row offset-md-0' id='inputCategoria'>
-            <div class='col-md-9'>
-                <select class='custom-select'>
-                    <option selected>Seleccione una categoría</option>
-                    <!-- ngFor de cada categoría -->
-                </select>
-            </div>
-    
-            <div class="custom-control custom-switch col-md-3 mt-2">
-                <input type="checkbox" class="custom-control-input" id="sinCategoria">
-                <label class="custom-control-label" for="sinCategoria">Sin categoría</label>
-            </div>
-        </div>
-
-        <br/>
-
-        <label for='inputColaboradores' class='col-md-12'>Colaboradores</label>
-        <div class='row offset-md-0' id='inputColaboradores'>
-            <div class='col-md-9'>
-                <select class='custom-select'>
-                    <option selected>Seleccione un colaborador</option>
-                    <!-- ngFor de cada categoría -->
-                </select>
-            </div>
-            
-            <button type="submit" class="btn btn-primary col-md-2">Agregar</button>
-
-            <!-- Sección con lista de colaboradores -->
-            
-        </div>
-
-        <br/>
-
-        <label for='inputPrivacidad' class='col-md-3'>Privacidad</label>
-        <div class='row offset-md-0' id='inputPrivacidad'>
-            <div class='col-md-9'>
-                <select class='custom-select'>
-                    <option selected>Seleccione la privacidad</option>
-                    <option value="1">Público</option>
-                    <option value="2">Privado</option>
-                </select>
-            </div>
-        </div>
-
-        <br/>
-
-        <div class='form-group col-md-12'>
-            <label for='inputDescripcionTarea'>Descripción de tarea</label>
-            <input type='text' class='form-control mb-3' id='inputDescripcionTarea'>
-        </div>
-
-        <div class='form-group col-md-12'>
-            <label for='inputEnlace'>Enlace de videoconferencia</label>
-            <input type='text' class='form-control' id='inputEnlace'>
-        </div>
-
-        <div class='btn-group d-flex col-md-12'>
-            <button type="submit" class="btn btn-primary">Aceptar</button>
-            <button type="submit" class="btn btn-danger">Cancelar</button>
-        </div>
+        </form>
     </div>
-
 </div>
 
 <app-footer></app-footer>
