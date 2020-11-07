@@ -9,6 +9,7 @@
 
         <form
             class="pb-5 pl-3 pr-3"
+            (ngSubmit)="onSubmit()"
             #registerForm="ngForm"
             novalidate
         >
@@ -28,7 +29,7 @@
                     >
                 </div>
                 
-                <label for='inputEncargadoTarea' class='col-md-12'>Encargado de tarea</label>
+                <!--label for='inputEncargadoTarea' class='col-md-12'>Encargado de evento</label>
                 <div class='row offset-md-0' >
                     <div class='col-md-11'>
                         <select 
@@ -39,10 +40,31 @@
                             [(ngModel)]='eventModel.encargado' 
                             #encargado="ngModel"
                         >
-                            <option selected>Seleccione un encargado</option>
-                            <!-- ngFor de cada integrante -->
+                            <option selected value="0">Seleccione un encargado</option>
+                            <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador[0].idColaborador}}'>
+                                {{colaborador.nombreColaborador[0].nombre}} {{colaborador.apellidosColaborador[0].apellidos}} 
+                            </option>
                         </select>
                     </div>
+                </div>
+
+                <br/-->
+
+                <label for='inputEquipo' class='col-md-12'>Equipo</label>
+                <div class='form-group col-md-12'>
+                    <select 
+                        class='custom-select'
+                        id='inputEquipo'
+                        required 
+                        name='equipo' 
+                        [(ngModel)]='eventModel.equipo' 
+                        #equipo="ngModel"
+                    >
+                        <option selected value="0">Seleccione un equipo</option>
+                        <option *ngFor="let equipo of equipos" value='{{equipo.nombreEquipo[0].idEquipo}}'>
+                            {{equipo.nombreEquipo[0].nombre}}
+                        </option>
+                    </select>
                 </div>
         
                 <br/>
@@ -71,7 +93,7 @@
                             [(ngModel)]='eventModel.mes' 
                             #mes="ngModel"
                         >
-                            <option selected>Mes</option>
+                            <option selected value="0">Mes</option>
                             <option value="1">Enero</option>
                             <option value="2">Febrero</option>
                             <option value="3">Marzo</option>
@@ -163,8 +185,10 @@
                             [(ngModel)]='eventModel.categoria' 
                             #categoria="ngModel"
                         >
-                            <option selected>Seleccione una categoría</option>
-                            <!-- ngFor de cada categoría -->
+                            <option selected value="0">Seleccione una categoría</option>
+                            <option *ngFor="let categoria of categorias" value='{{categoria.idCategoria[0].idCategoria}}'>
+                                {{categoria.nombreCategoria[0].nombreCategoria}}
+                            </option>
                         </select>
                     </div>
             
@@ -178,27 +202,29 @@
                     </div>
                 </div>
         
-                <label for='inputColaboradores' class='col-md-12 pt-3'>Colaboradores</label>
+                <!--label for='inputColaboradores' class='col-md-12 pt-3'>Colaboradores</label>
                 <div class='row offset-md-0'>
                     <div class='col-md-9'>
                         <select 
                             class='custom-select'
                             id='inputColaboradores'
                             required 
-                            name='colaboradores' 
-                            [(ngModel)]='eventModel.colaboradores' 
-                            #colaboradores="ngModel"
+                            name='encargado' 
+                            [(ngModel)]='eventModel.encargado' 
+                            #encargado="ngModel"
                         >
-                            <option selected>Seleccione un colaborador</option>
-                            <!-- ngFor de cada categoría -->
+                            <option selected>Seleccione al encargado del evento</option>
+                            <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador[0].idColaborador}}'>
+                                {{colaborador.nombreColaborador[0].nombre}} {{colaborador.apellidosColaborador[0].apellidos}} 
+                            </option>
                         </select>
                     </div>
                     
                     <button type="submit" class="btn btn-primary col-md-2">Agregar</button>
         
-                    <!-- Sección con lista de colaboradores -->
+                    Sección con lista de colaboradores
                     
-                </div>
+                </div-->
         
                 <label for='inputPrivacidad' class='col-md-3 pt-3'>Privacidad</label>
                 <div class='row offset-md-0' >
@@ -211,7 +237,7 @@
                             [(ngModel)]='eventModel.privacidad' 
                             #privacidad="ngModel"
                         >
-                            <option selected>Seleccione la privacidad</option>
+                            <option selected value="0">Seleccione la privacidad</option>
                             <option value="1">Público</option>
                             <option value="2">Privado</option>
                         </select>
@@ -244,10 +270,14 @@
                         [class.is-invalid]="enlace.invalid && enlace.touched"
                     >
                 </div>
+
+                <br/>
         
-                <div class='btn-group d-flex col-md-12'>
-                    <button type="submit" class="btn btn-primary">Aceptar</button>
-                    <button type="submit" class="btn btn-danger">Cancelar</button>
+                <div class='btn-group d-flex col-md-6 offset-md-3'>
+                    <button 
+                        type="submit" 
+                        class="btn btn-primary"
+                    >Crear evento</button>
                 </div>
             </div>
         </form>

@@ -92,7 +92,7 @@ class IndexController {
             if (datos.length >= 1) {
                 let aux = 0;
                 for (let equipo of datos) {
-                    const nombreEquipo = yield database_1.default.query("SELECT nombre FROM equipo WHERE idEquipo = ?", [equipo.idEquipo]);
+                    const nombreEquipo = yield database_1.default.query("SELECT nombre,idEquipo FROM equipo WHERE idEquipo = ?", [equipo.idEquipo]);
                     if (equipo.encargado) {
                         tareas = yield database_1.default.query("SELECT tarea.nombre, DATE_FORMAT(tarea.fecha, '%d/%m/%Y') AS date, categoria.nombreCategoria FROM tarea INNER JOIN categoria ON tarea.idCategoria = categoria.idCategoria AND idEquipo = ? ORDER BY date LIMIT 5", [equipo.idEquipo]);
                         eventos = yield database_1.default.query("SELECT evento.nombre, DATE_FORMAT(evento.fecha, '%d/%m/%Y') AS date, categoria.nombreCategoria FROM evento INNER JOIN categoria ON evento.idCategoria = categoria.idCategoria AND idEquipo = ? ORDER BY date LIMIT 5", [equipo.idEquipo]);

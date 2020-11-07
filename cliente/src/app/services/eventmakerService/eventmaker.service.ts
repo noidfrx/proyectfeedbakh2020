@@ -12,13 +12,38 @@ import {throwError} from 'rxjs';
 })
 export class EventMakerService {
 
-  _url='http://localhost/eventmaker'
+  _url='http://localhost:3000/eventmaker'
+  _urlCategorias='http://localhost:3000/eventmaker/categorias'
+  _urlColaboradores='http://localhost:3000/eventmaker/colaboradores'
+  _urlObtenerEquipos = 'http://localhost:3000/equiposUsuario';
 
   constructor(private _http:HttpClient) { }
+  
+  // GET
 
-  addTask(event:Event){
+  getCategorias(){
+    return this._http.get<any>(this._urlCategorias)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getColaboradores(){
+    return this._http.get<any>(this._urlColaboradores)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  // POST
+
+  addEvent(event:Event){
     return this._http.post<any>(this._url,event)
     .pipe(catchError(this.errorHandler))
+  }
+
+  // home-service.service.ts
+  // llamar datos de equipos
+  obtenerEquiposUsuario(){
+    return this._http
+      .get<any>(this._urlObtenerEquipos, {withCredentials: true})
+      .pipe(catchError(this.errorHandler));
   }
 
   //Manejo de errores

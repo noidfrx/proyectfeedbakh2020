@@ -92,7 +92,7 @@ class IndexController {
     if (datos.length >= 1){
       let aux = 0;
       for (let equipo of datos){
-        const nombreEquipo = await pool.query("SELECT nombre FROM equipo WHERE idEquipo = ?",[equipo.idEquipo]);
+        const nombreEquipo = await pool.query("SELECT nombre,idEquipo FROM equipo WHERE idEquipo = ?",[equipo.idEquipo]);
         
         if (equipo.encargado){
           tareas = await pool.query("SELECT tarea.nombre, DATE_FORMAT(tarea.fecha, '%d/%m/%Y') AS date, categoria.nombreCategoria FROM tarea INNER JOIN categoria ON tarea.idCategoria = categoria.idCategoria AND idEquipo = ? ORDER BY date LIMIT 5",[equipo.idEquipo]);
@@ -115,8 +115,35 @@ class IndexController {
       res.status(204).send({message: "No hay equipos para el Usuario Ingresado"});
     }
     
+  }
 
-  } 
+  ///////////////////
+  //// TASKMAKER ////
+  ///////////////////
+
+  /*
+
+  
+  public async categorias(req: Request, res:Response): Promise<any>{
+
+    let listaCategorias=[];
+
+    const datos = await pool.query("SELECT * FROM categoria");
+
+    if (datos.length >= 1){
+      let aux = 0;
+      for (let categoria of datos){
+        const nombreCategoria = await pool.query("SELECT nombreCategoria FROM categoria WHERE idCategoria=?",[categoria.idCategoria]);
+        const idCategoria = await pool.query("SELECT idCategoria FROM categoria WHERE idCategoria=?",[categoria.idCategoria]);
+        listaCategorias[aux]={nombreCategoria, idCategoria};
+        aux = aux + 1;
+      }
+      res.status(200).json(listaCategorias);
+    }else{
+      res.status(204).send({message: "No se adquirieron categorias"});
+    }
+  }
+  */
 }
 
 //Instanciamos y exportamos toda la clase

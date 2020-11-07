@@ -18,16 +18,36 @@ p{
 
 /* izquierda */
 
-#filter{
-    background-color: darkred;
+#izq {
+    width: 65%;
+    float: left;
+    padding-left: 2%;
+    padding-right: 5%;
+}
+
+#izq2 {
+    background-color: #fcc3c3;
+    align-self: center;
 }
 
 #sec_tareas{
-    background-color: #ffe0ee;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#sec_tareas2{
+    background-color:#ff000031;
+    align-self: center;
 }
 
 
 /* derecha */
+
+#der {
+    width: 35%;
+    background-color: #aaaaaa;
+    float: right;
+}
 
 #solic_eventos{
     background-color: gray;
