@@ -23,9 +23,13 @@ import { HomeComponent } from './components/home/home.component';
 import { NavigationHomeComponent } from './components/navigation-home/navigation-home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { TeamViewComponent } from './components/team-view/team-view.component';
-import { TaskMakerComponent } from './components/task-maker/task-maker.component';
-import { EventMakerComponent } from './components/event-maker/event-maker.component';
+//import { TaskMakerComponent } from './components/task-maker/task-maker.component';
+//import { EventMakerComponent } from './components/event-maker/event-maker.component';
 import { TutorialComponent } from './components/tutorial/tutorial.component';
+import { TaskAddComponent } from './components/task-add/task-add.component';
+import { TaskModComponent } from './components/task-mod/task-mod.component';
+import { EventAddComponent } from './components/event-add/event-add.component';
+import { EventModComponent } from './components/event-mod/event-mod.component';
 
 @NgModule({
   declarations: [
@@ -39,9 +43,13 @@ import { TutorialComponent } from './components/tutorial/tutorial.component';
     NavigationHomeComponent,
     FooterComponent,
     TeamViewComponent,
-    TaskMakerComponent,
-    EventMakerComponent,
-    TutorialComponent
+    //TaskMakerComponent,
+    //EventMakerComponent,
+    TutorialComponent,
+    TaskAddComponent,
+    TaskModComponent,
+    EventAddComponent,
+    EventModComponent
   ],
   imports: [
     BrowserModule,
