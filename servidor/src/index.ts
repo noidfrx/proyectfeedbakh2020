@@ -54,8 +54,6 @@ class Server{
         this.appExpress.use(flash());
         this.appExpress.use('/', indexRoutes);
         this.appExpress.use('/perfil', perfilRoutes);
-        this.appExpress.use('/taskmaker', taskRoutes);
-        this.appExpress.use('/eventmaker', eventRoutes);
         
         
     }

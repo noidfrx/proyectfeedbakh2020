@@ -80,6 +80,9 @@ class IndexRoutes {
     });*/
     
     this.router.get("/equiposUsuario", indexController.equipos);
+
+    this.router.get("/insertTask", indexController.addTask);
+    this.router.get("/insertEvent", indexController.addEvent);
   }
 }
 

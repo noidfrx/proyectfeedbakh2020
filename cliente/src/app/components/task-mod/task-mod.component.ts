@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {Task} from '../../models/Task';
-import {TaskMakerService} from '../../services/taskmakerService/taskmaker.service';
+import {HomeServiceService} from '../../services/homeService/home-service.service'
 
 //Para validación de formulario
 import {FormControl,FormGroup,Validators} from '@angular/forms';
@@ -20,7 +20,7 @@ export class TaskModComponent implements OnInit {
 
   taskModel = new Task('','',null,null,null,null,null,'');
 
-  constructor(private _taskmakerService:TaskMakerService, private router:Router) {
+  constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getColaboradores();
     this.getCategorias();
     this.obtenerEquipoUsuario();
@@ -32,7 +32,7 @@ export class TaskModComponent implements OnInit {
   // GET
 
   getCategorias(){
-    this._taskmakerService.getCategorias().subscribe(
+    this._homeService.getCategorias().subscribe(
       data => {
         (this.categorias = data)
         console.log("Categorias recibidas");
@@ -45,7 +45,7 @@ export class TaskModComponent implements OnInit {
   }
 
   getColaboradores(){
-    this._taskmakerService.getColaboradores().subscribe(
+    this._homeService.getColaboradores().subscribe(
       data => {
         (this.colaboradores = data)
         console.log("Colaboradores recibidos");
@@ -60,7 +60,7 @@ export class TaskModComponent implements OnInit {
   // POST
 
   onSubmit(){
-    this._taskmakerService.addTask(this.taskModel)
+    this._homeService.addTask(this.taskModel)
     .subscribe(
       data => console.log("Tarea agregada!", data),
       error => this.errorMsg = error.statusText
@@ -74,7 +74,7 @@ export class TaskModComponent implements OnInit {
 
   
   obtenerEquipoUsuario(){
-    this._taskmakerService.obtenerEquiposUsuario()
+    this._homeService.obtenerEquiposUsuario()
     .subscribe(
       data => {(this.equipos = data)},
       error => {

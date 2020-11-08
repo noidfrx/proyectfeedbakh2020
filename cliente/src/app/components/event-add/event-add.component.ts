@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Event} from '../../models/Event';
-import {EventMakerService} from '../../services/eventmakerService/eventmaker.service';
+import {HomeServiceService} from '../../services/homeService/home-service.service'
 
 //Para validación de formulario
 import {FormControl,FormGroup,Validators} from '@angular/forms';
@@ -17,7 +17,7 @@ export class EventAddComponent implements OnInit {
 
   equipos=null;
 
-  constructor(private _eventmakerService:EventMakerService) {
+  constructor(private _homeService:HomeServiceService) {
     this.getColaboradores();
     this.getCategorias();
     this.obtenerEquipoUsuario();
@@ -31,7 +31,7 @@ export class EventAddComponent implements OnInit {
   // GET
 
   getCategorias(){
-    this._eventmakerService.getCategorias().subscribe(
+    this._homeService.getCategorias().subscribe(
       data => {
         (this.categorias = data)
         console.log("Categorias recibidas");
@@ -44,7 +44,7 @@ export class EventAddComponent implements OnInit {
   }
 
   getColaboradores(){
-    this._eventmakerService.getColaboradores().subscribe(
+    this._homeService.getColaboradores().subscribe(
       data => {
         (this.colaboradores = data)
         console.log("Colaboradores recibidos");
@@ -59,7 +59,7 @@ export class EventAddComponent implements OnInit {
   // POST
   
   onSubmit(){
-    this._eventmakerService.addEvent(this.eventModel)
+    this._homeService.addEvent(this.eventModel)
     .subscribe(
       data => console.log("Tarea agregada!", data),
       error => this.errorMsg = error.statusText
@@ -72,7 +72,7 @@ export class EventAddComponent implements OnInit {
   ///////////////////////
 
   obtenerEquipoUsuario(){
-    this._eventmakerService.obtenerEquiposUsuario()
+    this._homeService.obtenerEquiposUsuario()
     .subscribe(
       data => {(this.equipos = data)},
       error => {
