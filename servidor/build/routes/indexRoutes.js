@@ -13,16 +13,17 @@ class IndexRoutes {
     }
     //Se define ruta inicial de la aplicación enviando mensaje
     config() {
+        /*///////
+        // GET //
+        ///////*/
         //Ejecutamos método index de controlador para enviar mensaje
         this.router.get("/", indexController_1.indexController.index);
-        this.router.post("/login", indexController_1.indexController.login);
         this.router.get("/logout", (req, res) => {
             delete req.session.idUserIniciado;
             delete req.session.nombreUserIniciado;
             console.log("Sesion cerrada");
             res.status(200).send({ message: "Sesión cerrada" });
         });
-        this.router.post("/register", indexController_1.indexController.register);
         this.router.get("/dataUser", (req, res) => {
             //SI EXISTE USUARIO INGRESADO SE MANDA
             if (req.session.nombreUserIniciado) {
@@ -40,6 +41,16 @@ class IndexRoutes {
                 " " +
                 req.session.nombreUserIniciado);
         });
+        this.router.get("/equiposUsuario", indexController_1.indexController.equipos);
+        this.router.get("/categorias", indexController_1.indexController.categorias);
+        this.router.get("/colaboradores", indexController_1.indexController.colaboradores);
+        /*////////
+        // POST //
+        ////////*/
+        this.router.post("/login", indexController_1.indexController.login);
+        this.router.post("/register", indexController_1.indexController.register);
+        this.router.post("/insertTask", indexController_1.indexController.addTask);
+        this.router.post("/insertEvent", indexController_1.indexController.addEvent);
         // this.router.get('/sesion', (req:Request,res:Response)=>{
         //     res.send("Inició sesion como: "+req!.session!.sesion);
         // } );
@@ -68,7 +79,6 @@ class IndexRoutes {
           //SI EXISTE USUARIO INGRESADO SE MANDA
           res.send({ message: "No hay nombre de usuario" });
         });*/
-        this.router.get("/equiposUsuario", indexController_1.indexController.equipos);
     }
 }
 const indexRoutes = new IndexRoutes();

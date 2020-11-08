@@ -14,9 +14,13 @@ class IndexRoutes {
 
   //Se define ruta inicial de la aplicación enviando mensaje
   config(): void {
+
+    /*///////
+    // GET //
+    ///////*/
+
     //Ejecutamos método index de controlador para enviar mensaje
     this.router.get("/", indexController.index);
-    this.router.post("/login", indexController.login);
 
     this.router.get("/logout", (req: Request, res: Response) => {
       delete req!.session!.idUserIniciado;
@@ -24,9 +28,6 @@ class IndexRoutes {
       console.log("Sesion cerrada");
       res.status(200).send({ message: "Sesión cerrada" });
     });
-    
-
-    this.router.post("/register", indexController.register);
 
     this.router.get("/dataUser", (req: Request, res: Response) => {
       //SI EXISTE USUARIO INGRESADO SE MANDA
@@ -47,6 +48,23 @@ class IndexRoutes {
           req!.session!.nombreUserIniciado
       );
     });
+
+    this.router.get("/equiposUsuario", indexController.equipos);
+
+    this.router.get("/categorias", indexController.categorias);
+    this.router.get("/colaboradores", indexController.colaboradores);
+
+    /*////////
+    // POST //
+    ////////*/
+
+    this.router.post("/login", indexController.login);
+
+    this.router.post("/register", indexController.register);
+
+    this.router.post("/insertTask", indexController.addTask);
+    this.router.post("/insertEvent", indexController.addEvent);
+
 
     // this.router.get('/sesion', (req:Request,res:Response)=>{
     //     res.send("Inició sesion como: "+req!.session!.sesion);
@@ -79,12 +97,6 @@ class IndexRoutes {
       res.send({ message: "No hay nombre de usuario" });
     });*/
     
-    this.router.get("/equiposUsuario", indexController.equipos);
-
-    this.router.get("/insertTask", indexController.addTask);
-    this.router.get("/insertEvent", indexController.addEvent);
-    this.router.get("/categorias", indexController.categorias);
-    this.router.get("/colaboradores", indexController.colaboradores);
   }
 }
 

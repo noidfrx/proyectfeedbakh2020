@@ -7,8 +7,6 @@ import flash from 'connect-flash';
 //Importamos archivos TS para manejo de rutas
 import indexRoutes from './routes/indexRoutes';
 import perfilRoutes from './routes/perfilRoutes';
-import taskRoutes from './routes/taskRoutes';
-import eventRoutes from './routes/eventRoutes';
 
 import bodyParser = require('body-parser');
 import cors = require('cors'); 
