@@ -83,6 +83,8 @@ class IndexRoutes {
 
     this.router.get("/insertTask", indexController.addTask);
     this.router.get("/insertEvent", indexController.addEvent);
+    this.router.get("/categorias", indexController.categorias);
+    this.router.get("/colaboradores", indexController.colaboradores);
   }
 }
 
