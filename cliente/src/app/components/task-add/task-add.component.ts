@@ -18,7 +18,7 @@ export class TaskAddComponent implements OnInit {
 
   equipos=null;
 
-  taskModel = new Task('','',null,null,null,null,null,'');
+  taskModel = new Task('','',null,null,null,null,null,'',null);
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getColaboradores();

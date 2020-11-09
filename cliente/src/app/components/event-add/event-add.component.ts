@@ -26,7 +26,7 @@ export class EventAddComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  eventModel = new Event('',0,null,0,null,null,null,0,0,0,'','');
+  eventModel = new Event('',0,null,0,null,null,null,0,0,0,'','',null);
 
   // GET
 

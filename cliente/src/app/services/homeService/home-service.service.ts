@@ -19,16 +19,23 @@ export class HomeServiceService {
   _urlObtenerData = 'http://localhost:3000/dataUser';
   _urlObtenerEquipos = 'http://localhost:3000/equiposUsuario';
 
-  _urlCategorias='http://localhost:3000/categorias'
-  _urlColaboradores='http://localhost:3000/colaboradores'
-  _urlAgregarTarea='http://localhost:3000/insertTask'
-  _urlAgregarEvento='http://localhost:3000/insertEvent'
+  _urlObtenerId = 'http://localhost:3000/idUser';
+
+  _urlCategorias = 'http://localhost:3000/categorias'
+  _urlColaboradores = 'http://localhost:3000/colaboradores'
+  _urlTareas = 'http://localhost:3000/tasks'
+  _urlAgregarTarea = 'http://localhost:3000/insertTask'
+  _urlModificarTarea = 'http://localhost:3000/modifyTask'
+  _urlEventos = 'http://localhost:3000/events'
+  _urlAgregarEvento = 'http://localhost:3000/insertEvent'
+  _urlModificarEvento = 'http://localhost:3000/modifyEvent'
 
   constructor(private _http: HttpClient) {}
 
-  /* 
-   / GET
-  */
+  /*///////
+  // GET //
+  ///////*/
+
   logout(){
     return this._http.get<any>(this._urlLogout,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
@@ -37,6 +44,12 @@ export class HomeServiceService {
   obtenerNombreUsuario() {
     return this._http
       .get<any>(this._urlObtenerData, { withCredentials: true })
+      .pipe(catchError(this.errorHandler));
+  }
+
+  obtenerEquiposUsuario(){
+    return this._http
+      .get<any>(this._urlObtenerEquipos, {withCredentials: true})
       .pipe(catchError(this.errorHandler));
   }
 
@@ -50,12 +63,39 @@ export class HomeServiceService {
       .pipe(catchError(this.errorHandler));
   }
 
-  /* 
-   / POST
-  */
+  getTareas(){
+    return this._http.get<any>(this._urlTareas)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getEventos(){
+    return this._http.get<any>(this._urlEventos)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  obtenerIdUsuario() {
+    return this._http
+      .get<any>(this._urlObtenerId, { withCredentials: true })
+      .pipe(catchError(this.errorHandler));
+  }
+
+  /*////////
+  // POST //
+  ////////*/
+
+  ingresar(login: Login) {
+    return this._http
+      .post<any>(this._url, login, { withCredentials: true })
+      .pipe(catchError(this.errorHandler));
+  }
 
   addTask(task:Task){
     return this._http.post<any>(this._urlAgregarTarea,task)
+    .pipe(catchError(this.errorHandler))
+  }
+
+  modTask(task:Task){
+    return this._http.post<any>(this._urlModificarTarea,task)
     .pipe(catchError(this.errorHandler))
   }
 
@@ -64,21 +104,14 @@ export class HomeServiceService {
     .pipe(catchError(this.errorHandler))
   }
 
-  obtenerEquiposUsuario(){
-    return this._http
-      .get<any>(this._urlObtenerEquipos, {withCredentials: true})
-      .pipe(catchError(this.errorHandler));
+  modEvent(event:Event){
+    return this._http.post<any>(this._urlModificarEvento,event)
+    .pipe(catchError(this.errorHandler))
   }
 
-  ingresar(login: Login) {
-    return this._http
-      .post<any>(this._url, login, { withCredentials: true })
-      .pipe(catchError(this.errorHandler));
-  }
-
-  /* 
-   / MANEJO DE ERRORES
-  */
+  /*/////////////////////
+  // MANEJO DE ERRORES //
+  /////////////////////*/
 
   errorHandler(error: HttpErrorResponse) {
     return throwError(error);

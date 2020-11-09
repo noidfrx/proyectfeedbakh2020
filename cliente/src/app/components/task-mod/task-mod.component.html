@@ -6,6 +6,7 @@
 
     <div class='card' id='zona_maker'>
         <h1 class='text-center pt-3'>Modificar tarea</h1>
+       
 
         <form
             class="pb-5 pl-3 pr-3"
@@ -13,7 +14,27 @@
             #registerForm="ngForm"
             novalidate
         >
+            <h3 class='text-center pt-3'>ID tarea: <!-- {{}} --></h3>
+
             <div class='card-body'>
+
+                <label for='inputTarea' class='col-md-12'>Tarea</label>
+                <div class='form-group col-md-12'>
+                    <select 
+                        class='custom-select'
+                        id='inputTarea'
+                        required 
+                        name='tarea' 
+                        [(ngModel)]='taskModel.tarea' 
+                        #tarea="ngModel"
+                    >
+                        <option selected value="0">Seleccione un equipo</option>
+                        <option *ngFor="let tarea of tareas" value='{{tarea.id[0].idTarea}}'>
+                            {{tarea.nombre[0].nombre}} (id: {{tarea.id[0].idTarea}})
+                        </option>
+                    </select>
+                </div>
+
                 <div class='form-group col-md-12'>
                     <label for='inputNombreTarea'>Nombre de tarea</label>
                     <input 
@@ -180,7 +201,7 @@
                 <button 
                     type="submit" 
                     class="btn btn-primary"
-                >Crear tarea</button>
+                >Modificar tarea</button>
             </div>
 
         </form>

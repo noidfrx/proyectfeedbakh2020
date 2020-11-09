@@ -11,6 +11,7 @@ export class Event{
         public equipo: number,
         public privacidad: number,
         public descripcion: string,
-        public enlace: string
+        public enlace: string,
+        public evento: number
     ) { }
 }

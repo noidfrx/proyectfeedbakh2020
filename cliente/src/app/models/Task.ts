@@ -7,6 +7,7 @@ export class Task{
         public mes: number,
         public anio: number,
         public categoria: number,
-        public descripcion: string
+        public descripcion: string,
+        public tarea: number
     ) { }
 }

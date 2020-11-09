@@ -127,6 +127,23 @@ class IndexController {
             res.status(200).json({ message: "Tarea guardada" });
         });
     }
+    /*  Query para modificar una tarea
+     /  implementado en /components/task-mod
+    */
+    modTask(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
+            yield database_1.default.query("UPDATE tarea SET nombre=?, fecha=?, descripcion=?, idCategoria=?, idEquipo=? WHERE idTarea=?", [
+                req.body.nombre,
+                req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
+                req.body.descripcion,
+                req.body.categoria,
+                req.body.equipo,
+                req.body.tarea
+            ]);
+            res.status(200).json({ message: "Tarea modificada" });
+        });
+    }
     /*  Query para agregar una nuevo evento
      /  implementado en /components/event-add
     */
@@ -143,7 +160,27 @@ class IndexController {
                 req.body.enlace,
                 req.body.privacidad
             ]);
-            res.status(200).json({ message: "Tarea guardada" });
+            res.status(200).json({ message: "Evento guardado" });
+        });
+    }
+    /*  Query para modificar un evento
+     /  implementado en /components/event-mod
+    */
+    modEvent(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
+            yield database_1.default.query("UPDATE evento SET nombre=?, fecha=?, hora=?, descripcion=?, idCategoria=?, idEquipo=?, enlaceVideoconferencia=?, privacidad=? WHERE idEvento=?", [
+                req.body.nombre,
+                req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
+                req.body.hora + ":" + req.body.minuto,
+                req.body.descripcion,
+                req.body.categoria,
+                req.body.equipo,
+                req.body.enlace,
+                req.body.privacidad,
+                req.body.evento
+            ]);
+            res.status(200).json({ message: "Evento modificado" });
         });
     }
     /*  Query para obtener una lista de todas las categorias
@@ -195,6 +232,48 @@ class IndexController {
             }
             else {
                 res.status(204).send({ message: "No se adquirieron colaboradores" });
+            }
+        });
+    }
+    tareas(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let listaTareas = [];
+            let nombre;
+            let id;
+            const datos = yield database_1.default.query("SELECT * FROM tarea");
+            if (datos.length >= 1) {
+                let aux = 0;
+                for (let tarea of datos) {
+                    nombre = yield database_1.default.query("SELECT nombre FROM tarea WHERE idTarea=?", [tarea.idTarea]);
+                    id = yield database_1.default.query("SELECT idTarea FROM tarea WHERE idTarea=?", [tarea.idTarea]);
+                    listaTareas[aux] = { nombre, id };
+                    aux = aux + 1;
+                }
+                res.status(200).json(listaTareas);
+            }
+            else {
+                res.status(204).send({ message: "No se adquirieron tareas" });
+            }
+        });
+    }
+    eventos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let listaEventos = [];
+            let nombre;
+            let id;
+            const datos = yield database_1.default.query("SELECT * FROM evento");
+            if (datos.length >= 1) {
+                let aux = 0;
+                for (let evento of datos) {
+                    nombre = yield database_1.default.query("SELECT nombre FROM evento WHERE idEvento=?", [evento.idEvento]);
+                    id = yield database_1.default.query("SELECT idEvento FROM evento WHERE idEvento=?", [evento.idEvento]);
+                    listaEventos[aux] = { nombre, id };
+                    aux = aux + 1;
+                }
+                res.status(200).json(listaEventos);
+            }
+            else {
+                res.status(204).send({ message: "No se adquirieron eventos" });
             }
         });
     }

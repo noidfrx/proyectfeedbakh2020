@@ -53,6 +53,20 @@ class IndexRoutes {
 
     this.router.get("/categorias", indexController.categorias);
     this.router.get("/colaboradores", indexController.colaboradores);
+    this.router.get("/tasks", indexController.tareas);
+    this.router.get("/events", indexController.eventos);
+
+    this.router.get("/idUser", (req: Request, res: Response) => {
+      //SI EXISTE USUARIO INGRESADO SE MANDA
+      if (req!.session!.idUserIniciado) {
+        res.status(200).send({
+          message: req!.session!.idUserIniciado,
+        });
+      }else{
+        res.status(404).send({ message: "No hay id de usuario" })
+      }
+    });
+
 
     /*////////
     // POST //
@@ -64,6 +78,8 @@ class IndexRoutes {
 
     this.router.post("/insertTask", indexController.addTask);
     this.router.post("/insertEvent", indexController.addEvent);
+    this.router.post("/modifyTask", indexController.modTask);
+    this.router.post("/modifyEvent", indexController.modEvent);
 
 
     // this.router.get('/sesion', (req:Request,res:Response)=>{

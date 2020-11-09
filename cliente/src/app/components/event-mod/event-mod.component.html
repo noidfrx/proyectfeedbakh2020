@@ -14,6 +14,40 @@
             novalidate
         >
             <div class='card-body'>
+
+                <!--div class='form-group col-md-12'>
+                    <label for='encargadoEvento'>Encargado del evento</label>
+                    <input 
+                        type='text' 
+                        class='form-control' 
+                        id='encargadoEvento'
+                        disabled
+                        name='encargado' 
+                        [(ngModel)]='eventModel.encargado' 
+                        #encargado="ngModel"
+                        placeholder='{{idUsuario}}'
+                        value='{{idUsuario}}'
+                    >
+                    {{encargado}}
+                </div-->
+
+                <label for='inputEvento' class='col-md-12'>Evento</label>
+                <div class='form-group col-md-12'>
+                    <select 
+                        class='custom-select'
+                        id='inputEvento'
+                        required 
+                        name='evento' 
+                        [(ngModel)]='eventModel.evento' 
+                        #evento="ngModel"
+                    >
+                        <option selected value="0">Seleccione un evento</option>
+                        <option *ngFor="let evento of eventos" value='{{evento.id[0].idEvento}}'>
+                            {{evento.nombre[0].nombre}} (id: {{evento.id[0].idEvento}})
+                        </option>
+                    </select>
+                </div>
+
                 <div class='form-group col-md-12'>
                     <label for='inputNombreEvento'>Nombre de evento</label>
                     <input 
@@ -277,7 +311,7 @@
                     <button 
                         type="submit" 
                         class="btn btn-primary"
-                    >Crear evento</button>
+                    >Modificar evento</button>
                 </div>
             </div>
         </form>

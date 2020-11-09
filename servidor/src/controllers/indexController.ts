@@ -137,6 +137,26 @@ class IndexController {
     res.status(200).json({ message: "Tarea guardada" });
   }
 
+  /*  Query para modificar una tarea
+   /  implementado en /components/task-mod
+  */
+ public async modTask(req: Request, res: Response): Promise<any> {
+  console.log(req.body);
+  
+  await pool.query(
+    "UPDATE tarea SET nombre=?, fecha=?, descripcion=?, idCategoria=?, idEquipo=? WHERE idTarea=?",
+    [
+      req.body.nombre,
+      req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
+      req.body.descripcion,
+      req.body.categoria,
+      req.body.equipo,
+      req.body.tarea
+    ]
+  );
+  res.status(200).json({ message: "Tarea modificada" });
+}
+
   /*  Query para agregar una nuevo evento
    /  implementado en /components/event-add
   */
@@ -156,8 +176,31 @@ class IndexController {
         req.body.privacidad
       ]
     );
-    res.status(200).json({ message: "Tarea guardada" });
+    res.status(200).json({ message: "Evento guardado" });
   }
+
+  /*  Query para modificar un evento
+   /  implementado en /components/event-mod
+  */
+ public async modEvent(req: Request, res: Response): Promise<any> {
+  console.log(req.body);
+  
+  await pool.query(
+    "UPDATE evento SET nombre=?, fecha=?, hora=?, descripcion=?, idCategoria=?, idEquipo=?, enlaceVideoconferencia=?, privacidad=? WHERE idEvento=?",
+    [
+      req.body.nombre,
+      req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
+      req.body.hora + ":" + req.body.minuto,
+      req.body.descripcion,
+      req.body.categoria,
+      req.body.equipo,
+      req.body.enlace,
+      req.body.privacidad,
+      req.body.evento
+    ]
+  );
+  res.status(200).json({ message: "Evento modificado" });
+}
 
   /*  Query para obtener una lista de todas las categorias
    /  implementado en /components/task-add, /components/event-add, /components/team-view
@@ -214,6 +257,54 @@ class IndexController {
       res.status(204).send({message: "No se adquirieron colaboradores"});
     }
   }
+
+  public async tareas(req: Request, res:Response): Promise<any>{
+
+    let listaTareas=[];
+    let nombre;
+    let id;
+
+    const datos = await pool.query("SELECT * FROM tarea");
+    
+    if (datos.length >= 1){
+      let aux = 0;
+      for (let tarea of datos){
+        nombre = await pool.query("SELECT nombre FROM tarea WHERE idTarea=?",[tarea.idTarea]);
+        id = await pool.query("SELECT idTarea FROM tarea WHERE idTarea=?",[tarea.idTarea]);
+        
+        listaTareas[aux]={nombre, id};
+        aux = aux + 1;
+      }
+      res.status(200).json(listaTareas);
+    }else{
+      res.status(204).send({message: "No se adquirieron tareas"});
+    }
+  }
+
+  public async eventos(req: Request, res:Response): Promise<any>{
+
+    let listaEventos=[];
+    let nombre;
+    let id;
+
+    const datos = await pool.query("SELECT * FROM evento");
+    
+    if (datos.length >= 1){
+      let aux = 0;
+      for (let evento of datos){
+        nombre = await pool.query("SELECT nombre FROM evento WHERE idEvento=?",[evento.idEvento]);
+        id = await pool.query("SELECT idEvento FROM evento WHERE idEvento=?",[evento.idEvento]);
+        
+        listaEventos[aux]={nombre, id};
+        aux = aux + 1;
+      }
+      res.status(200).json(listaEventos);
+    }else{
+      res.status(204).send({message: "No se adquirieron eventos"});
+    }
+  }
+
+
 }
 
 //Instanciamos y exportamos toda la clase
