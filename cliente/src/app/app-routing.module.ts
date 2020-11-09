@@ -15,6 +15,8 @@ import { TaskAddComponent } from './components/task-add/task-add.component';
 import { TaskModComponent } from './components/task-mod/task-mod.component';
 import { EventAddComponent } from './components/event-add/event-add.component';
 import { EventModComponent } from './components/event-mod/event-mod.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { MyProfileComponent } from './components/my-profile/my-profile.component';
 
 const routes: Routes = [
 
@@ -67,6 +69,14 @@ const routes: Routes = [
   {
     path:'eventmod',
     component: EventModComponent
+  },
+  {
+    path:'profile',
+    component: ProfileComponent
+  },
+  {
+    path:'my-profile',
+    component: MyProfileComponent
   },
   {
     path:'tutorial',

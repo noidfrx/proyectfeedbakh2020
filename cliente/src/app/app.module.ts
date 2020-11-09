@@ -30,6 +30,8 @@ import { TaskAddComponent } from './components/task-add/task-add.component';
 import { TaskModComponent } from './components/task-mod/task-mod.component';
 import { EventAddComponent } from './components/event-add/event-add.component';
 import { EventModComponent } from './components/event-mod/event-mod.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { MyProfileComponent } from './components/my-profile/my-profile.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import { EventModComponent } from './components/event-mod/event-mod.component';
     TaskAddComponent,
     TaskModComponent,
     EventAddComponent,
-    EventModComponent
+    EventModComponent,
+    ProfileComponent,
+    MyProfileComponent
   ],
   imports: [
     BrowserModule,

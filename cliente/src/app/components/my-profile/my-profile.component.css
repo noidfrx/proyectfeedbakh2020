@@ -1,0 +1,30 @@
+h1{
+    margin-top: 20px;
+    text-align: center;
+}
+#cuerpo{
+    min-height: 500px;
+}
+
+#cuadro{
+    border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    border: 1px solid #000000;
+    margin-left: 40;
+}
+#sinEspacioEntreLineas {
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 8px;
+   
+}
+
+.tabulacion:first-letter {
+	margin-left: 15px;
+}
+
+#centrado {
+    text-align: center;
+}
