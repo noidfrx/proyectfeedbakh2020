@@ -1,4 +1,4 @@
-import {Router} from 'express';
+import {Router, Request, Response} from 'express';
 import {perfilController} from '../controllers/perfilController';
 
 class PerfilRoutes{
@@ -15,7 +15,7 @@ class PerfilRoutes{
         // //GET Definimos ruta inicial de aplicación, se devuelve mensaje hello
 
         this.router.get('/todas', perfilController.todasCredenciales);
-        
+
         //GET Datos de usuario ingresado
         this.router.get('/datosIngresado', perfilController.datosDeIngresado);
 

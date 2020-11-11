@@ -21,7 +21,8 @@ class IndexRoutes {
 
     //Ejecutamos método index de controlador para enviar mensaje
     this.router.get("/", indexController.index);
-
+    
+    
     this.router.get("/logout", (req: Request, res: Response) => {
       delete req!.session!.idUserIniciado;
       delete req!.session!.nombreUserIniciado;
@@ -73,9 +74,7 @@ class IndexRoutes {
     ////////*/
 
     this.router.post("/login", indexController.login);
-
     this.router.post("/register", indexController.register);
-
     this.router.post("/insertTask", indexController.addTask);
     this.router.post("/insertEvent", indexController.addEvent);
     this.router.post("/modifyTask", indexController.modTask);

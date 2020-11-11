@@ -44,6 +44,7 @@ class Server {
             saveUninitialized: false,
         }));
         this.appExpress.use(connect_flash_1.default());
+        // RUTAS GLOBALES
         this.appExpress.use('/', indexRoutes_1.default);
         this.appExpress.use('/perfil', perfilRoutes_1.default);
     }

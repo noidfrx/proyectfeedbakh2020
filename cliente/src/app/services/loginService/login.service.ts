@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+
+//Modelo importado propio del formulario
 import { Login } from '../../models/Login';
 
 //Manejo de errores
@@ -16,12 +18,16 @@ export class LoginService {
   constructor(private _http: HttpClient) { }
 
   ingresar(login:Login){
+
+    //Post cambiar si es get
     return this._http.post<any>(this._url,login,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
+  
   }
 
   //Manejo de errores
   errorHandler(error: HttpErrorResponse){
     return throwError(error);
   }
+
 }

@@ -50,23 +50,28 @@ class IndexController {
             if (datoComprobacion.length == 1) {
                 //Cuando todo sale bien se manda código de OK
                 const idDatoComprobacion = yield database_1.default.query("SELECT idColaborador FROM colaborador WHERE email=? AND password=?", [email, password]);
+                //Veces ingresada
                 if (!req.session.viewCount) {
                     req.session.viewCount = 1;
                 }
                 else {
                     req.session.viewCount += 1;
                 }
+                //Se guarda nombre e id de colaborador en sesión
                 req.session.idUserIniciado = idDatoComprobacion[0].idColaborador;
                 req.session.nombreUserIniciado = datoComprobacion[0].nombre;
-                console.log("Sesión iniciada como: " + req.session.idUserIniciado + " " + req.session.nombreUserIniciado);
+                console.log("Sesión iniciada como: " +
+                    req.session.idUserIniciado +
+                    " " +
+                    req.session.nombreUserIniciado);
                 console.log("Veces iniciadas en el dispositivo: " + req.session.viewCount);
+                //Envia dato de colaborador a angular
                 res.status(200).send({
                     id: idDatoComprobacion[0].idColaborador,
                     nombre: datoComprobacion[0].nombre,
                     apellidoPaterno: datoComprobacion[0].apellidoPaterno,
-                    message: datoComprobacion[0]
+                    message: datoComprobacion[0],
                 });
-                //res.redirect("/loginCorrecto");
             }
             else {
                 res.status(401).send({ message: "Credenciales no coinciden" });
@@ -107,7 +112,9 @@ class IndexController {
                 res.status(200).json(vistaEquipos);
             }
             else {
-                res.status(204).send({ message: "No hay equipos para el Usuario Ingresado" });
+                res
+                    .status(204)
+                    .send({ message: "No hay equipos para el Usuario Ingresado" });
             }
         });
     }
@@ -122,7 +129,7 @@ class IndexController {
                 req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
                 req.body.descripcion,
                 req.body.categoria,
-                req.body.equipo
+                req.body.equipo,
             ]);
             res.status(200).json({ message: "Tarea guardada" });
         });
@@ -139,7 +146,7 @@ class IndexController {
                 req.body.descripcion,
                 req.body.categoria,
                 req.body.equipo,
-                req.body.tarea
+                req.body.tarea,
             ]);
             res.status(200).json({ message: "Tarea modificada" });
         });
@@ -158,7 +165,7 @@ class IndexController {
                 req.body.categoria,
                 req.body.equipo,
                 req.body.enlace,
-                req.body.privacidad
+                req.body.privacidad,
             ]);
             res.status(200).json({ message: "Evento guardado" });
         });
@@ -178,7 +185,7 @@ class IndexController {
                 req.body.equipo,
                 req.body.enlace,
                 req.body.privacidad,
-                req.body.evento
+                req.body.evento,
             ]);
             res.status(200).json({ message: "Evento modificado" });
         });
@@ -225,7 +232,11 @@ class IndexController {
                     nombreColaborador = yield database_1.default.query("SELECT nombre FROM colaborador WHERE idColaborador=?", [colaborador.idColaborador]);
                     apellidosColaborador = yield database_1.default.query("SELECT apellidos FROM colaborador WHERE idColaborador=?", [colaborador.idColaborador]);
                     idColaborador = yield database_1.default.query("SELECT idColaborador FROM colaborador WHERE idColaborador=?", [colaborador.idColaborador]);
-                    listaColaboradores[aux] = { nombreColaborador, apellidosColaborador, idColaborador };
+                    listaColaboradores[aux] = {
+                        nombreColaborador,
+                        apellidosColaborador,
+                        idColaborador,
+                    };
                     aux = aux + 1;
                 }
                 res.status(200).json(listaColaboradores);
@@ -244,8 +255,12 @@ class IndexController {
             if (datos.length >= 1) {
                 let aux = 0;
                 for (let tarea of datos) {
-                    nombre = yield database_1.default.query("SELECT nombre FROM tarea WHERE idTarea=?", [tarea.idTarea]);
-                    id = yield database_1.default.query("SELECT idTarea FROM tarea WHERE idTarea=?", [tarea.idTarea]);
+                    nombre = yield database_1.default.query("SELECT nombre FROM tarea WHERE idTarea=?", [
+                        tarea.idTarea,
+                    ]);
+                    id = yield database_1.default.query("SELECT idTarea FROM tarea WHERE idTarea=?", [
+                        tarea.idTarea,
+                    ]);
                     listaTareas[aux] = { nombre, id };
                     aux = aux + 1;
                 }
@@ -266,7 +281,9 @@ class IndexController {
                 let aux = 0;
                 for (let evento of datos) {
                     nombre = yield database_1.default.query("SELECT nombre FROM evento WHERE idEvento=?", [evento.idEvento]);
-                    id = yield database_1.default.query("SELECT idEvento FROM evento WHERE idEvento=?", [evento.idEvento]);
+                    id = yield database_1.default.query("SELECT idEvento FROM evento WHERE idEvento=?", [
+                        evento.idEvento,
+                    ]);
                     listaEventos[aux] = { nombre, id };
                     aux = aux + 1;
                 }

@@ -8,8 +8,9 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
+
 export class LoginComponent implements OnInit {
-  errorMsg = '';
+  errorMsg = ''; //Si es vacío no hay error c:
 
   constructor(private _loginService: LoginService, private router: Router) {}
 
@@ -18,14 +19,16 @@ export class LoginComponent implements OnInit {
   loginModel = new Login('', '');
   ingresado = false;
 
+  //Creada
   onSubmit() {
     //Pasamos lo que nos entrega el usuario a método del service
     this.ingresado = true;
+    
     this._loginService.ingresar(this.loginModel).subscribe(
       //Si me devuelve okay
       //data => this.router.navigateByUrl('/home'),
       (data) => {
-        //La sesión ha sido iniciada correctamente
+        //La sesión ha sido iniciada correctamente redirige al HOME
         this.router.navigateByUrl('/home');
       },
       (error) => {

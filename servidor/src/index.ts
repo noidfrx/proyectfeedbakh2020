@@ -50,9 +50,11 @@ class Server{
             saveUninitialized: false,
         }));
         this.appExpress.use(flash());
+
+
+        // RUTAS GLOBALES
         this.appExpress.use('/', indexRoutes);
         this.appExpress.use('/perfil', perfilRoutes);
-        
         
     }
 
