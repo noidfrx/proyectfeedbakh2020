@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2020 a las 19:41:38
+-- Tiempo de generación: 12-11-2020 a las 19:56:02
 -- Versión del servidor: 10.1.40-MariaDB
 -- Versión de PHP: 7.3.5
 
@@ -32,7 +32,7 @@ CREATE TABLE `amigo` (
   `idAmigo` int(255) NOT NULL,
   `idColaborador1` int(255) NOT NULL,
   `idColaborador2` int(255) NOT NULL,
-  `aceptado` int(255) NOT NULL DEFAULT '0'
+  `aceptado` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -98,7 +98,7 @@ INSERT INTO `amigo` (`idAmigo`, `idColaborador1`, `idColaborador2`, `aceptado`) 
 --
 
 CREATE TABLE `categoria` (
-  `idCategoria` int(100) NOT NULL,
+  `idCategoria` int(255) NOT NULL,
   `nombreCategoria` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -120,14 +120,14 @@ INSERT INTO `categoria` (`idCategoria`, `nombreCategoria`) VALUES
 --
 
 CREATE TABLE `colaborador` (
-  `idColaborador` int(11) NOT NULL,
+  `idColaborador` int(255) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `apellidos` varchar(255) NOT NULL,
   `fotoPerfil` varchar(255) DEFAULT '0',
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `fechaCreacion` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
-  `tutorial` int(255) NOT NULL DEFAULT '0'
+  `tutorial` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -247,7 +247,7 @@ CREATE TABLE `evento` (
   `enlaceVideoconferencia` varchar(255) DEFAULT NULL,
   `idCategoria` int(255) DEFAULT NULL,
   `idEquipo` int(255) NOT NULL,
-  `privacidad` varchar(255) NOT NULL
+  `privacidad` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -260,7 +260,7 @@ CREATE TABLE `listaequipo` (
   `idListaEquipo` int(255) NOT NULL,
   `idEquipo` int(255) NOT NULL,
   `idColaborador` int(255) NOT NULL,
-  `encargado` int(255) NOT NULL,
+  `encargado` tinyint(1) NOT NULL,
   `fechaAsignacionEquipo` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -413,13 +413,13 @@ ALTER TABLE `amigo`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idCategoria` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idCategoria` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `colaborador`
 --
 ALTER TABLE `colaborador`
-  MODIFY `idColaborador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `idColaborador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT de la tabla `equipo`
