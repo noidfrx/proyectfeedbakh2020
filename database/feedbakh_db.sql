@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-11-2020 a las 23:13:54
+-- Tiempo de generación: 12-11-2020 a las 19:41:38
 -- Versión del servidor: 10.1.40-MariaDB
 -- Versión de PHP: 7.3.5
 
@@ -260,15 +260,16 @@ CREATE TABLE `listaequipo` (
   `idListaEquipo` int(255) NOT NULL,
   `idEquipo` int(255) NOT NULL,
   `idColaborador` int(255) NOT NULL,
-  `encargado` int(255) NOT NULL
+  `encargado` int(255) NOT NULL,
+  `fechaAsignacionEquipo` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `listaequipo`
 --
 
-INSERT INTO `listaequipo` (`idListaEquipo`, `idEquipo`, `idColaborador`, `encargado`) VALUES
-(1, 1, 3, 0);
+INSERT INTO `listaequipo` (`idListaEquipo`, `idEquipo`, `idColaborador`, `encargado`, `fechaAsignacionEquipo`) VALUES
+(1, 1, 3, 0, '2020-11-12 18:38:16.083678');
 
 -- --------------------------------------------------------
 
@@ -279,7 +280,8 @@ INSERT INTO `listaequipo` (`idListaEquipo`, `idEquipo`, `idColaborador`, `encarg
 CREATE TABLE `listaeventos` (
   `idListaEventos` int(255) NOT NULL,
   `idEvento` int(255) NOT NULL,
-  `idColaborador` int(255) NOT NULL
+  `idColaborador` int(255) NOT NULL,
+  `fechaAsignacionEvento` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -291,16 +293,17 @@ CREATE TABLE `listaeventos` (
 CREATE TABLE `listatareas` (
   `idListaTareas` int(255) NOT NULL,
   `idTarea` int(255) NOT NULL,
-  `idColaborador` int(255) NOT NULL
+  `idColaborador` int(255) NOT NULL,
+  `fechaAsignacionTarea` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `listatareas`
 --
 
-INSERT INTO `listatareas` (`idListaTareas`, `idTarea`, `idColaborador`) VALUES
-(1, 1, 3),
-(2, 2, 3);
+INSERT INTO `listatareas` (`idListaTareas`, `idTarea`, `idColaborador`, `fechaAsignacionTarea`) VALUES
+(1, 1, 3, '2020-11-12 18:39:07.113936'),
+(2, 2, 3, '2020-11-12 18:39:07.113936');
 
 -- --------------------------------------------------------
 
