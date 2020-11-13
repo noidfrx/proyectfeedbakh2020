@@ -57,6 +57,7 @@ class IndexRoutes {
                 res.status(404).send({ message: "No hay id de usuario" });
             }
         });
+        this.router.get("/tutorial",indexController_1.indexController.tutorial);
         /*////////
         // POST //
         ////////*/
@@ -66,6 +67,7 @@ class IndexRoutes {
         this.router.post("/insertEvent", indexController_1.indexController.addEvent);
         this.router.post("/modifyTask", indexController_1.indexController.modTask);
         this.router.post("/modifyEvent", indexController_1.indexController.modEvent);
+        
         // this.router.get('/sesion', (req:Request,res:Response)=>{
         //     res.send("Inició sesion como: "+req!.session!.sesion);
         // } );

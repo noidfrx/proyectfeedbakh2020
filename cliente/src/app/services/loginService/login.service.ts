@@ -15,6 +15,7 @@ export class LoginService {
 
   // URL para la petición a servidor
   _url = 'http://localhost:3000/login';
+  _urlTutorial = 'http://localhost:3000/tutorial';
   constructor(private _http: HttpClient) { }
 
   ingresar(login:Login){
@@ -23,6 +24,11 @@ export class LoginService {
     return this._http.post<any>(this._url,login,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
   
+  }
+
+  tutorialCompletado(){
+    return this._http.get<any>(this._urlTutorial,{withCredentials:true})
+    .pipe(catchError(this.errorHandler));
   }
 
   //Manejo de errores
