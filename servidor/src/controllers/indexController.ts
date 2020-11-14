@@ -1,6 +1,7 @@
 //Para definir petición y respuesta
 import { Request, Response } from "express";
 import pool from "../database";
+import bcrypt = require("bcrypt");
 
 class IndexController {
   public index(req: Request, res: Response) {
@@ -11,8 +12,9 @@ class IndexController {
   public async register(req: Request, res: Response): Promise<any> {
     console.log(req.body);
 
-    // Comprobamos contraseñas iguales
-    if (req.body.password == req.body.repetirPassword) {
+    const password = req.body.password;
+
+    bcrypt.hash(password, 10, async function (err, hash) {
       //Se crea objeto en COLABORADOR
       await pool.query(
         "INSERT INTO colaborador (nombre, apellidos, email, password) VALUES (?,?,?,?)",
@@ -20,13 +22,12 @@ class IndexController {
           req.body.nombre,
           req.body.apellidoPaterno + " " + req.body.apellidoMaterno,
           req.body.email,
-          req.body.password,
+          hash,
         ]
       );
-      res.json({ message: "Colaborador guardado" });
-    } else {
-      res.status(401).send({ message: "Las contraseñas son iguales" });
-    }
+    });
+
+    res.json({ message: "Colaborador guardado" });
   }
 
   //Se comprueba que exista el usuario
@@ -35,51 +36,49 @@ class IndexController {
     const email = req.body.email;
     const password = req.body.password;
 
-    //Obtenemos objetos con los valores de petición
+    //Obtenemos objetos con valor email
     const datoComprobacion = await pool.query(
-      "SELECT * FROM colaborador WHERE email=? AND password=?",
-      [email, password]
+      "SELECT * FROM colaborador WHERE email=?",
+      [email]
     );
 
     //Cuando hay un dato que coincide con el email y la contraseña
     if (datoComprobacion.length == 1) {
-      //Cuando todo sale bien se manda código de OK
-      const idDatoComprobacion = await pool.query(
-        "SELECT idColaborador FROM colaborador WHERE email=? AND password=?",
-        [email, password]
-      );
+      //Comparar contraseñas y desencriptar
+      await bcrypt.compare(password, datoComprobacion[0].password, async function (
+        err,
+        result
+      ) {
+        //Si las contraseñas están bien
+        if (result) {
+          //Cuando todo sale bien se manda código de OK
+          const idDatoComprobacion = await pool.query(
+            "SELECT idColaborador FROM colaborador WHERE email=?",
+            [email]
+          );
 
-      //Veces ingresada
-      if (!req!.session!.viewCount) {
-        req!.session!.viewCount = 1;
-      } else {
-        req!.session!.viewCount += 1;
-      }
+          //Se guarda nombre e id de colaborador en sesión
+          req!.session!.idUserIniciado = idDatoComprobacion[0].idColaborador;
+          req!.session!.nombreUserIniciado = datoComprobacion[0].nombre;
 
-      //Se guarda nombre e id de colaborador en sesión
-      req!.session!.idUserIniciado = idDatoComprobacion[0].idColaborador;
-      req!.session!.nombreUserIniciado = datoComprobacion[0].nombre;
-      
-      console.log(
-        "Sesión iniciada como: " +
-          req!.session!.idUserIniciado +
-          " " +
-          req!.session!.nombreUserIniciado
-      );
-      console.log(
-        "Veces iniciadas en el dispositivo: " + req!.session!.viewCount
-      );
+          console.log(
+            "Sesión iniciada como: " +
+              req!.session!.idUserIniciado +
+              " " +
+              req!.session!.nombreUserIniciado
+          );
 
-      //Envia dato de colaborador a angular
-      res.status(200).send({
-        id: idDatoComprobacion[0].idColaborador,
-        nombre: datoComprobacion[0].nombre,
-        apellidoPaterno: datoComprobacion[0].apellidoPaterno,
-        message: datoComprobacion[0],
+          //Envia dato de colaborador a angular
+          res.status(200).send({
+            id: idDatoComprobacion[0].idColaborador,
+            nombre: datoComprobacion[0].nombre,
+            apellidoPaterno: datoComprobacion[0].apellidoPaterno,
+            message: datoComprobacion[0],
+          });
+        } else {
+          res.status(401).send({ message: "Credenciales no coinciden" });
+        }
       });
-
-    } else {
-      res.status(401).send({ message: "Credenciales no coinciden" });
     }
   }
 

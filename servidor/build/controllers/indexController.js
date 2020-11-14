@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.indexController = void 0;
 const database_1 = __importDefault(require("../database"));
+const bcrypt = require("bcrypt");
 class IndexController {
     index(req, res) {
         res.send("Hello from indexController");
@@ -22,20 +23,19 @@ class IndexController {
     register(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
-            // Comprobamos contraseñas iguales
-            if (req.body.password == req.body.repetirPassword) {
-                //Se crea objeto en COLABORADOR
-                yield database_1.default.query("INSERT INTO colaborador (nombre, apellidos, email, password) VALUES (?,?,?,?)", [
-                    req.body.nombre,
-                    req.body.apellidoPaterno + " " + req.body.apellidoMaterno,
-                    req.body.email,
-                    req.body.password,
-                ]);
-                res.json({ message: "Colaborador guardado" });
-            }
-            else {
-                res.status(401).send({ message: "Las contraseñas son iguales" });
-            }
+            const password = req.body.password;
+            bcrypt.hash(password, 10, function (err, hash) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    //Se crea objeto en COLABORADOR
+                    yield database_1.default.query("INSERT INTO colaborador (nombre, apellidos, email, password) VALUES (?,?,?,?)", [
+                        req.body.nombre,
+                        req.body.apellidoPaterno + " " + req.body.apellidoMaterno,
+                        req.body.email,
+                        hash,
+                    ]);
+                });
+            });
+            res.json({ message: "Colaborador guardado" });
         });
     }
     //Se comprueba que exista el usuario
@@ -44,37 +44,37 @@ class IndexController {
             //Hacer validaciones con req.body.email req.body.password
             const email = req.body.email;
             const password = req.body.password;
-            //Obtenemos objetos con los valores de petición
-            const datoComprobacion = yield database_1.default.query("SELECT * FROM colaborador WHERE email=? AND password=?", [email, password]);
+            //Obtenemos objetos con valor email
+            const datoComprobacion = yield database_1.default.query("SELECT * FROM colaborador WHERE email=?", [email]);
             //Cuando hay un dato que coincide con el email y la contraseña
             if (datoComprobacion.length == 1) {
-                //Cuando todo sale bien se manda código de OK
-                const idDatoComprobacion = yield database_1.default.query("SELECT idColaborador FROM colaborador WHERE email=? AND password=?", [email, password]);
-                //Veces ingresada
-                if (!req.session.viewCount) {
-                    req.session.viewCount = 1;
-                }
-                else {
-                    req.session.viewCount += 1;
-                }
-                //Se guarda nombre e id de colaborador en sesión
-                req.session.idUserIniciado = idDatoComprobacion[0].idColaborador;
-                req.session.nombreUserIniciado = datoComprobacion[0].nombre;
-                console.log("Sesión iniciada como: " +
-                    req.session.idUserIniciado +
-                    " " +
-                    req.session.nombreUserIniciado);
-                console.log("Veces iniciadas en el dispositivo: " + req.session.viewCount);
-                //Envia dato de colaborador a angular
-                res.status(200).send({
-                    id: idDatoComprobacion[0].idColaborador,
-                    nombre: datoComprobacion[0].nombre,
-                    apellidoPaterno: datoComprobacion[0].apellidoPaterno,
-                    message: datoComprobacion[0],
+                //Comparar contraseñas y desencriptar
+                yield bcrypt.compare(password, datoComprobacion[0].password, function (err, result) {
+                    return __awaiter(this, void 0, void 0, function* () {
+                        //Si las contraseñas están bien
+                        if (result) {
+                            //Cuando todo sale bien se manda código de OK
+                            const idDatoComprobacion = yield database_1.default.query("SELECT idColaborador FROM colaborador WHERE email=?", [email]);
+                            //Se guarda nombre e id de colaborador en sesión
+                            req.session.idUserIniciado = idDatoComprobacion[0].idColaborador;
+                            req.session.nombreUserIniciado = datoComprobacion[0].nombre;
+                            console.log("Sesión iniciada como: " +
+                                req.session.idUserIniciado +
+                                " " +
+                                req.session.nombreUserIniciado);
+                            //Envia dato de colaborador a angular
+                            res.status(200).send({
+                                id: idDatoComprobacion[0].idColaborador,
+                                nombre: datoComprobacion[0].nombre,
+                                apellidoPaterno: datoComprobacion[0].apellidoPaterno,
+                                message: datoComprobacion[0],
+                            });
+                        }
+                        else {
+                            res.status(401).send({ message: "Credenciales no coinciden" });
+                        }
+                    });
                 });
-            }
-            else {
-                res.status(401).send({ message: "Credenciales no coinciden" });
             }
         });
     }

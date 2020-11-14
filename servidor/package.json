@@ -12,6 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/bcrypt": "^3.0.0",
     "@types/connect-flash": "0.0.35",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.8",

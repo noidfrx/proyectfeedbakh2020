@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-11-2020 a las 19:56:02
+-- Tiempo de generación: 14-11-2020 a las 22:33:39
 -- Versión del servidor: 10.1.40-MariaDB
 -- Versión de PHP: 7.3.5
 
@@ -70,22 +70,12 @@ INSERT INTO `amigo` (`idAmigo`, `idColaborador1`, `idColaborador2`, `aceptado`) 
 (28, 5, 41, 0),
 (29, 16, 43, 0),
 (30, 4, 35, 1),
-(31, 2, 28, 1),
-(32, 2, 21, 1),
-(33, 2, 45, 1),
-(34, 2, 40, 1),
 (35, 1, 28, 1),
 (36, 1, 30, 1),
-(37, 2, 21, 1),
-(38, 2, 43, 1),
 (39, 3, 16, 1),
-(40, 2, 6, 1),
 (41, 3, 16, 1),
 (42, 1, 31, 1),
 (43, 1, 28, 1),
-(44, 2, 42, 1),
-(45, 2, 13, 1),
-(46, 2, 25, 1),
 (47, 3, 31, 1),
 (48, 3, 15, 1),
 (49, 1, 13, 1),
@@ -135,10 +125,9 @@ CREATE TABLE `colaborador` (
 --
 
 INSERT INTO `colaborador` (`idColaborador`, `nombre`, `apellidos`, `fotoPerfil`, `email`, `password`, `fechaCreacion`, `tutorial`) VALUES
-(1, 'admin', 'admin', '0', 'admin@admin.com', 'admin', '2020-10-31 17:40:06.000000', 0),
-(2, 'Eduardo', 'Ibacache González', '0', 'eduardo@gmail.com', '1235', '2020-10-31 17:40:50.430169', 0),
-(3, 'Karina', 'Hermosilla Moraga', '0', 'kari@kari.com', 'kari', '2020-11-03 02:15:33.655545', 0),
-(4, 'Felipe', 'Javier', '0', 'Ad@ad.com', 'jiji', '2020-11-04 20:42:24.519724', 0),
+(1, 'admin', 'admin', '0', 'admin@admin.com', '$2b$10$YXk8UvQsGQNQCf/cWQnouO4PuJA.6tpBirYSRzsuQN5Os4PrgIIim', '2020-10-31 17:40:06.000000', 0),
+(3, 'Karina', 'Hermosilla Moraga', '0', 'kari@kari.com', '$2b$10$WzPjXN.XQuIkn4kf9NHJoOwVFrNdcUd76P9O8N6HAdpkn0MJPBYfe', '2020-11-03 02:15:33.655545', 0),
+(4, 'Felipe', 'Javier', '0', 'Ad@ad.com', '$2b$10$ujnlirWYpFyRJuLHAxmmTOxtdO2BFJG3GqozdMfOQ2kOVkOzMHdB6', '2020-11-04 20:42:24.519724', 0),
 (5, 'Omar', 'Valdés', '0', 'venenatis@elementum.ca', 'Nki98MN', '2021-02-11 01:37:01.000000', 0),
 (6, 'Adela', 'Sepúlveda', '0', 'tempor.diam@felispurusac.net', 'Zce68OY', '2020-01-31 12:48:08.000000', 0),
 (7, 'Pilar', 'Campos', '0', 'tempus.non.lacinia@ullamcorpermagnaSed.net', 'Mkg27FP', '2019-12-21 18:54:18.000000', 0),
@@ -188,8 +177,7 @@ INSERT INTO `colaborador` (`idColaborador`, `nombre`, `apellidos`, `fotoPerfil`,
 (51, 'Jared', 'Jiménez', '0', 'enim.Etiam.imperdiet@ornareelitelit.org', 'Joq18LP', '2021-01-01 00:54:49.000000', 0),
 (52, 'Carolaine', 'Leiva', '0', 'eget@consequat.com', 'Xzy66LZ', '2020-01-25 05:59:49.000000', 0),
 (53, 'Rosita', 'Garrido', '0', 'tellus@Duis.edu', 'Nrz35IO', '2020-03-08 03:19:26.000000', 0),
-(54, 'Jahir', 'Flores', '0', 'lobortis.ultrices@enimnislelementum.org', 'Cjc08DE', '2020-04-17 02:50:56.000000', 0),
-(55, 'Este', 'bon bon', '0', 'este@gmail.com', '123', '2020-11-05 23:18:29.336377', 0);
+(54, 'Jahir', 'Flores', '0', 'lobortis.ultrices@enimnislelementum.org', 'Cjc08DE', '2020-04-17 02:50:56.000000', 0);
 
 -- --------------------------------------------------------
 
@@ -413,13 +401,13 @@ ALTER TABLE `amigo`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idCategoria` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idCategoria` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `colaborador`
 --
 ALTER TABLE `colaborador`
-  MODIFY `idColaborador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `idColaborador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT de la tabla `equipo`
