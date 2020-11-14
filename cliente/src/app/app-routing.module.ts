@@ -17,6 +17,8 @@ import { EventAddComponent } from './components/event-add/event-add.component';
 import { EventModComponent } from './components/event-mod/event-mod.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { AuthGuard } from './security/auth.guard';
+import { AuthWelcome } from './security/auth.welcome';
 
 const routes: Routes = [
 
@@ -28,23 +30,29 @@ const routes: Routes = [
   },
   {
     path:'welcome',
-    component: WelcomeComponent
-  },
+    component: WelcomeComponent,
+    canActivate: [AuthWelcome]
+    },
   {
     path:'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [AuthWelcome]
   },
   {
     path:'register',
-    component: RegisterComponent
+    component: RegisterComponent,
+    canActivate: [AuthWelcome]
   },
   {
     path:'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'teamview',
-    component: TeamViewComponent
+    component: TeamViewComponent,
+    canActivate: [AuthGuard]
+    
   },
   /*{
     path:'taskmaker',
@@ -52,11 +60,13 @@ const routes: Routes = [
   },*/
   {
     path:'taskadd',
-    component: TaskAddComponent
+    component: TaskAddComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'taskmod',
-    component: TaskModComponent
+    component: TaskModComponent,
+    canActivate: [AuthGuard]
   },
   /*{
     path:'eventmaker',
@@ -64,23 +74,28 @@ const routes: Routes = [
   },*/
   {
     path:'eventadd',
-    component: EventAddComponent
+    component: EventAddComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'eventmod',
-    component: EventModComponent
+    component: EventModComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'profile',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'my-profile',
-    component: MyProfileComponent
+    component: MyProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path:'tutorial',
-    component: TutorialComponent
+    component: TutorialComponent,
+    canActivate: [AuthGuard]
   }
 
 ];

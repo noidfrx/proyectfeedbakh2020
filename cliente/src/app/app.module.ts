@@ -32,6 +32,8 @@ import { EventAddComponent } from './components/event-add/event-add.component';
 import { EventModComponent } from './components/event-mod/event-mod.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
+import { AuthGuard } from './security/auth.guard';
+import { AuthWelcome } from './security/auth.welcome';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
     YouTubePlayerModule
   ],
   providers: [
-    LoginService
+    LoginService,
+    AuthGuard,
+    AuthWelcome
   ],
   bootstrap: [AppComponent]
 })
