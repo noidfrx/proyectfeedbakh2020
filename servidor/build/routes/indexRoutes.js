@@ -57,7 +57,6 @@ class IndexRoutes {
                 res.status(404).send({ message: "No hay id de usuario" });
             }
         });
-        this.router.get("/tutorial",indexController_1.indexController.tutorial);
         /*////////
         // POST //
         ////////*/

@@ -34,6 +34,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { MyProfileComponent } from './components/my-profile/my-profile.component';
 import { AuthGuard } from './security/auth.guard';
 import { AuthWelcome } from './security/auth.welcome';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { AuthWelcome } from './security/auth.welcome';
     EventAddComponent,
     EventModComponent,
     ProfileComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

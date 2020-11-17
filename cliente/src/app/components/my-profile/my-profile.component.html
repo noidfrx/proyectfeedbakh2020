@@ -1,91 +1,88 @@
 <app-navigation-home></app-navigation-home>
     <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3">
-            <p>si agrego cosas aquí, aparecen en otro lado</p>
-            <p>buscar colaboradores</p>
-            <p>solicitudes de colaboradores</p>
-            <p> crear grupos de trabajo</p>
-        </div>
+        <div class="row">
+            <div class="col-md-3" >
+                <app-sidebar></app-sidebar>
+            </div>
 
-        <div class="col-md-6">
-            <div class="row">
-                <div class= "col s-12">
-                    <h1>Mi perfil</h1>
-                    <br>
-                    <div class="text-center" >
-                        <img id="cuadro"  src="../../../assets/easter-bunny.png" width="90px" height="90px" class="img-fluid">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class= "col s-12">
+                        <h1>Mi perfil</h1>
                         <br>
-                        <br>
-                        <br>
+                        <div class="text-center" >
+                            <img id="cuadro"  src="../../../assets/easter-bunny.png" width="90px" height="90px" class="img-fluid">
+                            <br>
+                            <br>
+                            <br>
+                        </div>
                     </div>
-                </div>
-                <div class= "col-md-6"></div>
-            </div>  
-            <div class="row">
-                <div class="col-md-5">
-                    <ul>
-                        <li>Nombres:</li>
-                        <p class="tabulacion"> Insertar Nombre</p>
-                        <li>Apellidos:</li>
-                        <p class="tabulacion"> Insertar Apellido</p>
-                        <li>Correo:</li>
-                        <p class="tabulacion">Insertar Correo</p>
+                    <div class= "col-md-6"></div>
+                </div>  
+                <div class="row">
+                    <div class="col-md-5">
+                        <ul>
+                            <li>Nombres:</li>
+                            <p class="tabulacion"> Insertar Nombre</p>
+                            <li>Apellidos:</li>
+                            <p class="tabulacion"> Insertar Apellido</p>
+                            <li>Correo:</li>
+                            <p class="tabulacion">Insertar Correo</p>
 
-                    </ul>
-                    <p class="float-right" style="margin-right: 70px;">Editar   </p>
-                </div>
-                <div class="col-md-1"></div>
-                <div id="cuadro" class="col-md-5">
-                    <!-- lo que sigue, se generará solo una vez que tengamos conexion con el servidor, esto es solo un ejemplo\-->
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-2"></div>
-                            <div class="col">
-                                <br> 
-                                <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                <p id="centrado">amigo 1</p>
-                                <br>
+                        </ul>
+                        <p class="float-right" style="margin-right: 70px;">Editar   </p>
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div id="cuadro" class="col-md-5">
+                        <!-- lo que sigue, se generará solo una vez que tengamos conexion con el servidor, esto es solo un ejemplo\-->
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-2"></div>
+                                <div class="col">
+                                    <br> 
+                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    <p id="centrado">amigo 1</p>
+                                    <br>
+                                </div>
+                                
+                                <div class="col">
+                                    <br>
+                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    <p id="centrado" >amigo 2</p>
+                                    <br>
+                                </div>
+                                <div class="col-1"></div>
                             </div>
+                            <div class= "row">
+                                <div class="col-2">
+                                </div>
+                                <div class="col"> 
+                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    <p id="centrado">amigo 3</p>
+                                </div>
+                                
+                                <div class="col">
+                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    <p id="centrado">amigo 4</p>
+                                </div>
+                                <div class="col-1"></div> 
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <a routerLink="/register" class="float-right">Mostrar todos</a> 
+                                </div>
                             
-                            <div class="col">
-                                <br>
-                                <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                <p id="centrado" >amigo 2</p>
-                                <br>
                             </div>
-                            <div class="col-1"></div>
-                        </div>
-                        <div class= "row">
-                            <div class="col-2">
-                            </div>
-                            <div class="col"> 
-                                <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                <p id="centrado">amigo 3</p>
-                            </div>
-                            
-                            <div class="col">
-                                <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                <p id="centrado">amigo 4</p>
-                            </div>
-                            <div class="col-1"></div> 
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <a routerLink="/register" class="float-right">Mostrar todos</a> 
-                            </div>
-                           
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-2">
+            <div class="col-2">
             
         </div>
 
     </div>
 </div>
 
-<footer><app-footer></app-footer></footer>
+<app-footer></app-footer>
