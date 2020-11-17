@@ -68,7 +68,6 @@ class IndexController {
                                 nombre: datoComprobacion[0].nombre,
                                 apellidoPaterno: datoComprobacion[0].apellidoPaterno,
                                 message: datoComprobacion[0],
-                                tutorial: datoComprobacion[0].tutorial,
                             });
                         }
                         else {
@@ -226,7 +225,7 @@ class IndexController {
             let nombreColaborador;
             let apellidosColaborador;
             let idColaborador;
-            const datos = yield database_1.default.query("SELECT * FROM colaborador");
+            const datos = yield database_1.default.query("SELECT * FROM amigo WHERE (idColaborador1=? OR idColaborador2=?) AND aceptado=1", [req.session.idUserIniciado]);
             if (datos.length >= 1) {
                 let aux = 0;
                 for (let colaborador of datos) {
@@ -295,33 +294,6 @@ class IndexController {
             }
         });
     }
-
-    
-    tutorial(req,res){
-        return __awaiter(this, void 0, void 0, function* () {
-            let tutorialCompletado = yield database_1.default.query("SELECT tutorial FROM colaborador WHERE idColaborador=?", [req.session.idUserIniciado]);
-
-            if (tutorialCompletado.length>=1){
-                if ((tutorialCompletado[0].tutorial) == 0){
-
-                    yield database_1.default.query("UPDATE colaborador SET tutorial=? WHERE idColaborador=?",[1,req.session.idUserIniciado]);
-                    res.status(200).send({
-                        visto:0,
-                        mesage:"Se ha marcado como completado el tutorial"
-                    });
-                }else{
-                    res.status(200).send({
-                        visto:1,
-                        message:"Ya se ha visto el tutorial"});
-                }
-            }else{
-                res.status(400).send({message:"Error en la query"});
-            }
-        });
-
-    }
-
-
 }
 //Instanciamos y exportamos toda la clase
 exports.indexController = new IndexController();
