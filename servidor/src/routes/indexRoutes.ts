@@ -68,6 +68,8 @@ class IndexRoutes {
       }
     });
 
+    this.router.get("/tutorial",indexController.tutorial);
+
 
     /*////////
     // POST //
