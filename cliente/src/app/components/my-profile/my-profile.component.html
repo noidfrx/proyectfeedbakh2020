@@ -5,7 +5,7 @@
                 <app-sidebar></app-sidebar>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-9">
                 <div class="row">
                     <div class= "col s-12">
                         <h1>Mi perfil</h1>
@@ -31,57 +31,63 @@
                             <p class="tabulacion">{{datos[0].email}}</p>
 
                         </ul>
-                        <p class="float-right" style="margin-right: 70px;">Editar   </p>
+                        <a href="" class="btn btn-info btn-block"> editar</a>
                     </div>
                     <div class="col-md-1"></div>
                     <div id="cuadro" class="col-md-5">
                         <!-- lo que sigue, se generará solo una vez que tengamos conexion con el servidor, esto es solo un ejemplo\-->
-                        <div class="col">
-                            <div class="row">
-                                <div class="col-2"></div>
-                                <div class="col">
-                                    <br> 
-                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                    <p id="centrado">amigo 1</p>
-                                    <br>
+                       <div class="row">
+                            <div class="col-md-6">
+                                <div class="card text-center" style="max-width: 130px; max-height: 130px;">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                    <div class="card-header">
+                                        {{amigos[0].nombre}}
+                                    </div> 
                                 </div>
-                                
-                                <div class="col">
-                                    <br>
-                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                    <p id="centrado" >amigo 2</p>
-                                    <br>
-                                </div>
-                                <div class="col-1"></div>
                             </div>
-                            <div class= "row">
-                                <div class="col-2">
-                                </div>
-                                <div class="col"> 
-                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                    <p id="centrado">amigo 3</p>
-                                </div>
-                                
-                                <div class="col">
-                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                    <p id="centrado">amigo 4</p>
-                                </div>
-                                <div class="col-1"></div> 
+                            <div class="col-md-6">
+                                <div class="card text-center" style="max-width: 130px; max-height: 130px;">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                <div class="card-header">
+                                    {{amigos[1].nombre}}
+                                </div> 
                             </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <a routerLink="/register" class="float-right">Mostrar todos</a> 
-                                </div>
-                            
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card text-center" style="max-width: 130px; max-height: 130px;">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                    <div class="card-header">
+                                        {{amigos[2].nombre}}
+                                    </div> 
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card text-center" style="max-width: 130px; max-height: 130px;">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                <div class="card-header">
+                                    {{amigos[3].nombre}}
+                                </div> 
+                            </div>
+                            </div>
+                        </div>
+                       
+                            <div class="col-md-12">
+                                <a routerLink="/register" class="float-right">Mostrar todos</a> 
+                            </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-2">
-            
-        </div>
 
     </div>
 </div>

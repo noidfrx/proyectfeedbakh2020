@@ -26,7 +26,7 @@ export class ProfileService {
 
   amigos(){
     //Post cambiar si es get
-    return this._http.get<any>(this._url,{withCredentials:true})
+    return this._http.get<any>(this._url2,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
   
   }
