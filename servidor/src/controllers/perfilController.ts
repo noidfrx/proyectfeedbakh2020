@@ -16,15 +16,14 @@ class PerfilController{
 
     //GET todos los datos del usuario ingresado
     public async datosDeIngresado(req:Request, res: Response){
-        const datos = await pool.query('SELECT idColaborador,nombre,apellidos,fotoPerfil,email,fechaCreacion FROM colaborador WHERE idColaborador=?', req!.session!.idUserIniciado);
-        res.json(datos);
-        
+        const datos = await pool.query('SELECT idColaborador,nombre,apellidos,fotoPerfil,email,fechaCreacion FROM colaborador WHERE idColaborador = ? ', req!.session!.idUserIniciado);
+        res.json(datos); 
     }
 
     // GET amigos colaborador (donde el colaborador es quien hizo la accion de añadir al amigo)
     public async amigos(req:Request, res: Response){
         const amistades = await pool.query('SELECT colaborador.nombre FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', req!.session!.idUserIniciado);
-        console.log(req!.session!.nombreUserIniciado);
+        console.log(amistades);
         res.json(amistades);
     }
 
