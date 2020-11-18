@@ -28,7 +28,7 @@ class PerfilController {
     //GET todos los datos del usuario ingresado
     datosDeIngresado(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const datos = yield database_1.default.query('SELECT idColaborador,nombre,apellidos,fotoPerfil,email,fechaCreacion FROM colaborador WHERE idColaborador=?', req.session.idUserIniciado);
+            const datos = yield database_1.default.query('SELECT idColaborador,nombre,apellidos,fotoPerfil,email,fechaCreacion FROM colaborador WHERE idColaborador = ? ', req.session.idUserIniciado);
             res.json(datos);
         });
     }
@@ -36,7 +36,7 @@ class PerfilController {
     amigos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const amistades = yield database_1.default.query('SELECT colaborador.nombre FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', req.session.idUserIniciado);
-            console.log(req.session.nombreUserIniciado);
+            console.log(amistades);
             res.json(amistades);
         });
     }
