@@ -74,10 +74,12 @@ export class HomeServiceService {
   }
 
   obtenerIdUsuario() {
-    return this._http
-      .get<any>(this._urlObtenerId, { withCredentials: true })
+    return this._http.get<any>(this._urlObtenerId, { withCredentials: true })
       .pipe(catchError(this.errorHandler));
   }
+
+  
+
 
   /*////////
   // POST //

@@ -19,12 +19,19 @@ class PerfilRoutes{
         //GET Datos de usuario ingresado
         this.router.get('/datosIngresado', perfilController.datosDeIngresado);
 
+        this.router.get('/amigos', perfilController.amigos);
+
+        this.router.get('/amigos2',perfilController.amigosV2);
+
+        
+
 
         // //POST
 
         // //DELETE Se utiliza ID de recomendación
 
         // //PUT Actualizar, se utiliza ID de recomendación
+        this.router.put('/actualizarPerfil',perfilController.actualizarPerfil);
     }
 
 }

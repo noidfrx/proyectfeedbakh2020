@@ -226,7 +226,7 @@ class IndexController {
             let nombreColaborador;
             let apellidosColaborador;
             let idColaborador;
-            const datos = yield database_1.default.query("SELECT * FROM colaborador");
+            const datos = yield database_1.default.query("SELECT * FROM amigo WHERE (idColaborador1=? OR idColaborador2=?) AND aceptado=1", [req.session.idUserIniciado]);
             if (datos.length >= 1) {
                 let aux = 0;
                 for (let colaborador of datos) {

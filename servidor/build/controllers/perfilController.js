@@ -32,12 +32,40 @@ class PerfilController {
             res.json(datos);
         });
     }
-    // GET amigos colaborador
+    // GET amigos colaborador (donde el colaborador es quien hizo la accion de añadir al amigo)
     amigos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const amistades = yield database_1.default.query('SELECT colaborador.nombre FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', req.session.idUserIniciado);
             console.log(req.session.nombreUserIniciado);
             res.json(amistades);
+        });
+    }
+    // GET amigos colaborador (donde el colaborador es a quien le han enviado la invitación), es lo mismo de arriba pero con las credenciales dadas vueltas en la lista de amigos
+    amigosV2(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const amistades2 = yield database_1.default.query('SELECT colaborador.nombre FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador', req.session.idUserIniciado);
+            console.log(req.session.nombreUserIniciado);
+            res.json(amistades2);
+            console.log(req.session.idUserIniciado);
+        });
+    }
+    //GET ONE
+    //POST
+    //DELETE
+    //PUT
+    // actualiza los datos del perfil del usuario
+    actualizarPerfil(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
+            const actualizar = yield database_1.default.query('UPDATE colaborador SET nombre=? ,apellidos=? ,fotoPerfil=0 WHERE idcolaborador=?', [
+                req.body.nombre,
+                req.body.apellidos,
+                req.body.fotoPerfil,
+                req.session.idUserIniciado,
+            ]);
+            console.log(req.session.nombreUserIniciado);
+            res.json(actualizar);
+            console.log(req.session.idUserIniciado);
         });
     }
 }
