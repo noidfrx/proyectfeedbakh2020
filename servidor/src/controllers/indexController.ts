@@ -74,6 +74,7 @@ class IndexController {
             nombre: datoComprobacion[0].nombre,
             apellidoPaterno: datoComprobacion[0].apellidoPaterno,
             message: datoComprobacion[0],
+            tutorial: datoComprobacion[0].tutorial,
           });
         } else {
           res.status(401).send({ message: "Credenciales no coinciden" });
@@ -353,6 +354,31 @@ class IndexController {
       res.status(204).send({ message: "No se adquirieron eventos" });
     }
   }
+
+  public async tutorial(req:Request,res:Response):Promise<any>{
+    let tutorialCompletado = await pool.query("SELECT tutorial FROM colaborador WHERE idColaborador=?", [req!.session!.idUserIniciado]);
+
+    if (tutorialCompletado.length>=1){
+      if ((tutorialCompletado[0].tutorial) == 0){
+
+        await pool.query("UPDATE colaborador SET tutorial=? WHERE idColaborador=?",[1,req!.session!.idUserIniciado]);
+        res.status(200).send({
+          visto:0,
+          mesage:"Se ha marcado como completado el tutorial"
+        });
+      }else{
+        res.status(200).send({
+          visto:1,
+          message:"Ya se ha visto el tutorial"});
+        }
+      }else{
+        res.status(400).send({message:"Error en la query"});
+      }
+
+  }
+
+
+
 }
 
 //Instanciamos y exportamos toda la clase

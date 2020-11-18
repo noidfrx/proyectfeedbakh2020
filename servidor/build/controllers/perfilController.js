@@ -32,6 +32,14 @@ class PerfilController {
             res.json(datos);
         });
     }
+    // GET amigos colaborador
+    amigos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const amistades = yield database_1.default.query('SELECT colaborador.nombre FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', req.session.idUserIniciado);
+            console.log(req.session.nombreUserIniciado);
+            res.json(amistades);
+        });
+    }
 }
 //Instanciamos clase y exportamos toda la clase
 exports.perfilController = new PerfilController();

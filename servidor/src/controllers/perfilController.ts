@@ -19,6 +19,14 @@ class PerfilController{
         res.json(datos);
     }
 
+    // GET amigos colaborador
+    public async amigos(req:Request, res: Response){
+        const amistades = await pool.query('SELECT colaborador.nombre FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', req!.session!.idUserIniciado);
+        console.log(req!.session!.nombreUserIniciado);
+        res.json(amistades);
+    }
+
+
     //GET ONE
     
     //POST
