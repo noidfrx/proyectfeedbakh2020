@@ -26,8 +26,8 @@
                         #evento="ngModel"
                     >
                         <option selected value="0">Seleccione un evento</option>
-                        <option *ngFor="let evento of eventos" value='{{evento.id[0].idEvento}}'>
-                            {{evento.nombre[0].nombre}} (id: {{evento.id[0].idEvento}})
+                        <option *ngFor="let evento of eventos" value='{{evento.idEvento}}'>
+                            {{evento.nombre}} (id: {{evento.idEvento}})
                         </option>
                     </select>
                 </div>

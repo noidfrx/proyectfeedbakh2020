@@ -87,7 +87,7 @@ export class HomeServiceService {
   }
 
   getEventosUser(){
-    return this._http.get<any>(this._urlEventos, {withCredentials:true})
+    return this._http.get<any>(this._urlEventosUser, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
   }
 

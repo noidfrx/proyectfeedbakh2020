@@ -24,7 +24,7 @@ export class EventModComponent implements OnInit {
     this.getColaboradores();
     this.getCategorias();
     this.obtenerEquipoUsuario();
-    this.getEventos();
+    this.getEventosUser();
     //this.obtenerIdUsuario();
     //this.obtenerNombreUsuario();
    }
@@ -62,8 +62,8 @@ export class EventModComponent implements OnInit {
     )
   }
 
-  getEventos(){
-    this._homeService.getEventos().subscribe(
+  getEventosUser(){
+    this._homeService.getEventosUser().subscribe(
       data => {
         (this.eventos = data)
         console.log("Eventos recibidos!");
