@@ -14,21 +14,24 @@ import {throwError} from 'rxjs';
 })
 export class HomeServiceService {
   // URL para la petición a servidor
-  _url = 'http://localhost:3000/login';
-  _urlLogout = 'http://localhost:3000/logout';
-  _urlObtenerData = 'http://localhost:3000/dataUser';
-  _urlObtenerEquipos = 'http://localhost:3000/equiposUsuario';
+  _url                  = 'http://localhost:3000/login';
+  _urlLogout            = 'http://localhost:3000/logout';
+  _urlObtenerData       = 'http://localhost:3000/dataUser';
+  _urlObtenerEquipos    = 'http://localhost:3000/equiposUsuario';
 
-  _urlObtenerId = 'http://localhost:3000/idUser';
+  _urlObtenerId         = 'http://localhost:3000/idUser';
 
-  _urlCategorias = 'http://localhost:3000/categorias'
-  _urlColaboradores = 'http://localhost:3000/colaboradores'
-  _urlTareas = 'http://localhost:3000/tasks'
-  _urlAgregarTarea = 'http://localhost:3000/insertTask'
-  _urlModificarTarea = 'http://localhost:3000/modifyTask'
-  _urlEventos = 'http://localhost:3000/events'
-  _urlAgregarEvento = 'http://localhost:3000/insertEvent'
-  _urlModificarEvento = 'http://localhost:3000/modifyEvent'
+  _urlCategorias        = 'http://localhost:3000/categorias'
+  _urlColaboradores     = 'http://localhost:3000/colaboradores'
+  _urlColaboradoresUser = 'http://localhost:3000/colaboradoresusuario'
+  _urlTareas            = 'http://localhost:3000/tasks'
+  _urlTareasUser        = 'http://localhost:3000/tasksusuario'
+  _urlAgregarTarea      = 'http://localhost:3000/insertTask'
+  _urlModificarTarea    = 'http://localhost:3000/modifyTask'
+  _urlEventos           = 'http://localhost:3000/events'
+  _urlEventosUser       = 'http://localhost:3000/eventsusuario'
+  _urlAgregarEvento     = 'http://localhost:3000/insertEvent'
+  _urlModificarEvento   = 'http://localhost:3000/modifyEvent'
 
   constructor(private _http: HttpClient) {}
 
@@ -54,22 +57,37 @@ export class HomeServiceService {
   }
 
   getCategorias(){
-    return this._http.get<any>(this._urlCategorias)
+    return this._http.get<any>(this._urlCategorias, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
   }
 
   getColaboradores(){
-    return this._http.get<any>(this._urlColaboradores)
+    return this._http.get<any>(this._urlColaboradores, {withCredentials:true})
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getColaboradoresUser(){
+    return this._http.get<any>(this._urlColaboradoresUser, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
   }
 
   getTareas(){
-    return this._http.get<any>(this._urlTareas)
+    return this._http.get<any>(this._urlTareas, {withCredentials:true})
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getTareasUser(){
+    return this._http.get<any>(this._urlTareasUser, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
   }
 
   getEventos(){
-    return this._http.get<any>(this._urlEventos)
+    return this._http.get<any>(this._urlEventos, {withCredentials:true})
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getEventosUser(){
+    return this._http.get<any>(this._urlEventosUser, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
   }
 

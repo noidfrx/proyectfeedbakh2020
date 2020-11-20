@@ -119,9 +119,7 @@ class IndexController {
             }
         });
     }
-    /*  Query para agregar una nueva tarea
-     /  implementado en /components/task-add
-    */
+    //  Query para agregar una nueva tarea
     addTask(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
@@ -135,9 +133,7 @@ class IndexController {
             res.status(200).json({ message: "Tarea guardada" });
         });
     }
-    /*  Query para modificar una tarea
-     /  implementado en /components/task-mod
-    */
+    //  Query para modificar una tarea
     modTask(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
@@ -152,9 +148,7 @@ class IndexController {
             res.status(200).json({ message: "Tarea modificada" });
         });
     }
-    /*  Query para agregar una nuevo evento
-     /  implementado en /components/event-add
-    */
+    // Query para agregar una nuevo evento
     addEvent(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
@@ -171,9 +165,7 @@ class IndexController {
             res.status(200).json({ message: "Evento guardado" });
         });
     }
-    /*  Query para modificar un evento
-     /  implementado en /components/event-mod
-    */
+    //  Query para modificar un evento
     modEvent(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
@@ -191,10 +183,7 @@ class IndexController {
             res.status(200).json({ message: "Evento modificado" });
         });
     }
-    /*  Query para obtener una lista de todas las categorias
-     /  implementado en /components/task-add, /components/event-add, /components/team-view
-     /  /components/task-mod, /components/event-mod
-    */
+    //  Query para obtener todas las categorias
     categorias(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let listaCategorias = [];
@@ -216,10 +205,7 @@ class IndexController {
             }
         });
     }
-    /*  Query para obtener una lista de colaboradores (todos, por ahora)
-     /  implementado en /components/task-add, /components/event-add, /components/team-view
-     /  /components/task-mod, /components/event-mod
-    */
+    //  Query para obtener todos los colaboradores 
     colaboradores(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let listaColaboradores = [];
@@ -247,6 +233,39 @@ class IndexController {
             }
         });
     }
+    // Query para obtener una lista de colaboradores (solo los que posea el usuario actual)
+    colaboradores_usuario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let listaColaboradores = [];
+            let nombreColaborador;
+            let apellidosColaborador;
+            let idColaborador;
+            let id;
+            // Verificar si tiene algun colaborador agregado
+            const datos = yield database_1.default.query("SELECT DISTINCT colaborador.idColaborador, colaborador.nombre, colaborador.apellidos FROM `colaborador` INNER JOIN amigo ON (amigo.idColaborador1=colaborador.idColaborador OR amigo.idColaborador2=colaborador.idColaborador) AND colaborador.idColaborador!=? AND amigo.aceptado=1 AND (amigo.idColaborador1 = ? OR amigo.idColaborador2 = ?)", [req.session.idUserIniciado, req.session.idUserIniciado, req.session.idUserIniciado]);
+            if (datos.length >= 1) {
+                let aux = 0;
+                // Obtenemos id de todos los amigos aceptados
+                // Columna idColaborador1
+                for (let colaborador of datos) {
+                    nombreColaborador = yield database_1.default.query("SELECT nombre FROM colaborador WHERE idColaborador=?", [colaborador.idColaborador]);
+                    apellidosColaborador = yield database_1.default.query("SELECT apellidos FROM colaborador WHERE idColaborador=?", [colaborador.idColaborador]);
+                    idColaborador = yield database_1.default.query("SELECT idColaborador FROM colaborador WHERE idColaborador=?", [colaborador.idColaborador]);
+                    listaColaboradores[aux] = {
+                        nombreColaborador,
+                        apellidosColaborador,
+                        idColaborador,
+                    };
+                    aux = aux + 1;
+                }
+                res.status(200).json(listaColaboradores);
+            }
+            else {
+                res.status(204).send({ message: "No se adquirieron colaboradores" });
+            }
+        });
+    }
+    // Query para retornar todas las tareas
     tareas(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let listaTareas = [];
@@ -272,6 +291,52 @@ class IndexController {
             }
         });
     }
+    // Query para retornar las tareas asignadas al usuario
+    tareas_usuario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            //let listaTareas = [];
+            //let nombre;
+            //let id;
+            //let fecha;
+            //let fechaDia;
+            //let fechaMes;
+            //let fechaAnio;
+            //let fechaHora;
+            //let fechaMinuto;
+            //let descripcion;
+            const tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT listatareas.idTarea FROM listatareas WHERE listatareas.idColaborador=?) AS taskId ON tarea.idTarea=taskId.idTarea', [req.session.idUserIniciado]);
+            console.log(req.session.idUserIniciado);
+            console.log(tareas);
+            if (tareas.length >= 1) {
+                /*let aux=0;
+          
+                for(let task of tareas){
+                  nombre = await pool.query('SELECT nombre FROM tarea WHERE idTarea=?', [task.idTarea]);
+                  console.log("nombre:",nombre);
+          
+                  id = await pool.query('SELECT idTarea FROM tarea WHERE idTarea=?', [task.idTarea]);
+                  console.log("id:",id);
+          
+                  fecha = await pool.query('SELECT fecha FROM tarea WHERE idTarea=?', [task.idTarea]);
+                  console.log("fecha:",fecha);
+          
+                  descripcion = await pool.query('SELECT descripcion FROM tarea WHERE idTarea=?', [task.idTarea]);
+                  console.log("descripcion:",descripcion)
+          
+                  listaTareas[aux] = {
+                    nombre,
+                    id,
+                    fecha,
+                    descripcion
+                  }
+                  aux += 1;
+                }*/
+                res.status(200).json(tareas);
+            }
+            res.status(404).send({ message: "No se retornaron tareas asignadas al usuario" });
+        });
+    }
+    // Query para retornar todos los eventos
     eventos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let listaEventos = [];
@@ -295,6 +360,35 @@ class IndexController {
             }
         });
     }
+    eventos_usuario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            //let listaEventos = [];
+            //let nombre;
+            //let id;
+            const datos = yield database_1.default.query("SELECT evento.* FROM `evento` INNER JOIN listaeventos ON evento.idEvento=listaeventos.idEvento WHERE idColaborador=?", [req.session.idUserIniciado]);
+            if (datos.length >= 1) {
+                /*let aux = 0;
+                for (let evento of datos) {
+                  nombre = await pool.query(
+                    "SELECT nombre FROM evento WHERE idEvento=?",
+                    [evento.idEvento]
+                  );
+                  id = await pool.query("SELECT idEvento FROM evento WHERE idEvento=?", [
+                    evento.idEvento,
+                  ]);
+          
+                  listaEventos[aux] = { nombre, id };
+                  aux = aux + 1;
+                }*/
+                console.log(datos);
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).send({ message: "No se adquirieron eventos del usuario" });
+            }
+        });
+    }
+    // Query para comprobar si el usuario ha visto el tutorial
     tutorial(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let tutorialCompletado = yield database_1.default.query("SELECT tutorial FROM colaborador WHERE idColaborador=?", [req.session.idUserIniciado]);

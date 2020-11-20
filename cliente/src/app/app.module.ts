@@ -35,6 +35,7 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
 import { AuthGuard } from './security/auth.guard';
 import { AuthWelcome } from './security/auth.welcome';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { CreateWorkTeamComponent } from './components/create-work-team/create-work-team.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     EventModComponent,
     ProfileComponent,
     MyProfileComponent,
-    SidebarComponent
+    SidebarComponent,
+    CreateWorkTeamComponent
   ],
   imports: [
     BrowserModule,

@@ -30,7 +30,9 @@ class IndexController {
     res.json({ message: "Colaborador guardado" });
   }
 
+
   //Se comprueba que exista el usuario
+
   public async login(req: Request, res: Response): Promise<any> {
     //Hacer validaciones con req.body.email req.body.password
     const email = req.body.email;
@@ -142,9 +144,9 @@ class IndexController {
     }
   }
 
-  /*  Query para agregar una nueva tarea
-   /  implementado en /components/task-add
-  */
+
+  //  Query para agregar una nueva tarea
+
   public async addTask(req: Request, res: Response): Promise<any> {
     console.log(req.body);
 
@@ -161,9 +163,9 @@ class IndexController {
     res.status(200).json({ message: "Tarea guardada" });
   }
 
-  /*  Query para modificar una tarea
-   /  implementado en /components/task-mod
-  */
+
+  //  Query para modificar una tarea
+
   public async modTask(req: Request, res: Response): Promise<any> {
     console.log(req.body);
 
@@ -181,9 +183,9 @@ class IndexController {
     res.status(200).json({ message: "Tarea modificada" });
   }
 
-  /*  Query para agregar una nuevo evento
-   /  implementado en /components/event-add
-  */
+
+  // Query para agregar una nuevo evento
+
   public async addEvent(req: Request, res: Response): Promise<any> {
     console.log(req.body);
 
@@ -203,9 +205,9 @@ class IndexController {
     res.status(200).json({ message: "Evento guardado" });
   }
 
-  /*  Query para modificar un evento
-   /  implementado en /components/event-mod
-  */
+
+  //  Query para modificar un evento
+
   public async modEvent(req: Request, res: Response): Promise<any> {
     console.log(req.body);
 
@@ -226,10 +228,9 @@ class IndexController {
     res.status(200).json({ message: "Evento modificado" });
   }
 
-  /*  Query para obtener una lista de todas las categorias
-   /  implementado en /components/task-add, /components/event-add, /components/team-view
-   /  /components/task-mod, /components/event-mod
-  */
+
+  //  Query para obtener todas las categorias
+
   public async categorias(req: Request, res: Response): Promise<any> {
     let listaCategorias = [];
     let nombreCategoria;
@@ -258,10 +259,8 @@ class IndexController {
     }
   }
 
-  /*  Query para obtener una lista de colaboradores (todos, por ahora)
-   /  implementado en /components/task-add, /components/event-add, /components/team-view
-   /  /components/task-mod, /components/event-mod
-  */
+  //  Query para obtener todos los colaboradores 
+
   public async colaboradores(req: Request, res: Response): Promise<any> {
     let listaColaboradores = [];
     let nombreColaborador;
@@ -273,7 +272,6 @@ class IndexController {
 
     if (datos.length >= 1) {
       let aux = 0;
-
 
       for (let colaborador of datos) {
         nombreColaborador = await pool.query(
@@ -302,6 +300,58 @@ class IndexController {
     }
   }
 
+
+ // Query para obtener una lista de colaboradores (solo los que posea el usuario actual)
+
+ public async colaboradores_usuario(req: Request, res: Response): Promise<any> {
+  let listaColaboradores = [];
+  let nombreColaborador;
+  let apellidosColaborador;
+  let idColaborador;
+  let id;
+
+  // Verificar si tiene algun colaborador agregado
+  const datos = await pool.query("SELECT DISTINCT colaborador.idColaborador, colaborador.nombre, colaborador.apellidos FROM `colaborador` INNER JOIN amigo ON (amigo.idColaborador1=colaborador.idColaborador OR amigo.idColaborador2=colaborador.idColaborador) AND colaborador.idColaborador!=? AND amigo.aceptado=1 AND (amigo.idColaborador1 = ? OR amigo.idColaborador2 = ?)",
+  [req!.session!.idUserIniciado, req!.session!.idUserIniciado, req!.session!.idUserIniciado]);
+
+  if (datos.length >= 1) {
+    let aux = 0;
+
+    // Obtenemos id de todos los amigos aceptados
+
+    // Columna idColaborador1
+      for (let colaborador of datos) {
+
+        nombreColaborador = await pool.query(
+          "SELECT nombre FROM colaborador WHERE idColaborador=?",
+          [colaborador.idColaborador]
+        );
+        apellidosColaborador = await pool.query(
+          "SELECT apellidos FROM colaborador WHERE idColaborador=?",
+          [colaborador.idColaborador]
+        );
+        idColaborador = await pool.query(
+          "SELECT idColaborador FROM colaborador WHERE idColaborador=?",
+          [colaborador.idColaborador]
+        );
+  
+        listaColaboradores[aux] = {
+          nombreColaborador,
+          apellidosColaborador,
+          idColaborador,
+        };
+        aux = aux + 1;
+      }
+    
+    res.status(200).json(listaColaboradores);
+  } else {
+    res.status(204).send({ message: "No se adquirieron colaboradores" });
+  }
+}
+
+
+// Query para retornar todas las tareas
+
   public async tareas(req: Request, res: Response): Promise<any> {
     let listaTareas = [];
     let nombre;
@@ -327,6 +377,59 @@ class IndexController {
       res.status(204).send({ message: "No se adquirieron tareas" });
     }
   }
+
+
+  // Query para retornar las tareas asignadas al usuario
+
+  public async tareas_usuario(req: Request, res: Response): Promise<any> {
+    //let listaTareas = [];
+    //let nombre;
+    //let id;
+    //let fecha;
+    //let fechaDia;
+    //let fechaMes;
+    //let fechaAnio;
+    //let fechaHora;
+    //let fechaMinuto;
+    //let descripcion;
+
+    
+    const tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT listatareas.idTarea FROM listatareas WHERE listatareas.idColaborador=?) AS taskId ON tarea.idTarea=taskId.idTarea',
+    [req!.session!.idUserIniciado]);
+    console.log(req!.session!.idUserIniciado);
+    console.log(tareas);
+    
+    if(tareas.length >= 1){
+      /*let aux=0;
+
+      for(let task of tareas){
+        nombre = await pool.query('SELECT nombre FROM tarea WHERE idTarea=?', [task.idTarea]);
+        console.log("nombre:",nombre);
+
+        id = await pool.query('SELECT idTarea FROM tarea WHERE idTarea=?', [task.idTarea]);
+        console.log("id:",id);
+
+        fecha = await pool.query('SELECT fecha FROM tarea WHERE idTarea=?', [task.idTarea]);
+        console.log("fecha:",fecha);
+
+        descripcion = await pool.query('SELECT descripcion FROM tarea WHERE idTarea=?', [task.idTarea]);
+        console.log("descripcion:",descripcion)
+
+        listaTareas[aux] = {
+          nombre,
+          id,
+          fecha,
+          descripcion
+        }
+        aux += 1;
+      }*/
+      res.status(200).json(tareas);
+    }
+    res.status(404).send({message: "No se retornaron tareas asignadas al usuario"})
+  }
+
+
+  // Query para retornar todos los eventos
 
   public async eventos(req: Request, res: Response): Promise<any> {
     let listaEventos = [];
@@ -354,6 +457,38 @@ class IndexController {
       res.status(204).send({ message: "No se adquirieron eventos" });
     }
   }
+
+  public async eventos_usuario(req: Request, res: Response): Promise<any> {
+    //let listaEventos = [];
+    //let nombre;
+    //let id;
+
+    const datos = await pool.query("SELECT evento.* FROM `evento` INNER JOIN listaeventos ON evento.idEvento=listaeventos.idEvento WHERE idColaborador=?",
+    [req!.session!.idUserIniciado]);
+
+    if (datos.length >= 1) {
+      /*let aux = 0;
+      for (let evento of datos) {
+        nombre = await pool.query(
+          "SELECT nombre FROM evento WHERE idEvento=?",
+          [evento.idEvento]
+        );
+        id = await pool.query("SELECT idEvento FROM evento WHERE idEvento=?", [
+          evento.idEvento,
+        ]);
+
+        listaEventos[aux] = { nombre, id };
+        aux = aux + 1;
+      }*/
+      console.log(datos);
+      res.status(200).json(datos);
+    } else {
+      res.status(204).send({ message: "No se adquirieron eventos del usuario" });
+    }
+  }
+
+
+  // Query para comprobar si el usuario ha visto el tutorial
 
   public async tutorial(req:Request,res:Response):Promise<any>{
     let tutorialCompletado = await pool.query("SELECT tutorial FROM colaborador WHERE idColaborador=?", [req!.session!.idUserIniciado]);
