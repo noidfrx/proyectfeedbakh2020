@@ -41,3 +41,7 @@ li{
 #centrado {
     text-align: center;
 }
+
+#espacio{
+    position:static;
+}
