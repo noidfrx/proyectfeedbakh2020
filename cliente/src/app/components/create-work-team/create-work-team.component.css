@@ -17,7 +17,14 @@ p{
 
 #fondo{
     background-color: rgb(255, 235, 235);
-    align-self: center;
-    margin-left: 30%;
     margin-top: 10px;
+    width: 52%;
+}
+
+#bloque{
+    padding-left: 30%;
+}
+
+.card{
+    position: static;
 }

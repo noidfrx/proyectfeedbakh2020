@@ -47,6 +47,7 @@ class IndexRoutes {
         this.router.get("/colaboradoresusuario", indexController_1.indexController.colaboradores_usuario);
         this.router.get("/tasks", indexController_1.indexController.tareas);
         this.router.get("/tasksusuario", indexController_1.indexController.tareas_usuario);
+        this.router.get("/tasksequipo", indexController_1.indexController.tareas_equipo);
         this.router.get("/events", indexController_1.indexController.eventos);
         this.router.get("/eventsusuario", indexController_1.indexController.eventos_usuario);
         this.router.get("/idUser", (req, res) => {

@@ -26,6 +26,7 @@ export class HomeServiceService {
   _urlColaboradoresUser = 'http://localhost:3000/colaboradoresusuario'
   _urlTareas            = 'http://localhost:3000/tasks'
   _urlTareasUser        = 'http://localhost:3000/tasksusuario'
+  _urlTareasTeam        = 'http://localhost:3000/tasksequipo'
   _urlAgregarTarea      = 'http://localhost:3000/insertTask'
   _urlModificarTarea    = 'http://localhost:3000/modifyTask'
   _urlEventos           = 'http://localhost:3000/events'
@@ -78,6 +79,11 @@ export class HomeServiceService {
 
   getTareasUser(){
     return this._http.get<any>(this._urlTareasUser, {withCredentials:true})
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getTareasTeam(){
+    return this._http.get<any>(this._urlTareasTeam, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
   }
 

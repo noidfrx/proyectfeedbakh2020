@@ -17,14 +17,16 @@ export class TeamViewComponent implements OnInit {
   errorMsg='';
   categorias = null;
   colaboradores = null;
-
   equipos=null;
+  tareas=null;
+  eventos=null;
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getColaboradoresUser();
     this.getCategorias();
-    //this.getEquipos();
     this.obtenerEquipoUsuario();
+    this.getTareasTeam();
+    this.getEventosUser();
    }
 
   ngOnInit(): void {
@@ -58,15 +60,28 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
-  getTareas(){
-    this._homeService.getColaboradores().subscribe(
+  getTareasTeam(){
+    this._homeService.getTareasTeam().subscribe(
       data => {
-        (this.colaboradores = data)
-        console.log("Colaboradores recibidos");
+        (this.tareas = data)
+        console.log("Tareas del usuario recibidas");
       },
       error => {
         this.errorMsg=error.statusText;
-        console.log("Error al recibir los colaboradores");
+        console.log("Error al recibir las tareas del usuario");
+      }
+    )
+  }
+
+  getEventosUser(){
+    this._homeService.getEventosUser().subscribe(
+      data => {
+        (this.eventos = data)
+        console.log("Eventos del usuario recibidos");
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir los eventos del usuario");
       }
     )
   }

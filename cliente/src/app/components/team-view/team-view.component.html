@@ -10,19 +10,17 @@
             <!-- Equipos -->
             <div>
  
-                <br/>
-
+                <!--br/>
                 <h1 class="text-center">--nombre equipo--</h1>  
-                
-                <br/>
+                <br/-->
 
-                <h6 class='text-center'>Filtrar tareas</h6>
+                <h1 class='text-center'>Equipos <button>+</button></h1>
                 <div>
                     <select class="custom-select col-md-4 offset-md-4">
                         <option selected value="0">Todos los equipos</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        <option *ngFor="let equipo of equipos" value='{{equipo.nombreEquipo[0].idEquipo}}'>
+                            {{equipo.nombreEquipo[0].nombre}}
+                        </option>
                     </select>
                 </div>
 
@@ -31,9 +29,26 @@
             </div>
 
             <!-- Tareas -->
+            <h1 class='text-center'>Tareas <button>+</button></h1> 
             <div id="sec_tareas">
                 <div id='sec_tareas2'>
-                    <h1 class='text-center'>Lista de tareas</h1>
+
+                    <div *ngFor="let tarea of tareas" value='{{tarea.idTarea}}'>
+                        <div id="sec_tareas3">
+                            <div id="nombre_tarea">{{tarea.nombre}}</div>
+                            <br/>
+                            <div><b>Descripción:</b> {{tarea.descripcion}}</div>
+                            <br/>
+                            <div *ngIf="tarea.fecha != null"> <b>Fecha finalización:</b> {{tarea.fecha}} </div> 
+                            <div *ngIf="tarea.fecha == null"> <b>Fecha finalización:</b> Sin fecha limite </div>
+                            <br/>
+                            <div><b>Encargado tarea:</b>{{tarea.en}}</div>
+                            <button>Completado</button> <button>Modificar</button> <button>Eliminar</button>
+                        </div>
+                        <br/>
+                    </div>
+                    
+
                 </div>
             </div>
 
@@ -51,14 +66,32 @@
         <!-- Solicitudes -->
         <h1 class='text-center'>Solicitudes de eventos</h1>
         <div>
-            <h1 class='text-center' id='solic_eventos'>--seccion solicitud eventos--</h1>
+            <h1 class='text-center' id='solic_eventos'>--PROXIMAMENTE--</h1>
         </div>
         
         <br/>
 
-        <h1 class='text-center'>Eventos</h1>
-        <div class='col'>
-            <h1 class='text-center' id='eventos'>--seccion eventos--</h1>
+        <!-- Eventos -->
+        <h1 class='text-center'>Eventos <button>+</button></h1>
+        <div id="sec_eventos">
+            <div id='sec_eventos2'>
+
+                <div *ngFor="let evento of eventos" value='{{evento.idEvento}}'>
+                    <div id="sec_eventos3">
+                        <div id="nombre">{{evento.nombre}}</div>
+                        <br/>
+                        <div><b>Descripción:</b> {{evento.descripcion}}</div>
+                        <br/>
+                        <div *ngIf="evento.fecha != null"> <b>Fecha finalización:</b>  {{evento.fecha}} </div>
+                        <div *ngIf="evento.fecha == null"> <b>Fecha finalización:</b>  Sin fecha limite </div>
+                        <br/>
+                        <button>z</button>
+                    </div>
+                    <br/>
+                </div>
+                
+
+            </div>
         </div>
     </aside>
 

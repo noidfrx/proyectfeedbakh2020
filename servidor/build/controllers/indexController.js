@@ -294,46 +294,36 @@ class IndexController {
     // Query para retornar las tareas asignadas al usuario
     tareas_usuario(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //let listaTareas = [];
-            //let nombre;
-            //let id;
-            //let fecha;
-            //let fechaDia;
-            //let fechaMes;
-            //let fechaAnio;
-            //let fechaHora;
-            //let fechaMinuto;
-            //let descripcion;
             const tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT listatareas.idTarea FROM listatareas WHERE listatareas.idColaborador=?) AS taskId ON tarea.idTarea=taskId.idTarea', [req.session.idUserIniciado]);
             console.log(req.session.idUserIniciado);
             console.log(tareas);
             if (tareas.length >= 1) {
-                /*let aux=0;
-          
-                for(let task of tareas){
-                  nombre = await pool.query('SELECT nombre FROM tarea WHERE idTarea=?', [task.idTarea]);
-                  console.log("nombre:",nombre);
-          
-                  id = await pool.query('SELECT idTarea FROM tarea WHERE idTarea=?', [task.idTarea]);
-                  console.log("id:",id);
-          
-                  fecha = await pool.query('SELECT fecha FROM tarea WHERE idTarea=?', [task.idTarea]);
-                  console.log("fecha:",fecha);
-          
-                  descripcion = await pool.query('SELECT descripcion FROM tarea WHERE idTarea=?', [task.idTarea]);
-                  console.log("descripcion:",descripcion)
-          
-                  listaTareas[aux] = {
-                    nombre,
-                    id,
-                    fecha,
-                    descripcion
-                  }
-                  aux += 1;
-                }*/
                 res.status(200).json(tareas);
             }
             res.status(404).send({ message: "No se retornaron tareas asignadas al usuario" });
+        });
+    }
+    // Query para retornar las tareas segun el equipo seleccionado
+    tareas_equipo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let team = req.body.equipo;
+            if (team == 0) {
+                const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', [req.session.idUserIniciado]);
+                console.log("Todos los equipos");
+                console.log(_tareas);
+                if (_tareas.length >= 1) {
+                    res.status(200).json(_tareas);
+                }
+            }
+            else {
+                const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', [req.session.idUserIniciado, team]);
+                console.log(team);
+                console.log(_tareas);
+                if (_tareas.length >= 1) {
+                    res.status(200).json(_tareas);
+                }
+            }
+            res.status(404).send({ message: "No se retornaron tareas asignadas al equipo" });
         });
     }
     // Query para retornar todos los eventos
