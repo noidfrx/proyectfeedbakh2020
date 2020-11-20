@@ -24,10 +24,10 @@ export class TaskModComponent implements OnInit {
   taskModel = new Task('','',null,null,null,null,null,'',null);
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
-    this.getColaboradores();
+    this.getColaboradoresUser();
     this.getCategorias();
     this.obtenerEquipoUsuario();
-    this.getTareas();
+    this.getTareasUser();
    }
 
   ngOnInit(): void {
@@ -40,6 +40,7 @@ export class TaskModComponent implements OnInit {
       data => {
         (this.categorias = data)
         console.log("Categorias recibidas");
+        console.log(data);
       },
       error => {
         this.errorMsg=error.statusText;
@@ -48,11 +49,12 @@ export class TaskModComponent implements OnInit {
     )
   }
 
-  getColaboradores(){
-    this._homeService.getColaboradores().subscribe(
+  getColaboradoresUser(){
+    this._homeService.getColaboradoresUser().subscribe(
       data => {
         (this.colaboradores = data)
         console.log("Colaboradores recibidos");
+        console.log(data);
       },
       error => {
         this.errorMsg=error.statusText;
@@ -61,11 +63,12 @@ export class TaskModComponent implements OnInit {
     )
   }
 
-  getTareas(){
-    this._homeService.getTareas().subscribe(
+  getTareasUser(){
+    this._homeService.getTareasUser().subscribe(
       data => {
         (this.tareas = data)
         console.log("Tareas recibidas");
+        console.log(data);
       },
       error => {
         this.errorMsg=error.statusText;

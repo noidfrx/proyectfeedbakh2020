@@ -54,8 +54,11 @@ class IndexRoutes {
 
     this.router.get("/categorias", indexController.categorias);
     this.router.get("/colaboradores", indexController.colaboradores);
+    this.router.get("/colaboradoresusuario", indexController.colaboradores_usuario);
     this.router.get("/tasks", indexController.tareas);
+    this.router.get("/tasksusuario", indexController.tareas_usuario);
     this.router.get("/events", indexController.eventos);
+    this.router.get("/eventsusuario", indexController.eventos_usuario);
 
     this.router.get("/idUser", (req: Request, res: Response) => {
       //SI EXISTE USUARIO INGRESADO SE MANDA

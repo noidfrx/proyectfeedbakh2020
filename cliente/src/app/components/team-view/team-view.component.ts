@@ -21,7 +21,7 @@ export class TeamViewComponent implements OnInit {
   equipos=null;
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
-    this.getColaboradores();
+    this.getColaboradoresUser();
     this.getCategorias();
     //this.getEquipos();
     this.obtenerEquipoUsuario();
@@ -45,7 +45,20 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
-  getColaboradores(){
+  getColaboradoresUser(){
+    this._homeService.getColaboradoresUser().subscribe(
+      data => {
+        (this.colaboradores = data)
+        console.log("Colaboradores recibidos");
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir los colaboradores");
+      }
+    )
+  }
+
+  getTareas(){
     this._homeService.getColaboradores().subscribe(
       data => {
         (this.colaboradores = data)

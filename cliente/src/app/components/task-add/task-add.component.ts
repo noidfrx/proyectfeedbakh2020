@@ -21,7 +21,7 @@ export class TaskAddComponent implements OnInit {
   taskModel = new Task('','',null,null,null,null,null,'',null);
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
-    this.getColaboradores();
+    this.getColaboradoresUser();
     this.getCategorias();
     this.obtenerEquipoUsuario();
    }
@@ -44,8 +44,8 @@ export class TaskAddComponent implements OnInit {
     )
   }
 
-  getColaboradores(){
-    this._homeService.getColaboradores().subscribe(
+  getColaboradoresUser(){
+    this._homeService.getColaboradoresUser().subscribe(
       data => {
         (this.colaboradores = data)
         console.log("Colaboradores recibidos");
