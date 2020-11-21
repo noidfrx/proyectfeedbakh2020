@@ -14,7 +14,7 @@ class PerfilRoutes{
 
         // //GET Definimos ruta inicial de aplicación, se devuelve mensaje hello
 
-        this.router.get('/todas', perfilController.todasCredenciales);
+        this.router.get('/todosLosDatos/:id', perfilController.getAllDatos);
 
         //GET Datos de usuario ingresado
         this.router.get('/datosIngresado', perfilController.datosDeIngresado);
@@ -26,7 +26,7 @@ class PerfilRoutes{
         
 
 
-        // //POST
+        // //POST 
 
         // //DELETE Se utiliza ID de recomendación
 

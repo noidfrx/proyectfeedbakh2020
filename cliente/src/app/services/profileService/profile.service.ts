@@ -13,20 +13,28 @@ import {from, throwError} from 'rxjs';
 export class ProfileService {
 
   // URL para la petición a servidor
-  _url = 'http://localhost:3000/perfil/datosIngresado';
-  _url2 = 'http://localhost:3000/perfil/amigos';
+  _url = 'http://localhost:3000/perfil';
+  
   constructor(private _http: HttpClient) { }
 
   datosUsuario(){
     //Post cambiar si es get
-    return this._http.get<any>(this._url,{withCredentials:true})
+
+    return this._http.get<any>(`${this._url}/datosIngresado`,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
   
   }
 
   amigos(){
     //Post cambiar si es get
-    return this._http.get<any>(this._url2,{withCredentials:true})
+    return this._http.get<any>(`${this._url}/amigos`,{withCredentials:true})
+    .pipe(catchError(this.errorHandler));
+  
+  }
+
+  datosAmigo(id){
+    //Post cambiar si es get
+    return this._http.get<any>(`${this._url}/todosLosDatos/${id}`,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
   
   }

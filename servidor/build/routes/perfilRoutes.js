@@ -11,12 +11,12 @@ class PerfilRoutes {
     }
     config() {
         // //GET Definimos ruta inicial de aplicación, se devuelve mensaje hello
-        this.router.get('/todas', perfilController_1.perfilController.todasCredenciales);
+        this.router.get('/todosLosDatos/:id', perfilController_1.perfilController.getAllDatos);
         //GET Datos de usuario ingresado
         this.router.get('/datosIngresado', perfilController_1.perfilController.datosDeIngresado);
         this.router.get('/amigos', perfilController_1.perfilController.amigos);
         this.router.get('/amigos2', perfilController_1.perfilController.amigosV2);
-        // //POST
+        // //POST 
         // //DELETE Se utiliza ID de recomendación
         // //PUT Actualizar, se utiliza ID de recomendación
         this.router.put('/actualizarPerfil', perfilController_1.perfilController.actualizarPerfil);

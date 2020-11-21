@@ -18,13 +18,6 @@ const database_1 = __importDefault(require("../database"));
 class PerfilController {
     //Metodos para llevar a indexRoutes.ts
     //GET
-    todasCredenciales(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const recomendaciones = yield database_1.default.query('SELECT * FROM colaborador');
-            console.log(req.session.nombreUserIniciado);
-            res.json(recomendaciones);
-        });
-    }
     //GET todos los datos del usuario ingresado
     datosDeIngresado(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -35,8 +28,8 @@ class PerfilController {
     // GET amigos colaborador (donde el colaborador es quien hizo la accion de añadir al amigo)
     amigos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const amistades = yield database_1.default.query('SELECT colaborador.nombre FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', req.session.idUserIniciado);
-            console.log(amistades);
+            const amistades = yield database_1.default.query('SELECT colaborador.nombre,colaborador.idColaborador FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', req.session.idUserIniciado);
+            //  console.log(amistades);
             res.json(amistades);
         });
     }
@@ -44,12 +37,20 @@ class PerfilController {
     amigosV2(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const amistades2 = yield database_1.default.query('SELECT colaborador.nombre FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador', req.session.idUserIniciado);
-            console.log(req.session.nombreUserIniciado);
+            //console.log(req!.session!.nombreUserIniciado);
             res.json(amistades2);
-            console.log(req.session.idUserIniciado);
+            // console.log(req!.session!.idUserIniciado);
         });
     }
     //GET ONE
+    getAllDatos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            const allDatos = yield database_1.default.query('SELECT * FROM colaborador WHERE idColaborador = ?', [id]);
+            console.log(allDatos);
+            res.json(allDatos);
+        });
+    }
     //POST
     //DELETE
     //PUT

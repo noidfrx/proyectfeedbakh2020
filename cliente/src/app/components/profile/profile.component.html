@@ -1,81 +1,91 @@
 <app-navigation-home></app-navigation-home>
-    <div class="container-fluid">
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3" >
+
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-9" id="espacio">
             <div class="row">
-                <div class= "col s-12">
+                <div class= "col s-12" id="espacio">
                     <h1>Mi perfil</h1>
                     <br>
                     <div class="text-center" >
-                        <img  src="../../../assets/easter-bunny.png" width="90px" height="90px" class="img-fluid">
+                        <img id="cuadro"  src="../../../assets/easter-bunny.png" width="100px" height="100px" class="img-fluid">
+                        
+                        <br>
                         <br>
                         <br>
                     </div>
                 </div>
-                <div class= "col-md-6"></div>
+                <div class= "col-md-6" id="espacio"></div>
             </div>  
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <ul>
                         <li>Nombres:</li>
-                        <p class="tabulacion"> Insertar Nombre</p>
+                        <p class="tabulacion" > {{datos[0].nombre}}</p>
                         <li>Apellidos:</li>
-                        <p class="tabulacion"> Insertar Apellido</p>
+                        <p class="tabulacion"> {{datos[0].apellidos}}</p>
                         <li>Correo:</li>
-                        <p class="tabulacion">Insertar Correo</p>
+                        <p class="tabulacion">{{datos[0].email}}</p>
 
                     </ul>
-                    <p>Editar</p>
+                    <a href="" class="btn btn-info btn-block" style="width: 100px;"> editar</a>
                 </div>
-
-                <div id="cuadro" class="col-md-6">
+                <div class="col-md-1"></div>
+                <div id="cuadro" class="col-md-5 text-center">
                     <!-- lo que sigue, se generará solo una vez que tengamos conexion con el servidor, esto es solo un ejemplo\-->
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-2"></div>
-                            <div class="col"> 
-                                <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                <p id="centrado">amigo 1</p>
-                                <br>
+                   <div class="row">
+                        <div class="col-md-6 ">
+                            <div class="card text-center" style="max-width: 130px; max-height: 140px;">
+                                <div class="card-body">
+                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                </div>  
+                                <div class="card-header">
+                                    {{amigos[0].nombre}}
+                                </div> 
                             </div>
-                            
-                            <div class="col">
-                                <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                <p id="centrado" >amigo 2</p>
-                                <br>
-                            </div>
-                            <div class="col-1"></div>
                         </div>
-                        <div class= "row">
-                            <div class="col-2">
-                            </div>
-                            <div class="col"> 
-                                <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                <p id="centrado">amigo 3</p>
-                            </div>
-                            
-                            <div class="col">
-                                <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                <p id="centrado">amigo 4</p>
-                            </div>
-                            <div class="col-1"></div> 
+                        <div class="col-md-6">
+                            <div class="card text-center" style="max-width: 130px; max-height: 140px;">
+                                <div class="card-body">
+                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                </div>  
+                            <div class="card-header">
+                                <a href="/perfiles/{{amigos[1].idColaborador}}" > {{amigos[1].nombre}} </a>
+                            </div> 
                         </div>
-                        <div class="row">
-                            <p id="centrado">Ver más</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card text-center" style="max-width: 130px; max-height: 140px;">
+                                <div class="card-body">
+                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                </div>  
+                                <div class="card-header">
+                                    {{amigos[2].nombre}}
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card text-center" style="max-width: 130px; max-height: 140px;">
+                                <div class="card-body">
+                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                </div>  
+                            <div class="card-header">
+                                {{amigos[3].nombre}}
+                            </div> 
+                        </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-2">
-            
-        </div>
-
-    </div>
+</div>
 </div>
 
 <footer><app-footer></app-footer></footer>
