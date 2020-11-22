@@ -1,7 +1,7 @@
 export class Task{
     constructor(
         public nombre: string,
-        public encargado: string,
+        public encargado: number,
         public equipo: number,
         public dia: number,
         public mes: number,

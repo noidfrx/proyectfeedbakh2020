@@ -21,10 +21,15 @@ export class TeamViewComponent implements OnInit {
   tareas=null;
   eventos=null;
 
+  selectedTeam = null;
+  nombre_team='';
+  team=null;
+
   constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getColaboradoresUser();
     this.getCategorias();
     this.obtenerEquipoUsuario();
+    this.getLastTeam();
     this.getTareasTeam();
     this.getEventosUser();
    }
@@ -60,8 +65,32 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
+  getTeamData(){
+    this.nombre_team = 
+    this._homeService.getTareasTeam(this.selectedTeam).subscribe(
+      data => {
+        (this.tareas = data)
+        console.log("Tareas del usuario recibidas");
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir las tareas del usuario");
+      }
+    )
+    this._homeService.getEventosTeam(this.selectedTeam).subscribe(
+      data => {
+        (this.eventos = data)
+        console.log("Eventos del usuario recibidos");
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir los eventos del usuario");
+      }
+    )
+  }
+
   getTareasTeam(){
-    this._homeService.getTareasTeam().subscribe(
+    this._homeService.getTareasTeam(this.selectedTeam).subscribe(
       data => {
         (this.tareas = data)
         console.log("Tareas del usuario recibidas");
@@ -82,6 +111,21 @@ export class TeamViewComponent implements OnInit {
       error => {
         this.errorMsg=error.statusText;
         console.log("Error al recibir los eventos del usuario");
+      }
+    )
+  }
+
+  getLastTeam(){
+    
+    this._homeService.getLastTeam().subscribe(
+      data => {
+        (this.selectedTeam = data)
+        //this.nombre_team = this.equipos[this.selectedTeam]
+        console.log("Ultimo equipo recibido: ", this.selectedTeam);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir el ultimo equipo");
       }
     )
   }

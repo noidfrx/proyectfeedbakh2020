@@ -21,7 +21,7 @@ export class TaskModComponent implements OnInit {
 
   //idTarea=null;
 
-  taskModel = new Task('','',null,null,null,null,null,'',null);
+  taskModel = new Task('',0,null,null,null,null,null,'',null);
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getColaboradoresUser();

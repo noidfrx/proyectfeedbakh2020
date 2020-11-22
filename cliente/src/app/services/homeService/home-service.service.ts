@@ -31,8 +31,10 @@ export class HomeServiceService {
   _urlModificarTarea    = 'http://localhost:3000/modifyTask'
   _urlEventos           = 'http://localhost:3000/events'
   _urlEventosUser       = 'http://localhost:3000/eventsusuario'
+  _urlEventosTeam       = 'http://localhost:3000/eventsequipo'
   _urlAgregarEvento     = 'http://localhost:3000/insertEvent'
   _urlModificarEvento   = 'http://localhost:3000/modifyEvent'
+  _urlLastTeam          = 'http://localhost:3000/ultimoequipo'
 
   constructor(private _http: HttpClient) {}
 
@@ -82,11 +84,6 @@ export class HomeServiceService {
       .pipe(catchError(this.errorHandler));
   }
 
-  getTareasTeam(){
-    return this._http.get<any>(this._urlTareasTeam, {withCredentials:true})
-      .pipe(catchError(this.errorHandler));
-  }
-
   getEventos(){
     return this._http.get<any>(this._urlEventos, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
@@ -99,6 +96,11 @@ export class HomeServiceService {
 
   obtenerIdUsuario() {
     return this._http.get<any>(this._urlObtenerId, { withCredentials: true })
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getLastTeam(){
+    return this._http.get<any>(this._urlLastTeam, { withCredentials: true })
       .pipe(catchError(this.errorHandler));
   }
 
@@ -134,6 +136,18 @@ export class HomeServiceService {
     return this._http.post<any>(this._urlModificarEvento,event)
     .pipe(catchError(this.errorHandler))
   }
+
+  getTareasTeam(selectedTeam:number){
+    return this._http.post<any>(this._urlTareasTeam, selectedTeam)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getEventosTeam(selectedTeam:number){
+    return this._http.post<any>(this._urlEventosTeam, selectedTeam)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  
 
   /*/////////////////////
   // MANEJO DE ERRORES //
