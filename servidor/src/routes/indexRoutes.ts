@@ -86,8 +86,12 @@ class IndexRoutes {
     this.router.post("/insertEvent", indexController.addEvent);
     this.router.post("/modifyTask", indexController.modTask);
     this.router.post("/modifyEvent", indexController.modEvent);
+<<<<<<< HEAD
     this.router.post("/tasksequipo", indexController.tareas_equipo);
     this.router.post("/eventsequipo", indexController.eventos_equipo);
+=======
+    this.router.post("/crearEquipo",indexController.crearEquipo);
+>>>>>>> d4622a385af5979eb71a75760e15e108b89a0fbe
 
 
     // this.router.get('/sesion', (req:Request,res:Response)=>{

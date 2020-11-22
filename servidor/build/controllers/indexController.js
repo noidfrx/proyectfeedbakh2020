@@ -451,6 +451,16 @@ class IndexController {
             }
         });
     }
+    crearEquipo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
+            yield database_1.default.query("INSERT INTO equipo (nombre, objetivo) VALUES (?,?)", [
+                req.body.nombre,
+                req.body.objetivo,
+            ]);
+            res.status(200).json({ message: "Tarea guardada" });
+        });
+    }
 }
 //Instanciamos y exportamos toda la clase
 exports.indexController = new IndexController();

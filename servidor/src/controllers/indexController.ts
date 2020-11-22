@@ -569,6 +569,18 @@ class IndexController {
       }
 
   }
+  public async crearEquipo(req: Request, res: Response): Promise<any> {
+    console.log(req.body);
+
+    await pool.query(
+      "INSERT INTO equipo (nombre, objetivo) VALUES (?,?)",
+      [
+        req.body.nombre,
+        req.body.objetivo,
+      ]
+    );
+    res.status(200).json({ message: "Tarea guardada" });
+  }
 
 
 

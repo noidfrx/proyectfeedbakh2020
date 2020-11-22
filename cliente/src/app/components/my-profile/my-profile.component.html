@@ -40,52 +40,52 @@
                         <br>
                         <div class="row">
                            
-                            <div class="col-md-6 ">
+                            <div class="col-md-6 " *ngIf="amigos[0]" >
                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                     <div class="card-body">
                                         <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
                                     </div>  
                                     <div class="card-header">
-                                        <a href="/perfiles/{{amigos[0].idColaborador}}" > {{amigos[0].nombre}} </a>
+                                        <a routerLink="/perfiles/{{amigos[0].idColaborador}}" > {{amigos[0].nombre}} </a>
                                     </div> 
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" *ngIf="amigos[1]">
                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                     <div class="card-body">
                                         <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
                                     </div>  
                                 <div class="card-header">
-                                    <a href="/perfiles/{{amigos[1].idColaborador}}" > {{amigos[1].nombre}} </a>
+                                    <a routerLink="/perfiles/{{amigos[1].idColaborador}}" > {{amigos[1].nombre}} </a>
                                 </div> 
                             </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6" *ngIf="amigos[2]">
                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                     <div class="card-body">
                                         <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
                                     </div>  
                                     <div class="card-header">  
-                                        <a href="/perfiles/{{amigos[2].idColaborador}}" > {{amigos[2].nombre}} </a>
+                                        <a routerLink="/perfiles/{{amigos[2].idColaborador}}" > {{amigos[2].nombre}} </a>
                                     </div> 
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" *ngIf="amigos[3]">
                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                     <div class="card-body">
                                         <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
                                     </div>  
                                 <div class="card-header"> 
-                                    <a href="/perfiles/{{amigos[3].idColaborador}}" > {{amigos[3].nombre}} </a>
+                                    <a routerLink="/perfiles/{{amigos[3].idColaborador}}" > {{amigos[3].nombre}} </a>
                                 </div> 
                             </div>
                             </div>
                         </div>
                        
-                            <div class="col-md-12">
+                            <div class="col-md-12" *ngIf="amigos[4]">
                                 <a routerLink="/register" class="float-right">Mostrar todos</a> 
                             </div>
                     </div>

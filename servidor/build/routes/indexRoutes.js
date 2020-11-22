@@ -71,8 +71,12 @@ class IndexRoutes {
         this.router.post("/insertEvent", indexController_1.indexController.addEvent);
         this.router.post("/modifyTask", indexController_1.indexController.modTask);
         this.router.post("/modifyEvent", indexController_1.indexController.modEvent);
+<<<<<<< HEAD
         this.router.post("/tasksequipo", indexController_1.indexController.tareas_equipo);
         this.router.post("/eventsequipo", indexController_1.indexController.eventos_equipo);
+=======
+        this.router.post("/crearEquipo", indexController_1.indexController.crearEquipo);
+>>>>>>> d4622a385af5979eb71a75760e15e108b89a0fbe
         // this.router.get('/sesion', (req:Request,res:Response)=>{
         //     res.send("Inició sesion como: "+req!.session!.sesion);
         // } );
