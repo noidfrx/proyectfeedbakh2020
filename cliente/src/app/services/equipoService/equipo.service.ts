@@ -8,17 +8,22 @@ import { Equipo } from 'src/app/models/Equipo';
   providedIn: 'root'
 })
 export class EquipoService {
-  _url = 'http://localhost:3000/crearEquipo';
+  url = 'http://localhost:3000/crearEquipo';
 
   constructor(private _http: HttpClient) { }
 
   ingresar(equipo:Equipo){
 
     //Post cambiar si es get
-   return this._http.post<any>(this._url,equipo,{withCredentials:true})
+   return this._http.post<any>(this.url,equipo,{withCredentials:true})
     .pipe(catchError(this.errorHandler))
   
   }
+
+  /*agregarIntegrante(){
+    return this._http.post<any>(this.url,)
+  }*/
+  
   errorHandler(error: HttpErrorResponse){
     return throwError(error);
   }

@@ -51,7 +51,6 @@ class IndexRoutes {
     });
 
     this.router.get("/equiposUsuario", indexController.equipos);
-
     this.router.get("/categorias", indexController.categorias);
     this.router.get("/colaboradores", indexController.colaboradores);
     this.router.get("/colaboradoresusuario", indexController.colaboradores_usuario);
@@ -59,6 +58,8 @@ class IndexRoutes {
     this.router.get("/tasksusuario", indexController.tareas_usuario);
     this.router.get("/events", indexController.eventos);
     this.router.get("/eventsusuario", indexController.eventos_usuario);
+    this.router.get("/allTeams", indexController.getEquipos);
+    this.router.get("/anadirIntegrante",indexController.agregarIntegranteEquipo);
     this.router.get("/ultimoequipo", indexController.equipo_ultimo);
     
 
