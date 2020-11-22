@@ -7,26 +7,26 @@
               <h1>Crear equipo de trabajo</h1>
               <br>
               <br>
-              <form>
+              <form (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate>
                   <div class="form-group">
-                    <label for="nombreEquipo">Nombre del equipo</label> 
+                    <label for="nombre">Nombre del equipo</label> 
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
                           <i class="fa fa-group"></i>
                         </div>
                       </div> 
-                      <input id="nombreEquipo" name="nombreEquipo" type="text" required="required" class="form-control">
+                      <input id="nombre" name="nombre" [(ngModel)]="nuevoEquipo.nombre" type="text" required="required" class="form-control">
                     </div>
                   </div>
                   <div class="form-group">
-                    <label for="Descripcion">Descripción del equipo</label> 
-                    <textarea id="Descripcion" name="Descripcion" cols="25" rows="10" required="required" class="form-control"></textarea>
+                    <label for="objetivo">Descripción del equipo</label> 
+                    <textarea id="objetivo" name="objetivo"  [(ngModel)]="nuevoEquipo.objetivo" cols="20" rows="10" required="required" class="form-control"></textarea>
                   </div> 
                   <div class="form-group">
-                    <button name="submit" type="submit" class="btn btn-primary">Crear</button>
+                    <button type="submit" [disabled]="false" class="btn btn-primary">Crear</button>
                   </div>
-                </form>
+              </form>
           </div>
       </div>
       
