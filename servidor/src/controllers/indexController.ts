@@ -508,16 +508,23 @@ class IndexController {
 
   }
   public async crearEquipo(req: Request, res: Response): Promise<any> {
-    console.log(req.body);
-
     await pool.query(
-      "INSERT INTO equipo (nombre, objetivo) VALUES (?,?)",
-      [
-        req.body.nombre,
-        req.body.objetivo,
-      ]
-    );
+      "INSERT INTO equipo (nombre, objetivo) VALUES (?,?)",[ req.body.nombre, req.body.objetivo,]);
     res.status(200).json({ message: "Tarea guardada" });
+  }
+
+  public async getEquipos(req: Request, res: Response): Promise<any> {
+   
+    const equipos= await pool.query("SELECT * FROM equipo ORDER BY idEquipo DESC");
+    res.status(200).json(equipos);
+    console.log(equipos[0]);
+
+  }
+
+  public async agregarIntegranteEquipo(req: Request, res: Response): Promise<any> {
+    await pool.query(
+      "INSERT INTO equipo (encargado,idColaborador,idEquipo) VALUES (?,?,?)",[ req.body.encargado, req.body.idColaborador,req.body.idEquipo,]);
+    res.status(200).json({ message: "relación creada c:" });
   }
 
 

@@ -50,6 +50,8 @@ class IndexRoutes {
         this.router.get("/tasksequipo", indexController_1.indexController.tareas_equipo);
         this.router.get("/events", indexController_1.indexController.eventos);
         this.router.get("/eventsusuario", indexController_1.indexController.eventos_usuario);
+        this.router.get("/allTeams", indexController_1.indexController.getEquipos);
+        this.router.get("/anadirIntegrante", indexController_1.indexController.agregarIntegranteEquipo);
         this.router.get("/idUser", (req, res) => {
             //SI EXISTE USUARIO INGRESADO SE MANDA
             if (req.session.idUserIniciado) {
