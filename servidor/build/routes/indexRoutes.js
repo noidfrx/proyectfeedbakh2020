@@ -47,9 +47,9 @@ class IndexRoutes {
         this.router.get("/colaboradoresusuario", indexController_1.indexController.colaboradores_usuario);
         this.router.get("/tasks", indexController_1.indexController.tareas);
         this.router.get("/tasksusuario", indexController_1.indexController.tareas_usuario);
-        this.router.get("/tasksequipo", indexController_1.indexController.tareas_equipo);
         this.router.get("/events", indexController_1.indexController.eventos);
         this.router.get("/eventsusuario", indexController_1.indexController.eventos_usuario);
+        this.router.get("/ultimoequipo", indexController_1.indexController.equipo_ultimo);
         this.router.get("/idUser", (req, res) => {
             //SI EXISTE USUARIO INGRESADO SE MANDA
             if (req.session.idUserIniciado) {
@@ -71,6 +71,8 @@ class IndexRoutes {
         this.router.post("/insertEvent", indexController_1.indexController.addEvent);
         this.router.post("/modifyTask", indexController_1.indexController.modTask);
         this.router.post("/modifyEvent", indexController_1.indexController.modEvent);
+        this.router.post("/tasksequipo", indexController_1.indexController.tareas_equipo);
+        this.router.post("/eventsequipo", indexController_1.indexController.eventos_equipo);
         // this.router.get('/sesion', (req:Request,res:Response)=>{
         //     res.send("Inició sesion como: "+req!.session!.sesion);
         // } );
