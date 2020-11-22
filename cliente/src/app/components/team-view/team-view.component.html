@@ -41,14 +41,14 @@
 
                     <div *ngFor="let tarea of tareas" value='{{tarea.idTarea}}'>
                         <div id="sec_tareas3">
-                            <div id="nombre_tarea">{{tarea.nombre}}</div>
+                            <div class="text-center" id="nombre_tarea">{{tarea.nombre}}</div>
                             <br/>
                             <div><b>Descripción:</b> {{tarea.descripcion}}</div>
                             <br/>
                             <div *ngIf="tarea.fecha != null"> <b>Fecha finalización:</b> {{tarea.fecha}} </div> 
                             <div *ngIf="tarea.fecha == null"> <b>Fecha finalización:</b> Sin fecha limite </div>
                             <br/>
-                            <div><b>Encargado tarea:</b>{{tarea.encargado}}</div>
+                            <!--div><b>Encargado tarea:</b>{{tarea.encargado}}</div-->
                             <button>Completado</button> <button>Modificar</button> <button>Eliminar</button>
                         </div>
                         <br/>
@@ -85,6 +85,8 @@
                 <div *ngFor="let evento of eventos" value='{{evento.idEvento}}'>
                     <div id="sec_eventos3">
                         <div id="nombre">{{evento.nombre}}</div>
+                        <br/>
+                        <div><b>Link: </b>{{evento.enlaceVideoconferencia}}</div>
                         <br/>
                         <div><b>Descripción:</b> {{evento.descripcion}}</div>
                         <br/>
