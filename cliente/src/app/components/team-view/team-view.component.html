@@ -15,15 +15,14 @@
                 <br/>
 
                 <h1 class='text-center'>Equipos <button>+</button></h1>
-                <!--form class="form-inline" -->
+                <!--form (ngSubmit)="getTeamData()" #registerForm="ngForm"-->
                     <div class='form-group'>
                         <select 
                             class="custom-select col-md-4 offset-md-4"
-                            name="selectedTeam" 
                             [(ngModel)]="selectedTeam"
                         >
                             <option selected value="0">Todos los equipos</option>
-                            <option *ngFor="let equipo of equipos" [ngValue]='equipo.nombreEquipo[0].idEquipo'>
+                            <option *ngFor="let equipo of equipos" value={{equipo.nombreEquipo[0].idEquipo}}>
                                 {{equipo.nombreEquipo[0].nombre}}
                             </option>
                         </select>
