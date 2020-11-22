@@ -417,13 +417,13 @@ class IndexController {
     let team = Number(req.body.id);
 
     if(team == 0) {
-      const _tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', 
+      const tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', 
       [req!.session!.idUserIniciado]);
 
-      console.log(_tareas);
+      console.log(tareas);
 
-      if(_tareas.length >= 1){
-        res.status(200).json(_tareas);
+      if(tareas.length >= 1){
+        res.status(200).json(tareas);
       }
     }else{
       const tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', 
@@ -446,7 +446,7 @@ class IndexController {
     if(equipo.length >= 1) {
       res.status(200).json(equipo[0].idEquipo);
      }
-    res.status(404).send({message: "No se retorno el ultimo equipo"})
+    res.status(204).send({message: "No se retorno el ultimo equipo"})
   }
 
 
@@ -515,26 +515,29 @@ class IndexController {
 
   public async eventos_equipo(req: Request, res: Response): Promise<any> {
     let team = Number(req.body.id);
+    console.log("EVENTOS_EQUIPO");
+    console.log(team);
+    console.log(req!.session!.idUserIniciado);
     
     if(team == 0) {
-      const _tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', 
+      const eventos = await pool.query('SELECT evento.* FROM evento INNER JOIN (SELECT * FROM listaeventos WHERE listaeventos.idColaborador=?) AS eventos_user ON eventos_user.idEvento=evento.idEvento', 
       [req!.session!.idUserIniciado]);
 
-      console.log(_tareas);
+      console.log(eventos);
 
-      if(_tareas.length >= 1){
-        res.status(200).json(_tareas);
+      if(eventos.length >= 1){
+        res.status(200).json(eventos);
       }
     }else{
-      const tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', 
+      const eventos = await pool.query('SELECT evento.* FROM evento INNER JOIN (SELECT * FROM listaeventos WHERE listaeventos.idColaborador=?) AS eventos_user ON eventos_user.idEvento=evento.idEvento WHERE evento.idEquipo=?', 
       [req!.session!.idUserIniciado, team]);
       
-      if(tareas.length >= 1){
-        res.status(200).json(tareas);
+      if(eventos.length >= 1){
+        res.status(200).json(eventos);
       }
     }
 
-    res.status(404).send({message: "No se retornaron tareas asignadas al equipo"});
+    res.status(204).send({message: "No se retornaron eventos asignados al equipo"});
   }
 
 
