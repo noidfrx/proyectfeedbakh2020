@@ -4,10 +4,12 @@ import { Login } from '../../models/Login';
 
 import { Task } from '../../models/Task';
 import { Event } from '../../models/Event';
+import { TeamId } from 'src/app/models/TeamId';
 
 //Manejo de errores
 import {catchError} from 'rxjs/operators';
 import {throwError} from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root',
@@ -137,13 +139,13 @@ export class HomeServiceService {
     .pipe(catchError(this.errorHandler))
   }
 
-  getTareasTeam(selectedTeam:number){
-    return this._http.post<any>(this._urlTareasTeam, selectedTeam)
+  getTareasTeam(teamId:TeamId){
+    return this._http.post<any>(this._urlTareasTeam, teamId)
       .pipe(catchError(this.errorHandler));
   }
 
-  getEventosTeam(selectedTeam:number){
-    return this._http.post<any>(this._urlEventosTeam, selectedTeam)
+  getEventosTeam(teamId:TeamId){
+    return this._http.post<any>(this._urlEventosTeam, teamId)
       .pipe(catchError(this.errorHandler));
   }
 

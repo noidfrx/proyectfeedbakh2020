@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import {TeamId} from '../../models/TeamId';
 import { HomeServiceService } from 'src/app/services/homeService/home-service.service';
 
 //Para validación de formulario
@@ -22,19 +23,19 @@ export class TeamViewComponent implements OnInit {
   eventos=null;
 
   selectedTeam = null;
+  teamId = null;
   nombre_team='';
-  team=null;
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getColaboradoresUser();
     this.getCategorias();
     this.obtenerEquipoUsuario();
-    this.getLastTeam();
     this.getTareasTeam();
     this.getEventosUser();
    }
 
   ngOnInit(): void {
+    this.getLastTeam();
   }
 
   // GET
@@ -66,21 +67,24 @@ export class TeamViewComponent implements OnInit {
   }
 
   getTeamData(){
-    this.nombre_team = 
-    this._homeService.getTareasTeam(this.selectedTeam).subscribe(
+    this.teamId = new TeamId(this.selectedTeam);
+    console.log("TEAMID: ", this.teamId);
+    this._homeService.getTareasTeam(this.teamId).subscribe(
       data => {
         (this.tareas = data)
-        console.log("Tareas del usuario recibidas");
+        console.log("Tareas del usuario recibidas. ID: ", this.selectedTeam);
+        console.log(data);
       },
       error => {
         this.errorMsg=error.statusText;
         console.log("Error al recibir las tareas del usuario");
       }
     )
-    this._homeService.getEventosTeam(this.selectedTeam).subscribe(
+    this._homeService.getEventosTeam(this.teamId).subscribe(
       data => {
         (this.eventos = data)
         console.log("Eventos del usuario recibidos");
+        console.log(data);
       },
       error => {
         this.errorMsg=error.statusText;
@@ -90,10 +94,11 @@ export class TeamViewComponent implements OnInit {
   }
 
   getTareasTeam(){
-    this._homeService.getTareasTeam(this.selectedTeam).subscribe(
+    this._homeService.getTareasTeam(this.teamId).subscribe(
       data => {
         (this.tareas = data)
         console.log("Tareas del usuario recibidas");
+        console.log(data);
       },
       error => {
         this.errorMsg=error.statusText;
@@ -107,6 +112,7 @@ export class TeamViewComponent implements OnInit {
       data => {
         (this.eventos = data)
         console.log("Eventos del usuario recibidos");
+        console.log(data);
       },
       error => {
         this.errorMsg=error.statusText;
@@ -116,12 +122,13 @@ export class TeamViewComponent implements OnInit {
   }
 
   getLastTeam(){
-    
     this._homeService.getLastTeam().subscribe(
       data => {
         (this.selectedTeam = data)
         //this.nombre_team = this.equipos[this.selectedTeam]
-        console.log("Ultimo equipo recibido: ", this.selectedTeam);
+        console.log("Ultimo equipo recibido: ", data);
+        console.log(data);
+        this.teamId = new TeamId(this.selectedTeam);
       },
       error => {
         this.errorMsg=error.statusText;

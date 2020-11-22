@@ -8,8 +8,6 @@ import {WelcomeComponent} from './components/welcome/welcome.component';
 import {RegisterComponent} from './components/register/register.component';
 import {HomeComponent} from './components/home/home.component';
 import {TeamViewComponent} from './components/team-view/team-view.component';
-//import {TaskMakerComponent} from './components/task-maker/task-maker.component';
-//import {EventMakerComponent} from './components/event-maker/event-maker.component';
 import { TutorialComponent } from './components/tutorial/tutorial.component';
 import { TaskAddComponent } from './components/task-add/task-add.component';
 import { TaskModComponent } from './components/task-mod/task-mod.component';
@@ -55,10 +53,6 @@ const routes: Routes = [
     canActivate: [AuthGuard]
     
   },
-  /*{
-    path:'taskmaker',
-    component: TaskMakerComponent
-  },*/
   {
     path:'taskadd',
     component: TaskAddComponent,
@@ -69,10 +63,6 @@ const routes: Routes = [
     component: TaskModComponent,
     canActivate: [AuthGuard]
   },
-  /*{
-    path:'eventmaker',
-    component: EventMakerComponent
-  },*/
   {
     path:'eventadd',
     component: EventAddComponent,

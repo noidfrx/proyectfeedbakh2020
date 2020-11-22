@@ -316,23 +316,28 @@ class IndexController {
     // Query para retornar las tareas segun el equipo seleccionado
     tareas_equipo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            let team = req.body.selectedTeam; //no funciona
-            console.log("team: ", team);
-            if (team == 0) {
-                const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', [req.session.idUserIniciado]);
-                console.log(_tareas);
-                if (_tareas.length >= 1) {
-                    res.status(200).json(_tareas);
+            let team = req.body; //no funciona
+            console.log("TAREAS_EQUIPO");
+            console.log("Team: ", team);
+            if (this.tareas.length != 0 && this.tareas != null) {
+                if (team == 0) {
+                    const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', [req.session.idUserIniciado]);
+                    console.log(_tareas);
+                    if (_tareas.length >= 1) {
+                        res.status(200).json(_tareas);
+                        return;
+                    }
                 }
-            }
-            else {
-                const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', [req.session.idUserIniciado, team]);
-                console.log(_tareas);
-                if (_tareas.length >= 1) {
-                    res.status(200).json(_tareas);
+                else {
+                    const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', [req.session.idUserIniciado, team]);
+                    console.log(_tareas);
+                    if (_tareas.length >= 1) {
+                        res.status(200).json(_tareas);
+                    }
                 }
             }
             res.status(404).send({ message: "No se retornaron tareas asignadas al equipo" });
+            return;
         });
     }
     // Query para retornar el id del ultimo equipo creado
