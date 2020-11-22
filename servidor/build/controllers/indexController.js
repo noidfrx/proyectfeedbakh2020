@@ -130,6 +130,16 @@ class IndexController {
                 req.body.categoria,
                 req.body.equipo,
             ]);
+            let idTarea = yield database_1.default.query("SELECT idTarea FROM tarea WHERE nombre=? AND idCategoria=? AND descripcion=? AND idEquipo=?", [
+                req.body.nombre,
+                req.body.descripcion,
+                req.body.categoria,
+                req.body.equipo,
+            ]);
+            yield database_1.default.query("INSERT INTO listatareas (idTarea, idColaborador) VALUES (?,?)", [
+                idTarea,
+                req.body.encargado
+            ]);
             res.status(200).json({ message: "Tarea guardada" });
         });
     }
@@ -306,10 +316,10 @@ class IndexController {
     // Query para retornar las tareas segun el equipo seleccionado
     tareas_equipo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            let team = req.body.equipo;
+            let team = req.body.selectedTeam;
+            console.log("team: ", team);
             if (team == 0) {
                 const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', [req.session.idUserIniciado]);
-                console.log("Todos los equipos");
                 console.log(_tareas);
                 if (_tareas.length >= 1) {
                     res.status(200).json(_tareas);
@@ -317,13 +327,22 @@ class IndexController {
             }
             else {
                 const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', [req.session.idUserIniciado, team]);
-                console.log(team);
                 console.log(_tareas);
                 if (_tareas.length >= 1) {
                     res.status(200).json(_tareas);
                 }
             }
             res.status(404).send({ message: "No se retornaron tareas asignadas al equipo" });
+        });
+    }
+    // Query para retornar el id del ultimo equipo creado
+    equipo_ultimo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const equipo = yield database_1.default.query('SELECT equipo.* FROM equipo INNER JOIN (SELECT * FROM listaequipo WHERE idColaborador=?) AS listado ON listado.idEquipo=equipo.idEquipo ORDER BY equipo.idEquipo DESC LIMIT 1', [req.session.idUserIniciado]);
+            if (equipo.length >= 1) {
+                res.status(200).json(equipo[0].idEquipo);
+            }
+            res.status(404).send({ message: "No se retorno el ultimo equipo" });
         });
     }
     // Query para retornar todos los eventos
@@ -350,7 +369,37 @@ class IndexController {
             }
         });
     }
+    // Query para retornar eventos segun usuario
     eventos_usuario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            //let listaEventos = [];
+            //let nombre;
+            //let id;
+            const datos = yield database_1.default.query("SELECT evento.* FROM `evento` INNER JOIN listaeventos ON evento.idEvento=listaeventos.idEvento WHERE idColaborador=?", [req.session.idUserIniciado]);
+            if (datos.length >= 1) {
+                /*let aux = 0;
+                for (let evento of datos) {
+                  nombre = await pool.query(
+                    "SELECT nombre FROM evento WHERE idEvento=?",
+                    [evento.idEvento]
+                  );
+                  id = await pool.query("SELECT idEvento FROM evento WHERE idEvento=?", [
+                    evento.idEvento,
+                  ]);
+          
+                  listaEventos[aux] = { nombre, id };
+                  aux = aux + 1;
+                }*/
+                console.log(datos);
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).send({ message: "No se adquirieron eventos del usuario" });
+            }
+        });
+    }
+    // Query para retornar eventos segun equipo
+    eventos_equipo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             //let listaEventos = [];
             //let nombre;
