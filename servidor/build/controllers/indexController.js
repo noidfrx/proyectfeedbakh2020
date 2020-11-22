@@ -459,7 +459,7 @@ class IndexController {
     agregarIntegranteEquipo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query("INSERT INTO equipo (encargado,idColaborador,idEquipo) VALUES (?,?,?)", [req.body.encargado, req.body.idColaborador, req.body.idEquipo,]);
-            res.status(200).json({ message: "relación creada c:" });
+            res.status(200).json({ message: "true" });
         });
     }
 }

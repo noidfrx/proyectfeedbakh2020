@@ -581,7 +581,7 @@ class IndexController {
   public async agregarIntegranteEquipo(req: Request, res: Response): Promise<any> {
     await pool.query(
       "INSERT INTO equipo (encargado,idColaborador,idEquipo) VALUES (?,?,?)",[ req.body.encargado, req.body.idColaborador,req.body.idEquipo,]);
-    res.status(200).json({ message: "relación creada c:" });
+    res.status(200).json({ message: "true" });
   }
 
 
