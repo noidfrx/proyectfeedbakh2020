@@ -140,12 +140,12 @@ export class HomeServiceService {
   }
 
   getTareasTeam(teamId:TeamId){
-    return this._http.post<any>(this._urlTareasTeam, teamId)
+    return this._http.post<any>(this._urlTareasTeam, teamId, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
   }
 
   getEventosTeam(teamId:TeamId){
-    return this._http.post<any>(this._urlEventosTeam, teamId)
+    return this._http.post<any>(this._urlEventosTeam, teamId, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
   }
 

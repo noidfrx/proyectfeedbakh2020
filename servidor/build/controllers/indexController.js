@@ -316,28 +316,21 @@ class IndexController {
     // Query para retornar las tareas segun el equipo seleccionado
     tareas_equipo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            let team = req.body; //no funciona
-            console.log("TAREAS_EQUIPO");
-            console.log("Team: ", team);
-            if (this.tareas.length != 0 && this.tareas != null) {
-                if (team == 0) {
-                    const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', [req.session.idUserIniciado]);
-                    console.log(_tareas);
-                    if (_tareas.length >= 1) {
-                        res.status(200).json(_tareas);
-                        return;
-                    }
+            let team = Number(req.body.id);
+            if (team == 0) {
+                const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', [req.session.idUserIniciado]);
+                console.log(_tareas);
+                if (_tareas.length >= 1) {
+                    res.status(200).json(_tareas);
                 }
-                else {
-                    const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', [req.session.idUserIniciado, team]);
-                    console.log(_tareas);
-                    if (_tareas.length >= 1) {
-                        res.status(200).json(_tareas);
-                    }
+            }
+            else {
+                const tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', [req.session.idUserIniciado, team]);
+                if (tareas.length >= 1) {
+                    res.status(200).json(tareas);
                 }
             }
             res.status(404).send({ message: "No se retornaron tareas asignadas al equipo" });
-            return;
         });
     }
     // Query para retornar el id del ultimo equipo creado
@@ -406,30 +399,21 @@ class IndexController {
     // Query para retornar eventos segun equipo
     eventos_equipo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            //let listaEventos = [];
-            //let nombre;
-            //let id;
-            const datos = yield database_1.default.query("SELECT evento.* FROM `evento` INNER JOIN listaeventos ON evento.idEvento=listaeventos.idEvento WHERE idColaborador=?", [req.session.idUserIniciado]);
-            if (datos.length >= 1) {
-                /*let aux = 0;
-                for (let evento of datos) {
-                  nombre = await pool.query(
-                    "SELECT nombre FROM evento WHERE idEvento=?",
-                    [evento.idEvento]
-                  );
-                  id = await pool.query("SELECT idEvento FROM evento WHERE idEvento=?", [
-                    evento.idEvento,
-                  ]);
-          
-                  listaEventos[aux] = { nombre, id };
-                  aux = aux + 1;
-                }*/
-                console.log(datos);
-                res.status(200).json(datos);
+            let team = Number(req.body.id);
+            if (team == 0) {
+                const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', [req.session.idUserIniciado]);
+                console.log(_tareas);
+                if (_tareas.length >= 1) {
+                    res.status(200).json(_tareas);
+                }
             }
             else {
-                res.status(204).send({ message: "No se adquirieron eventos del usuario" });
+                const tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', [req.session.idUserIniciado, team]);
+                if (tareas.length >= 1) {
+                    res.status(200).json(tareas);
+                }
             }
+            res.status(404).send({ message: "No se retornaron tareas asignadas al equipo" });
         });
     }
     // Query para comprobar si el usuario ha visto el tutorial

@@ -414,36 +414,27 @@ class IndexController {
   // Query para retornar las tareas segun el equipo seleccionado
   
   public async tareas_equipo(req: Request, res: Response): Promise<any> {
-    let team = req.body; //no funciona
-    console.log("TAREAS_EQUIPO");
-    console.log("Team: ",team);
+    let team = Number(req.body.id);
 
-    if(this.tareas.length != 0 && this.tareas != null){
-      if(team == 0) {
-        const _tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', 
-        [req!.session!.idUserIniciado]);
-  
-        console.log(_tareas);
-  
-        if(_tareas.length >= 1){
-          res.status(200).json(_tareas);
-          return;
-        }
-  
-      }else{
-        const _tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', 
-        [req!.session!.idUserIniciado, team]);
-  
-        console.log(_tareas);
-        
-        if(_tareas.length >= 1){
-          res.status(200).json(_tareas);
-        }
+    if(team == 0) {
+      const _tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', 
+      [req!.session!.idUserIniciado]);
+
+      console.log(_tareas);
+
+      if(_tareas.length >= 1){
+        res.status(200).json(_tareas);
+      }
+    }else{
+      const tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', 
+      [req!.session!.idUserIniciado, team]);
+      
+      if(tareas.length >= 1){
+        res.status(200).json(tareas);
       }
     }
 
     res.status(404).send({message: "No se retornaron tareas asignadas al equipo"});
-    return;
   }
 
   // Query para retornar el id del ultimo equipo creado
@@ -523,32 +514,27 @@ class IndexController {
   // Query para retornar eventos segun equipo
 
   public async eventos_equipo(req: Request, res: Response): Promise<any> {
-    //let listaEventos = [];
-    //let nombre;
-    //let id;
+    let team = Number(req.body.id);
+    
+    if(team == 0) {
+      const _tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', 
+      [req!.session!.idUserIniciado]);
 
-    const datos = await pool.query("SELECT evento.* FROM `evento` INNER JOIN listaeventos ON evento.idEvento=listaeventos.idEvento WHERE idColaborador=?",
-    [req!.session!.idUserIniciado]);
+      console.log(_tareas);
 
-    if (datos.length >= 1) {
-      /*let aux = 0;
-      for (let evento of datos) {
-        nombre = await pool.query(
-          "SELECT nombre FROM evento WHERE idEvento=?",
-          [evento.idEvento]
-        );
-        id = await pool.query("SELECT idEvento FROM evento WHERE idEvento=?", [
-          evento.idEvento,
-        ]);
-
-        listaEventos[aux] = { nombre, id };
-        aux = aux + 1;
-      }*/
-      console.log(datos);
-      res.status(200).json(datos);
-    } else {
-      res.status(204).send({ message: "No se adquirieron eventos del usuario" });
+      if(_tareas.length >= 1){
+        res.status(200).json(_tareas);
+      }
+    }else{
+      const tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', 
+      [req!.session!.idUserIniciado, team]);
+      
+      if(tareas.length >= 1){
+        res.status(200).json(tareas);
+      }
     }
+
+    res.status(404).send({message: "No se retornaron tareas asignadas al equipo"});
   }
 
 

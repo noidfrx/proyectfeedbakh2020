@@ -23,15 +23,15 @@ export class TeamViewComponent implements OnInit {
   eventos=null;
 
   selectedTeam = null;
-  teamId = null;
+  teamId = new TeamId(null);
   nombre_team='';
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getColaboradoresUser();
     this.getCategorias();
     this.obtenerEquipoUsuario();
-    this.getTareasTeam();
-    this.getEventosUser();
+    //this.getTareasTeam();
+    //this.getEventosUser();
    }
 
   ngOnInit(): void {
@@ -67,7 +67,7 @@ export class TeamViewComponent implements OnInit {
   }
 
   getTeamData(){
-    this.teamId = new TeamId(this.selectedTeam);
+    this.teamId.id = this.selectedTeam;
     console.log("TEAMID: ", this.teamId);
     this._homeService.getTareasTeam(this.teamId).subscribe(
       data => {
@@ -128,7 +128,7 @@ export class TeamViewComponent implements OnInit {
         //this.nombre_team = this.equipos[this.selectedTeam]
         console.log("Ultimo equipo recibido: ", data);
         console.log(data);
-        this.teamId = new TeamId(this.selectedTeam);
+        this.getTeamData();
       },
       error => {
         this.errorMsg=error.statusText;
