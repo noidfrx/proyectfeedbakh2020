@@ -316,7 +316,7 @@ class IndexController {
     // Query para retornar las tareas segun el equipo seleccionado
     tareas_equipo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            let team = req.body.selectedTeam;
+            let team = req.body.selectedTeam; //no funciona
             console.log("team: ", team);
             if (team == 0) {
                 const _tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', [req.session.idUserIniciado]);
@@ -467,7 +467,7 @@ class IndexController {
     agregarIntegranteEquipo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query("INSERT INTO equipo (encargado,idColaborador,idEquipo) VALUES (?,?,?)", [req.body.encargado, req.body.idColaborador, req.body.idEquipo,]);
-            res.status(200).json({ message: "relación creada c:" });
+            res.status(200).json({ message: "true" });
         });
     }
 }
