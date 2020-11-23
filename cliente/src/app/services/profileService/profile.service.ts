@@ -5,7 +5,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Profile} from '../../models/Profile'
 //Manejo de errores
 import {catchError} from 'rxjs/operators';
-import {from, throwError} from 'rxjs';
+import {throwError} from 'rxjs';
 import { Amistad } from 'src/app/models/Amistad';
 
 @Injectable({
@@ -44,8 +44,12 @@ export class ProfileService {
 
 
   comprobaramistad(amistad:Amistad){
-    console.log("solo soy un id indefenso: ",amistad.idColaborador2);
     return this._http.post<any>(this.url2,amistad, {withCredentials:true})
+    .pipe(catchError(this.errorHandler));
+  }
+
+  buscarUsuario(datos:Profile){
+    return this._http.post<any>(`${this._url}/buscarUsuarios`,datos,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
   }
 

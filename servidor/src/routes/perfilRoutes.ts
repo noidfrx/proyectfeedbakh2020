@@ -28,10 +28,11 @@ class PerfilRoutes{
 
         // //POST
         this.router.post("/comprobarAmistad",perfilController.comprobarAmistad);
+        this.router.post("/buscarUsuarios",perfilController.buscarUsuario);
 
-        // //DELETE Se utiliza ID de recomendación
+        // //DELETE
 
-        // //PUT Actualizar, se utiliza ID de recomendación
+        // //PUT Actualizar
         this.router.put('/actualizarPerfil',perfilController.actualizarPerfil);
     }
 

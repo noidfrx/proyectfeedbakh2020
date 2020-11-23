@@ -42,6 +42,21 @@ class PerfilController {
             // console.log(req!.session!.idUserIniciado);
         });
     }
+    // devuelve los usuarios ingresados en la busqueda, está aquí porque para llegar a esta opción solo se puede hacer mediante el
+    buscarUsuario(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const Usuarios = yield database_1.default.query('SELECT * FROM colaborador WHERE nombre = ? OR email=?', [
+                req.body.nombre,
+                req.body.nombre
+            ]);
+            if (Usuarios.length >= 1) {
+                res.json(Usuarios);
+            }
+            else {
+                res.json(false);
+            }
+        });
+    }
     //GET ONE
     getAllDatos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -53,7 +68,6 @@ class PerfilController {
     }
     comprobarAmistad(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("no mi cuerpoo", req.body);
             const estadoAmistad = yield database_1.default.query('SELECT aceptado FROM amigo WHERE (idColaborador1 = ? AND idColaborador2 = ?) OR (idColaborador2 = ? AND idColaborador1 = ?)', [req.session.idUserIniciado, req.body.idColaborador2, req.session.idUserIniciado, req.body.idColaborador2]);
             if (estadoAmistad.length >= 1) {
                 res.json(estadoAmistad[0].aceptado);

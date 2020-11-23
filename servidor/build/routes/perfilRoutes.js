@@ -18,8 +18,9 @@ class PerfilRoutes {
         this.router.get('/amigos2', perfilController_1.perfilController.amigosV2);
         // //POST
         this.router.post("/comprobarAmistad", perfilController_1.perfilController.comprobarAmistad);
-        // //DELETE Se utiliza ID de recomendación
-        // //PUT Actualizar, se utiliza ID de recomendación
+        this.router.post("/buscarUsuarios", perfilController_1.perfilController.buscarUsuario);
+        // //DELETE
+        // //PUT Actualizar
         this.router.put('/actualizarPerfil', perfilController_1.perfilController.actualizarPerfil);
     }
 }

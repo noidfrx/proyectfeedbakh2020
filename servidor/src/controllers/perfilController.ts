@@ -31,9 +31,22 @@ class PerfilController{
        // console.log(req!.session!.idUserIniciado);
     }
 
+    // devuelve los usuarios ingresados en la busqueda, está aquí porque para llegar a esta opción solo se puede hacer mediante el
+    public async buscarUsuario(req:Request, res: Response): Promise<any>{
+        const Usuarios = await pool.query('SELECT * FROM colaborador WHERE nombre = ? OR email=?',[
+            req.body.nombre,
+            req.body.nombre]);
+        if(Usuarios.length>=1){
+            res.json(Usuarios);
+        }else{
+            res.json(false);          
+        }
+        
+      }
+    
+
 
     //GET ONE
-
     public async getAllDatos(req:Request, res: Response){
         const { id } = req.params;
         const allDatos = await pool.query('SELECT * FROM colaborador WHERE idColaborador = ?', [id]);
@@ -42,7 +55,6 @@ class PerfilController{
     }
 
     public async comprobarAmistad(req:Request, res: Response): Promise<any>{
-        console.log("no mi cuerpoo",req.body);
         const estadoAmistad = await pool.query('SELECT aceptado FROM amigo WHERE (idColaborador1 = ? AND idColaborador2 = ?) OR (idColaborador2 = ? AND idColaborador1 = ?)',[req!.session!.idUserIniciado, req.body.idColaborador2,req!.session!.idUserIniciado, req.body.idColaborador2]);
         if(estadoAmistad.length>=1){
             res.json(estadoAmistad[0].aceptado);

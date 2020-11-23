@@ -35,7 +35,6 @@ export class CreateWorkTeamComponent implements OnInit {
 
   
   buscaridEquipo(data:any){
-    console.log(data)
     this.equipo.buscarUltimoEquipo().subscribe(
       data=> {this.agregarIntegrantes(data);
               this.route.navigate(['/teamview']);

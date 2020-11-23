@@ -18,6 +18,7 @@ import { MyProfileComponent } from './components/my-profile/my-profile.component
 import { AuthGuard } from './security/auth.guard';
 import { AuthWelcome } from './security/auth.welcome';
 import { CreateWorkTeamComponent } from './components/create-work-team/create-work-team.component';
+import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usuarios.component';
 
 const routes: Routes = [
 
@@ -91,6 +92,11 @@ const routes: Routes = [
   {
     path:'crearEquipo',
     component: CreateWorkTeamComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'buscarUsuario',
+    component: BuscarUsuariosComponent,
     canActivate: [AuthGuard]
   }
 
