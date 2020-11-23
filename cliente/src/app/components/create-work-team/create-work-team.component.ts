@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {EquipoService} from '../../services/equipoService/equipo.service';
 import { Equipo } from 'src/app/models/Equipo';
 import {listaEquipo} from 'src/app/models/listaEquipo';
-import { error } from 'protractor';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -25,7 +25,7 @@ export class CreateWorkTeamComponent implements OnInit {
     idColaborador: 0,
   }
 
-  constructor( private equipo: EquipoService) { 
+  constructor( private equipo: EquipoService, private route:Router) { 
 
   }
 
@@ -37,7 +37,10 @@ export class CreateWorkTeamComponent implements OnInit {
   buscaridEquipo(data:any){
     console.log(data)
     this.equipo.buscarUltimoEquipo().subscribe(
-      data=> this.agregarIntegrantes(data),
+      data=> {this.agregarIntegrantes(data);
+              this.route.navigate(['/teamview']);
+      
+      },
       error=> this.errorMsg = error.statisText
     )
   }
