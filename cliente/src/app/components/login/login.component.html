@@ -12,6 +12,10 @@
         Volver a intentarlo
       </a>
     </div>
+    <!-- Mensaje para el usuario que recién se ha registrado -->
+    <div class="alert alert-success pt-4 pl-3 pr-3 pt-4" *ngIf="newUser">
+      <p class="text-center">Se ha registrado correctamente. Inicie sesión para continuar.</p>
+    </div>
     <div class="card-body">
       <!-- Se exporta formulario como un ngForm -->
       <form

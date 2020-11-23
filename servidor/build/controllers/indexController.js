@@ -77,6 +77,9 @@ class IndexController {
                     });
                 });
             }
+            else {
+                res.status(401).send({ message: "No existe ese usuario" });
+            }
         });
     }
     /* Pide los equipos a los que pertenezca el usuario logeado y retorna todos los datos:

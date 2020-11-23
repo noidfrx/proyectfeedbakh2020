@@ -11,10 +11,14 @@ import { Router } from '@angular/router';
 
 export class LoginComponent implements OnInit {
   errorMsg = ''; //Si es vacío no hay error c:
+  newUser='';
 
   constructor(private _loginService: LoginService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.newUser=history.state.message;
+    console.log("Nuevo usuario: "+this.newUser);
+  }
 
   loginModel = new Login('', '');
   ingresado = false;

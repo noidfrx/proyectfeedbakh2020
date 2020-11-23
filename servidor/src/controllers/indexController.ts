@@ -82,6 +82,8 @@ class IndexController {
           res.status(401).send({ message: "Credenciales no coinciden" });
         }
       });
+    }else{
+      res.status(401).send({ message: "No existe ese usuario" });
     }
   }
 
