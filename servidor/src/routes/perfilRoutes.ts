@@ -26,7 +26,8 @@ class PerfilRoutes{
         
 
 
-        // //POST 
+        // //POST
+        this.router.post("/comprobarAmistad",perfilController.comprobarAmistad);
 
         // //DELETE Se utiliza ID de recomendación
 

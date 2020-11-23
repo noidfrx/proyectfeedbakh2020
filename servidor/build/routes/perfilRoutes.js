@@ -16,7 +16,8 @@ class PerfilRoutes {
         this.router.get('/datosIngresado', perfilController_1.perfilController.datosDeIngresado);
         this.router.get('/amigos', perfilController_1.perfilController.amigos);
         this.router.get('/amigos2', perfilController_1.perfilController.amigosV2);
-        // //POST 
+        // //POST
+        this.router.post("/comprobarAmistad", perfilController_1.perfilController.comprobarAmistad);
         // //DELETE Se utiliza ID de recomendación
         // //PUT Actualizar, se utiliza ID de recomendación
         this.router.put('/actualizarPerfil', perfilController_1.perfilController.actualizarPerfil);

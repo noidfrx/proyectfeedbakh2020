@@ -6,6 +6,7 @@ import {Profile} from '../../models/Profile'
 //Manejo de errores
 import {catchError} from 'rxjs/operators';
 import {from, throwError} from 'rxjs';
+import { Amistad } from 'src/app/models/Amistad';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,8 @@ export class ProfileService {
 
   // URL para la petición a servidor
   _url = 'http://localhost:3000/perfil';
+  url2 = 'http://localhost:3000/perfil/comprobarAmistad';
+  
   
   constructor(private _http: HttpClient) { }
 
@@ -37,6 +40,13 @@ export class ProfileService {
     return this._http.get<any>(`${this._url}/todosLosDatos/${id}`,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
   
+  }
+
+
+  comprobaramistad(amistad:Amistad){
+    console.log("solo soy un id indefenso: ",amistad.idColaborador2);
+    return this._http.post<any>(this.url2,amistad, {withCredentials:true})
+    .pipe(catchError(this.errorHandler));
   }
 
   //Manejo de errores

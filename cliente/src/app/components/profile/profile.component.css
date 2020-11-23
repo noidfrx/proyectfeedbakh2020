@@ -45,3 +45,8 @@ li{
 #espacio{
     position:static;
 }
+
+#botonAmistad{
+    margin-top: 20%;
+    background-color: rgb(255, 144, 144);
+}

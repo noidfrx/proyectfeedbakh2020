@@ -18,7 +18,11 @@
                         <br>
                     </div>
                 </div>
-                <div class= "col-md-6" id="espacio"></div>
+                <div class= "col-md-6" id="espacio">
+                    <button [disabled]="false" *ngIf="boton==0" class="btn btn-primary" id="botonAmistad" (click)="agregarAmigo()">Enviar solicitud</button>
+                    <button [disabled]="false" *ngIf="boton==3" class="btn btn-primary" id="botonAmistad" (click)="eliminarSolicitud()">EliminarSolicitud</button>
+                    <button [disabled]="false" *ngIf="boton==1" class="btn btn-primary" id="botonAmistad" (click)="eliminarAmigo()">Eliminar amistad</button>
+                </div>
             </div>  
             <div class="row">
                 <div class="col-md-5">
@@ -31,7 +35,6 @@
                         <p class="tabulacion">{{datos[0].email}}</p>
 
                     </ul>
-                    <a href="" class="btn btn-info btn-block" style="width: 100px;"> editar</a>
                 </div>
                 <div class="col-md-1"></div>
                 <div id="cuadro" class="col-md-5 text-center">
@@ -44,7 +47,7 @@
                                     <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
                                 </div>  
                                 <div class="card-header">
-                                    hola
+                                    Rodrigo
                                 </div> 
                             </div>
                         </div>
@@ -54,7 +57,7 @@
                                     <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
                                 </div>  
                             <div class="card-header">
-                                <a href="#" > hola </a>
+                                <a href="#" > Juan </a>
                             </div> 
                         </div>
                         </div>
@@ -67,7 +70,7 @@
                                     <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
                                 </div>  
                                 <div class="card-header">
-                                    hola
+                                    Catalina
                                 </div> 
                             </div>
                         </div>
@@ -77,7 +80,7 @@
                                     <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
                                 </div>  
                             <div class="card-header">
-                              hola
+                              Felipe
                             </div> 
                         </div>
                         </div>

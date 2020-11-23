@@ -40,6 +40,16 @@ class PerfilController{
         console.log(allDatos);
         res.json(allDatos);
     }
+
+    public async comprobarAmistad(req:Request, res: Response): Promise<any>{
+        console.log("no mi cuerpoo",req.body);
+        const estadoAmistad = await pool.query('SELECT aceptado FROM amigo WHERE (idColaborador1 = ? AND idColaborador2 = ?) OR (idColaborador2 = ? AND idColaborador1 = ?)',[req!.session!.idUserIniciado, req.body.idColaborador2,req!.session!.idUserIniciado, req.body.idColaborador2]);
+        if(estadoAmistad.length>=1){
+            res.json(estadoAmistad[0].aceptado);
+        }else{
+            res.json(false);           
+        }
+    }
     
     //POST
     
@@ -57,10 +67,12 @@ class PerfilController{
                 req!.session!.idUserIniciado,
             ]
         );
-        console.log(req!.session!.nombreUserIniciado); 
+       // console.log(req!.session!.nombreUserIniciado); 
         res.json(actualizar);
-        console.log(req!.session!.idUserIniciado);
+       // console.log(req!.session!.idUserIniciado);
     }
+
+    
 }
 
 //Instanciamos clase y exportamos toda la clase
