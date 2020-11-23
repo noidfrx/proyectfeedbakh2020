@@ -90,6 +90,7 @@ class IndexRoutes {
     this.router.post("/tasksequipo", indexController.tareas_equipo);
     this.router.post("/eventsequipo", indexController.eventos_equipo);
     this.router.post("/crearEquipo",indexController.crearEquipo);
+    this.router.post("/anadirIntegrante",indexController.agregarIntegranteEquipo);
 
 
     // this.router.get('/sesion', (req:Request,res:Response)=>{

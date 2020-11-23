@@ -445,21 +445,28 @@ class IndexController {
     }
     crearEquipo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield database_1.default.query("INSERT INTO equipo (nombre, objetivo) VALUES (?,?)", [req.body.nombre, req.body.objetivo,]);
-            res.status(200).json({ message: "Tarea guardada" });
+            yield database_1.default.query("INSERT INTO equipo (nombre, objetivo) VALUES (?,?)", [req.body.nombre, req.body.objetivo]);
+            res.status(200).json(true);
         });
     }
     getEquipos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const equipos = yield database_1.default.query("SELECT * FROM equipo ORDER BY idEquipo DESC");
-            res.status(200).json(equipos);
-            console.log(equipos[0]);
+            console.log(equipos[0].idEquipo);
+            res.status(200).json(equipos[0].idEquipo);
         });
     }
     agregarIntegranteEquipo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield database_1.default.query("INSERT INTO equipo (encargado,idColaborador,idEquipo) VALUES (?,?,?)", [req.body.encargado, req.body.idColaborador, req.body.idEquipo,]);
-            res.status(200).json({ message: "true" });
+            if (req.body.encargado == 1) {
+                yield database_1.default.query("INSERT INTO listaequipo (idEquipo,idColaborador,encargado) VALUES (?,?,?)", [req.body.idEquipo, req.session.idUserIniciado, req.body.encargado]);
+                res.status(200).json({ message: "true" });
+            }
+            else {
+                yield database_1.default.query("INSERT INTO listaequipo (idEquipo,idColaborador,encargado) VALUES (?,?,?)", [req.body.idEquipo,
+                    req.body.idColaborador, req.body.encargado]);
+                res.status(200).json({ message: "true" });
+            }
         });
     }
 }

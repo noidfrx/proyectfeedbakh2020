@@ -10,7 +10,8 @@ import { listaEquipo } from 'src/app/models/listaEquipo';
 })
 export class EquipoService {
   url = 'http://localhost:3000/crearEquipo';
-  url2 ='http://localhost:3000/anadirIntegrante'
+  url2 ='http://localhost:3000/anadirIntegrante';
+  url3 ='http://localhost:3000/allTeams'
 
   constructor(private _http: HttpClient) { }
 
@@ -23,8 +24,12 @@ export class EquipoService {
   }
 
   agregarIntegrante(relacion:listaEquipo){
-    return this._http.post<any>(this.url,relacion,{withCredentials:true})
+    return this._http.post<any>(this.url2,relacion,{withCredentials:true})
     .pipe(catchError(this.errorHandler))
+  }
+
+  buscarUltimoEquipo(){
+    return this._http.get<any>(this.url3,{withCredentials:true}).pipe(catchError(this.errorHandler))
   }
   
   errorHandler(error: HttpErrorResponse){

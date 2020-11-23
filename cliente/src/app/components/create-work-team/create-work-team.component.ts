@@ -13,38 +13,55 @@ import { error } from 'protractor';
 export class CreateWorkTeamComponent implements OnInit {
 
   errorMsg='';
-  equipoCreado='false'
+  equipoCreado='false';
+  funciona='false';
   nuevoEquipo:Equipo = {
     nombre:"",
     objetivo:"" 
   };
 
   nuevarelacion:listaEquipo ={
-    encargado: '1',
-    idColaborador: '1',
-    idEquipo: '2'
+    encargado: 1,
+    idColaborador: 0,
   }
 
-  constructor( private equipo: EquipoService) { }
+  constructor( private equipo: EquipoService) { 
+
+  }
 
   ngOnInit(): void {
 
   }
 
+  
+  buscaridEquipo(data:any){
+    console.log(data)
+    this.equipo.buscarUltimoEquipo().subscribe(
+      data=> this.agregarIntegrantes(data),
+      error=> this.errorMsg = error.statisText
+    )
+  }
+
+  agregarIntegrantes(data:any){
+    this.nuevarelacion.idEquipo=data;
+    
+    this.equipo.agregarIntegrante(this.nuevarelacion).subscribe(
+      data => console.log('dato creado',data),
+      error=> this.errorMsg= error.statisText
+    )
+
+  }
+
   onSubmit(){
-    this.equipo.ingresar(this.nuevoEquipo).subscribe(
-      data => this.equipoCreado=data,
+
+   this.equipo.ingresar(this.nuevoEquipo).subscribe(
+      data => this.buscaridEquipo(data),
       error => this.errorMsg = error.statusText
       // Manejo de errores ^
     )
+     
 
-    if(this.equipoCreado){
-      this.equipo.agregarIntegrante(this.nuevarelacion).subscribe(
-        data => console.log('dato creado',data),
-        error=> this.errorMsg= error.statisText
-      )
-          
-    }
   }
+
 
 }
