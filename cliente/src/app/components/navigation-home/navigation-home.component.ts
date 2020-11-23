@@ -24,8 +24,8 @@ export class NavigationHomeComponent implements OnInit {
       data => {
         if (data.length>0){
           this.equipos=[];
-          var largo=5;
-          if (data.length<5){
+          var largo=2;
+          if (data.length<2){
             largo = data.length;
           }
           for(var i=0;i<largo;i++){

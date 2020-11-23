@@ -25,6 +25,6 @@ p{
     padding-left: 30%;
 }
 
-.card{
+#nombre,.card,.input-group{
     position: static;
 }
