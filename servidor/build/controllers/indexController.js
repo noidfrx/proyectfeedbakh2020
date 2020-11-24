@@ -472,6 +472,36 @@ class IndexController {
             }
         });
     }
+    // Query para retornar una tarea segun su id
+    una_tarea(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("UNA_TAREA");
+            let id = req.body.id;
+            console.log(id);
+            const datos = yield database_1.default.query("SELECT * FROM tarea WHERE idTarea=?", [id]);
+            if (datos.length >= 1) {
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).send({ message: "No se adquirio la tarea con el id dado" });
+            }
+        });
+    }
+    // Query para retornar un evento segun su id
+    un_evento(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("UN_EVENTO");
+            let id = req.body.id;
+            console.log(id);
+            const datos = yield database_1.default.query("SELECT * FROM evento WHERE idEvento=?", [id]);
+            if (datos.length >= 1) {
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).send({ message: "No se adquirio el evento con el id dado" });
+            }
+        });
+    }
 }
 //Instanciamos y exportamos toda la clase
 exports.indexController = new IndexController();

@@ -4,7 +4,7 @@ import { Login } from '../../models/Login';
 
 import { Task } from '../../models/Task';
 import { Event } from '../../models/Event';
-import { TeamId } from 'src/app/models/TeamId';
+import { IdBringer } from 'src/app/models/IdBringer';
 
 //Manejo de errores
 import {catchError} from 'rxjs/operators';
@@ -37,6 +37,8 @@ export class HomeServiceService {
   _urlAgregarEvento     = 'http://localhost:3000/insertEvent'
   _urlModificarEvento   = 'http://localhost:3000/modifyEvent'
   _urlLastTeam          = 'http://localhost:3000/ultimoequipo'
+  _urlTarea             = 'http://localhost:3000/liltask'
+  _urlEvento            = 'http://localhost:3000/lilevent'
 
   constructor(private _http: HttpClient) {}
 
@@ -108,6 +110,8 @@ export class HomeServiceService {
 
   
 
+  
+
 
   /*////////
   // POST //
@@ -139,13 +143,23 @@ export class HomeServiceService {
     .pipe(catchError(this.errorHandler))
   }
 
-  getTareasTeam(teamId:TeamId){
+  getTareasTeam(teamId:IdBringer){
     return this._http.post<any>(this._urlTareasTeam, teamId, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
   }
 
-  getEventosTeam(teamId:TeamId){
+  getEventosTeam(teamId:IdBringer){
     return this._http.post<any>(this._urlEventosTeam, teamId, {withCredentials:true})
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getTarea(id:IdBringer){
+    return this._http.post<any>(this._urlTarea, id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getEvento(id:IdBringer){
+    return this._http.post<any>(this._urlEvento, id)
       .pipe(catchError(this.errorHandler));
   }
 

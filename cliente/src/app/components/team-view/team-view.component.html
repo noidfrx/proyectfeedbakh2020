@@ -10,9 +10,9 @@
             <!-- Equipos -->
             <div>
  
-                <br/>
-                <h1 class="text-center">{{nombre_team}}</h1>  
-                <br/>
+                <!--br/>
+                <h1 class="text-center" [(ngModel)]="nombre_team">{{nombre_team}}</h1>  
+                <br/-->
 
                 <h1 class='text-center'>Equipos <button>+</button></h1>
                 <!--form (ngSubmit)="getTeamData()" #registerForm="ngForm"-->
@@ -35,7 +35,7 @@
             </div>
 
             <!-- Tareas -->
-            <h1 class='text-center'>Tareas <button>+</button></h1> 
+            <h1 class='text-center'>Tareas <button (click)="addTask()">+</button></h1> 
             <div id="sec_tareas">
                 <div id='sec_tareas2'>
 
@@ -49,7 +49,7 @@
                             <div *ngIf="tarea.fecha == null"> <b>Fecha finalización:</b> Sin fecha limite </div>
                             <br/>
                             <!--div><b>Encargado tarea:</b>{{tarea.encargado}}</div-->
-                            <button>Completado</button> <button>Modificar</button> <button>Eliminar</button>
+                            <!--button>Completado</button--> <button (click)="modTask(tarea.idTarea)">Modificar</button> <button (click)="banTask(tarea.idTarea)">Eliminar</button>
                         </div>
                         <br/>
                     </div>
@@ -78,7 +78,7 @@
         <br/>
 
         <!-- Eventos -->
-        <h1 class='text-center'>Eventos <button>+</button></h1>
+        <h1 class='text-center'>Eventos <button (click)="addEvent()">+</button></h1>
         <div id="sec_eventos">
             <div id='sec_eventos2'>
 
@@ -86,14 +86,14 @@
                     <div id="sec_eventos3">
                         <div id="nombre">{{evento.nombre}}</div>
                         <br/>
-                        <div><b>Link: </b>{{evento.enlaceVideoconferencia}}</div>
+                        <div><b>Link: </b><a href={{evento.enlaceVideoconferencia}} style="color: blue">{{evento.enlaceVideoconferencia}}</a></div>
                         <br/>
                         <div><b>Descripción:</b> {{evento.descripcion}}</div>
                         <br/>
                         <div *ngIf="evento.fecha != null"> <b>Fecha finalización:</b>  {{evento.fecha}} </div>
                         <div *ngIf="evento.fecha == null"> <b>Fecha finalización:</b>  Sin fecha limite </div>
                         <br/>
-                        <button>z</button>
+                        <button (click)="modEvent(evento.idEvento)">Modificar</button> <button (click)="banEvent(evento.idEvento)">Eliminar</button>
                     </div>
                     <br/>
                 </div>

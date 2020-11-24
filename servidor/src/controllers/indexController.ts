@@ -448,7 +448,7 @@ class IndexController {
     if(equipo.length >= 1) {
       res.status(200).json(equipo[0].idEquipo);
      }
-    res.status(204).send({message: "No se retorno el ultimo equipo"})
+     res.status(204).send({message: "No se retorno el ultimo equipo"});
   }
 
 
@@ -597,7 +597,37 @@ class IndexController {
 
   }
 
+  // Query para retornar una tarea segun su id
 
+  public async una_tarea(req: Request, res: Response): Promise<any> {
+    console.log("UNA_TAREA");
+    let id = req.body.id;
+    console.log(id);
+
+    const datos = await pool.query("SELECT * FROM tarea WHERE idTarea=?", [id]);
+
+    if (datos.length >= 1) {
+      res.status(200).json(datos);
+    } else {
+      res.status(204).send({ message: "No se adquirio la tarea con el id dado"});
+    }
+  }
+
+  // Query para retornar un evento segun su id
+
+  public async un_evento(req: Request, res: Response): Promise<any> {
+    console.log("UN_EVENTO");
+    let id = req.body.id;
+    console.log(id);
+
+    const datos = await pool.query("SELECT * FROM evento WHERE idEvento=?", [id]);
+
+    if (datos.length >= 1) {
+      res.status(200).json(datos);
+    } else {
+      res.status(204).send({ message: "No se adquirio el evento con el id dado"});
+    }
+  }
 
 }
 

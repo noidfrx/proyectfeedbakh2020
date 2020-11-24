@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,  } from '@angular/core';
 import { Router } from '@angular/router';
-import {TeamId} from '../../models/TeamId';
+import { IdBringer } from '../../models/IdBringer';
 import { HomeServiceService } from 'src/app/services/homeService/home-service.service';
 
 //Para validación de formulario
@@ -23,7 +23,7 @@ export class TeamViewComponent implements OnInit {
   eventos=null;
 
   selectedTeam = null;
-  teamId = new TeamId(null);
+  teamId = new IdBringer(null);
   nombre_team='';
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
@@ -135,6 +135,31 @@ export class TeamViewComponent implements OnInit {
         console.log("Error al recibir el ultimo equipo");
       }
     )
+  }
+
+  addTask(){
+    this.router.navigate(['/taskadd']);
+  }
+
+  modTask(id){
+    console.log("modTask: ", id);
+    this.router.navigate(['/taskmod'], { state: {id} });
+  }
+
+  banTask(id){
+
+  }
+
+  addEvent(){
+    this.router.navigate(['/eventadd']);
+  }
+
+  modEvent(id){
+    this.router.navigate(['/eventmod'], { state: {id} });
+  }
+
+  banEvent(id){
+    
   }
 
   // POST

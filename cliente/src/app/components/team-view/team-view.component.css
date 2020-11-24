@@ -27,7 +27,7 @@ p{
 }
 
 #izq2 {
-    background-color: #fcc3c3;
+    /*background-color: #fcc3c3;*/
     align-self: center;
     padding-top: 5%;
 }
@@ -42,15 +42,19 @@ p{
 }
 
 #sec_tareas2{
-    background-color:#ff000031;
+    /*background-color:#ff000031;*/
     align-self: center;
     padding-top: 5%;
     padding-left: 10%;
     padding-right: 10%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    border-radius: 10px;
 }
 
 #sec_tareas3{
-    background-color:#00ff1531;
+    background-color:#ffc5c5;
     float: center;
     color: black;
     text-decoration-color: black;
@@ -64,14 +68,14 @@ p{
 
 #der {
     width: 35%;
-    background-color: #aaaaaa;
+    /*background-color: #aaaaaa;*/
     float: right;
     height: 100%;
 }
 
-#solic_eventos{
+/*#solic_eventos{
     background-color: gray;
-}
+}*/
 
 #sec_eventos{
     padding-left: 5%;
@@ -79,15 +83,19 @@ p{
 }
 
 #sec_eventos2{
-    background-color:#5554545e;
+    /*background-color:#5554545e;*/
     align-self: center;
     padding-top: 5%;
     padding-left: 10%;
     padding-right: 10%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    border-radius: 10px;
 }
 
 #sec_eventos3{
-    background-color:#70707031;
+    background-color:#ffc5c5;
     float: center;
     color: black;
     text-decoration-color: black;

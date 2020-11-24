@@ -77,6 +77,8 @@ class IndexRoutes {
         this.router.post("/eventsequipo", indexController_1.indexController.eventos_equipo);
         this.router.post("/crearEquipo", indexController_1.indexController.crearEquipo);
         this.router.post("/anadirIntegrante", indexController_1.indexController.agregarIntegranteEquipo);
+        this.router.post("/liltask", indexController_1.indexController.una_tarea);
+        this.router.post("/lilevent", indexController_1.indexController.un_evento);
         // this.router.get('/sesion', (req:Request,res:Response)=>{
         //     res.send("Inició sesion como: "+req!.session!.sesion);
         // } );
