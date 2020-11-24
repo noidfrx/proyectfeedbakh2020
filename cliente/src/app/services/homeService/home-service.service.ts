@@ -39,6 +39,8 @@ export class HomeServiceService {
   _urlLastTeam          = 'http://localhost:3000/ultimoequipo'
   _urlTarea             = 'http://localhost:3000/liltask'
   _urlEvento            = 'http://localhost:3000/lilevent'
+  _urlBanTarea          = 'http://localhost:3000/bantask'
+  _urlBanEvento         = 'http://localhost:3000/banevent'
 
   constructor(private _http: HttpClient) {}
 
@@ -160,6 +162,16 @@ export class HomeServiceService {
 
   getEvento(id:IdBringer){
     return this._http.post<any>(this._urlEvento, id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  banTask(id:IdBringer){
+    return this._http.post<any>(this._urlBanTarea, id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  banEvent(id:IdBringer){
+    return this._http.post<any>(this._urlBanEvento, id)
       .pipe(catchError(this.errorHandler));
   }
 

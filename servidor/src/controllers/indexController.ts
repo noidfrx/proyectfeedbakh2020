@@ -662,6 +662,26 @@ class IndexController {
     }
   }
 
+  
+  // Query para eliminar una tarea segun id
+
+  public async ban_tarea(req: Request, res: Response): Promise<any> {
+    await pool.query("DELETE FROM tarea WHERE idTarea=?",
+    [req.body.id]);
+
+    res.json({message: "Tarea eliminada"});
+  }
+
+
+  // Query para eliminar una tarea segun id
+
+  public async ban_evento(req: Request, res: Response): Promise<any> {
+    await pool.query("DELETE FROM evento WHERE idEvento=?",
+    [req.body.id]);
+
+    res.json({message: "Evento eliminado"});
+  }
+
 }
 
 //Instanciamos y exportamos toda la clase

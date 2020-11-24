@@ -93,6 +93,8 @@ class IndexRoutes {
     this.router.post("/anadirIntegrante",indexController.agregarIntegranteEquipo);
     this.router.post("/liltask", indexController.una_tarea);
     this.router.post("/lilevent", indexController.un_evento);
+    this.router.post("/bantask", indexController.ban_tarea);
+    this.router.post("/banevent", indexController.ban_evento);
 
 
     // this.router.get('/sesion', (req:Request,res:Response)=>{

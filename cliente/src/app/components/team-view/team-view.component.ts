@@ -142,12 +142,23 @@ export class TeamViewComponent implements OnInit {
   }
 
   modTask(id){
-    console.log("modTask: ", id);
     this.router.navigate(['/taskmod'], { state: {id} });
   }
 
   banTask(id){
-
+    let c = confirm("Se va a eliminar la tarea. Continuar?");
+    if(c){
+      this.teamId.id=id;
+      this._homeService.banTask(this.teamId).subscribe(
+        data => {
+          console.log(data);
+        },
+        error => {
+          this.errorMsg=error.statusText;
+          console.log(error);
+        }
+      )
+    }
   }
 
   addEvent(){
@@ -159,7 +170,19 @@ export class TeamViewComponent implements OnInit {
   }
 
   banEvent(id){
-    
+    let c = confirm("Se va a eliminar el evento. Continuar?");
+    if(c){
+      this.teamId.id=id;
+      this._homeService.banEvent(this.teamId).subscribe(
+        data => {
+          console.log(data);
+        },
+        error => {
+          this.errorMsg=error.statusText;
+          console.log(error);
+        }
+      )
+    }
   }
 
   // POST

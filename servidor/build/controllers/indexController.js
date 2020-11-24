@@ -536,6 +536,20 @@ class IndexController {
             }
         });
     }
+    // Query para eliminar una tarea segun id
+    ban_tarea(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query("DELETE FROM tarea WHERE idTarea=?", [req.body.id]);
+            res.json({ message: "Tarea eliminada" });
+        });
+    }
+    // Query para eliminar una tarea segun id
+    ban_evento(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query("DELETE FROM evento WHERE idEvento=?", [req.body.id]);
+            res.json({ message: "Evento eliminado" });
+        });
+    }
 }
 //Instanciamos y exportamos toda la clase
 exports.indexController = new IndexController();
