@@ -23,9 +23,9 @@
         </div>
     </div>
 
-    <div class="row">
-        <div *ngIf="mostrar==1" class="div col-md-8 offset-2" id="cuadro">
-            <div *ngFor="let datos of usuarios" class="row">
+    <div *ngIf="mostrar==1" class="row">
+        <div *ngFor="let datos of usuarios"  class="div col-md-8 offset-2" id="cuadro">
+            <div class="row">
                 <div class="col-md-2">
                     <img id="cuadro"  src="../../../assets/easter-bunny.png" width="100px" height="100px" class="img">
                     <br>
@@ -40,6 +40,7 @@
     
                     </ul>
                 </div>
+
                 <div class="col-md 1 text-right">
                     <br>
                     <button name="perfil"  routerLink="/perfiles/{{datos.idColaborador}}" class="btn btn-primary">Ir al perfil</button>
@@ -49,17 +50,28 @@
                 </div>
             </div>
         </div>
-        <div *ngIf="mostrar==0" class="div col-md-8 offset-2" id="cuadro">
-          <div class="col-md-6 text-center">
-            <p id="alerta"> No se ha realizado Ninguna búsqueda aún</p>
-          </div>
-        </div>
-        <div *ngIf="mostrar==2" class="div col-md-8 offset-2 text-center" id="cuadro">
-          <div class="col-md-6 text-center">
-            <p  id="alerta"> No se ha encontrado el usuario</p>
-          </div>
-        </div>
     </div>
+
+
+
+        <div *ngIf="mostrar==0" class="row">
+          <div  class="div col-md-8 offset-2" id="cuadro">
+            <div class="col-md-6 text-center">
+              <p id="alerta"> No se ha realizado Ninguna búsqueda aún</p>
+            </div>
+          </div>
+        </div>
+        
+
+
+
+        <div *ngIf="mostrar==2" class="row">
+          <div  class="div col-md-8 offset-2 text-center" id="cuadro">
+            <div class="col-md-6 text-center">
+              <p  id="alerta"> No se ha encontrado el usuario</p>
+            </div>
+          </div>
+        </div>
 
 </div>
 

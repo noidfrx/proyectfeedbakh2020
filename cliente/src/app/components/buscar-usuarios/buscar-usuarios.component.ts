@@ -41,10 +41,9 @@ export class BuscarUsuariosComponent implements OnInit {
 
   queMuestro(){
     if(!this.usuarios){
-        console.log('no se encontraron usuarios');
+      
         this.mostrar=2;
     }else{
-      console.log('se encontraron usuarios');
       this.mostrar=1
     }
   }

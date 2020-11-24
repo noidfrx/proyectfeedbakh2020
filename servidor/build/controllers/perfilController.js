@@ -68,7 +68,7 @@ class PerfilController {
     }
     comprobarAmistad(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const estadoAmistad = yield database_1.default.query('SELECT aceptado FROM amigo WHERE (idColaborador1 = ? AND idColaborador2 = ?) OR (idColaborador2 = ? AND idColaborador1 = ?)', [req.session.idUserIniciado, req.body.idColaborador2, req.session.idUserIniciado, req.body.idColaborador2]);
+            const estadoAmistad = yield database_1.default.query('SELECT aceptado FROM amigo WHERE (idColaborador1 LIKE ? AND idColaborador2 LIKE ?) OR (idColaborador2 = ? AND idColaborador1 = ?)', [req.session.idUserIniciado, req.body.idColaborador2, req.session.idUserIniciado, req.body.idColaborador2]);
             if (estadoAmistad.length >= 1) {
                 res.json(estadoAmistad[0].aceptado);
             }

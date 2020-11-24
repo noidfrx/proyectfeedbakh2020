@@ -55,7 +55,7 @@ class PerfilController{
     }
 
     public async comprobarAmistad(req:Request, res: Response): Promise<any>{
-        const estadoAmistad = await pool.query('SELECT aceptado FROM amigo WHERE (idColaborador1 = ? AND idColaborador2 = ?) OR (idColaborador2 = ? AND idColaborador1 = ?)',[req!.session!.idUserIniciado, req.body.idColaborador2,req!.session!.idUserIniciado, req.body.idColaborador2]);
+        const estadoAmistad = await pool.query('SELECT aceptado FROM amigo WHERE (idColaborador1 LIKE ? AND idColaborador2 LIKE ?) OR (idColaborador2 = ? AND idColaborador1 = ?)',[req!.session!.idUserIniciado, req.body.idColaborador2,req!.session!.idUserIniciado, req.body.idColaborador2]);
         if(estadoAmistad.length>=1){
             res.json(estadoAmistad[0].aceptado);
         }else{
