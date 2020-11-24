@@ -15,7 +15,7 @@ export class MyProfileComponent implements OnInit {
     this.ProfileService.datosUsuario().subscribe(
       res => { console.log(res);
         this.datos = res;
-        console.log(this.datos[0].email);
+        console.log('datos que recivo',this.datos);
       },
       err => {
         this.errorMsg=err.statusText;

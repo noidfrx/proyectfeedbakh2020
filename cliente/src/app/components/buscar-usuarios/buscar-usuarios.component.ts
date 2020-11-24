@@ -19,30 +19,33 @@ export class BuscarUsuariosComponent implements OnInit {
   };
   usuarios: any = [];
   errorMsg: string;
+  mostrar:number=0;
 
   ngOnInit(): void {
   }
 
   onSubmit(){
-    console.log('datos a buscar',this.busqueda);
+ 
     this.buscar.buscarUsuario(this.busqueda).subscribe(
       data =>{
-        console.log('data: ',data);
         this.usuarios=data;
-
+        console.log('data',data);
+        this.queMuestro();
       }, error => {
         this.errorMsg = error.statusText;
       }
       // Manejo de errores ^
     )
-    console.log('esto recibe la funcion', this.usuarios);
+    
   }
 
   queMuestro(){
-    if(this.usuarios){
-        console.log('se encontraron usuarios');
+    if(!this.usuarios){
+        console.log('no se encontraron usuarios');
+        this.mostrar=2;
     }else{
-        console.log('no se encontraron usuarios')
+      console.log('se encontraron usuarios');
+      this.mostrar=1
     }
   }
 
