@@ -133,16 +133,21 @@ class IndexController {
                 req.body.categoria,
                 req.body.equipo,
             ]);
-            let idTarea = yield database_1.default.query("SELECT idTarea FROM tarea WHERE nombre=? AND idCategoria=? AND descripcion=? AND idEquipo=?", [
+            let idTareaQuery = yield database_1.default.query("SELECT idTarea FROM tarea WHERE nombre=? AND idCategoria=? AND descripcion=? AND idEquipo=?", [
                 req.body.nombre,
-                req.body.descripcion,
                 req.body.categoria,
+                req.body.descripcion,
                 req.body.equipo,
             ]);
-            yield database_1.default.query("INSERT INTO listatareas (idTarea, idColaborador) VALUES (?,?)", [
-                idTarea,
-                req.body.encargado
-            ]);
+            if (idTareaQuery.length >= 1) {
+                yield database_1.default.query("INSERT INTO listatareas (idTarea, idColaborador) VALUES (?,?)", [
+                    idTareaQuery[0].idTarea,
+                    req.body.encargado
+                ]);
+            }
+            else {
+                console.log("idTareaQuery esta vacio");
+            }
             res.status(200).json({ message: "Tarea guardada" });
         });
     }
@@ -175,6 +180,27 @@ class IndexController {
                 req.body.enlace,
                 req.body.privacidad,
             ]);
+            /*let idEventoQuery = await pool.query("SELECT idEvento FROM evento WHERE nombre=? AND idCategoria=? AND descripcion=? AND idEquipo=? AND enlaceVideoconferencia=?",
+              [
+                req.body.nombre,
+                req.body.categoria,
+                req.body.descripcion,
+                req.body.equipo,
+                req.body.enlace
+              ]
+            );
+            
+            if(idEventoQuery.length >= 1){
+              await pool.query(
+                "INSERT INTO listaeventos (idEvento, idColaborador) VALUES (?,?)",
+                [
+                  idEventoQuery[0].idEvento,
+                  req.body.encargado
+                ]
+              );
+            }else{
+              console.log("idEventoQuery esta vacio");
+            }*/
             res.status(200).json({ message: "Evento guardado" });
         });
     }
@@ -253,7 +279,7 @@ class IndexController {
             let nombreColaborador;
             let apellidosColaborador;
             let idColaborador;
-            let id;
+            //let id;
             // Verificar si tiene algun colaborador agregado
             const datos = yield database_1.default.query("SELECT DISTINCT colaborador.idColaborador, colaborador.nombre, colaborador.apellidos FROM `colaborador` INNER JOIN amigo ON (amigo.idColaborador1=colaborador.idColaborador OR amigo.idColaborador2=colaborador.idColaborador) AND colaborador.idColaborador!=? AND amigo.aceptado=1 AND (amigo.idColaborador1 = ? OR amigo.idColaborador2 = ?)", [req.session.idUserIniciado, req.session.idUserIniciado, req.session.idUserIniciado]);
             if (datos.length >= 1) {
@@ -321,14 +347,18 @@ class IndexController {
         return __awaiter(this, void 0, void 0, function* () {
             let team = Number(req.body.id);
             if (team == 0) {
-                const tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo', [req.session.idUserIniciado]);
+                /*const tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo',
+                [req!.session!.idUserIniciado]);*/
+                const tareas = yield database_1.default.query('SELECT * FROM tarea');
                 console.log(tareas);
                 if (tareas.length >= 1) {
                     res.status(200).json(tareas);
                 }
             }
             else {
-                const tareas = yield database_1.default.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', [req.session.idUserIniciado, team]);
+                /*const tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?',
+                [req!.session!.idUserIniciado, team]);*/
+                const tareas = yield database_1.default.query('SELECT * FROM tarea WHERE idEquipo=?', [team]);
                 if (tareas.length >= 1) {
                     res.status(200).json(tareas);
                 }
@@ -407,14 +437,18 @@ class IndexController {
             console.log(team);
             console.log(req.session.idUserIniciado);
             if (team == 0) {
-                const eventos = yield database_1.default.query('SELECT evento.* FROM evento INNER JOIN (SELECT * FROM listaeventos WHERE listaeventos.idColaborador=?) AS eventos_user ON eventos_user.idEvento=evento.idEvento', [req.session.idUserIniciado]);
+                /*const eventos = await pool.query('SELECT evento.* FROM evento INNER JOIN (SELECT * FROM listaeventos WHERE listaeventos.idColaborador=?) AS eventos_user ON eventos_user.idEvento=evento.idEvento',
+                [req!.session!.idUserIniciado]);*/
+                const eventos = yield database_1.default.query('SELECT * FROM evento');
                 console.log(eventos);
                 if (eventos.length >= 1) {
                     res.status(200).json(eventos);
                 }
             }
             else {
-                const eventos = yield database_1.default.query('SELECT evento.* FROM evento INNER JOIN (SELECT * FROM listaeventos WHERE listaeventos.idColaborador=?) AS eventos_user ON eventos_user.idEvento=evento.idEvento WHERE evento.idEquipo=?', [req.session.idUserIniciado, team]);
+                /*const eventos = await pool.query('SELECT evento.* FROM evento INNER JOIN (SELECT * FROM listaeventos WHERE listaeventos.idColaborador=?) AS eventos_user ON eventos_user.idEvento=evento.idEvento WHERE evento.idEquipo=?',
+                [req!.session!.idUserIniciado, team]);*/
+                const eventos = yield database_1.default.query('SELECT * FROM evento WHERE idEquipo=?', [team]);
                 if (eventos.length >= 1) {
                     res.status(200).json(eventos);
                 }
