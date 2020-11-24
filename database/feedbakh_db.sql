@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-11-2020 a las 20:57:59
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.2.34
+-- Tiempo de generación: 24-11-2020 a las 23:30:33
+-- Versión del servidor: 10.1.40-MariaDB
+-- Versión de PHP: 7.3.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -31,7 +32,7 @@ CREATE TABLE `amigo` (
   `idAmigo` int(255) NOT NULL,
   `idColaborador1` int(255) NOT NULL,
   `idColaborador2` int(255) NOT NULL,
-  `aceptado` tinyint(1) NOT NULL DEFAULT 0
+  `aceptado` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -116,8 +117,8 @@ CREATE TABLE `colaborador` (
   `fotoPerfil` varchar(255) DEFAULT '0',
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `fechaCreacion` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
-  `tutorial` tinyint(1) NOT NULL DEFAULT 0
+  `fechaCreacion` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
+  `tutorial` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -177,7 +178,9 @@ INSERT INTO `colaborador` (`idColaborador`, `nombre`, `apellidos`, `fotoPerfil`,
 (51, 'Jared', 'Jiménez', '0', 'enim.Etiam.imperdiet@ornareelitelit.org', 'Joq18LP', '2021-01-01 00:54:49.000000', 0),
 (52, 'Carolaine', 'Leiva', '0', 'eget@consequat.com', 'Xzy66LZ', '2020-01-25 05:59:49.000000', 0),
 (53, 'Rosita', 'Garrido', '0', 'tellus@Duis.edu', 'Nrz35IO', '2020-03-08 03:19:26.000000', 0),
-(54, 'Jahir', 'Flores', '0', 'lobortis.ultrices@enimnislelementum.org', 'Cjc08DE', '2020-04-17 02:50:56.000000', 0);
+(54, 'Jahir', 'Flores', '0', 'lobortis.ultrices@enimnislelementum.org', 'Cjc08DE', '2020-04-17 02:50:56.000000', 0),
+(55, 'Mateo', 'Castro Matus', '0', 'p@p.com', '$2b$10$hTODep1Bl0HXCEua9EFby.YLVKAA6j2VI.FLwqegAaP9TEeFwJwEi', '2020-11-24 21:14:40.377509', 1),
+(56, 'a', 'a a', '0', 'aaaa@www.cl', '$2b$10$A2ehs2qL9Ir29fJ3yVhS7u/lmJTriWfjCgH6E2e6FVL4Kvc1i5yOu', '2020-11-24 22:28:51.531884', 1);
 
 -- --------------------------------------------------------
 
@@ -189,7 +192,7 @@ CREATE TABLE `equipo` (
   `idEquipo` int(255) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `objetivo` varchar(255) DEFAULT NULL,
-  `fechaCreacion` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
+  `fechaCreacion` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -217,7 +220,8 @@ INSERT INTO `equipo` (`idEquipo`, `nombre`, `objetivo`, `fechaCreacion`) VALUES
 (18, 'vel,', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec', '2020-12-07 16:29:40.000000'),
 (19, 'facilisis', 'Lorem ipsum dolor sit amet, consectetuer adipiscing', '2020-03-15 09:48:31.000000'),
 (20, 'ante. Nunc mauris sapien,', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus.', '2019-12-25 18:03:36.000000'),
-(21, 'sit', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor.', '2019-12-28 23:47:38.000000');
+(21, 'sit', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor.', '2019-12-28 23:47:38.000000'),
+(22, 'Equipo maravilla', 'Realizar buenas tareas', '2020-11-24 21:27:29.802181');
 
 -- --------------------------------------------------------
 
@@ -231,7 +235,7 @@ CREATE TABLE `evento` (
   `descripcion` varchar(255) NOT NULL,
   `fecha` date NOT NULL,
   `hora` int(255) NOT NULL,
-  `fechaCreacion` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `fechaCreacion` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `enlaceVideoconferencia` varchar(255) DEFAULT NULL,
   `idCategoria` int(255) DEFAULT NULL,
   `idEquipo` int(255) NOT NULL,
@@ -257,7 +261,7 @@ CREATE TABLE `listaequipo` (
   `idEquipo` int(255) NOT NULL,
   `idColaborador` int(255) NOT NULL,
   `encargado` tinyint(1) NOT NULL,
-  `fechaAsignacionEquipo` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
+  `fechaAsignacionEquipo` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -266,9 +270,8 @@ CREATE TABLE `listaequipo` (
 
 INSERT INTO `listaequipo` (`idListaEquipo`, `idEquipo`, `idColaborador`, `encargado`, `fechaAsignacionEquipo`) VALUES
 (1, 1, 3, 0, '2020-11-12 18:38:16.083678'),
-(2, 1, 1, 1, '2020-11-12 18:38:16.083678'),
 (3, 1, 4, 0, '2020-11-12 18:38:16.083678'),
-(4, 2, 1, 1, '2020-11-12 18:38:16.083678');
+(5, 22, 1, 1, '2020-11-24 21:27:29.987015');
 
 -- --------------------------------------------------------
 
@@ -280,7 +283,7 @@ CREATE TABLE `listaeventos` (
   `idListaEventos` int(255) NOT NULL,
   `idEvento` int(255) NOT NULL,
   `idColaborador` int(255) NOT NULL,
-  `fechaAsignacionEvento` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
+  `fechaAsignacionEvento` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -301,7 +304,7 @@ CREATE TABLE `listatareas` (
   `idListaTareas` int(255) NOT NULL,
   `idTarea` int(255) NOT NULL,
   `idColaborador` int(255) NOT NULL,
-  `fechaAsignacionTarea` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
+  `fechaAsignacionTarea` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -324,7 +327,7 @@ CREATE TABLE `tarea` (
   `idTarea` int(255) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `fecha` date DEFAULT NULL,
-  `fechaCreacion` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `fechaCreacion` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6),
   `descripcion` varchar(255) NOT NULL,
   `idCategoria` int(255) DEFAULT NULL,
   `idEquipo` int(255) NOT NULL
@@ -338,7 +341,8 @@ INSERT INTO `tarea` (`idTarea`, `nombre`, `fecha`, `fechaCreacion`, `descripcion
 (1, 'Comer mucho', '2020-11-26', '2020-11-05 02:33:03.000000', 'La idea es comer mucho', 1, 1),
 (2, 'Comer poco', '2020-11-06', '2020-11-20 06:36:14.000000', 'Comer poco xq si', 1, 1),
 (3, 'VERY NOISE', '2020-11-17', '0000-00-00 00:00:00.000000', 'https://www.youtube.com/watch?v=Osqf4oIK0E8', 1, 1),
-(4, 'Ra Ra Rasputin', NULL, '0000-00-00 00:00:00.000000', 'https://www.youtube.com/watch?v=WhPvJOnHotE', 3, 2);
+(4, 'Ra Ra Rasputin', NULL, '0000-00-00 00:00:00.000000', 'https://www.youtube.com/watch?v=WhPvJOnHotE', 3, 2),
+(7, 'wqwqw', '2020-00-12', '2020-11-24 22:15:20.593232', 'qwqwqwqwqw', NULL, 22);
 
 --
 -- Índices para tablas volcadas
@@ -418,37 +422,37 @@ ALTER TABLE `tarea`
 -- AUTO_INCREMENT de la tabla `amigo`
 --
 ALTER TABLE `amigo`
-  MODIFY `idAmigo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `idAmigo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idCategoria` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idCategoria` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `colaborador`
 --
 ALTER TABLE `colaborador`
-  MODIFY `idColaborador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `idColaborador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- AUTO_INCREMENT de la tabla `equipo`
 --
 ALTER TABLE `equipo`
-  MODIFY `idEquipo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idEquipo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT de la tabla `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `idEvento` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idEvento` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `listaequipo`
 --
 ALTER TABLE `listaequipo`
-  MODIFY `idListaEquipo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idListaEquipo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `listaeventos`
@@ -466,7 +470,7 @@ ALTER TABLE `listatareas`
 -- AUTO_INCREMENT de la tabla `tarea`
 --
 ALTER TABLE `tarea`
-  MODIFY `idTarea` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idTarea` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Restricciones para tablas volcadas

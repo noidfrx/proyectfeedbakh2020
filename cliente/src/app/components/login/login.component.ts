@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     //Pasamos lo que nos entrega el usuario a método del service
     this.ingresado = true;
+    this.newUser='';
     
     this._loginService.ingresar(this.loginModel).subscribe(
       //Si me devuelve okay

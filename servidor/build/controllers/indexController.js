@@ -170,12 +170,11 @@ class IndexController {
     addEvent(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
-            yield database_1.default.query("INSERT INTO evento (nombre, fecha, hora, descripcion, idCategoria, idEquipo, enlaceVideoconferencia, privacidad) VALUES (?,?,?,?,?,?,?,?)", [
+            yield database_1.default.query("INSERT INTO evento (nombre, fecha, hora, descripcion, idEquipo, enlaceVideoconferencia, privacidad) VALUES (?,?,?,?,?,?,?)", [
                 req.body.nombre,
                 req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
                 req.body.hora + ":" + req.body.minuto,
                 req.body.descripcion,
-                req.body.categoria,
                 req.body.equipo,
                 req.body.enlace,
                 req.body.privacidad,
@@ -373,7 +372,9 @@ class IndexController {
             if (equipo.length >= 1) {
                 res.status(200).json(equipo[0].idEquipo);
             }
-            res.status(204).send({ message: "No se retorno el ultimo equipo" });
+            else {
+                res.status(204).send({ message: "No se retorno el ultimo equipo" });
+            }
         });
     }
     // Query para retornar todos los eventos
