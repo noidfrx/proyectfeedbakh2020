@@ -16,6 +16,7 @@ import session = require('express-session');
 import cookieParser = require('cookie-parser');
 
 class Server{
+    
     public appExpress : Application;
 
     constructor(){
