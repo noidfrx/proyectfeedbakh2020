@@ -14,7 +14,7 @@
             novalidate
         >
 
-            <h3 class='text-center pt-3'>Equipo: {{nombreteam}}</h3>
+            <!--h3 class='text-center pt-3'>Equipo: {{nombreteam}}</h3-->
             
             <div class='card-body'>
                 <div class='form-group col-md-12'>
@@ -30,6 +30,23 @@
                         [class.is-invalid]="nombre.invalid && nombre.touched"
                         placeholder='(Obligatorio)'
                     >
+                </div>
+
+                <label for='inputEncargadoEvento' class='col-md-12'>Integrante</label>
+                <div class='form-group col-md-12'>
+                    <select 
+                        class='custom-select'
+                        id='inputEncargadoEvento'
+                        required 
+                        name='encargado' 
+                        [(ngModel)]='eventModel.encargado' 
+                        #encargado="ngModel"
+                    >
+                        <option selected value="0">Seleccione un encargado</option>
+                        <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador[0].idColaborador}}'>
+                            {{colaborador.nombreColaborador[0].nombre}} {{colaborador.apellidosColaborador[0].apellidos}} 
+                        </option>
+                    </select>
                 </div>
 
                 <!--label for='inputEquipo' class='col-md-12'>Equipo</label>
@@ -167,7 +184,6 @@
                             [(ngModel)]='eventModel.categoria' 
                             #categoria="ngModel"
                         >
-                            <option selected value="0">Seleccione una categoría</option>
                             <option *ngFor="let categoria of categorias" value='{{categoria.idCategoria[0].idCategoria}}'>
                                 {{categoria.nombreCategoria[0].nombreCategoria}}
                             </option>

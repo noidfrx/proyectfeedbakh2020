@@ -25,7 +25,7 @@ export class EventAddComponent implements OnInit {
   eventModel = new Event('',0,null,0,null,null,null,0,0,0,'','',null);
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
-    this.getColaboradores();
+    this.getColaboradoresUser();
     this.getCategorias();
     this.obtenerEquipoUsuario();
    }
@@ -53,8 +53,8 @@ export class EventAddComponent implements OnInit {
     )
   }
 
-  getColaboradores(){
-    this._homeService.getColaboradores().subscribe(
+  getColaboradoresUser(){
+    this._homeService.getColaboradoresUser().subscribe(
       data => {
         (this.colaboradores = data)
         console.log("Colaboradores recibidos");
@@ -65,26 +65,31 @@ export class EventAddComponent implements OnInit {
       }
     )
   }
+  
 
   // POST
   
   onSubmit(){
     this.eventModel.equipo = this.teamId.id;
     this.eventModel.enlace = '';
-    this._homeService.addEvent(this.eventModel)
-    .subscribe(
-      data => {
-        console.log("Evento agregado!", data);
-        alert("Evento creado con éxito");
-        setTimeout(() => 
-        {
-            this.router.navigate(['/teamview']);
+    if(this.eventModel.encargado == 0){
+      alert("Seleccione un encargado");
+    }else{
+      this._homeService.addEvent(this.eventModel)
+      .subscribe(
+        data => {
+          console.log("Evento agregado!", data);
+          alert("Evento creado con éxito");
+          setTimeout(() => 
+          {
+              this.router.navigate(['/teamview']);
+          },
+          500);
         },
-        500);
-      },
-      error => this.errorMsg = error.statusText
-      // Manejo de errores ^
-    )
+        error => this.errorMsg = error.statusText
+        // Manejo de errores ^
+      )
+    }
   }
 
   ///////////////////////

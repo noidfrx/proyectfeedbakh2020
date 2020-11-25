@@ -70,20 +70,26 @@ export class TaskAddComponent implements OnInit {
 
   onSubmit(){
     this.taskModel.equipo = this.teamId.id;
-    this._homeService.addTask(this.taskModel)
-    .subscribe(
-      data => {
-        console.log("Tarea agregada!", data);
-        alert("Tarea creada con éxito");
-        setTimeout(() => 
-        {
-            this.router.navigate(['/teamview']);
+    if(this.taskModel.encargado == 0){
+      alert("Debe seleccionar un integrante");
+    }else{
+      this._homeService.addTask(this.taskModel)
+      .subscribe(
+        data => {
+          console.log("Tarea agregada!", data);
+          alert("Tarea creada con éxito");
+          setTimeout(() => 
+          {
+              this.router.navigate(['/teamview']);
+          },
+          500);
         },
-        500);
-      },
-      error => {this.errorMsg = error.statusText}
-      // Manejo de errores ^
-    )
+        error => {this.errorMsg = error.statusText}
+        // Manejo de errores ^
+      )
+    }
+    
+    
   }
 
   ///////////////////////
