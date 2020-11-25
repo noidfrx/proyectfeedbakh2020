@@ -455,7 +455,7 @@ class IndexController {
       if(tareas.length >= 1){
         res.status(200).json(tareas);
       }else{
-        res.status(404).send({message: "No se retornaron tareas asignadas al equipo"});
+        res.status(204).send({message: "No se retornaron tareas asignadas al equipo"});
       }
     }else{
       /*const tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', 
@@ -465,7 +465,7 @@ class IndexController {
       if(tareas.length >= 1){
         res.status(200).json(tareas);
       }else{
-        res.status(404).send({message: "No se retornaron tareas asignadas al equipo"});
+        res.status(204).send({message: "No se retornaron tareas asignadas al equipo"});
       }
     }
 

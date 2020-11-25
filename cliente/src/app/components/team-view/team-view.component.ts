@@ -2,9 +2,11 @@ import { Component, OnInit,  } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdBringer } from '../../models/IdBringer';
 import { HomeServiceService } from 'src/app/services/homeService/home-service.service';
+import { EquipoService } from 'src/app/services/equipoService/equipo.service';
 
 //Para validación de formulario
 import {FormControl,FormGroup,Validators} from '@angular/forms';
+import { listaEquipo } from 'src/app/models/listaEquipo';
 
 
 
@@ -22,11 +24,13 @@ export class TeamViewComponent implements OnInit {
   tareas=null;
   eventos=null;
 
+  teamData = null;
   selectedTeam = null;
   teamId = new IdBringer(null);
   nombre_team='';
+  member_selector = 0;
 
-  constructor(private _homeService:HomeServiceService, private router:Router) {
+  constructor(private _homeService:HomeServiceService, private _equipoService:EquipoService, private router:Router) {
     this.getColaboradoresUser();
     this.getCategorias();
     this.obtenerEquipoUsuario();
@@ -67,12 +71,14 @@ export class TeamViewComponent implements OnInit {
   }
 
   getTeamData(){
-    this.teamId.id = this.selectedTeam.idEquipo;
+    this.teamId.id = this.selectedTeam;
+    this.teamData.id = this.selectedTeam;
+    //this.teamData.nombre = 
     console.log("TEAMID: ", this.teamId);
     this._homeService.getTareasTeam(this.teamId).subscribe(
       data => {
         (this.tareas = data)
-        console.log("Tareas del usuario recibidas. ID: ", this.selectedTeam);
+        console.log("Tareas del usuario recibidas. ID: ", this.teamData);
         console.log(data);
       },
       error => {
@@ -101,6 +107,7 @@ export class TeamViewComponent implements OnInit {
         console.log(data);
       },
       error => {
+        (this.tareas = null)
         this.errorMsg=error.statusText;
         console.log("Error al recibir las tareas del usuario");
       }
@@ -115,6 +122,7 @@ export class TeamViewComponent implements OnInit {
         console.log(data);
       },
       error => {
+        (this.eventos = null)
         this.errorMsg=error.statusText;
         console.log("Error al recibir los eventos del usuario");
       }
@@ -124,10 +132,10 @@ export class TeamViewComponent implements OnInit {
   getLastTeam(){
     this._homeService.getLastTeam().subscribe(
       data => {
-        (this.selectedTeam = data)
+        (this.teamData = data)
         //this.nombre_team = this.equipos[this.selectedTeam]
         console.log("Ultimo equipo recibido: ", data);
-        console.log(data);
+        this.selectedTeam = this.teamData.idEquipo;
         this.getTeamData();
       },
       error => {
@@ -139,14 +147,14 @@ export class TeamViewComponent implements OnInit {
 
   addTask(){
     let idteam = this.teamId.id;
-    let nombreteam = this.selectedTeam.nombre;
+    let nombreteam = this.teamData.nombre;
     this.router.navigate(['/taskadd'], { state: {idteam, nombreteam} });
   }
 
-  modTask(idTask){
-    let idTeam = this.teamId.id;
+  modTask(idtask){
+    let idteam = this.teamId.id;
     let nombreteam = this.selectedTeam.nombre;
-    this.router.navigate(['/taskmod'], { state: {idTask,idTeam,nombreteam} });
+    this.router.navigate(['/taskmod'], { state: {idtask,idteam,nombreteam} });
   }
 
   banTask(id){
@@ -172,15 +180,15 @@ export class TeamViewComponent implements OnInit {
   }
 
   addEvent(){
-    let idTeam = this.teamId.id;
-    let nombreteam = this.selectedTeam.nombre;
-    this.router.navigate(['/eventadd'], { state: {idTeam, nombreteam} });
+    let idteam = this.teamId.id;
+    let nombreteam = this.teamData.nombre;
+    this.router.navigate(['/eventadd'], { state: {idteam, nombreteam} });
   }
 
-  modEvent(idEvent){
-    let idTeam = this.teamId.id;
-    let nombreteam = this.selectedTeam.nombre;
-    this.router.navigate(['/eventmod'], { state: {idEvent, idTeam, nombreteam} });
+  modEvent(idevent){
+    let idteam = this.teamId.id;
+    let nombreteam = this.teamData.nombre;
+    this.router.navigate(['/eventmod'], { state: {idevent, idteam, nombreteam} });
   }
 
   banEvent(id){
@@ -203,6 +211,26 @@ export class TeamViewComponent implements OnInit {
         }
       )
     }
+  }
+
+  addMember(){
+    let m = this.member_selector;
+    let relacion = new listaEquipo(0,m,this.selectedTeam);
+    this._equipoService.agregarIntegrante(relacion).subscribe(
+      data => {
+        console.log("Miembro agregado con éxito ", this.member_selector);
+        alert("Miembro agregado al equipo");
+        setTimeout(() => 
+        {
+            this.router.navigate(['/uwu']);
+        },
+        500);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log(error);
+      }
+    )
   }
 
   // POST

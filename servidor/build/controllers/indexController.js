@@ -354,7 +354,7 @@ class IndexController {
                     res.status(200).json(tareas);
                 }
                 else {
-                    res.status(404).send({ message: "No se retornaron tareas asignadas al equipo" });
+                    res.status(204).send({ message: "No se retornaron tareas asignadas al equipo" });
                 }
             }
             else {
@@ -365,7 +365,7 @@ class IndexController {
                     res.status(200).json(tareas);
                 }
                 else {
-                    res.status(404).send({ message: "No se retornaron tareas asignadas al equipo" });
+                    res.status(204).send({ message: "No se retornaron tareas asignadas al equipo" });
                 }
             }
         });

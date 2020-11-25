@@ -14,7 +14,7 @@
             #registerForm="ngForm"
             novalidate
         >
-            <h3 class='text-center pt-3'>Equipo: {{nombreteam}}</h3>
+            <!--h3 class='text-center pt-3'>Equipo: {{nombreteam}}</h3-->
 
             <div class='card-body'>
 
@@ -139,7 +139,7 @@
                     </div>
                     
                     <!-- HACER FUNCIONAL ESTE SWITCH!! --> 
-                    <div class="custom-control custom-switch col-md-3 mt-2">
+                    <!--div class="custom-control custom-switch col-md-3 mt-2">
                         <input 
                             type="checkbox" 
                             class="custom-control-input" 
@@ -147,7 +147,7 @@
                             ng-model='sinFecha'
                         >
                         <label class="custom-control-label" for="inputSinFecha">Sin fecha</label>
-                    </div>
+                    </div-->
                 </div>
         
                 <label for='inputCategoria' class='col-md-12'>Categoría</label>
@@ -160,7 +160,6 @@
                             [(ngModel)]='taskModel.categoria'
                             #categoria="ngModel"
                         >
-                            <option selected value="0">Seleccione una categoria</option>
                             <option *ngFor="let categoria of categorias" value='{{categoria.idCategoria[0].idCategoria}}'>
                                 {{categoria.nombreCategoria[0].nombreCategoria}}
                             </option>

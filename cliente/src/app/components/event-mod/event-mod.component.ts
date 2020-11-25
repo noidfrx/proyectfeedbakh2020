@@ -34,8 +34,8 @@ export class EventModComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.eventId.id=history.state.idEvent;
-    this.teamId.id=history.state.idTeam;
+    this.eventId.id=history.state.idevent;
+    this.teamId.id=history.state.idteam;
     this.nombreteam=history.state.nombreteam;
 
     if(this.teamId.id == null){

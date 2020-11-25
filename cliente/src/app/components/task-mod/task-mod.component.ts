@@ -24,7 +24,7 @@ export class TaskModComponent implements OnInit {
   nombreteam='';
   colaboradores = null;
 
-  taskModel = new Task('',0,null,null,null,null,null,'',null);
+  taskModel = new Task('',0,0,null,null,null,null,'',null);
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getCategorias();
@@ -33,8 +33,8 @@ export class TaskModComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.taskId.id=history.state.idTask;
-    this.teamId.id=history.state.idTeam;
+    this.taskId.id=history.state.idtask;
+    this.teamId.id=history.state.idteam;
     this.nombreteam=history.state.nombreteam;
 
     if(this.teamId.id == null){

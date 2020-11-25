@@ -186,7 +186,6 @@
                             [(ngModel)]='eventModel.categoria' 
                             #categoria="ngModel"
                         >
-                            <option selected value="0">Seleccione una categoría</option>
                             <option *ngFor="let categoria of categorias" value='{{categoria.idCategoria[0].idCategoria}}'>
                                 {{categoria.nombreCategoria[0].nombreCategoria}}
                             </option>
