@@ -13,6 +13,9 @@
             #registerForm="ngForm"
             novalidate
         >
+
+            <h3 class='text-center pt-3'>Equipo: {{nombreteam}}</h3>
+            
             <div class='card-body'>
                 <div class='form-group col-md-12'>
                     <label for='inputNombreEvento'>Nombre de evento</label>
@@ -29,7 +32,7 @@
                     >
                 </div>
 
-                <label for='inputEquipo' class='col-md-12'>Equipo</label>
+                <!--label for='inputEquipo' class='col-md-12'>Equipo</label>
                 <div class='form-group col-md-12'>
                     <select 
                         class='custom-select'
@@ -46,7 +49,7 @@
                     </select>
                 </div>
         
-                <br/>
+                <br/-->
                 
                 <label for='inputFechaTarea' class='col-md-12'>Fecha del evento</label>
                 <div class='row offset-md-0' id='inputFechaTarea'>
@@ -103,14 +106,14 @@
                     </div>
                     
         
-                    <div class="custom-control custom-switch col-md-3 mt-2">
+                    <!--div class="custom-control custom-switch col-md-3 mt-2">
                         <input 
                             type="checkbox" 
                             class="custom-control-input" 
                             id="sinFecha"
                         >
                         <label class="custom-control-label" for="sinFecha">Sin fecha</label>
-                    </div>
+                    </div-->
                 </div>
         
                 <label for='inputHoraEvento' class='col-md-12'>Hora del evento</label>
@@ -143,14 +146,14 @@
                         >
                     </div>
                     
-                    <div class="custom-control custom-switch col-md-8 mt-2">
+                    <!--div class="custom-control custom-switch col-md-8 mt-2">
                         <input 
                             type="checkbox" 
                             class="custom-control-input" 
                             id="sinHora"
                         >
                         <label class="custom-control-label" for="sinHora">Sin Hora</label>
-                    </div>
+                    </div-->
                 </div>
         
                 <label for='inputCategoria' class='col-md-12 pt-2'>Categoría</label>
@@ -171,14 +174,14 @@
                         </select>
                     </div>
             
-                    <div class="custom-control custom-switch col-md-3 mt-2">
+                    <!--div class="custom-control custom-switch col-md-3 mt-2">
                         <input 
                             type="checkbox" 
                             class="custom-control-input" 
                             id="sinCategoria"
                         >
                         <label class="custom-control-label" for="sinCategoria">Sin categoría</label>
-                    </div>
+                    </div-->
                 </div>
         
                 <label for='inputPrivacidad' class='col-md-3 pt-3'>Privacidad</label>
@@ -220,7 +223,7 @@
                         name='enlace' 
                         [(ngModel)]='eventModel.enlace' 
                         #enlace="ngModel"
-                        placeholder='Inserte aquí el link de la videoconferencia'
+                        placeholder='(Opcional) Inserte aquí el link de la videoconferencia'
                         [class.is-invalid]="enlace.invalid && enlace.touched"
                     >
                 </div>

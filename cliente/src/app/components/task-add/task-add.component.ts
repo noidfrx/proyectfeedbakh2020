@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {Task} from '../../models/Task';
 import {HomeServiceService} from '../../services/homeService/home-service.service'
+import { IdBringer } from 'src/app/models/IdBringer';
 
 //Para validación de formulario
 import {FormControl,FormGroup,Validators} from '@angular/forms';
+
 
 @Component({
   selector: 'app-task-add',
@@ -18,7 +20,9 @@ export class TaskAddComponent implements OnInit {
 
   equipos=null;
 
-  taskModel = new Task('',null,null,null,null,null,null,'',null);
+  teamId = new IdBringer(null);
+  nombreteam = '';
+  taskModel = new Task('',0,0,null,0,null,0,'',null);
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getColaboradoresUser();
@@ -27,6 +31,11 @@ export class TaskAddComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.teamId.id=history.state.idteam;
+    this.nombreteam=history.state.nombreteam;
+    if(this.teamId.id == null){
+      this.router.navigate(['/teamview']);
+    }
   }
 
   // GET
@@ -60,10 +69,19 @@ export class TaskAddComponent implements OnInit {
   // POST
 
   onSubmit(){
+    this.taskModel.equipo = this.teamId.id;
     this._homeService.addTask(this.taskModel)
     .subscribe(
-      data => console.log("Tarea agregada!", data),
-      error => this.errorMsg = error.statusText
+      data => {
+        console.log("Tarea agregada!", data);
+        alert("Tarea creada con éxito");
+        setTimeout(() => 
+        {
+            this.router.navigate(['/teamview']);
+        },
+        500);
+      },
+      error => {this.errorMsg = error.statusText}
       // Manejo de errores ^
     )
   }

@@ -67,7 +67,7 @@ export class TeamViewComponent implements OnInit {
   }
 
   getTeamData(){
-    this.teamId.id = this.selectedTeam;
+    this.teamId.id = this.selectedTeam.idEquipo;
     console.log("TEAMID: ", this.teamId);
     this._homeService.getTareasTeam(this.teamId).subscribe(
       data => {
@@ -138,20 +138,30 @@ export class TeamViewComponent implements OnInit {
   }
 
   addTask(){
-    this.router.navigate(['/taskadd']);
+    let idteam = this.teamId.id;
+    let nombreteam = this.selectedTeam.nombre;
+    this.router.navigate(['/taskadd'], { state: {idteam, nombreteam} });
   }
 
-  modTask(id){
-    this.router.navigate(['/taskmod'], { state: {id} });
+  modTask(idTask){
+    let idTeam = this.teamId.id;
+    let nombreteam = this.selectedTeam.nombre;
+    this.router.navigate(['/taskmod'], { state: {idTask,idTeam,nombreteam} });
   }
 
   banTask(id){
-    let c = confirm("Se va a eliminar la tarea. Continuar?");
+    let c = confirm("¿Está seguro que desea eliminar la tarea seleccionada?");
     if(c){
       this.teamId.id=id;
       this._homeService.banTask(this.teamId).subscribe(
         data => {
           console.log(data);
+          alert("Tarea eliminada con éxito");
+          setTimeout(() => 
+          {
+              this.router.navigate(['/uwu']);
+          },
+          500);
         },
         error => {
           this.errorMsg=error.statusText;
@@ -162,20 +172,30 @@ export class TeamViewComponent implements OnInit {
   }
 
   addEvent(){
-    this.router.navigate(['/eventadd']);
+    let idTeam = this.teamId.id;
+    let nombreteam = this.selectedTeam.nombre;
+    this.router.navigate(['/eventadd'], { state: {idTeam, nombreteam} });
   }
 
-  modEvent(id){
-    this.router.navigate(['/eventmod'], { state: {id} });
+  modEvent(idEvent){
+    let idTeam = this.teamId.id;
+    let nombreteam = this.selectedTeam.nombre;
+    this.router.navigate(['/eventmod'], { state: {idEvent, idTeam, nombreteam} });
   }
 
   banEvent(id){
-    let c = confirm("Se va a eliminar el evento. Continuar?");
+    let c = confirm("¿Está seguro que desea eliminar el evento seleccionado?");
     if(c){
       this.teamId.id=id;
       this._homeService.banEvent(this.teamId).subscribe(
         data => {
           console.log(data);
+          alert("Evento eliminado con éxito");
+          setTimeout(() => 
+          {
+            this.router.navigate(['/uwu']);
+          },
+          500);
         },
         error => {
           this.errorMsg=error.statusText;

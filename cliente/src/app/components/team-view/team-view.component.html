@@ -49,7 +49,7 @@
                             <div *ngIf="tarea.fecha == null"> <b>Fecha finalización:</b> Sin fecha limite </div>
                             <br/>
                             <!--div><b>Encargado tarea:</b>{{tarea.encargado}}</div-->
-                            <!--button>Completado</button--> <button (click)="modTask(tarea.idTarea)">Modificar</button> <button (click)="banTask(tarea.idTarea)">Eliminar</button>
+                            <!--button>Completado</button--> <button class="btn btn-primary" (click)="modTask(tarea.idTarea)">Editar</button> <button class="btn btn-danger" (click)="banTask(tarea.idTarea)">Eliminar</button>
                         </div>
                         <br/>
                     </div>
@@ -86,14 +86,14 @@
                     <div id="sec_eventos3">
                         <div id="nombre">{{evento.nombre}}</div>
                         <br/>
-                        <div><b>Link: </b><a href={{evento.enlaceVideoconferencia}} style="color: blue">{{evento.enlaceVideoconferencia}}</a></div>
-                        <br/>
+                        <!--div><b>Link: </b><a href={{evento.enlaceVideoconferencia}} style="color: blue">{{evento.enlaceVideoconferencia}}</a></div>
+                        <br/-->
                         <div><b>Descripción:</b> {{evento.descripcion}}</div>
                         <br/>
                         <div *ngIf="evento.fecha != null"> <b>Fecha finalización:</b>  {{evento.fecha}} </div>
                         <div *ngIf="evento.fecha == null"> <b>Fecha finalización:</b>  Sin fecha limite </div>
                         <br/>
-                        <button (click)="modEvent(evento.idEvento)">Modificar</button> <button (click)="banEvent(evento.idEvento)">Eliminar</button>
+                        <button class="btn btn-primary" (click)="modEvent(evento.idEvento)">Editar</button> <button class="btn btn-danger" (click)="banEvent(evento.idEvento)">Eliminar</button>
                     </div>
                     <br/>
                 </div>

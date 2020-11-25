@@ -13,6 +13,9 @@
             #registerForm="ngForm"
             novalidate
         >
+
+            <h3 class='text-center pt-3'>Equipo: {{nombreteam}}</h3>
+
             <div class='card-body'>
                 <div class='form-group col-md-12'>
                     <label for='inputNombreTarea'>Nombre de tarea</label>
@@ -29,7 +32,7 @@
                     >
                 </div>
                 
-                <label for='inputEncargadoTarea' class='col-md-12'>Encargado de tarea</label>
+                <label for='inputEncargadoTarea' class='col-md-12'>Integrante</label>
                 <div class='form-group col-md-12'>
                     <select 
                         class='custom-select'
@@ -46,7 +49,7 @@
                     </select>
                 </div>
 
-                <label for='inputEquipo' class='col-md-12'>Equipo</label>
+                <!--label for='inputEquipo' class='col-md-12'>Equipo</label>
                 <div class='form-group col-md-12'>
                     <select 
                         class='custom-select'
@@ -61,7 +64,7 @@
                             {{equipo.nombreEquipo[0].nombre}}
                         </option>
                     </select>
-                </div>
+                </div-->
                 
                 <label for='inputFechaTarea' class='col-md-12'>Fecha de finalización</label>
                 <div class='row offset-md-0' id='inputFechaTarea'>
@@ -118,15 +121,15 @@
                     </div>
                     
                     <!-- HACER FUNCIONAL ESTE SWITCH!! --> 
-                    <div class="custom-control custom-switch col-md-3 mt-2">
+                    <!--div class="custom-control custom-switch col-md-3 mt-2">
                         <input 
                             type="checkbox" 
                             class="custom-control-input" 
                             id="inputSinFecha"
-                            ng-model='sinFecha'
+                            [(ngModel)]='sinFecha'
                         >
                         <label class="custom-control-label" for="inputSinFecha">Sin fecha</label>
-                    </div>
+                    </div-->
                 </div>
         
                 <label for='inputCategoria' class='col-md-12'>Categoría</label>
@@ -147,14 +150,14 @@
                     </div>
                     
                     <!-- HACER FUNCIONAL ESTE SWITCH!! --> 
-                    <div class="custom-control custom-switch col-md-3 mt-2">
+                    <!--div class="custom-control custom-switch col-md-3 mt-2">
                         <input 
                             type="checkbox" 
                             class="custom-control-input" 
                             id="inputSinCategoria"
                         >
                         <label class="custom-control-label" for="inputSinCategoria">Sin categoría</label>
-                    </div>
+                    </div-->
                 </div>
         
                 <br/>

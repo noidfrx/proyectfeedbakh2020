@@ -17,31 +17,32 @@ import {FormControl,FormGroup,Validators} from '@angular/forms';
 export class TaskModComponent implements OnInit {
   errorMsg='';
   categorias = null;
-  //colaboradores = null;
-  //tareas = null;
   _tarea = new Task('',0,0,0,0,0,0,'',0);
   equipos=null;
+  taskId = new IdBringer(null);
   teamId = new IdBringer(null);
-  //idTarea=null;
+  nombreteam='';
+  colaboradores = null;
 
   taskModel = new Task('',0,null,null,null,null,null,'',null);
 
-  constructor(private _homeService:HomeServiceService, private router:Router/*, private activatedRoute:ActivatedRoute*/) {
-    //this.getColaboradoresUser();
+  constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getCategorias();
     this.obtenerEquipoUsuario();
-    //this.getTarea();
-    //this.getTareasUser();
+    //this.getColaboradoresUser();
    }
 
   ngOnInit(): void {
-    console.log("---TASKMOD---");
-    this.teamId.id=history.state.id;
-    console.log("idTarea: ",this.teamId.id);
-    if(this.teamId.id){
+    this.taskId.id=history.state.idTask;
+    this.teamId.id=history.state.idTeam;
+    this.nombreteam=history.state.nombreteam;
+
+    if(this.teamId.id == null){
+      this.router.navigate(['/teamview']);
+    }
+
+    if(this.taskId.id){
       this.getTarea();
-      //this.setSuciusFormularius();
-      //console.log(this._tarea);
     }else{
       console.log("_tarea es null");
     }
@@ -49,18 +50,20 @@ export class TaskModComponent implements OnInit {
 
   setSuciusFormularius(){
     console.log("tarea usada para form: ", this._tarea);
-    this.taskModel.tarea = this.teamId.id;
+    this.taskModel.tarea = this.taskId.id;
     this.taskModel.nombre = this._tarea[0].nombre;
     this.taskModel.encargado = this._tarea[0].idEncargado;
     this.taskModel.equipo = this._tarea[0].idEquipo;
-    this.taskModel.dia = 1;
-    this.taskModel.mes = 1;
-    this.taskModel.anio = 1;
+    this.taskModel.dia = this.getDia(this._tarea[0].fecha);
+    this.taskModel.mes = this.getMes(this._tarea[0].fecha);
+    this.taskModel.anio = this.getAnio(this._tarea[0].fecha);
     this.taskModel.categoria = this._tarea[0].idCategoria;
     this.taskModel.descripcion = this._tarea[0].descripcion;
   }
 
-  // GET
+  /////////
+  // GET //
+  /////////
 
   getCategorias(){
     this._homeService.getCategorias().subscribe(
@@ -76,12 +79,26 @@ export class TaskModComponent implements OnInit {
     )
   }
 
+  getTarea(){
+    this._homeService.getTarea(this.taskId).subscribe(
+      data => {
+        (this._tarea = data)
+        console.log("Tarea con id ", this.taskId.id, " recibida");
+        console.log(data);
+        this.setSuciusFormularius();
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir la tarea de id ", this.taskId);
+      }
+    )
+  }
+
   /*getColaboradoresUser(){
     this._homeService.getColaboradoresUser().subscribe(
       data => {
         (this.colaboradores = data)
         console.log("Colaboradores recibidos");
-        console.log(data);
       },
       error => {
         this.errorMsg=error.statusText;
@@ -90,41 +107,23 @@ export class TaskModComponent implements OnInit {
     )
   }*/
 
-  /*getTareasUser(){
-    this._homeService.getTareasUser().subscribe(
-      data => {
-        (this.tareas = data)
-        console.log("Tareas recibidas");
-        console.log(data);
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("Error al recibir las tareas");
-      }
-    )
-  }*/
-
-  getTarea(){
-    this._homeService.getTarea(this.teamId).subscribe(
-      data => {
-        (this._tarea = data)
-        console.log("Tarea con id ", this.teamId.id, " recibida");
-        console.log(data);
-        this.setSuciusFormularius();
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("Error al recibir la tarea de id ", this.teamId);
-      }
-    )
-  }
-
-  // POST
+  //////////
+  // POST //
+  //////////
 
   onSubmit(){
+    this.taskModel.equipo = this.teamId.id;
     this._homeService.modTask(this.taskModel)
     .subscribe(
-      data => console.log("Tarea modificada!", data),
+      data => {
+        console.log("Tarea modificada!", data);
+        alert("Tarea modificada con éxito");
+        setTimeout(() => 
+        {
+            this.router.navigate(['/teamview']);
+        },
+        500);
+      },
       error => this.errorMsg = error.statusText
       // Manejo de errores ^
     )
@@ -145,7 +144,37 @@ export class TaskModComponent implements OnInit {
       }
     )
   }
-  
+
+  /////////////////////////////////
+  // Funciones aux para la fecha //
+  /////////////////////////////////
+
+  getDia(dat) : number{
+    var date = String(dat);
+    var fecha = date.split('T',2);
+    var fecha2 = fecha[0].split('-',3);
+    var dia = fecha2[2];
+
+    return Number(dia);
+  }
+
+  getMes(dat) : number{
+    var date = String(dat);
+    var fecha = date.split('T',2);
+    var fecha2 = fecha[0].split('-',3);
+    var dia = fecha2[1];
+
+    return Number(dia);
+  }
+
+  getAnio(dat) : number{
+    var date = String(dat);
+    var fecha = date.split('T',2);
+    var fecha2 = fecha[0].split('-',3);
+    var dia = fecha2[0];
+
+    return Number(dia);
+  }
 
 
 }

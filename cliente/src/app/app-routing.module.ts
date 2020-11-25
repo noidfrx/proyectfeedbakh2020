@@ -19,6 +19,7 @@ import { AuthGuard } from './security/auth.guard';
 import { AuthWelcome } from './security/auth.welcome';
 import { CreateWorkTeamComponent } from './components/create-work-team/create-work-team.component';
 import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usuarios.component';
+import { UwuComponent } from './components/uwu/uwu.component';
 
 const routes: Routes = [
 
@@ -97,6 +98,11 @@ const routes: Routes = [
   {
     path:'buscarUsuario',
     component: BuscarUsuariosComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'uwu',
+    component: UwuComponent,
     canActivate: [AuthGuard]
   }
 

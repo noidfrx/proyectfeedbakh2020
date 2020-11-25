@@ -314,7 +314,7 @@ class IndexController {
     let idColaborador;
 
     const datos = await pool.query("SELECT * FROM amigo WHERE (idColaborador1=? OR idColaborador2=?) AND aceptado=1",
-    [req!.session!.idUserIniciado]);
+    [req!.session!.idUserIniciado, req!.session!.idUserIniciado]);
 
     if (datos.length >= 1) {
       let aux = 0;
@@ -454,6 +454,8 @@ class IndexController {
 
       if(tareas.length >= 1){
         res.status(200).json(tareas);
+      }else{
+        res.status(404).send({message: "No se retornaron tareas asignadas al equipo"});
       }
     }else{
       /*const tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?', 
@@ -462,10 +464,12 @@ class IndexController {
       
       if(tareas.length >= 1){
         res.status(200).json(tareas);
+      }else{
+        res.status(404).send({message: "No se retornaron tareas asignadas al equipo"});
       }
     }
 
-    res.status(404).send({message: "No se retornaron tareas asignadas al equipo"});
+    
   }
 
   // Query para retornar el id del ultimo equipo creado
@@ -475,7 +479,7 @@ class IndexController {
     [req!.session!.idUserIniciado]);
 
     if(equipo.length >= 1) {
-      res.status(200).json(equipo[0].idEquipo);
+      res.status(200).json(equipo[0]);
     }
     else{
       res.status(204).send({message: "No se retorno el ultimo equipo"});
@@ -548,9 +552,6 @@ class IndexController {
 
   public async eventos_equipo(req: Request, res: Response): Promise<any> {
     let team = Number(req.body.id);
-    console.log("EVENTOS_EQUIPO");
-    console.log(team);
-    console.log(req!.session!.idUserIniciado);
     
     if(team == 0) {
       /*const eventos = await pool.query('SELECT evento.* FROM evento INNER JOIN (SELECT * FROM listaeventos WHERE listaeventos.idColaborador=?) AS eventos_user ON eventos_user.idEvento=evento.idEvento', 
@@ -561,7 +562,10 @@ class IndexController {
 
       if(eventos.length >= 1){
         res.status(200).json(eventos);
+      }else{
+        res.status(204).send({message: "No se retornaron eventos asignados al equipo"});
       }
+
     }else{
       /*const eventos = await pool.query('SELECT evento.* FROM evento INNER JOIN (SELECT * FROM listaeventos WHERE listaeventos.idColaborador=?) AS eventos_user ON eventos_user.idEvento=evento.idEvento WHERE evento.idEquipo=?', 
       [req!.session!.idUserIniciado, team]);*/
@@ -570,10 +574,11 @@ class IndexController {
       
       if(eventos.length >= 1){
         res.status(200).json(eventos);
+      }else{
+        res.status(204).send({message: "No se retornaron eventos asignados al equipo"});
       }
-    }
 
-    res.status(204).send({message: "No se retornaron eventos asignados al equipo"});
+    }
   }
 
 
@@ -611,8 +616,6 @@ class IndexController {
     const equipos= await pool.query("SELECT * FROM equipo ORDER BY idEquipo DESC");
     console.log(equipos[0].idEquipo);
     res.status(200).json(equipos[0].idEquipo);
-    
-
   }
 
   public async agregarIntegranteEquipo(req: Request, res: Response): Promise<any> {
@@ -628,15 +631,12 @@ class IndexController {
           req.body.idColaborador,req.body.encargado]);
       res.status(200).json({ message: "true" });
     }
-
   }
 
   // Query para retornar una tarea segun su id
 
   public async una_tarea(req: Request, res: Response): Promise<any> {
-    console.log("UNA_TAREA");
     let id = req.body.id;
-    console.log(id);
 
     const datos = await pool.query("SELECT * FROM tarea WHERE idTarea=?", [id]);
 
@@ -650,9 +650,7 @@ class IndexController {
   // Query para retornar un evento segun su id
 
   public async un_evento(req: Request, res: Response): Promise<any> {
-    console.log("UN_EVENTO");
     let id = req.body.id;
-    console.log(id);
 
     const datos = await pool.query("SELECT * FROM evento WHERE idEvento=?", [id]);
 

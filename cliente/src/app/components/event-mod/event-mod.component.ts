@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import {Event} from '../../models/Event';
 import {HomeServiceService} from '../../services/homeService/home-service.service'
 import { IdBringer } from 'src/app/models/IdBringer';
+import { Router } from '@angular/router';
 
 //Para validación de formulario
 import {FormControl,FormGroup,Validators} from '@angular/forms';
+
 
 
 @Component({
@@ -19,45 +21,45 @@ export class EventModComponent implements OnInit {
   colaboradores = null;
   equipos=null;
   eventos=null;
-  //idUsuario=null;
-  //encargado=null;
+  
   _evento = new Event('',0,0,0,0,0,0,0,0,0,'','',0);
   eventModel = new Event('',null,null,0,null,null,null,0,0,0,'','',null);
+  eventId = new IdBringer(null);
   teamId = new IdBringer(null);
+  nombreteam='';
 
-  constructor(private _homeService:HomeServiceService) {
-    //this.getColaboradores();
+  constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getCategorias();
     this.obtenerEquipoUsuario();
-    //this.getEventosUser();
-    //this.obtenerIdUsuario();
-    //this.obtenerNombreUsuario();
    }
 
   ngOnInit(): void {
-    console.log("---TASKMOD---");
-    this.teamId.id=history.state.id;
-    console.log("idEvento: ",this.teamId.id);
-    if(this.teamId.id){
+    this.eventId.id=history.state.idEvent;
+    this.teamId.id=history.state.idTeam;
+    this.nombreteam=history.state.nombreteam;
+
+    if(this.teamId.id == null){
+      this.router.navigate(['/teamview']);
+    }
+
+    if(this.eventId.id){
       this.getEvento();
-      //this.setSuciusFormularius();
-      //console.log(this._tarea);
     }else{
-      console.log("_tarea es null");
+      console.log("_evento es null");
     }
   }
 
   setSuciusFormularius(){
     console.log("tarea usada para form: ", this._evento);
-    this.eventModel.evento = this.teamId.id;
+    this.eventModel.evento = this.eventId.id;
     this.eventModel.nombre = this._evento[0].nombre;
     this.eventModel.encargado = this._evento[0].idEncargado;
     this.eventModel.equipo = this._evento[0].idEquipo;
-    this.eventModel.dia = 1;
-    this.eventModel.mes = 1;
-    this.eventModel.anio = 1;
-    this.eventModel.hora = 1;
-    this.eventModel.minuto = 1;
+    this.eventModel.dia = this.getDia(this._evento[0].fecha);
+    this.eventModel.mes = this.getMes(this._evento[0].fecha);
+    this.eventModel.anio =this.getAnio(this._evento[0].fecha);
+    this.eventModel.hora = this.getHora(this._evento[0].fecha);
+    this.eventModel.minuto = this.getMinuto(this._evento[0].fecha);
     this.eventModel.categoria = this._evento[0].idCategoria;
     this.eventModel.privacidad = this._evento[0].privacidad;
     this.eventModel.descripcion = this._evento[0].descripcion;
@@ -106,47 +108,17 @@ export class EventModComponent implements OnInit {
     )
   }
 
-  /*obtenerIdUsuario(){
-    this._homeService.obtenerIdUsuario().subscribe(
-      data => {
-        (this.idUsuario = data.message)
-        console.log("Id usuario recibido! idUser:", data.message);
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("Error al recibir id usuario");
-      }
-    )
-  }*/
-
-  /*obtenerNombreUsuario(){
-    this._homeService.obtenerNombreUsuario()
-      .subscribe(
-
-        //Si me devuelve okay
-        data => {
-          //La sesión ha sido iniciada correctamente
-          (this.encargado = data.message)
-          console.log("Nombre usuario recibido! nombre:", data.message);
-        },
-        error => {
-          this.errorMsg = error.statusText;
-          console.log("Error, no se recibió nombre de usuario")
-        }
-      );
-  }*/
-
   getEvento(){
-    this._homeService.getEvento(this.teamId).subscribe(
+    this._homeService.getEvento(this.eventId).subscribe(
       data => {
         (this._evento = data)
-        console.log("Evento con id ", this.teamId.id, " recibido");
+        console.log("Evento con id ", this.eventId.id, " recibido");
         console.log(data);
         this.setSuciusFormularius();
       },
       error => {
         this.errorMsg=error.statusText;
-        console.log("Error al recibir el evento de id ", this.teamId);
+        console.log("Error al recibir el evento de id ", this.eventId);
       }
     )
   }
@@ -154,9 +126,20 @@ export class EventModComponent implements OnInit {
   // POST
   
   onSubmit(){
+    console.log(this.teamId.id);
+    console.log(this.eventModel.equipo);
+    this.eventModel.equipo = this.teamId.id;
     this._homeService.modEvent(this.eventModel)
     .subscribe(
-      data => console.log("Evento modificado!", data),
+      data => {
+        console.log("Evento modificado!", data);
+        alert("Evento modificado con éxito");
+        setTimeout(() => 
+        {
+            this.router.navigate(['/teamview']);
+        },
+        500);
+      },
       error => this.errorMsg = error.statusText
       // Manejo de errores ^
     )
@@ -175,6 +158,60 @@ export class EventModComponent implements OnInit {
         console.log("Error al recibir los equipos");
       }
     )
+  }
+
+
+  /////////////////////////////////
+  // Funciones aux para la fecha //
+  /////////////////////////////////
+
+  getDia(dat) : number{
+    var date = String(dat);
+    var fecha = date.split('T',2);
+    var fecha2 = fecha[0].split('-',3);
+    var dia = fecha2[2];
+
+    return Number(dia);
+  }
+
+  getMes(dat) : number{
+    var date = String(dat);
+    var fecha = date.split('T',2);
+    var fecha2 = fecha[0].split('-',3);
+    var dia = fecha2[1];
+
+    return Number(dia);
+  }
+
+  getAnio(dat) : number{
+    var date = String(dat);
+    var fecha = date.split('T',2);
+    var fecha2 = fecha[0].split('-',3);
+    var dia = fecha2[0];
+
+    return Number(dia);
+  }
+
+
+  // 2001-01-01T03:00:00.000Z 
+  getHora(dat) : number{
+    var date = String(dat);
+    var fecha = date.split('T',2);
+    var fechus = fecha[1].split('.',2);
+    var fecha2 = fechus[0].split(':',3);
+    var dia = fecha2[0];
+
+    return Number(dia);
+  }
+
+  getMinuto(dat) : number{
+    var date = String(dat);
+    var fecha = date.split('T',2);
+    var fechus = fecha[1].split('.',2);
+    var fecha2 = fechus[0].split(':',3);
+    var dia = fecha2[1];
+
+    return Number(dia);
   }
   
 

@@ -37,6 +37,7 @@ import { AuthWelcome } from './security/auth.welcome';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { CreateWorkTeamComponent } from './components/create-work-team/create-work-team.component';
 import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usuarios.component';
+import { UwuComponent } from './components/uwu/uwu.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usu
     MyProfileComponent,
     SidebarComponent,
     CreateWorkTeamComponent,
-    BuscarUsuariosComponent
+    BuscarUsuariosComponent,
+    UwuComponent
   ],
   imports: [
     BrowserModule,

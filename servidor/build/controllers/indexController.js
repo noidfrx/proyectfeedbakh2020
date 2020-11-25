@@ -250,7 +250,7 @@ class IndexController {
             let nombreColaborador;
             let apellidosColaborador;
             let idColaborador;
-            const datos = yield database_1.default.query("SELECT * FROM amigo WHERE (idColaborador1=? OR idColaborador2=?) AND aceptado=1", [req.session.idUserIniciado]);
+            const datos = yield database_1.default.query("SELECT * FROM amigo WHERE (idColaborador1=? OR idColaborador2=?) AND aceptado=1", [req.session.idUserIniciado, req.session.idUserIniciado]);
             if (datos.length >= 1) {
                 let aux = 0;
                 for (let colaborador of datos) {
@@ -353,6 +353,9 @@ class IndexController {
                 if (tareas.length >= 1) {
                     res.status(200).json(tareas);
                 }
+                else {
+                    res.status(404).send({ message: "No se retornaron tareas asignadas al equipo" });
+                }
             }
             else {
                 /*const tareas = await pool.query('SELECT tarea.* FROM tarea INNER JOIN (SELECT * FROM listaequipo WHERE listaequipo.idColaborador=?) AS equipos_user ON equipos_user.idEquipo=tarea.idEquipo WHERE tarea.idEquipo=?',
@@ -361,8 +364,10 @@ class IndexController {
                 if (tareas.length >= 1) {
                     res.status(200).json(tareas);
                 }
+                else {
+                    res.status(404).send({ message: "No se retornaron tareas asignadas al equipo" });
+                }
             }
-            res.status(404).send({ message: "No se retornaron tareas asignadas al equipo" });
         });
     }
     // Query para retornar el id del ultimo equipo creado
@@ -370,7 +375,7 @@ class IndexController {
         return __awaiter(this, void 0, void 0, function* () {
             const equipo = yield database_1.default.query('SELECT equipo.* FROM equipo INNER JOIN (SELECT * FROM listaequipo WHERE idColaborador=?) AS listado ON listado.idEquipo=equipo.idEquipo ORDER BY equipo.idEquipo DESC LIMIT 1', [req.session.idUserIniciado]);
             if (equipo.length >= 1) {
-                res.status(200).json(equipo[0].idEquipo);
+                res.status(200).json(equipo[0]);
             }
             else {
                 res.status(204).send({ message: "No se retorno el ultimo equipo" });
@@ -434,9 +439,6 @@ class IndexController {
     eventos_equipo(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             let team = Number(req.body.id);
-            console.log("EVENTOS_EQUIPO");
-            console.log(team);
-            console.log(req.session.idUserIniciado);
             if (team == 0) {
                 /*const eventos = await pool.query('SELECT evento.* FROM evento INNER JOIN (SELECT * FROM listaeventos WHERE listaeventos.idColaborador=?) AS eventos_user ON eventos_user.idEvento=evento.idEvento',
                 [req!.session!.idUserIniciado]);*/
@@ -444,6 +446,9 @@ class IndexController {
                 console.log(eventos);
                 if (eventos.length >= 1) {
                     res.status(200).json(eventos);
+                }
+                else {
+                    res.status(204).send({ message: "No se retornaron eventos asignados al equipo" });
                 }
             }
             else {
@@ -453,8 +458,10 @@ class IndexController {
                 if (eventos.length >= 1) {
                     res.status(200).json(eventos);
                 }
+                else {
+                    res.status(204).send({ message: "No se retornaron eventos asignados al equipo" });
+                }
             }
-            res.status(204).send({ message: "No se retornaron eventos asignados al equipo" });
         });
     }
     // Query para comprobar si el usuario ha visto el tutorial
@@ -510,9 +517,7 @@ class IndexController {
     // Query para retornar una tarea segun su id
     una_tarea(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("UNA_TAREA");
             let id = req.body.id;
-            console.log(id);
             const datos = yield database_1.default.query("SELECT * FROM tarea WHERE idTarea=?", [id]);
             if (datos.length >= 1) {
                 res.status(200).json(datos);
@@ -525,9 +530,7 @@ class IndexController {
     // Query para retornar un evento segun su id
     un_evento(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("UN_EVENTO");
             let id = req.body.id;
-            console.log(id);
             const datos = yield database_1.default.query("SELECT * FROM evento WHERE idEvento=?", [id]);
             if (datos.length >= 1) {
                 res.status(200).json(datos);
