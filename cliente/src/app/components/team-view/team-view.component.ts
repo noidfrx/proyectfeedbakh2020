@@ -2,9 +2,11 @@ import { Component, OnInit,  } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdBringer } from '../../models/IdBringer';
 import { HomeServiceService } from 'src/app/services/homeService/home-service.service';
+import { EquipoService } from 'src/app/services/equipoService/equipo.service';
 
 //Para validación de formulario
 import {FormControl,FormGroup,Validators} from '@angular/forms';
+import { listaEquipo } from 'src/app/models/listaEquipo';
 
 
 
@@ -26,8 +28,9 @@ export class TeamViewComponent implements OnInit {
   selectedTeam = null;
   teamId = new IdBringer(null);
   nombre_team='';
+  member_selector = 0;
 
-  constructor(private _homeService:HomeServiceService, private router:Router) {
+  constructor(private _homeService:HomeServiceService, private _equipoService:EquipoService, private router:Router) {
     this.getColaboradoresUser();
     this.getCategorias();
     this.obtenerEquipoUsuario();
@@ -208,6 +211,26 @@ export class TeamViewComponent implements OnInit {
         }
       )
     }
+  }
+
+  addMember(){
+    let m = this.member_selector;
+    let relacion = new listaEquipo(0,m,this.selectedTeam);
+    this._equipoService.agregarIntegrante(relacion).subscribe(
+      data => {
+        console.log("Miembro agregado con éxito ", this.member_selector);
+        alert("Miembro agregado al equipo");
+        setTimeout(() => 
+        {
+            this.router.navigate(['/uwu']);
+        },
+        500);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log(error);
+      }
+    )
   }
 
   // POST
