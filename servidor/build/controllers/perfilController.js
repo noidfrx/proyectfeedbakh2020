@@ -45,7 +45,7 @@ class PerfilController {
     // devuelve los usuarios ingresados en la busqueda, está aquí porque para llegar a esta opción solo se puede hacer mediante el
     buscarUsuario(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const Usuarios = yield database_1.default.query('SELECT * FROM colaborador WHERE nombre = ? OR email=?', [
+            const Usuarios = yield database_1.default.query('SELECT * FROM colaborador WHERE nombre LIKE ? OR email = ?', [
                 req.body.nombre,
                 req.body.nombre
             ]);
@@ -68,7 +68,7 @@ class PerfilController {
     }
     comprobarAmistad(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const estadoAmistad = yield database_1.default.query('SELECT aceptado FROM amigo WHERE (idColaborador1 LIKE ? AND idColaborador2 LIKE ?) OR (idColaborador2 = ? AND idColaborador1 = ?)', [req.session.idUserIniciado, req.body.idColaborador2, req.session.idUserIniciado, req.body.idColaborador2]);
+            const estadoAmistad = yield database_1.default.query('SELECT aceptado FROM amigo WHERE (idColaborador1 = ? AND idColaborador2 = ?) OR (idColaborador2 = ? AND idColaborador1 = ?)', [req.session.idUserIniciado, req.body.idColaborador2, req.session.idUserIniciado, req.body.idColaborador2]);
             if (estadoAmistad.length >= 1) {
                 res.json(estadoAmistad[0].aceptado);
             }
@@ -79,6 +79,18 @@ class PerfilController {
     }
     //POST
     //DELETE
+    // Elimina una amistad del usuario seleccionado
+    eliminarAmistad(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query("DELETE FROM amigo WHERE (idColaborador1=? AND  IdColaborador2=?)OR(idColaborador1=? AND  IdColaborador2=?)", [
+                req.body.idColaborador2,
+                req.session.idUserIniciado,
+                req.body.idColaborador2,
+                req.session.idUserIniciado
+            ]);
+            res.json({ message: "Tarea eliminada" });
+        });
+    }
     //PUT
     // actualiza los datos del perfil del usuario
     actualizarPerfil(req, res) {

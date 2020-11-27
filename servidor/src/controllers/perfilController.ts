@@ -8,7 +8,7 @@ class PerfilController{
     //Metodos para llevar a indexRoutes.ts
     
     //GET
-   
+   // funcion p
 
     //GET todos los datos del usuario ingresado
     public async datosDeIngresado(req:Request, res: Response){
@@ -33,7 +33,7 @@ class PerfilController{
 
     // devuelve los usuarios ingresados en la busqueda, está aquí porque para llegar a esta opción solo se puede hacer mediante el
     public async buscarUsuario(req:Request, res: Response): Promise<any>{
-        const Usuarios = await pool.query('SELECT * FROM colaborador WHERE nombre = ? OR email=?',[
+        const Usuarios = await pool.query('SELECT * FROM colaborador WHERE nombre LIKE ? OR email = ?',[
             req.body.nombre,
             req.body.nombre]);
         if(Usuarios.length>=1){
@@ -55,7 +55,7 @@ class PerfilController{
     }
 
     public async comprobarAmistad(req:Request, res: Response): Promise<any>{
-        const estadoAmistad = await pool.query('SELECT aceptado FROM amigo WHERE (idColaborador1 LIKE ? AND idColaborador2 LIKE ?) OR (idColaborador2 = ? AND idColaborador1 = ?)',[req!.session!.idUserIniciado, req.body.idColaborador2,req!.session!.idUserIniciado, req.body.idColaborador2]);
+        const estadoAmistad = await pool.query('SELECT aceptado FROM amigo WHERE (idColaborador1 = ? AND idColaborador2 = ?) OR (idColaborador2 = ? AND idColaborador1 = ?)',[req!.session!.idUserIniciado, req.body.idColaborador2,req!.session!.idUserIniciado, req.body.idColaborador2]);
         if(estadoAmistad.length>=1){
             res.json(estadoAmistad[0].aceptado);
         }else{
@@ -64,8 +64,33 @@ class PerfilController{
     }
     
     //POST
+    //crea una nueva amistad
+    public async agregarAmistad(req: Request, res: Response): Promise<any> {
+        await pool.query("INSERT INTO amigo (idColaborador1, idColaborador2, aceptado) VALUES (?,?,?)",
+        [
+            req!.session!.idUserIniciado,
+            req.body.idColaborador2,
+            req.body.aceptado // 0 pendiente, 1 aceptado.
+        
+        ]);
     
+        res.json({message: "amistad eliminada"});
+    }
     //DELETE
+    // Elimina una amistad del usuario seleccionado, usando el id del usuario iniciado y el id del usuario objetivo
+    // tambien se utiliza en el caso de rechazar una amistad
+    public async eliminarAmistad(req: Request, res: Response): Promise<any> {
+        await pool.query("DELETE FROM amigo WHERE (idColaborador1=? AND  IdColaborador2=?) OR (idColaborador1=? AND  IdColaborador2=?)",
+        [
+            req.body.idColaborador2,
+            req!.session!.idUserIniciado,
+            req.body.idColaborador2,
+            req!.session!.idUserIniciado  
+        
+        ]);
+    
+        res.json({message: "amistad eliminada"});
+    }
     
     //PUT
     // actualiza los datos del perfil del usuario
@@ -79,9 +104,24 @@ class PerfilController{
                 req!.session!.idUserIniciado,
             ]
         );
-       // console.log(req!.session!.nombreUserIniciado); 
         res.json(actualizar);
-       // console.log(req!.session!.idUserIniciado);
+    }
+
+
+    //permite aceptar una amistad cambiando el campo del atributo a "1"
+    public async aceptarAmistad(req:Request, res: Response){
+        console.log(req.body);
+        const actualizar = await pool.query('UPDATE amigo SET aceptado=? WHERE (idColaborador1=? AND  IdColaborador2=?) OR (idColaborador1=? AND  IdColaborador2=?)',
+            [
+                req.body.aceptado,// 0 pendiente, 1 aceptado.
+                req!.session!.idUserIniciado,
+                req.body.idColaborador2,
+                req.body.idColaborador2,
+                req!.session!.idUserIniciado
+                 
+            ]
+        );
+        res.json({message: "amistad aceptada"});
     }
 
     
