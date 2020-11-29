@@ -18,6 +18,7 @@ const database_1 = __importDefault(require("../database"));
 class PerfilController {
     //Metodos para llevar a indexRoutes.ts
     //GET
+    // funcion p
     //GET todos los datos del usuario ingresado
     datosDeIngresado(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -62,7 +63,6 @@ class PerfilController {
         return __awaiter(this, void 0, void 0, function* () {
             const { id } = req.params;
             const allDatos = yield database_1.default.query('SELECT * FROM colaborador WHERE idColaborador = ?', [id]);
-            console.log(allDatos);
             res.json(allDatos);
         });
     }
@@ -78,17 +78,30 @@ class PerfilController {
         });
     }
     //POST
-    //DELETE
-    // Elimina una amistad del usuario seleccionado
-    eliminarAmistad(req, res) {
+    //crea una nueva amistad
+    agregarAmistad(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield database_1.default.query("DELETE FROM amigo WHERE (idColaborador1=? AND  IdColaborador2=?)OR(idColaborador1=? AND  IdColaborador2=?)", [
-                req.body.idColaborador2,
+            yield database_1.default.query("INSERT INTO amigo (idColaborador1, idColaborador2, aceptado) VALUES (?,?,?)", [
                 req.session.idUserIniciado,
                 req.body.idColaborador2,
+                req.body.aceptado // 0 pendiente, 1 aceptado.
+            ]);
+            res.json({ message: "amistad eliminada" });
+        });
+    }
+    //DELETE
+    // Elimina una amistad del usuario seleccionado, usando el id del usuario iniciado y el id del usuario objetivo
+    // tambien se utiliza en el caso de rechazar una amistad
+    eliminarAmistad(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            yield database_1.default.query("DELETE FROM amigo WHERE (idColaborador1=? AND  IdColaborador2=?) OR (idColaborador2=? AND  IdColaborador1=?)", [
+                id,
+                req.session.idUserIniciado,
+                id,
                 req.session.idUserIniciado
             ]);
-            res.json({ message: "Tarea eliminada" });
+            res.json({ message: "amistad eliminada" });
         });
     }
     //PUT
@@ -102,9 +115,21 @@ class PerfilController {
                 req.body.fotoPerfil,
                 req.session.idUserIniciado,
             ]);
-            // console.log(req!.session!.nombreUserIniciado); 
             res.json(actualizar);
-            // console.log(req!.session!.idUserIniciado);
+        });
+    }
+    //permite aceptar una amistad cambiando el campo del atributo a "1"
+    aceptarAmistad(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
+            const actualizar = yield database_1.default.query('UPDATE amigo SET aceptado=? WHERE (idColaborador1=? AND  IdColaborador2=?) OR (idColaborador1=? AND  IdColaborador2=?)', [
+                req.body.aceptado,
+                req.session.idUserIniciado,
+                req.body.idColaborador2,
+                req.body.idColaborador2,
+                req.session.idUserIniciado
+            ]);
+            res.json({ message: "amistad aceptada" });
         });
     }
 }

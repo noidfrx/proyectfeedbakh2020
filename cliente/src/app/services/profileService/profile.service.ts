@@ -53,6 +53,21 @@ export class ProfileService {
     .pipe(catchError(this.errorHandler));
   }
 
+  //envía una solicitud de amistad al amigo seleccionado
+  anadirAmigo(datos:Amistad){
+    return this._http.post<any>(`${this._url}/anadirAmigo`,datos,{withCredentials:true})
+    .pipe(catchError(this.errorHandler));
+  }
+
+ // elimina la relacion de amistad en la bd 
+  eliminarAmigo(id:number){
+    return this._http.delete<any>(`${this._url}/eliminarAmigo/${id}`,{withCredentials:true})
+    .pipe(catchError(this.errorHandler));
+  }
+
+
+
+
   //Manejo de errores
   errorHandler(error: HttpErrorResponse){
     return throwError(error);

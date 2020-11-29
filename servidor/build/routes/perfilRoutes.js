@@ -19,9 +19,13 @@ class PerfilRoutes {
         // //POST
         this.router.post("/comprobarAmistad", perfilController_1.perfilController.comprobarAmistad);
         this.router.post("/buscarUsuarios", perfilController_1.perfilController.buscarUsuario);
+        this.router.post("/anadirAmigo", perfilController_1.perfilController.agregarAmistad); // enviar solicitud
         // //DELETE
+        // no olvidar que cuando se rechaza una amistad, su equivalente es esta función
+        this.router.delete("/eliminarAmigo/:id", perfilController_1.perfilController.eliminarAmistad);
         // //PUT Actualizar
         this.router.put('/actualizarPerfil', perfilController_1.perfilController.actualizarPerfil);
+        this.router.put("/aceptarAmistad", perfilController_1.perfilController.aceptarAmistad);
     }
 }
 const perfilRoutes = new PerfilRoutes();

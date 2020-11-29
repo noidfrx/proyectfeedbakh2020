@@ -20,6 +20,9 @@ export class ProfileComponent implements OnInit {
     aceptado: null,
   };
 
+  anadirAmigo:Amistad;
+
+
   constructor( private route:ActivatedRoute, private ProfileService: ProfileService) { }
  
   verSiAmigo(){
@@ -27,10 +30,10 @@ export class ProfileComponent implements OnInit {
     this.ProfileService.comprobaramistad(this.amistad).subscribe(
       data=>{
         this.amigos=data;
-        console.log('por favor que funvione :c',this.amigos);
         if(!this.amigos){
           this.boton=0;
           console.log('la amistad no existe', this.boton);
+          this.amistad.aceptado=1;
         }else{
           if(this.amigos==0){
             this.boton=3;
@@ -38,12 +41,12 @@ export class ProfileComponent implements OnInit {
           }
           if(this.amigos==1){
             this.boton=1;
-            console.log('la amistd ha sido aceptada', this.boton);
+            console.log('la amistad ha sido aceptada', this.boton);
           }
-          if(this.amigos==2){
+          if(this.amigos==2){  // creo que este caso de prueba nuna se cumple, al rechazar una amistad, me deberpian poder volver a haver ña solicitud????
+            //No olvidar darle un par de vueltas a esto a la hora de refinar
               this.boton=2;
-              console.log('la amistd ha sido rechazada', this.boton);
-    
+              console.log('la amistad ha sido rechazada', this.boton);
           }
         }
       },
@@ -56,15 +59,33 @@ export class ProfileComponent implements OnInit {
   }
 
   agregarAmigo() {
+    this.ProfileService.anadirAmigo(this.amistad).subscribe(
+      data => { 
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      }
+    )
+
     this.boton=3;
   }
-
   eliminarAmigo(){
+    this.ProfileService.eliminarAmigo(this.amigoId).subscribe(
+      data => { 
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      }
+    )
     this.boton=0;
   }
 
   eliminarSolicitud(){
     this.boton=0;
+
+
   }
   
   ngOnInit() {
@@ -87,17 +108,6 @@ export class ProfileComponent implements OnInit {
       }
     )
 
-      // no recuerdo lo que hace :c
-   /* this.ProfileService.datosUsuario().subscribe(
-      data => { console.log(data);
-        this.datos = data.message;
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("no se pueden obtener los datos")
-      }
-    
-    );*/
     
   }
 

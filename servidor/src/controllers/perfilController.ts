@@ -42,15 +42,13 @@ class PerfilController{
             res.json(false);          
         }
         
-      }
-    
-
+      
+    }
 
     //GET ONE
     public async getAllDatos(req:Request, res: Response){
         const { id } = req.params;
         const allDatos = await pool.query('SELECT * FROM colaborador WHERE idColaborador = ?', [id]);
-        console.log(allDatos);
         res.json(allDatos);
     }
 
@@ -80,15 +78,15 @@ class PerfilController{
     // Elimina una amistad del usuario seleccionado, usando el id del usuario iniciado y el id del usuario objetivo
     // tambien se utiliza en el caso de rechazar una amistad
     public async eliminarAmistad(req: Request, res: Response): Promise<any> {
-        await pool.query("DELETE FROM amigo WHERE (idColaborador1=? AND  IdColaborador2=?) OR (idColaborador1=? AND  IdColaborador2=?)",
+        const { id } = req.params
+        await pool.query("DELETE FROM amigo WHERE (idColaborador1=? AND  IdColaborador2=?) OR (idColaborador2=? AND  IdColaborador1=?)",
         [
-            req.body.idColaborador2,
+            id,
             req!.session!.idUserIniciado,
-            req.body.idColaborador2,
+            id,
             req!.session!.idUserIniciado  
         
         ]);
-    
         res.json({message: "amistad eliminada"});
     }
     
