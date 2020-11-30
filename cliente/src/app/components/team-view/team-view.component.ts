@@ -20,11 +20,11 @@ export class TeamViewComponent implements OnInit {
   errorMsg='';
   categorias = null;
   colaboradores = null;
-  equipos=null;
+  equipos=[];
   tareas=null;
   eventos=null;
 
-  teamData = null;
+  teamData=null;
   selectedTeam = null;
   teamId = new IdBringer(null);
   nombre_team='';
@@ -34,12 +34,21 @@ export class TeamViewComponent implements OnInit {
     this.getColaboradoresUser();
     this.getCategorias();
     this.obtenerEquipoUsuario();
+
     //this.getTareasTeam();
     //this.getEventosUser();
+    let mostrarEquipo = this._homeService.getMostrarEquipo();
+
+    if (mostrarEquipo==0 || mostrarEquipo==null){
+      this.getLastTeam();
+    }else{
+      this.selectedTeam = this._homeService.getMostrarEquipo();
+      this.getTeamData();
+    }
    }
 
   ngOnInit(): void {
-    this.getLastTeam();
+    
   }
 
   // GET
@@ -72,9 +81,19 @@ export class TeamViewComponent implements OnInit {
 
   getTeamData(){
     this.teamId.id = this.selectedTeam;
-    this.teamData.id = this.selectedTeam;
+    if (this.teamData == null){
+      this.equipos.forEach(equipo => {
+        if (equipo.nombreEquipo[0].idEquipo == this.selectedTeam){
+          this.teamData = equipo.nombreEquipo[0];
+        }
+      });
+    }
+    
+    //this.teamData.id = this.selectedTeam;
+    
     //this.teamData.nombre = 
     console.log("TEAMID: ", this.teamId);
+    
     this._homeService.getTareasTeam(this.teamId).subscribe(
       data => {
         (this.tareas = data)
@@ -153,7 +172,7 @@ export class TeamViewComponent implements OnInit {
 
   modTask(idtask){
     let idteam = this.teamId.id;
-    let nombreteam = this.selectedTeam.nombre;
+    let nombreteam = this.selectedTeam.nombre; //esto no funciona, selectedTeam es un número
     this.router.navigate(['/taskmod'], { state: {idtask,idteam,nombreteam} });
   }
 
@@ -252,7 +271,8 @@ export class TeamViewComponent implements OnInit {
   obtenerEquipoUsuario(){
     this._homeService.obtenerEquiposUsuario()
     .subscribe(
-      data => {(this.equipos = data)},
+      data => {this.equipos = data;
+      },
       error => {
         this.errorMsg=error.statusText;
         console.log("Error al recibir los equipos");

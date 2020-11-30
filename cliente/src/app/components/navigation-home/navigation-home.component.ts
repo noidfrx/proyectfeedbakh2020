@@ -53,4 +53,14 @@ export class NavigationHomeComponent implements OnInit {
     );
   }
 
+  redireccionar(id){
+    this._homeService.setMostrarEquipo(id);
+    
+    setTimeout(() => 
+          {
+              this.router.navigate(['/uwu']);
+          },
+          500);
+  }
+
 }

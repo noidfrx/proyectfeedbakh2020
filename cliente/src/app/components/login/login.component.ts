@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
       (data) => {
         //La sesión ha sido iniciada correctamente redirige al HOME
         if(data.tutorial == 0){
-          this.router.navigateByUrl('/home');
+          this.router.navigateByUrl('/tutorial');
         }else{
           this.router.navigateByUrl('/home');
         }

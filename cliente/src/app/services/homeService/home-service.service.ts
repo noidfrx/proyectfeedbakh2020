@@ -15,6 +15,8 @@ import {throwError} from 'rxjs';
   providedIn: 'root',
 })
 export class HomeServiceService {
+   mostrarEquipo;
+
   // URL para la petición a servidor
   _url                  = 'http://localhost:3000/login';
   _urlLogout            = 'http://localhost:3000/logout';
@@ -110,6 +112,10 @@ export class HomeServiceService {
       .pipe(catchError(this.errorHandler));
   }
 
+  getMostrarEquipo(){
+    return this.mostrarEquipo;
+  }
+
   
 
   
@@ -173,6 +179,10 @@ export class HomeServiceService {
   banEvent(id:IdBringer){
     return this._http.post<any>(this._urlBanEvento, id)
       .pipe(catchError(this.errorHandler));
+  }
+
+  setMostrarEquipo(id:number){
+    this.mostrarEquipo = id;
   }
 
   

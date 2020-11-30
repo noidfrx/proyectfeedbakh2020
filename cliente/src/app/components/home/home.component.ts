@@ -81,4 +81,9 @@ export class HomeComponent implements OnInit {
     );
   }
 
+  redireccionar(id){
+    this._homeService.setMostrarEquipo(id);
+    this.router.navigate(['/teamview']);
+  }
+
 }

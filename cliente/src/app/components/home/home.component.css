@@ -80,3 +80,7 @@ h3{
 #todoContenido{
     min-height: 498px;
 }
+
+#tituloEquipo{
+    cursor: pointer;
+}

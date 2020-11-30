@@ -23,13 +23,13 @@
                 </a>
             </li>
             <li class="nav-item p-4">
-                <a class="nav-link" routerLink="/teamview">
+                <a class="nav-link" (click)="redireccionar(0)">
                     <i class="fas fa-users"></i>
                     Equipos
                     <i class="fas fa-angle-down"></i>
                 </a>
                 <ul id="equipos">
-                    <li *ngFor="let equipo of equipos"><a href="/home">{{equipo.nombreEquipo[0].nombre}}</a></li>
+                    <li *ngFor="let equipo of equipos"><a (click)=redireccionar(equipo.nombreEquipo[0].idEquipo)>{{equipo.nombreEquipo[0].nombre}}</a></li>
                     <li><a href="crearEquipo"><i class="fas fa-plus"></i> Crear Equipo</a></li>
                 </ul>  
             </li>
