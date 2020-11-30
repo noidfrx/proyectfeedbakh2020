@@ -120,6 +120,7 @@ export class TaskModComponent implements OnInit {
         alert("Tarea modificada con éxito");
         setTimeout(() => 
         {
+            this._homeService.setMostrarEquipo(this.teamId.id);
             this.router.navigate(['/teamview']);
         },
         500);

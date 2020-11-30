@@ -37,17 +37,22 @@ export class TeamViewComponent implements OnInit {
 
     //this.getTareasTeam();
     //this.getEventosUser();
-    let mostrarEquipo = this._homeService.getMostrarEquipo();
-
-    if (mostrarEquipo==0 || mostrarEquipo==null){
-      this.getLastTeam();
-    }else{
-      this.selectedTeam = this._homeService.getMostrarEquipo();
-      this.getTeamData();
-    }
+    
    }
 
   ngOnInit(): void {
+
+    /* Lo que hace este código es ver si desde otro lugar se apretó algún equipo para mostrar
+       Si es cero o null, mostrará el último equipo creado 
+       Si es algún número, se mostrará el equipo con esa id (número)*/
+       let mostrarEquipo = this._homeService.getMostrarEquipo();
+
+       if (mostrarEquipo==0 || mostrarEquipo==null){
+         this.getLastTeam();
+       }else{
+         this.selectedTeam = mostrarEquipo;
+         this.getTeamData();
+       }
     
   }
 
@@ -165,12 +170,18 @@ export class TeamViewComponent implements OnInit {
   }
 
   addTask(){
+    if (this.teamData == null){
+      this.getTeamData();
+    }
     let idteam = this.teamId.id;
     let nombreteam = this.teamData.nombre;
     this.router.navigate(['/taskadd'], { state: {idteam, nombreteam} });
   }
 
   modTask(idtask){
+    if (this.teamData == null){
+      this.getTeamData();
+    }
     let idteam = this.teamId.id;
     let nombreteam = this.selectedTeam.nombre; //esto no funciona, selectedTeam es un número
     this.router.navigate(['/taskmod'], { state: {idtask,idteam,nombreteam} });
@@ -199,12 +210,19 @@ export class TeamViewComponent implements OnInit {
   }
 
   addEvent(){
+    if (this.teamData == null){
+      this.getTeamData();
+    }
     let idteam = this.teamId.id;
+    console.log("ID  TEAM:",idteam);
     let nombreteam = this.teamData.nombre;
     this.router.navigate(['/eventadd'], { state: {idteam, nombreteam} });
   }
 
   modEvent(idevent){
+    if (this.teamData == null){
+      this.getTeamData();
+    }
     let idteam = this.teamId.id;
     let nombreteam = this.teamData.nombre;
     this.router.navigate(['/eventmod'], { state: {idevent, idteam, nombreteam} });

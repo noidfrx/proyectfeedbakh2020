@@ -80,6 +80,7 @@ export class TaskAddComponent implements OnInit {
           alert("Tarea creada con éxito");
           setTimeout(() => 
           {
+              this._homeService.setMostrarEquipo(this.teamId.id);
               this.router.navigate(['/teamview']);
           },
           500);

@@ -136,6 +136,7 @@ export class EventModComponent implements OnInit {
         alert("Evento modificado con éxito");
         setTimeout(() => 
         {
+            this._homeService.setMostrarEquipo(this.teamId.id);
             this.router.navigate(['/teamview']);
         },
         500);

@@ -110,7 +110,7 @@ class IndexController {
       let aux = 0;
       for (let equipo of datos) {
         const nombreEquipo = await pool.query(
-          "SELECT nombre,idEquipo FROM equipo WHERE idEquipo = ?",
+          "SELECT nombre,idEquipo,objetivo FROM equipo WHERE idEquipo = ?",
           [equipo.idEquipo]
         );
 

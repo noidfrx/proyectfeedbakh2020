@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {EquipoService} from '../../services/equipoService/equipo.service';
+import {HomeServiceService} from '../../services/homeService/home-service.service';
 import { Equipo } from 'src/app/models/Equipo';
 import {listaEquipo} from 'src/app/models/listaEquipo';
 import {Router} from '@angular/router';
@@ -25,7 +26,7 @@ export class CreateWorkTeamComponent implements OnInit {
     idColaborador: 0,
   }
 
-  constructor( private equipo: EquipoService, private route:Router) { 
+  constructor( private _homeService: HomeServiceService, private equipo: EquipoService, private route:Router) { 
 
   }
 
@@ -36,8 +37,10 @@ export class CreateWorkTeamComponent implements OnInit {
   
   buscaridEquipo(data:any){
     this.equipo.buscarUltimoEquipo().subscribe(
-      data=> {this.agregarIntegrantes(data);
-              this.route.navigate(['/teamview']);
+      data=> {
+        this.agregarIntegrantes(data);
+        this._homeService.setMostrarEquipo(0);
+        this.route.navigate(['/teamview']);
       
       },
       error=> this.errorMsg = error.statisText
