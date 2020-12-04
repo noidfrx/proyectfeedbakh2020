@@ -61,9 +61,15 @@ export class VistaSolicitudesComponent implements OnInit {
         console.log(error);
       }
     )
+    this.notifiacion.forEach(element=> {
+        if(element.idColaborador===id){
+          element.idColaborador1=true;
+        }
+
+    })
   }
   rechazar(id:number){
-    // lo mismo que arriba, pero aquí funciona solo con la id xc
+    // lo mismo que arriba, pero aquí funciona solo con la id 
     this.consulta.eliminarAmigo(id).subscribe(
       data => { 
         console.log(data);
@@ -73,6 +79,12 @@ export class VistaSolicitudesComponent implements OnInit {
         console.log(error);
       }
     )
+    this.notifiacion.forEach(element=> {
+      if(element.idColaborador===id){
+        element.idColaborador1=true;
+      }
+
+    })
   }
 
 }
