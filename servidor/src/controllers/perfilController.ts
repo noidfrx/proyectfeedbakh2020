@@ -18,7 +18,7 @@ class PerfilController{
 
     // GET amigos colaborador (donde el colaborador es quien hizo la accion de añadir al amigo)
     public async amigos(req:Request, res: Response){
-        const amistades = await pool.query('SELECT colaborador.nombre,colaborador.idColaborador FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', req!.session!.idUserIniciado);
+        const amistades = await pool.query('SELECT colaborador.nombre,colaborador.idColaborador FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 =? AND aceptado =1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', req!.session!.idUserIniciado);
       //  console.log(amistades);
         res.json(amistades);
     }
@@ -46,15 +46,11 @@ class PerfilController{
     }
 
     //busca las solicitudes, de momento solo las de amistad
-    public async obtenerSolicitudes(req:Request, res: Response): Promise<any>{
+    public async obtenerSolicitudes(req:Request, res: Response){
     // qué podemos hacer aquí??????
-        const solicitudes = await pool.query('SELECT * FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 = ? AND aceptado = 0) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador', req!.session!.idUserIniciado);
-        if(solicitudes.length>=1){
-            res.json(solicitudes);
-        }else{
-            res.json(false);          
-        }
-       
+        const solicitudes = await pool.query("SELECT * FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 =? AND aceptado =0) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador",
+         [req!.session!.idUserIniciado]);
+        res.json(solicitudes);  
     }
 
     //GET ONE
@@ -69,7 +65,7 @@ class PerfilController{
         if(estadoAmistad.length>=1){
             res.json(estadoAmistad[0].aceptado);
         }else{
-            res.json(false);           
+            res.json(2);           
         }
     }
     
@@ -119,8 +115,8 @@ class PerfilController{
 
 
     //permite aceptar una amistad cambiando el campo del atributo a "1"
-    public async aceptarAmistad(req:Request, res: Response){
-        console.log(req.body);
+    public async aceptarAmistad(req:Request, res: Response): Promise<any>{
+        console.log("el id del user a cambiar es: ", req.body.idColaborador2);
         const actualizar = await pool.query('UPDATE amigo SET aceptado=? WHERE (idColaborador1=? AND  IdColaborador2=?) OR (idColaborador1=? AND  IdColaborador2=?)',
             [
                 req.body.aceptado,// 0 pendiente, 1 aceptado.

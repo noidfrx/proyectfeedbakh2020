@@ -66,8 +66,8 @@ export class ProfileService {
   }
 
   //acepta una amistad
-  aceptarAmistad(id:number){
-    return this._http.put<any>(`${this._url}/aceptarAmistad`,{withCredentials:true})
+  aceptarAmistad(datos:Amistad){
+    return this._http.put<any>(`${this._url}/aceptarAmistad`,datos,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
   }
 

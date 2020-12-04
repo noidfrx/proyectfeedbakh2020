@@ -26,7 +26,7 @@ class PerfilRoutes {
         this.router.delete("/eliminarAmigo/:id", perfilController_1.perfilController.eliminarAmistad);
         // //PUT Actualizar
         this.router.put('/actualizarPerfil', perfilController_1.perfilController.actualizarPerfil);
-        this.router.put("/aceptarAmistad", perfilController_1.perfilController.aceptarAmistad);
+        this.router.put('/aceptarAmistad', perfilController_1.perfilController.aceptarAmistad);
     }
 }
 const perfilRoutes = new PerfilRoutes();

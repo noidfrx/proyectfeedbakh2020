@@ -29,21 +29,19 @@ export class ProfileComponent implements OnInit {
     // ve el tipo de relación que se tiene, 0=rechazado, 1= aceptado,  2=rechazado, false es que no existe
     this.ProfileService.comprobaramistad(this.amistad).subscribe(
       data=>{
+        
         this.amigos=data;
-          
           if(this.amigos==1){
             this.boton=1;
+            console.log(" 1 estas personas tienen admistad tipo", this.amigos);
 
           }
           if(this.amigos==0){
             this.boton=3;
-          }else{
+            console.log("2 estas personas tienen admistad tipo",this.amigos);
+          }if(this.amigos==2){
             this.boton=0;
-            /*if(this.amigos==2){  // creo que este caso de prueba nuna se cumple, al rechazar una amistad, me deberpian poder volver a haver ña solicitud????
-              //No olvidar darle un par de vueltas a esto a la hora de refinar
-                this.boton=2;
-                console.log('la amistad ha sido rechazada', this.boton);
-            }*/
+            console.log("3 estas personas tienen admistad tipo",this.amigos);
           }
       },
       error =>{
@@ -54,7 +52,6 @@ export class ProfileComponent implements OnInit {
   }
 
   agregarAmigo() {
-    
     this.ProfileService.anadirAmigo(this.amistad).subscribe(
       data => { 
         console.log(data);
@@ -79,9 +76,15 @@ export class ProfileComponent implements OnInit {
   }
 
   eliminarSolicitud(){
+    this.ProfileService.eliminarAmigo(this.amigoId).subscribe(
+      data => { 
+        console.log(data);
+      },
+      error => {
+        console.log(error);
+      }
+    )
     this.boton=0;
-
-
   }
   
   ngOnInit() {

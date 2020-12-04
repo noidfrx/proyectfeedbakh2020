@@ -11,12 +11,7 @@ import { ProfileService } from 'src/app/services/profileService/profile.service'
 export class VistaSolicitudesComponent implements OnInit {
 
   // dato del tipo perfil, que nos dará informacion sobre la persona que hizo la solicitud
-  notifiacion:Profile = {
-    id:null,
-    nombre:null,
-    apellidos:null,
-    email:null,
-  };
+  notifiacion: any[];
   amistad:Amistad = {
     idColaborador1: null,
     idColaborador2: null,
@@ -29,18 +24,18 @@ export class VistaSolicitudesComponent implements OnInit {
   constructor(private consulta:ProfileService) { }
 
   ngOnInit(): void {
-    console.log("estoy en solicitudes de pana");
+    // revisa que hayan solicitudes
     this.consulta.obtenerSolicitudes().subscribe(
-      data=>{
-        this.notifiacion=data;
+      res => {
+        console.log('datos que recibo',res);
+        this.notifiacion=res;
+        // llama a la función que mostrar, que como indica, decide qué opciones mostrará
         this.queMostrar();
-
-      }, err=>{
-        this.errorMsg = err.statusText;
-        console.log(this.errorMsg)
-      }
-    )
-
+      },
+      err => {
+        this.errorMsg=err.statusText;
+        console.log("no se pueden obtener los datos");
+      });
   
   }
 
@@ -54,10 +49,12 @@ export class VistaSolicitudesComponent implements OnInit {
     }
   }
   aceptar(id:number){
-    this.amistad.idColaborador2=id;
-    this.consulta.aceptarAmistad(id).subscribe(
+    // pasa la ide del otro colaborador a un objeti tipo amistad
+    this.amistad.idColaborador2=id as number;
+    this.consulta.aceptarAmistad(this.amistad).subscribe(
       data => { 
         console.log(data);
+        // una vez que añade a los amigos, cambia los botones
         this.botones=1
       },
       error => {
@@ -66,10 +63,11 @@ export class VistaSolicitudesComponent implements OnInit {
     )
   }
   rechazar(id:number){
+    // lo mismo que arriba, pero aquí funciona solo con la id xc
     this.consulta.eliminarAmigo(id).subscribe(
       data => { 
         console.log(data);
-        this.botones=1
+        this.botones=2
       },
       error => {
         console.log(error);

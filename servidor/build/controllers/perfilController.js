@@ -29,7 +29,7 @@ class PerfilController {
     // GET amigos colaborador (donde el colaborador es quien hizo la accion de añadir al amigo)
     amigos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const amistades = yield database_1.default.query('SELECT colaborador.nombre,colaborador.idColaborador FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', req.session.idUserIniciado);
+            const amistades = yield database_1.default.query('SELECT colaborador.nombre,colaborador.idColaborador FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 =? AND aceptado =1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', req.session.idUserIniciado);
             //  console.log(amistades);
             res.json(amistades);
         });
@@ -62,13 +62,8 @@ class PerfilController {
     obtenerSolicitudes(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             // qué podemos hacer aquí??????
-            const solicitudes = yield database_1.default.query('SELECT * FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 = ? AND aceptado = 0) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador', req.session.idUserIniciado);
-            if (solicitudes.length >= 1) {
-                res.json(solicitudes);
-            }
-            else {
-                res.json(false);
-            }
+            const solicitudes = yield database_1.default.query("SELECT * FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 =? AND aceptado =0) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador", [req.session.idUserIniciado]);
+            res.json(solicitudes);
         });
     }
     //GET ONE
@@ -86,7 +81,7 @@ class PerfilController {
                 res.json(estadoAmistad[0].aceptado);
             }
             else {
-                res.json(false);
+                res.json(2);
             }
         });
     }
@@ -134,7 +129,7 @@ class PerfilController {
     //permite aceptar una amistad cambiando el campo del atributo a "1"
     aceptarAmistad(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(req.body);
+            console.log("el id del user a cambiar es: ", req.body.idColaborador2);
             const actualizar = yield database_1.default.query('UPDATE amigo SET aceptado=? WHERE (idColaborador1=? AND  IdColaborador2=?) OR (idColaborador1=? AND  IdColaborador2=?)', [
                 req.body.aceptado,
                 req.session.idUserIniciado,

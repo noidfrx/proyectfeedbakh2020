@@ -44,7 +44,7 @@ class PerfilRoutes{
         // //PUT Actualizar
         this.router.put('/actualizarPerfil',perfilController.actualizarPerfil);
 
-        this.router.put("/aceptarAmistad",perfilController.aceptarAmistad);
+        this.router.put('/aceptarAmistad',perfilController.aceptarAmistad);
     }
 
 }

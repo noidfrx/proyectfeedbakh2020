@@ -27,13 +27,16 @@
                     <br>
                     <button class="btn btn-primary" *ngIf="botones==0" (click)="aceptar(datos.idColaborador)">Aceptar</button>
                     <button class="btn btn-primary" *ngIf="botones==0" (click)="rechazar(datos.idColaborador)">Rechazar</button>
-                    <button class="btn btn-primary" *ngIf="botones==1" disabled="true">Solicitud aceptada</button>
+                    <!--a estos bontones cambia cuando hacemos click en los de arriba-->
+                    <button class="btn btn-primary" *ngIf="botones==1" disabled="true">Solicitud aceptada</button> 
                     <button class="btn btn-primary" *ngIf="botones==2" disabled="true">Solicitud rechazada</button>
                 </div>
             </div>
         </div>
     </div>
 <!--
+
+    esto se mostrará cuando no hayan notificaciones, desactivado para desarrollo c:
     <div class="row" *ngIf="mostrarNot">
           <div  class="div col-md-8 offset-2" id="cuadro">
             <div class="col-md-6 text-center">
