@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
   amistad:Amistad = {
     idColaborador1: null,
     idColaborador2: null,
-    aceptado: null,
+    aceptado: 0,
   };
 
   anadirAmigo:Amistad;
@@ -30,35 +30,31 @@ export class ProfileComponent implements OnInit {
     this.ProfileService.comprobaramistad(this.amistad).subscribe(
       data=>{
         this.amigos=data;
-        if(!this.amigos){
-          this.boton=0;
-          console.log('la amistad no existe', this.boton);
-          this.amistad.aceptado=1;
-        }else{
-          if(this.amigos==0){
-            this.boton=3;
-            console.log('la amistad está pendiente', this.boton);
-          }
+          
           if(this.amigos==1){
             this.boton=1;
-            console.log('la amistad ha sido aceptada', this.boton);
+
           }
-          if(this.amigos==2){  // creo que este caso de prueba nuna se cumple, al rechazar una amistad, me deberpian poder volver a haver ña solicitud????
-            //No olvidar darle un par de vueltas a esto a la hora de refinar
-              this.boton=2;
-              console.log('la amistad ha sido rechazada', this.boton);
+          if(this.amigos==0){
+            this.boton=3;
+          }else{
+            this.boton=0;
+            /*if(this.amigos==2){  // creo que este caso de prueba nuna se cumple, al rechazar una amistad, me deberpian poder volver a haver ña solicitud????
+              //No olvidar darle un par de vueltas a esto a la hora de refinar
+                this.boton=2;
+                console.log('la amistad ha sido rechazada', this.boton);
+            }*/
           }
-        }
       },
       error =>{
         this.errorMsg=error.statusText;
         console.log("no se pueden obtener los datos", this.errorMsg);
       }
     )
-      console.log('amigos?',this.amigos[0].aceptado);
   }
 
   agregarAmigo() {
+    
     this.ProfileService.anadirAmigo(this.amistad).subscribe(
       data => { 
         console.log(data);

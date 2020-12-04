@@ -45,6 +45,18 @@ class PerfilController{
       
     }
 
+    //busca las solicitudes, de momento solo las de amistad
+    public async obtenerSolicitudes(req:Request, res: Response): Promise<any>{
+    // qué podemos hacer aquí??????
+        const solicitudes = await pool.query('SELECT * FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 = ? AND aceptado = 0) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador', req!.session!.idUserIniciado);
+        if(solicitudes.length>=1){
+            res.json(solicitudes);
+        }else{
+            res.json(false);          
+        }
+       
+    }
+
     //GET ONE
     public async getAllDatos(req:Request, res: Response){
         const { id } = req.params;

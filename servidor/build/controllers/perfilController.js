@@ -58,6 +58,19 @@ class PerfilController {
             }
         });
     }
+    //busca las solicitudes, de momento solo las de amistad
+    obtenerSolicitudes(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // qué podemos hacer aquí??????
+            const solicitudes = yield database_1.default.query('SELECT * FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 = ? AND aceptado = 0) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador', req.session.idUserIniciado);
+            if (solicitudes.length >= 1) {
+                res.json(solicitudes);
+            }
+            else {
+                res.json(false);
+            }
+        });
+    }
     //GET ONE
     getAllDatos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {

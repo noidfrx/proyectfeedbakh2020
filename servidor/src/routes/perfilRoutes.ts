@@ -23,6 +23,8 @@ class PerfilRoutes{
 
         this.router.get('/amigos2',perfilController.amigosV2);
 
+        this.router.get('/obtenerSolicitudes',perfilController.obtenerSolicitudes);
+
         
 
 

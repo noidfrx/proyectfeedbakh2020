@@ -20,6 +20,7 @@ import { AuthWelcome } from './security/auth.welcome';
 import { CreateWorkTeamComponent } from './components/create-work-team/create-work-team.component';
 import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usuarios.component';
 import { UwuComponent } from './components/uwu/uwu.component';
+import { VistaSolicitudesComponent } from './components/vista-solicitudes/vista-solicitudes.component';
 
 const routes: Routes = [
 
@@ -104,7 +105,12 @@ const routes: Routes = [
     path:'uwu',
     component: UwuComponent,
     canActivate: [AuthGuard]
-  }
+  },
+  {
+    path:'Notificaciones',
+    component: VistaSolicitudesComponent,
+    canActivate: [AuthGuard]
+  },
 
 ];
 

@@ -21,22 +21,22 @@ export class ProfileService {
   constructor(private _http: HttpClient) { }
 
   datosUsuario(){
-    //Post cambiar si es get
-
     return this._http.get<any>(`${this._url}/datosIngresado`,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
-  
+  }
+
+  obtenerSolicitudes(){
+    return this._http.get<any>(`${this._url}/obtenerSolicitudes`,{withCredentials:true})
+    .pipe(catchError(this.errorHandler));
   }
 
   amigos(){
-    //Post cambiar si es get
     return this._http.get<any>(`${this._url}/amigos`,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
   
   }
 
   datosAmigo(id){
-    //Post cambiar si es get
     return this._http.get<any>(`${this._url}/todosLosDatos/${id}`,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
   
@@ -65,6 +65,11 @@ export class ProfileService {
     .pipe(catchError(this.errorHandler));
   }
 
+  //acepta una amistad
+  aceptarAmistad(id:number){
+    return this._http.put<any>(`${this._url}/aceptarAmistad`,{withCredentials:true})
+    .pipe(catchError(this.errorHandler));
+  }
 
 
 
