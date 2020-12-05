@@ -16,12 +16,8 @@
             <li>
                 <a href="crearEquipo"><i class="fa fa-group"></i> Nuevo Equipo de trabajo</a>
             </li>
-            <li>
-                <a href="Notificaciones"><i class="fa fa-bell"></i>  Solicitudes</a> <!-- si hay solicitudes, debería mostrarse este-->
-            </li>
-
-            <li>
-                <a href="#"><i class="far fa-bell"></i>  Solicitudes</a><!-- si no hay solicitudes, debería mostrarse este-->
+            <li *ngIf="mostrarNot">
+                <a href="Notificaciones"><i class="fa fa-bell" ></i>  Solicitudes</a> <!-- si hay solicitudes, debería mostrarse este-->
             </li>
         </ul>
             

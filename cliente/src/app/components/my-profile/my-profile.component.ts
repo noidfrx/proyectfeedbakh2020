@@ -9,17 +9,16 @@ export class MyProfileComponent implements OnInit {
   datos: any;
   errorMsg='';
   amigos: any;
+  modoEdicion=true;
   constructor( private ProfileService: ProfileService) { }
 
   ngOnInit() {
     this.ProfileService.datosUsuario().subscribe(
       res => { console.log(res);
         this.datos = res;
-        console.log('datos que recibo',this.datos);
       },
       err => {
         this.errorMsg=err.statusText;
-        console.log("no se pueden obtener los datos")
       }
     
     );
@@ -27,13 +26,10 @@ export class MyProfileComponent implements OnInit {
     this.ProfileService.amigos().subscribe(
       res => { console.log(res);
         this.amigos = res;
-        console.log(this.amigos[0].nombre);
       },
       err => {
         this.errorMsg=err.statusText;
-        console.log("no se pueden obtener los datos")
       }
-    
     );
 
     

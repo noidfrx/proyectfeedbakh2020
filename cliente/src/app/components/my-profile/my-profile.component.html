@@ -4,10 +4,10 @@
             <div class="col-md-3" >
                 <app-sidebar></app-sidebar>
             </div>
-
+            <!--Muestro la imagen de perfil-->
             <div class="col-md-9" id="espacio">
                 <div class="row">
-                    <div class= "col s-12" id="espacio">
+                    <div class= "col-md-5" id="espacio">
                         <h1>Mi perfil</h1>
                         <br>
                         <div class="text-center" >
@@ -18,10 +18,13 @@
                             <br>
                         </div>
                     </div>
-                    <div class= "col-md-6" id="espacio"></div>
-                </div>  
+                    <div class= "col-md-6" id="espacio">
+                        <p>aquí irá la seleccion de imágen</p>
+                    </div>
+                </div> 
+                <!--termino de mostrar la imagen de perfil y comienzo a mostrar los datos--> 
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-5" *ngIf="!modoEdicion">
                         <ul>
                             <li>Nombres:</li>
                             <p class="tabulacion" > {{datos[0].nombre}}</p>
@@ -33,7 +36,35 @@
                         </ul>
                         <button [disabled]="true" class="btn btn-primary" id="botonEditar">Editar</button>
                     </div>
-                    <div class="col-md-1"></div>
+
+                    <div class="col-md-5" *ngIf="modoEdicion">
+                        <form>
+                            <div class="form-group">
+                              <label for="nombre">Nombre</label> 
+                              <input id="nombre" name="nombre" type="text" required="true" class="form-control">
+                            </div>
+                            <div class="form-group">
+                              <label for="apellidos">Apellidos</label> 
+                              <input id="apellidos" name="apellidos" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                              <label for="email">Email</label> 
+                              <input id="email" name="email" type="text" required="true" class="form-control">
+                            </div> 
+                            <div class="form-group">
+                              <button name="submit" type="submit" class="btn btn-primary">Aceptar</button>
+                              
+                              <button name="Cancelar" type="submit" class="btn btn-primary">Aceptar</button>
+                            </div>
+                          </form>
+                    </div>
+
+                    <div class="col-md-1">
+                    </div>
+
+
+
+                    <!--muestro a los amigos-->
                     <div id="cuadro" class="col-md-5 text-center">
                         <!-- lo que sigue, se generará solo una vez que tengamos conexion con el servidor, esto es solo un ejemplo\-->
                         <h1>Amigos</h1>
