@@ -42,11 +42,15 @@ li{
     text-align: center;
 }
 
-#espacio{
+#espacio,#todoContenido{
     position:static;
 }
 
 #botonAmistad{
     margin-top: 20%;
     background-color: rgb(255, 144, 144);
+}
+
+#todoContenido{
+    min-height: 78vh;
 }

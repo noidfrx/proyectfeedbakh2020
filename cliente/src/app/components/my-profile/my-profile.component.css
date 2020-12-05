@@ -43,9 +43,13 @@ li{
     text-align: center;
 }
 
-#espacio{
+#espacio,#todoContenido{
     position:static;
 }
 #margenbottom{
     margin-bottom: 20px;
+}
+
+#todoContenido{
+    min-height: 78vh;
 }
