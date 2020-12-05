@@ -7,6 +7,7 @@ import {Profile} from '../../models/Profile'
 import {catchError} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 import { Amistad } from 'src/app/models/Amistad';
+import { stringify } from 'querystring';
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +75,41 @@ export class ProfileService {
   actualizarPerfil(datos:Profile){
     return this._http.put<any>(`${this._url}/actualizarPerfil`,datos,{withCredentials:true})
     .pipe(catchError(this.errorHandler));
+  }
+
+  fotoPerfil(foto:number){
+    
+    if(foto==0){
+      return "../../../assets/easter-bunny.png";
+    }
+    if(foto==1){
+      return "../../../assets/bicycle-5.svg";
+    }
+    if(foto==2){
+      return "../../../assets/cat-3.svg";
+    }
+    if(foto==3){
+      return "../../../assets/customer-4.svg";
+    }
+    if(foto==4){
+      return "../../../assets/turtle.svg";
+    }
+    if(foto==5){
+      return "../../../assets/horse-24.svg";
+    }
+    if(foto==6){
+      return "../../../assets/iconmonstr-easter-19.svg";
+    }
+    if(foto==7){
+      return "../../../assets/school-26.svg";
+    }
+    if(foto==8){
+      return "../../../assets/school-27.svg";
+    }
+    if(foto==9){
+      return "../../../assets/tree-8.svg";
+    }
+    return "hola";
   }
 
 

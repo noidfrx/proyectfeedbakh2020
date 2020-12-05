@@ -11,19 +11,55 @@
                         <h1>Mi perfil</h1>
                         <br>
                         <div class="text-center" >
-                            <img id="cuadro"  src="../../../assets/easter-bunny.png" width="100px" height="100px" class="img-fluid">
+                            <img id="cuadro"  src="{{foto}}" width="100px" height="100px" class="img-fluid">
                             
                             <br>
                             <br>
                             <br>
                         </div>
                     </div>
-                    <div class= "col-md-6" id="espacio">
-                        <p>aquí irá la seleccion de imágen</p>
+                    <div class= "col-md-6" id="espacio" *ngIf="!modoEdicion">
+                    </div>
+                    <!--muestra la primera danda de imágenes, cuando se está en modo edición-->
+                    <div class= "col-md-6" id="espacio" *ngIf="modoEdicion" style="margin-top: 50px;" >
+                        <p>Seleccione una imágen de perfil.</p>
+                       <div class="row">
+                           <div class="col-md-6 " (click)="cambiarFoto(0)">
+                                <div class="card text-center" style="max-width: 130px; max-height: 140px;">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="col-md-6 " (click)="cambiarFoto(1)">
+                                <div class="card text-center" style="max-width: 130px; max-height: 140px;">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/bicycle-5.svg" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
+                       </div>
+                       <div class="row">
+                        <div class="col-md-6 " (click)="cambiarFoto(2)">
+                             <div class="card text-center" style="max-width: 130px; max-height: 140px;">
+                                 <div class="card-body">
+                                     <img  src="../../../assets/cat-3.svg" width="70px" height="70px" class="img-fluid">
+                                 </div>  
+                             </div>
+                         </div>
+                         <div class="col-md-6 " (click)="cambiarFoto(3)">
+                             <div class="card text-center" style="max-width: 130px; max-height: 140px;">
+                                 <div class="card-body">
+                                     <img  src="../../../assets/customer-4.svg" width="70px" height="70px" class="img-fluid">
+                                 </div>  
+                             </div>
+                         </div>
+                        </div>    
                     </div>
                 </div> 
                 <!--termino de mostrar la imagen de perfil y comienzo a mostrar los datos--> 
                 <div class="row">
+                    <!--muestra los datos del usuario-->
                     <div class="col-md-5" id="margenbottom" *ngIf="!modoEdicion">
                         <ul>
                             <li>Nombres:</li>
@@ -59,22 +95,21 @@
                           </form>
                     </div>
 
-                    <div class="col-md-1">
+                    <div class="col-md-1" *ngIf="!modoEdicion">
                     </div>
 
 
 
                     <!--muestro a los amigos-->
-                    <div id="cuadro" class="col-md-5 text-center">
+                    <div id="cuadro" class="col-md-5 text-center" *ngIf="!modoEdicion">
                         <!-- lo que sigue, se generará solo una vez que tengamos conexion con el servidor, esto es solo un ejemplo\-->
                         <h1>Amigos</h1>
                         <br>
                         <div class="row">
-                           
                             <div class="col-md-6 " *ngIf="amigos[0]" >
                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                     <div class="card-body">
-                                        <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                        <img  src="{{ProfileService.fotoPerfil(amigos[0].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                     </div>  
                                     <div class="card-header">
                                         <a routerLink="/perfiles/{{amigos[0].idColaborador}}" > {{amigos[0].nombre}} </a>
@@ -84,7 +119,7 @@
                             <div class="col-md-6" *ngIf="amigos[1]">
                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                     <div class="card-body">
-                                        <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                        <img  src="{{ProfileService.fotoPerfil(amigos[1].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                     </div>  
                                 <div class="card-header">
                                     <a routerLink="/perfiles/{{amigos[1].idColaborador}}" > {{amigos[1].nombre}} </a>
@@ -97,7 +132,7 @@
                             <div class="col-md-6" *ngIf="amigos[2]">
                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                     <div class="card-body">
-                                        <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                        <img  src="{{ProfileService.fotoPerfil(amigos[2].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                     </div>  
                                     <div class="card-header">  
                                         <a routerLink="/perfiles/{{amigos[2].idColaborador}}" > {{amigos[2].nombre}} </a>
@@ -107,7 +142,7 @@
                             <div class="col-md-6" *ngIf="amigos[3]">
                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                     <div class="card-body">
-                                        <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                        <img  src="{{ProfileService.fotoPerfil(amigos[3].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                     </div>  
                                 <div class="card-header"> 
                                     <a routerLink="/perfiles/{{amigos[3].idColaborador}}" > {{amigos[3].nombre}} </a>
@@ -119,6 +154,42 @@
                             <div class="col-md-12" *ngIf="amigos[4]">
                                 <a routerLink="/register" class="float-right">Mostrar todos</a> 
                             </div>
+                    </div>
+                    <!-- muestra la segunda tanda de imágenes, cuando se está en modo edicion-->
+                    <div class="col-md-6" *ngIf="modoEdicion">
+                        <div class="row">
+                            <div class="col-md-6 " (click)="cambiarFoto(4)">
+                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
+                                     <div class="card-body">
+                                         <img  src="../../../assets/turtle.svg" width="70px" height="70px" class="img-fluid">
+                                     </div>  
+                                 </div>
+                             </div>
+                             <div class="col-md-6 " (click)="cambiarFoto(5)">
+                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
+                                     <div class="card-body">
+                                         <img  src="../../../assets/horse-24.svg" width="70px" height="70px" class="img-fluid">
+                                     </div>  
+                                 </div>
+                             </div>
+                        </div>
+                        <div class="row">
+                         <div class="col-md-6 " (click)="cambiarFoto(6)">
+                              <div class="card text-center" style="max-width: 130px; max-height: 140px;">
+                                  <div class="card-body">
+                                      <img  src="../../../assets/iconmonstr-easter-19.svg" width="70px" height="70px" class="img-fluid">
+                                  </div>  
+                              </div>
+                          </div>
+                          <div class="col-md-6 " (click)="cambiarFoto(7)">
+                              <div class="card text-center" style="max-width: 130px; max-height: 140px;">
+                                  <div class="card-body">
+                                      <img  src="../../../assets/school-26.svg" width="70px" height="70px" class="img-fluid">
+                                  </div>  
+                              </div>
+                          </div>
+                         </div>
+                
                     </div>
                 </div>
             </div>

@@ -29,7 +29,7 @@ class PerfilController {
     // GET amigos colaborador (donde el colaborador es quien hizo la accion de añadir al amigo)
     amigos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const amistades = yield database_1.default.query('SELECT colaborador.nombre,colaborador.idColaborador FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 =? AND aceptado =1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', [req.session.idUserIniciado]);
+            const amistades = yield database_1.default.query('SELECT colaborador.nombre,colaborador.idColaborador,colaborador.fotoPerfil FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 =? AND aceptado =1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', [req.session.idUserIniciado]);
             //  console.log(amistades);
             res.json(amistades);
         });
@@ -37,7 +37,7 @@ class PerfilController {
     // GET amigos colaborador (donde el colaborador es a quien le han enviado la invitación), es lo mismo de arriba pero con las credenciales dadas vueltas en la lista de amigos
     amigosV2(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const amistades2 = yield database_1.default.query('SELECT colaborador.nombre FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador', [req.session.idUserIniciado]);
+            const amistades2 = yield database_1.default.query('SELECT colaborador.nombre,colaborador.idColaborador,colaborador.fotoPerfil FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador', [req.session.idUserIniciado]);
             //console.log(req!.session!.nombreUserIniciado);
             res.json(amistades2);
             // console.log(req!.session!.idUserIniciado);
@@ -117,12 +117,12 @@ class PerfilController {
     actualizarPerfil(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
-            const actualizar = yield database_1.default.query('UPDATE colaborador SET nombre=? ,apellidos=? ,fotoPerfil=0 WHERE colaborador.idColaborador=?', 
+            const actualizar = yield database_1.default.query('UPDATE colaborador SET nombre=? ,apellidos=? ,fotoPerfil=? WHERE colaborador.idColaborador=?', 
             //UPDATE `colaborador` SET `nombre` = 'juanita' WHERE `colaborador`.`idColaborador` = 3;
             [
                 req.body.nombre,
                 req.body.apellidos,
-                // req.body.fotoPerfil, falta configurar las fotos, preguntar al eduardo
+                req.body.fotoPerfil,
                 req.session.idUserIniciado,
             ]);
             req.session.nombreUserIniciado = req.body.nombre;

@@ -27,7 +27,7 @@
         <div *ngFor="let datos of usuarios"  class="div col-md-8 offset-2" id="cuadro">
             <div class="row">
                 <div class="col-md-2">
-                    <img id="cuadro"  src="../../../assets/easter-bunny.png" width="100px" height="100px" class="img">
+                    <img id="cuadro"  src="{{buscar.fotoPerfil(datos.fotoPerfil)}}" width="100px" height="100px" class="img">
                     <br>
                     <br>
                     <br>
@@ -55,10 +55,8 @@
 
 
         <div *ngIf="mostrar==0" class="row">
-          <div  class="div col-md-8 offset-2" id="cuadro">
-            <div class="col-md-6 text-center">
+          <div  class="div col-md-8 offset-2 text-center" id="cuadro">
               <p id="alerta"> No se ha realizado Ninguna búsqueda aún</p>
-            </div>
           </div>
         </div>
         
@@ -67,9 +65,7 @@
 
         <div *ngIf="mostrar==2" class="row">
           <div  class="div col-md-8 offset-2 text-center" id="cuadro">
-            <div class="col-md-6 text-center">
               <p  id="alerta"> No se ha encontrado el usuario</p>
-            </div>
           </div>
         </div>
 

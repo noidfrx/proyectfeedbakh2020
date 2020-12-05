@@ -9,12 +9,14 @@ import {ProfileService} from '../../services/profileService/profile.service';
 export class MyProfileComponent implements OnInit {
   datos: any;
   errorMsg='';
-  amigos: any;
+  amigos: any[];
+  foto="";
   modoEdicion=false;
   nuevosDatos: Profile ={
     nombre:"",
     apellidos:"",
-    email:""
+    email:"",
+    fotoPerfil:0,
 
   };
   constructor( private ProfileService: ProfileService) { }
@@ -25,6 +27,8 @@ export class MyProfileComponent implements OnInit {
         this.nuevosDatos.nombre=res[0].nombre;
         this.nuevosDatos.apellidos=res[0].apellidos;
         this.nuevosDatos.email=res[0].email;
+        this.nuevosDatos.fotoPerfil=res[0].fotoPerfil;
+        this.foto=this.ProfileService.fotoPerfil(this.nuevosDatos.fotoPerfil);
       },
       err => {
         this.errorMsg=err.statusText;
@@ -34,7 +38,8 @@ export class MyProfileComponent implements OnInit {
 
     this.ProfileService.amigos().subscribe(
       res => { console.log(res);
-        this.amigos = res;
+        this.amigos= res;
+        console.log("mi foto es:", this.amigos[0].fotoPerfil);
       },
       err => {
         this.errorMsg=err.statusText;
@@ -61,5 +66,10 @@ export class MyProfileComponent implements OnInit {
    }
    editar(){
      this.modoEdicion=true;
-   }
+  }
+
+  cambiarFoto(id:number){
+    this.foto=this.ProfileService.fotoPerfil(id);
+    this.nuevosDatos.fotoPerfil=id;
+  }
 }
