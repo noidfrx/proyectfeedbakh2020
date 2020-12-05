@@ -40,3 +40,9 @@ button{
 #espacio{
     position: static;
 }
+
+.btn:disabled{
+    opacity: 1;
+    background-color: rgb(166, 215, 201);
+    border-color: rgb(166, 215, 201);
+}
