@@ -1,5 +1,5 @@
 <app-navigation-home></app-navigation-home>
-<div class="container-fluid">
+<div id="todoContenido" class="container-fluid">
     <div class="row"  style="margin-top: 20px;">
         <div class="col-md-8 text-center offset-2">
             <h1>Nuevas solicitudes</h1>
@@ -26,7 +26,7 @@
                 <div id="espacio" class="col-md 1 text-right">
                     <br>
                     <button class="btn btn-primary" *ngIf="datos.idColaborador1===datos.idColaborador" (click)="aceptar(datos.idColaborador)">Aceptar</button>
-                    <button class="btn btn-primary" *ngIf="datos.idColaborador1===datos.idColaborador" (click)="rechazar(datos.idColaborador)">Rechazar</button>
+                    <button class="btn btn-danger" *ngIf="datos.idColaborador1===datos.idColaborador" (click)="rechazar(datos.idColaborador)">Rechazar</button>
                     <!--a estos bontones cambia cuando hacemos click en los de arriba-->
                     <button class="btn btn-primary" *ngIf="datos.idColaborador1===true" disabled="true">Solicitud aceptada</button> 
                     <button class="btn btn-primary" *ngIf="datos.idColaborador1===false" disabled="true">Solicitud rechazada</button>

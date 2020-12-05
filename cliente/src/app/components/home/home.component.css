@@ -74,11 +74,11 @@ h3{
 #noequipo{
     text-align: center;
     margin-top: 5%;
-    margin-bottom: 21.6%;
+    /*margin-bottom: 21.6%;*/
 }
 
 #todoContenido{
-    min-height: 498px;
+    min-height: 78vh;
 }
 
 #tituloEquipo{

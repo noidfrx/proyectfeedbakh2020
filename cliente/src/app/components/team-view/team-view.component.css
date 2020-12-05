@@ -103,3 +103,7 @@ p{
     border-width: 1px;
     border-color: black;
 }
+
+#todoContenido{
+    min-height: 78vh;
+}

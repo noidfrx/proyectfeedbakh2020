@@ -16,3 +16,11 @@ p{
 #zona_maker{
     background-color: rgb(255, 235, 235);
 }
+
+#todoContenido{
+    margin-left: 20%;
+}
+
+#todoContenido,#zona_maker,#static{
+    position: static;
+}
