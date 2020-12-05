@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
       });
   }
   queMostrar(){
-    if(!this.notifiacion){
+    if(this.notifiacion.length==0){
       this.mostrarNot=false;
       console.log("mostrar campana 1");
     }else{
