@@ -42,7 +42,7 @@ export class VistaSolicitudesComponent implements OnInit {
   // funcion que dicierne sobre qué mensaje mostrar por defecto dentro de la página, dependiendo
   // de si hay notificaciones o no
   queMostrar(){
-    if(!this.notifiacion){
+    if(this.notifiacion.length==0){
       this.mostrarNot=false;
     }else{
       this.mostrarNot=true;

@@ -3,6 +3,7 @@
     <div class="row"  style="margin-top: 20px;">
         <div class="col-md-8 text-center offset-2">
             <h1>Nuevas solicitudes</h1>
+            <br>
         </div>
     </div>
 
@@ -34,17 +35,12 @@
             </div>
         </div>
     </div>
-<!--
 
-    esto se mostrará cuando no hayan notificaciones, desactivado para desarrollo c:
-    <div class="row" *ngIf="mostrarNot">
-          <div  class="div col-md-8 offset-2" id="cuadro">
-            <div class="col-md-6 text-center">
+    <div class="row" *ngIf="!mostrarNot">
+            <div class="div col-md-8 offset-2 text-center" id="cuadro">
               <p id="alerta"> No hay nuevas notificaciones</p>
             </div>
-          </div>
-        </div>
--->
+    </div>
         
 </div>
 

@@ -71,6 +71,10 @@ export class ProfileService {
     .pipe(catchError(this.errorHandler));
   }
 
+  actualizarPerfil(datos:Profile){
+    return this._http.put<any>(`${this._url}/actualizarPerfil`,datos,{withCredentials:true})
+    .pipe(catchError(this.errorHandler));
+  }
 
 
   //Manejo de errores

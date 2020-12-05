@@ -24,37 +24,37 @@
                 </div> 
                 <!--termino de mostrar la imagen de perfil y comienzo a mostrar los datos--> 
                 <div class="row">
-                    <div class="col-md-5" *ngIf="!modoEdicion">
+                    <div class="col-md-5" id="margenbottom" *ngIf="!modoEdicion">
                         <ul>
                             <li>Nombres:</li>
-                            <p class="tabulacion" > {{datos[0].nombre}}</p>
+                            <p class="tabulacion" > {{nuevosDatos.nombre}}</p>
                             <li>Apellidos:</li>
-                            <p class="tabulacion"> {{datos[0].apellidos}}</p>
+                            <p class="tabulacion"> {{nuevosDatos.apellidos}}</p>
                             <li>Correo:</li>
-                            <p class="tabulacion">{{datos[0].email}}</p>
+                            <p class="tabulacion">{{nuevosDatos.email}}</p>
 
                         </ul>
-                        <button [disabled]="true" class="btn btn-primary" id="botonEditar">Editar</button>
+                        <button [disabled]="false" class="btn btn-primary"(click)="editar()" id="botonEditar">Editar</button>
                     </div>
-
-                    <div class="col-md-5" *ngIf="modoEdicion">
-                        <form>
+                    <!--al entrar  a modo edicion se activa este formulario-->
+                    <div class="col-md-5" *ngIf="modoEdicion" id="margenbottom">
+                        <form (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate>
                             <div class="form-group">
                               <label for="nombre">Nombre</label> 
-                              <input id="nombre" name="nombre" type="text" required="true" class="form-control">
+                              <input id="nombre" name="nombre" [(ngModel)]="nuevosDatos.nombre"  type="text" required="true" class="form-control">
                             </div>
                             <div class="form-group">
                               <label for="apellidos">Apellidos</label> 
-                              <input id="apellidos" name="apellidos" type="text" class="form-control">
+                              <input id="apellidos" name="apellidos" [(ngModel)]="nuevosDatos.apellidos" type="text" class="form-control">
                             </div>
                             <div class="form-group">
                               <label for="email">Email</label> 
-                              <input id="email" name="email" type="text" required="true" class="form-control">
+                              <input id="email" name="email" [(ngModel)]="nuevosDatos.email" type="text" required="true" class="form-control">
                             </div> 
                             <div class="form-group">
                               <button name="submit" type="submit" class="btn btn-primary">Aceptar</button>
                               
-                              <button name="Cancelar" type="submit" class="btn btn-primary">Aceptar</button>
+                              <button name="Cancelar" class="btn btn-primary" (click)="cancelar()">Cancelar</button>
                             </div>
                           </form>
                     </div>
