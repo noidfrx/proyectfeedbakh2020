@@ -81,7 +81,7 @@ export class VistaSolicitudesComponent implements OnInit {
     )
     this.notifiacion.forEach(element=> {
       if(element.idColaborador===id){
-        element.idColaborador1=true;
+        element.idColaborador1=false;
       }
 
     })

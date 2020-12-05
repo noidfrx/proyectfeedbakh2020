@@ -46,7 +46,7 @@ class PerfilController {
     // devuelve los usuarios ingresados en la busqueda, está aquí porque para llegar a esta opción solo se puede hacer mediante el
     buscarUsuario(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const Usuarios = yield database_1.default.query('SELECT * FROM colaborador WHERE nombre LIKE ? OR email = ?', [
+            const Usuarios = yield database_1.default.query('SELECT * FROM colaborador WHERE nombre LIKE "%"?"%" OR email LIKE "%"?"%"', [
                 req.body.nombre,
                 req.body.nombre
             ]);

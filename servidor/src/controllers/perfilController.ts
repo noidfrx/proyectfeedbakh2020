@@ -33,7 +33,7 @@ class PerfilController{
 
     // devuelve los usuarios ingresados en la busqueda, está aquí porque para llegar a esta opción solo se puede hacer mediante el
     public async buscarUsuario(req:Request, res: Response): Promise<any>{
-        const Usuarios = await pool.query('SELECT * FROM colaborador WHERE nombre LIKE ? OR email = ?',[
+        const Usuarios = await pool.query('SELECT * FROM colaborador WHERE nombre LIKE "%"?"%" OR email LIKE "%"?"%"',[
             req.body.nombre,
             req.body.nombre]);
         if(Usuarios.length>=1){
