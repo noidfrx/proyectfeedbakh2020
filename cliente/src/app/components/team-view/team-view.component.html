@@ -14,21 +14,6 @@
                 <h1 class="text-center" [(ngModel)]="nombre_team">{{nombre_team}}</h1>  
                 <br/-->
                 
-                <h2 class='text-center'>Añadir miembro</h2>
-                <div class='form-group'>
-                    <select 
-                        class="custom-select col-md-4 offset-md-4"
-                        [(ngModel)]="member_selector"
-                    >
-                        <option selected value="0">Seleccione un miembro</option>
-                        <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador[0].idColaborador}}'>
-                            {{colaborador.nombreColaborador[0].nombre}} {{colaborador.apellidosColaborador[0].apellidos}} 
-                        </option>
-                    </select>
-                    <button (click)="addMember()">Añadir</button>
-                </div>
-
-                <br/>
                 
                 <h2 class='text-center'>Equipos <button>+</button></h2>
                 <!--form (ngSubmit)="getTeamData()" #registerForm="ngForm"-->
@@ -48,10 +33,26 @@
 
                 <br/>
 
+                <div class='form-group' *ngIf="team_owner_checker != 0">
+                    <h2 class='text-center'>Añadir miembro</h2>
+                    <select 
+                        class="custom-select col-md-4 offset-md-4"
+                        [(ngModel)]="member_selector"
+                    >
+                        <option selected value="0">Seleccione un miembro</option>
+                        <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador[0].idColaborador}}'>
+                            {{colaborador.nombreColaborador[0].nombre}} {{colaborador.apellidosColaborador[0].apellidos}} 
+                        </option>
+                    </select>
+                    <button (click)="addMember()">Añadir</button>
+                </div>
+
+                <br/>
+
             </div>
 
             <!-- Tareas -->
-            <h2 class='text-center'>Tareas <button (click)="addTask()">+</button></h2> 
+            <h2 class='text-center'>Tareas <button *ngIf="team_owner_checker != 0" (click)="addTask()">+</button></h2> 
             <div id="sec_tareas">
                 <div id='sec_tareas2'>
 
@@ -65,7 +66,10 @@
                             <div *ngIf="tarea.fecha == null"> <b>Fecha finalización:</b> Sin fecha limite </div>
                             <br/>
                             <!--div><b>Encargado tarea:</b>{{tarea.encargado}}</div-->
-                            <!--button>Completado</button--> <button class="btn btn-primary" (click)="modTask(tarea.idTarea)">Editar</button> <button class="btn btn-danger" (click)="banTask(tarea.idTarea)">Eliminar</button>
+                            <!--div><b>Estado tarea:</b>{{tarea.estado}}</div-->
+                            <div *ngIf="team_owner_checker != 0">
+                                <!--button>Completado</button--> <button class="btn btn-primary" (click)="modTask(tarea.idTarea)">Editar</button> <button class="btn btn-danger" (click)="banTask(tarea.idTarea)">Eliminar</button>
+                            </div>
                         </div>
                         <br/>
                     </div>
@@ -94,7 +98,7 @@
         <br/>
 
         <!-- Eventos -->
-        <h2 class='text-center'>Eventos <button (click)="addEvent()">+</button></h2>
+        <h2 class='text-center'>Eventos <button *ngIf="team_owner_checker != 0" (click)="addEvent()">+</button></h2>
         <div id="sec_eventos">
             <div id='sec_eventos2'>
 
@@ -102,14 +106,16 @@
                     <div id="sec_eventos3">
                         <div id="nombre">{{evento.nombre}}</div>
                         <br/>
-                        <!--div><b>Link: </b><a href={{evento.enlaceVideoconferencia}} style="color: blue">{{evento.enlaceVideoconferencia}}</a></div>
-                        <br/-->
+                        <div><b>Link: </b><a href={{evento.enlaceVideoconferencia}} style="color: blue">{{evento.enlaceVideoconferencia}}</a></div>
+                        <br/>
                         <div><b>Descripción:</b> {{evento.descripcion}}</div>
                         <br/>
                         <div *ngIf="evento.fecha != null"> <b>Fecha finalización:</b>  {{evento.fecha}} </div>
                         <div *ngIf="evento.fecha == null"> <b>Fecha finalización:</b>  Sin fecha limite </div>
                         <br/>
-                        <button class="btn btn-primary" (click)="modEvent(evento.idEvento)">Editar</button> <button class="btn btn-danger" (click)="banEvent(evento.idEvento)">Eliminar</button>
+                        <div *ngIf="team_owner_checker != 0">
+                            <button class="btn btn-primary" (click)="modEvent(evento.idEvento)">Editar</button> <button class="btn btn-danger" (click)="banEvent(evento.idEvento)">Eliminar</button>
+                        </div>
                     </div>
                     <br/>
                 </div>

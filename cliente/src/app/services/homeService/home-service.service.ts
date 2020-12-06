@@ -44,6 +44,9 @@ export class HomeServiceService {
   _urlBanTarea          = 'http://localhost:3000/bantask'
   _urlBanEvento         = 'http://localhost:3000/banevent'
 
+  // Vista equipo
+  _urlCheckTeamOwner    = 'http://localhost:3000/checkteamowner'
+
   constructor(private _http: HttpClient) {}
 
   /*///////
@@ -116,6 +119,7 @@ export class HomeServiceService {
     return this.mostrarEquipo;
   }
 
+
   
 
   
@@ -183,6 +187,11 @@ export class HomeServiceService {
 
   setMostrarEquipo(id:number){
     this.mostrarEquipo = id;
+  }
+
+  checkTeamOwner(id:IdBringer){
+    return this._http.post<any>(this._urlCheckTeamOwner, id, {withCredentials:true})
+      .pipe(catchError(this.errorHandler));
   }
 
   

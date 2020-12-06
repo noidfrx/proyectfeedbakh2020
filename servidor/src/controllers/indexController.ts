@@ -681,6 +681,28 @@ class IndexController {
     res.json({message: "Evento eliminado"});
   }
 
+
+  // Query para verificar si el usuario es el encargado de un equipo
+
+  public async equipo_owner(req: Request, res: Response): Promise<any>{
+
+    const check = await pool.query("SELECT encargado FROM listaequipo WHERE idEquipo=? AND idColaborador=? AND encargado=1",
+    [req.body.id, req!.session!.idUserIniciado]);
+
+    // Si el usuario es el admin, se considera instantáneamente como propietario del equipo
+    if(req!.session!.idUserIniciado == 1){
+      const check = 1;
+    }
+
+    if(check.length > 0){
+      res.status(200).json(check);
+    }else{
+      res.status(204).json(check);
+    }
+  }
+  
+
+  
 }
 
 //Instanciamos y exportamos toda la clase

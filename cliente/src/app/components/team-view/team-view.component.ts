@@ -17,27 +17,25 @@ import { listaEquipo } from 'src/app/models/listaEquipo';
 })
 export class TeamViewComponent implements OnInit {
 
-  errorMsg='';
-  categorias = null;
-  colaboradores = null;
-  equipos=[];
-  tareas=null;
-  eventos=null;
+  errorMsg='';                    // Mensaje que notifica un error
+  categorias = null;              // Categorías de las tareas y eventos
+  colaboradores = null;           // Colaboradores del usuario con sesión iniciada
+  equipos=[];                     // Equipos en los que pertenece el usuario con sesión iniciada
+  tareas=null;                    // Tareas del equipo seleccionado
+  eventos=null;                   // Eventos del equipo seleccionado
 
   teamData=null;
-  selectedTeam = null;
-  teamId = new IdBringer(null);
+  selectedTeam = null;            // ID del equipo seleccionado
+  teamId = new IdBringer(null);   // Modelo que posee el ID y el nombre del equipo seleccionado
+                                  // utilizado para realizar querys a la base de datos
   nombre_team='';
-  member_selector = 0;
+  member_selector = 0;            // ID del miembro seleccionado
+  team_owner_checker = 0;         // Verificador si es miembro de un equipo
 
   constructor(private _homeService:HomeServiceService, private _equipoService:EquipoService, private router:Router) {
     this.getColaboradoresUser();
     this.getCategorias();
     this.obtenerEquipoUsuario();
-
-    //this.getTareasTeam();
-    //this.getEventosUser();
-    
    }
 
   ngOnInit(): void {
@@ -56,8 +54,8 @@ export class TeamViewComponent implements OnInit {
     
   }
 
-  // GET
 
+  // Función para adquirir todas las categorías de la base de datos
   getCategorias(){
     this._homeService.getCategorias().subscribe(
       data => {
@@ -71,6 +69,7 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
+  // Función para adquirir todos los colaboradores según el usuario con sesión iniciada
   getColaboradoresUser(){
     this._homeService.getColaboradoresUser().subscribe(
       data => {
@@ -84,6 +83,8 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
+  // Función que llama a las funciones "getTareasTeam" y  "getEventosTeam"
+  // para adquirir las tareas y eventos de un equipo seleccionado, respectivamente
   getTeamData(){
     this.teamId.id = this.selectedTeam;
     if (this.teamData == null){
@@ -94,12 +95,13 @@ export class TeamViewComponent implements OnInit {
       });
     }
     
-    //this.teamData.id = this.selectedTeam;
-    
-    //this.teamData.nombre = 
     console.log("TEAMID: ", this.teamId);
+
+    this.checkTeamOwner();
+    this.getTareasTeam();
+    this.getEventosTeam();
     
-    this._homeService.getTareasTeam(this.teamId).subscribe(
+    /*this._homeService.getTareasTeam(this.teamId).subscribe(
       data => {
         (this.tareas = data)
         console.log("Tareas del usuario recibidas. ID: ", this.teamData);
@@ -120,9 +122,10 @@ export class TeamViewComponent implements OnInit {
         this.errorMsg=error.statusText;
         console.log("Error al recibir los eventos del usuario");
       }
-    )
+    )*/
   }
 
+  // Función para adquirir las tareas según el equipo seleccionado
   getTareasTeam(){
     this._homeService.getTareasTeam(this.teamId).subscribe(
       data => {
@@ -138,6 +141,21 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
+  getEventosTeam(){
+    this._homeService.getEventosTeam(this.teamId).subscribe(
+      data => {
+        (this.eventos = data)
+        console.log("Eventos del usuario recibidos");
+        console.log(data);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir los eventos del usuario");
+      }
+    )
+  }
+
+  // Función para adquirir los eventos según el equipo seleccionado
   getEventosUser(){
     this._homeService.getEventosUser().subscribe(
       data => {
@@ -153,6 +171,7 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
+  // Función para adquirir el último equipo en el que pertenezca el usuario con sesión iniciada
   getLastTeam(){
     this._homeService.getLastTeam().subscribe(
       data => {
@@ -169,6 +188,7 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
+  // Función para agregar una tarea, redirigiendo hacia el formulario correspondiente
   addTask(){
     if (this.teamData == null){
       this.getTeamData();
@@ -178,6 +198,7 @@ export class TeamViewComponent implements OnInit {
     this.router.navigate(['/taskadd'], { state: {idteam, nombreteam} });
   }
 
+  // Función para modificar una tarea, redirigiendo hacia el formulario correspondiente
   modTask(idtask){
     if (this.teamData == null){
       this.getTeamData();
@@ -187,6 +208,7 @@ export class TeamViewComponent implements OnInit {
     this.router.navigate(['/taskmod'], { state: {idtask,idteam,nombreteam} });
   }
 
+  // Función para eliminar una tarea
   banTask(id){
     let c = confirm("¿Está seguro que desea eliminar la tarea seleccionada?");
     if(c){
@@ -209,6 +231,7 @@ export class TeamViewComponent implements OnInit {
     }
   }
 
+  // Función para agregar un evento, redirigiendo hacia el formulario correspondiente
   addEvent(){
     if (this.teamData == null){
       this.getTeamData();
@@ -219,6 +242,7 @@ export class TeamViewComponent implements OnInit {
     this.router.navigate(['/eventadd'], { state: {idteam, nombreteam} });
   }
 
+  // Función para modificar un evento, redirigiendo hacia el formulario correspondiente
   modEvent(idevent){
     if (this.teamData == null){
       this.getTeamData();
@@ -228,6 +252,7 @@ export class TeamViewComponent implements OnInit {
     this.router.navigate(['/eventmod'], { state: {idevent, idteam, nombreteam} });
   }
 
+  // Función para eliminar un evento
   banEvent(id){
     let c = confirm("¿Está seguro que desea eliminar el evento seleccionado?");
     if(c){
@@ -250,6 +275,7 @@ export class TeamViewComponent implements OnInit {
     }
   }
 
+  // Función para agregar un miembro al equipo seleccionado
   addMember(){
     let m = this.member_selector;
     let relacion = new listaEquipo(0,m,this.selectedTeam);
@@ -270,16 +296,27 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
-  // POST
-
-  /*onSubmit(){
-    this._taskmakerService.addTask(this.taskModel)
-    .subscribe(
-      data => console.log("Tarea agregada!", data),
-      error => this.errorMsg = error.statusText
-      // Manejo de errores ^
+  // Función para verificar si el usuario con sesión iniciada es el encargado del equipo seleccionado
+  checkTeamOwner(){
+    this._homeService.checkTeamOwner(this.teamId).subscribe(
+      data => {
+        if(data != null && data.length > 0){
+          this.team_owner_checker = data[0].encargado;
+        }else{
+          this.team_owner_checker = 0;
+        }
+        console.log("checkTeamOwner(data): ", data);
+        console.log("team_owner_checker: ", this.team_owner_checker);
+      },
+      error => {
+        this.team_owner_checker = 0;
+        console.log("checkTeamOwner(error): ", error);
+        console.log("team_owner_checker: ", this.team_owner_checker);
+      }
     )
-  }*/
+  }
+
+
 
   ///////////////////////
   // home.component.ts //

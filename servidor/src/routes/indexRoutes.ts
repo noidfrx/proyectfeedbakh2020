@@ -95,6 +95,7 @@ class IndexRoutes {
     this.router.post("/lilevent", indexController.un_evento);
     this.router.post("/bantask", indexController.ban_tarea);
     this.router.post("/banevent", indexController.ban_evento);
+    this.router.post("/checkteamowner", indexController.equipo_owner);
 
 
     // this.router.get('/sesion', (req:Request,res:Response)=>{
