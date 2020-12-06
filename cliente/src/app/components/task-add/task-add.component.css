@@ -19,6 +19,8 @@ p{
 
 #todoContenido{
     margin-left: 20%;
+    min-height: 78vh;
+    margin-bottom: 1rem;
 }
 
 #todoContenido,#zona_maker,#static{
