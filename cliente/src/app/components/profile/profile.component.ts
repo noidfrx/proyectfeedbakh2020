@@ -86,6 +86,10 @@ export class ProfileComponent implements OnInit {
     )
     this.boton=0;
   }
+
+  elegirFoto(id:number){
+    return this.ProfileService.fotoPerfil(id);
+  }
   
   ngOnInit() {
 
