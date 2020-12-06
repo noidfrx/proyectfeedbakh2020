@@ -21,6 +21,7 @@ import { CreateWorkTeamComponent } from './components/create-work-team/create-wo
 import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usuarios.component';
 import { UwuComponent } from './components/uwu/uwu.component';
 import { VistaSolicitudesComponent } from './components/vista-solicitudes/vista-solicitudes.component';
+import { AmigosComponent } from './components/amigos/amigos.component';
 
 const routes: Routes = [
 
@@ -109,6 +110,11 @@ const routes: Routes = [
   {
     path:'Notificaciones',
     component: VistaSolicitudesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path:'Amigos',
+    component: AmigosComponent,
     canActivate: [AuthGuard]
   },
 

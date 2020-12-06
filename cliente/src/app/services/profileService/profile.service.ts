@@ -36,6 +36,11 @@ export class ProfileService {
     .pipe(catchError(this.errorHandler));
   
   }
+  amigos2(id){
+    return this._http.get<any>(`${this._url}/amigos2/${id}`,{withCredentials:true})
+    .pipe(catchError(this.errorHandler));
+  
+  }
 
   datosAmigo(id){
     return this._http.get<any>(`${this._url}/todosLosDatos/${id}`,{withCredentials:true})
@@ -109,7 +114,6 @@ export class ProfileService {
     if(foto==9){
       return "../../../assets/tree-8.svg";
     }
-    return "hola";
   }
 
 

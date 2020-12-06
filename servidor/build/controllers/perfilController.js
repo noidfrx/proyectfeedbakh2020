@@ -29,18 +29,55 @@ class PerfilController {
     // GET amigos colaborador (donde el colaborador es quien hizo la accion de añadir al amigo)
     amigos(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const amistades = yield database_1.default.query('SELECT colaborador.nombre,colaborador.idColaborador,colaborador.fotoPerfil FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 =? AND aceptado =1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', [req.session.idUserIniciado]);
-            //  console.log(amistades);
-            res.json(amistades);
+            const amistades = yield database_1.default.query('SELECT colaborador.nombre,colaborador.idColaborador,colaborador.fotoPerfil,colaborador.email FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 =? AND aceptado = 1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', [req.session.idUserIniciado]);
+            const amistades2 = yield database_1.default.query('SELECT colaborador.nombre,colaborador.idColaborador,colaborador.fotoPerfil,colaborador.email FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador', [req.session.idUserIniciado]);
+            if (amistades.length >= 1) {
+                if (amistades2.length >= 1) {
+                    const allAmistades = amistades.concat(amistades2);
+                    res.json(allAmistades);
+                }
+                else {
+                    const allAmistades = amistades;
+                    res.json(allAmistades);
+                }
+            }
+            else {
+                if (amistades2.length >= 1) {
+                    const allAmistades = amistades2;
+                    res.json(allAmistades);
+                }
+                else {
+                    const allAmistades = null;
+                    res.json(allAmistades);
+                }
+            }
         });
     }
-    // GET amigos colaborador (donde el colaborador es a quien le han enviado la invitación), es lo mismo de arriba pero con las credenciales dadas vueltas en la lista de amigos
-    amigosV2(req, res) {
+    amigos2(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const amistades2 = yield database_1.default.query('SELECT colaborador.nombre,colaborador.idColaborador,colaborador.fotoPerfil FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador', [req.session.idUserIniciado]);
-            //console.log(req!.session!.nombreUserIniciado);
-            res.json(amistades2);
-            // console.log(req!.session!.idUserIniciado);
+            const { id } = req.params;
+            const amistades = yield database_1.default.query('SELECT colaborador.nombre,colaborador.idColaborador,colaborador.fotoPerfil,colaborador.email FROM colaborador INNER JOIN (SELECT idColaborador2 FROM amigo WHERE idColaborador1 =? AND aceptado = 1) AS amigos ON amigos.idColaborador2 = colaborador.idColaborador', [id]);
+            const amistades2 = yield database_1.default.query('SELECT colaborador.nombre,colaborador.idColaborador,colaborador.fotoPerfil,colaborador.email FROM colaborador INNER JOIN (SELECT idColaborador1 FROM amigo WHERE idColaborador2 = ? AND aceptado = 1) AS amigos ON amigos.idColaborador1 = colaborador.idColaborador', [id]);
+            if (amistades.length >= 1) {
+                if (amistades2.length >= 1) {
+                    const allAmistades = amistades.concat(amistades2);
+                    res.json(allAmistades);
+                }
+                else {
+                    const allAmistades = amistades;
+                    res.json(allAmistades);
+                }
+            }
+            else {
+                if (amistades2.length >= 1) {
+                    const allAmistades = amistades2;
+                    res.json(allAmistades);
+                }
+                else {
+                    const allAmistades = null;
+                    res.json(allAmistades);
+                }
+            }
         });
     }
     // devuelve los usuarios ingresados en la busqueda, está aquí porque para llegar a esta opción solo se puede hacer mediante el

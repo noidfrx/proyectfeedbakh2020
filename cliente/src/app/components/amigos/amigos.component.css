@@ -1,0 +1,58 @@
+h1{
+    font-size: 24px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-top: 20px;
+    text-align: center;
+}
+
+li{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 15px;
+}
+
+#zona_maker{
+    background-color: rgb(255, 235, 235);
+}
+
+#cuerpo{
+    min-height: 500px;
+}
+
+#cuadro{
+    border-radius: 8px 8px 8px 8px;
+    -moz-border-radius: 8px 8px 8px 8px;
+    -webkit-border-radius: 8px 8px 8px 8px;
+    border: 1px solid #000000;
+    margin-left: 40;
+    margin-bottom: 20px;
+    padding: 5px;
+
+}
+#sinEspacioEntreLineas {
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 8px;
+   
+}
+
+.tabulacion:first-letter {
+	margin-left: 15px;
+}
+
+#centrado {
+    text-align: center;
+}
+
+#espacio,#todoContenido{
+    position:static;
+}
+
+#botonAmistad{
+    margin-top: 20%;
+    background-color: rgb(255, 144, 144);
+}
+
+#todoContenido{
+    min-height: 78vh;
+}

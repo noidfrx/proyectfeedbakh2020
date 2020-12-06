@@ -37,55 +37,54 @@
                     </ul>
                 </div>
                 <div class="col-md-1"></div>
-                <div id="cuadro" class="col-md-5 text-center">
-                    <!-- lo que sigue, se generará solo una vez que tengamos conexion con el servidor, esto es solo un ejemplo\-->
-                    <h1>Amigos</h1>
+                <div class="col-md-5 text-center" id="cuadro">
                     <div class="row">
-                        <div class="col-md-6 ">
+                        <div class="col-md-6 " *ngIf="amistad[0]" >
                             <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                 <div class="card-body">
-                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    <img  src="{{ProfileService.fotoPerfil(amistad[0].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                 </div>  
                                 <div class="card-header">
-                                    Rodrigo
+                                    <a href="/perfiles/{{amistad[0].idColaborador}}" > {{amistad[0].nombre}} </a>
                                 </div> 
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" *ngIf="amistad[1]">
                             <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                 <div class="card-body">
-                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    <img  src="{{ProfileService.fotoPerfil(amistad[1].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                 </div>  
                             <div class="card-header">
-                                <a href="#" > Juan </a>
+                                <a href="/perfiles/{{amistad[1].idColaborador}}" > {{amistad[1].nombre}} </a>
                             </div> 
                         </div>
                         </div>
                     </div>
-
+        
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-6" *ngIf="amistad[2]">
                             <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                 <div class="card-body">
-                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    <img  src="{{ProfileService.fotoPerfil(amistad[2].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                 </div>  
-                                <div class="card-header">
-                                    Catalina
+                                <div class="card-header">  
+                                    <a href="/perfiles/{{amistad[2].idColaborador}}" > {{amistad[2].nombre}} </a>
                                 </div> 
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" *ngIf="amistad[3]">
                             <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                 <div class="card-body">
-                                    <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    <img  src="{{ProfileService.fotoPerfil(amistad[3].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                 </div>  
-                            <div class="card-header">
-                              Felipe
+                            <div class="card-header"> 
+                                <a href="/perfiles/{{amistad[3].idColaborador}}" > {{amistad[3].nombre}} </a>
                             </div> 
                         </div>
                         </div>
                     </div>
                 </div>
+                
             </div>
         </div>
 

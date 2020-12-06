@@ -39,6 +39,7 @@ import { CreateWorkTeamComponent } from './components/create-work-team/create-wo
 import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usuarios.component';
 import { UwuComponent } from './components/uwu/uwu.component';
 import { VistaSolicitudesComponent } from './components/vista-solicitudes/vista-solicitudes.component';
+import { AmigosComponent } from './components/amigos/amigos.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { VistaSolicitudesComponent } from './components/vista-solicitudes/vista-
     CreateWorkTeamComponent,
     BuscarUsuariosComponent,
     UwuComponent,
-    VistaSolicitudesComponent
+    VistaSolicitudesComponent,
+    AmigosComponent
   ],
   imports: [
     BrowserModule,

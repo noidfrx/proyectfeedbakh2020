@@ -20,8 +20,7 @@ class PerfilRoutes{
         this.router.get('/datosIngresado', perfilController.datosDeIngresado);
 
         this.router.get('/amigos', perfilController.amigos);
-
-        this.router.get('/amigos2',perfilController.amigosV2);
+        this.router.get('/amigos2/:id', perfilController.amigos2);
 
         this.router.get('/obtenerSolicitudes',perfilController.obtenerSolicitudes);
 

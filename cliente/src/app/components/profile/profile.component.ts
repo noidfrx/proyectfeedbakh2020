@@ -19,6 +19,7 @@ export class ProfileComponent implements OnInit {
     idColaborador2: null,
     aceptado: 0,
   };
+  amistades;
 
   anadirAmigo:Amistad;
 
@@ -29,7 +30,6 @@ export class ProfileComponent implements OnInit {
     // ve el tipo de relación que se tiene, 0=rechazado, 1= aceptado,  2=rechazado, false es que no existe
     this.ProfileService.comprobaramistad(this.amistad).subscribe(
       data=>{
-        
         this.amigos=data;
           if(this.amigos==1){
             this.boton=1;
@@ -104,6 +104,18 @@ export class ProfileComponent implements OnInit {
       data => { 
         this.datos = data;
         this.verSiAmigo();
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("no se pueden obtener los datos")
+      }
+    )
+
+    this.ProfileService.amigos2(this.amigoId).subscribe(
+      data => { 
+        this.amistad = data;
+        console.log("los amigos de esta persona son",this.amistad)
+
       },
       error => {
         this.errorMsg=error.statusText;
