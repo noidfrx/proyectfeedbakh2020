@@ -595,6 +595,13 @@ class IndexController {
             res.status(200).json({ message: "Tarea marcada como completada" });
         });
     }
+    // Query para marcar una tarea como NO completada
+    set_nocompletado(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query("UPDATE tarea SET completado = '0' WHERE tarea.idTarea = ?", req.body.id);
+            res.status(200).json({ message: "Tarea marcada como NO completada" });
+        });
+    }
 }
 //Instanciamos y exportamos toda la clase
 exports.indexController = new IndexController();

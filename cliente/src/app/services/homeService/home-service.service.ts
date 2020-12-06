@@ -49,6 +49,7 @@ export class HomeServiceService {
   //_urlNombreEncargado   = 'http://localhost:3000/getnomencargado';
   _urlCheckTaskOwner    = 'http://localhost:3000/checktaskowner'
   _urlSetCompletado     = 'http://localhost:3000/setcompletado'
+  _urlSetNoCompletado     = 'http://localhost:3000/setnocompletado'
 
   constructor(private _http: HttpClient) {}
 
@@ -200,6 +201,11 @@ export class HomeServiceService {
 
   setCompletado(id:IdBringer){
     return this._http.post<any>(this._urlSetCompletado, id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  setNoCompletado(id:IdBringer){
+    return this._http.post<any>(this._urlSetNoCompletado, id)
       .pipe(catchError(this.errorHandler));
   }
 

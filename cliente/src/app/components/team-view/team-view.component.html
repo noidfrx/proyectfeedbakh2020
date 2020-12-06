@@ -73,7 +73,8 @@
                             <br>
                                 
                             <div *ngIf="team_owner_checker != 0">
-                                <!--button *ngIf="tarea.completado == 0 && checkTaskOwner(tarea.idTarea)" (click)="setCompletado(tarea.idTarea)">Marcar como completado</button--> 
+                                <button *ngIf="tarea.completado == 0" (click)="setCompletado(tarea.idTarea)">Marcar como completado</button>
+                                <button *ngIf="tarea.completado == 1" (click)="setNoCompletado(tarea.idTarea)">Marcar como completado</button> 
                                 <button class="btn btn-primary" id="espacioBoton" (click)="modTask(tarea.idTarea)">Editar</button> <button class="btn btn-danger" (click)="banTask(tarea.idTarea)" id="espacioBoton">Eliminar</button>
                             </div>
                         </div>

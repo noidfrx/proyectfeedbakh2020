@@ -729,10 +729,17 @@ class IndexController {
   // Query para marcar una tarea como completada
 
   public async set_completado(req: Request, res: Response): Promise<any>{
-
     await pool.query("UPDATE tarea SET completado = '1' WHERE tarea.idTarea = ?", req.body.id);
-
     res.status(200).json({ message: "Tarea marcada como completada" });
+  }
+
+
+
+  // Query para marcar una tarea como NO completada
+
+  public async set_nocompletado(req: Request, res: Response): Promise<any>{
+    await pool.query("UPDATE tarea SET completado = '0' WHERE tarea.idTarea = ?", req.body.id);
+    res.status(200).json({ message: "Tarea marcada como NO completada" });
   }
   
   
