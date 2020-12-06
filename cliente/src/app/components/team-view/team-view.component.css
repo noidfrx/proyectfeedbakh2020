@@ -109,3 +109,7 @@ p{
 #todoContenido{
     min-height: 78vh;
 }
+
+#espacioBoton{
+    margin-left: 10px;
+}
