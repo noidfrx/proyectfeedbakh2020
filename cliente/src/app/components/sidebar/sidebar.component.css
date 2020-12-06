@@ -19,11 +19,12 @@
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background:  rgb(49, 49, 49);
+    background: #e9b5df;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    border-color: black;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -60,12 +61,12 @@
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999999;
+    color: black;
 }
 
 .sidebar-nav li a:hover {
     text-decoration: none;
-    color: #fff;
+    color: black;
     background: rgba(255,255,255,0.2);
 }
 
@@ -85,7 +86,7 @@
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
+    color: black;
     background: none;
 }
 
@@ -118,5 +119,5 @@
 }
 
 li p{
-    color: rgb(253, 243, 243);
+    color:black;
 }

@@ -15,8 +15,8 @@ export class ProfileComponent implements OnInit {
   amigos;
   boton: number;
   amistad:Amistad = {
-    idColaborador1: null,
-    idColaborador2: null,
+    idColaborador1: 0,
+    idColaborador2:0,
     aceptado: 0,
   };
   amistades;
@@ -26,6 +26,42 @@ export class ProfileComponent implements OnInit {
 
   constructor( private route:ActivatedRoute, private ProfileService: ProfileService) { }
  
+  ngOnInit() {
+
+    //id del amigo, que es pasada por la url
+    this.route.paramMap.subscribe(params => {
+      console.log("parametros",params);
+      this.amistad.idColaborador2 = params.get('id') as unknown as number;
+      this.amigoId = params.get('id');
+    })
+
+    //busca los datos del usuario, con el id pasado por la url
+    this.ProfileService.datosAmigo(this.amigoId).subscribe(
+      data => { 
+        this.datos = data;
+        this.verSiAmigo();
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("no se pueden obtener los datos")
+      }
+    )
+
+    this.ProfileService.amigos2(this.amigoId).subscribe(
+      data => { 
+        this.amistades = data;
+        console.log("los amigos de esta persona son",data)
+
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("no se pueden obtener los datos")
+      }
+    )
+
+    
+  }
+
   verSiAmigo(){
     // ve el tipo de relación que se tiene, 0=rechazado, 1= aceptado,  2=rechazado, false es que no existe
     this.ProfileService.comprobaramistad(this.amistad).subscribe(
@@ -52,6 +88,7 @@ export class ProfileComponent implements OnInit {
   }
 
   agregarAmigo() {
+    console.log("id 2 ", this.amigoId);
     this.ProfileService.anadirAmigo(this.amistad).subscribe(
       data => { 
         console.log(data);
@@ -63,6 +100,7 @@ export class ProfileComponent implements OnInit {
 
     this.boton=3;
   }
+
   eliminarAmigo(){
     this.ProfileService.eliminarAmigo(this.amigoId).subscribe(
       data => { 
@@ -91,39 +129,6 @@ export class ProfileComponent implements OnInit {
     return this.ProfileService.fotoPerfil(id);
   }
   
-  ngOnInit() {
-
-    //id del amigo, que es pasada por la url
-    this.route.paramMap.subscribe(params => {
-      this.amistad.idColaborador2 = params.get('id') as unknown as number;
-      this.amigoId = params.get('id');
-    })
-
-    //busca los datos del usuario, con el id pasado por la url
-    this.ProfileService.datosAmigo(this.amigoId).subscribe(
-      data => { 
-        this.datos = data;
-        this.verSiAmigo();
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("no se pueden obtener los datos")
-      }
-    )
-
-    this.ProfileService.amigos2(this.amigoId).subscribe(
-      data => { 
-        this.amistad = data;
-        console.log("los amigos de esta persona son",this.amistad)
-
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("no se pueden obtener los datos")
-      }
-    )
-
-    
-  }
+ 
 
 }

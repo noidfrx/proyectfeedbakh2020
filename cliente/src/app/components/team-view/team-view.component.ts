@@ -431,7 +431,7 @@ export class TeamViewComponent implements OnInit {
 
   // Función para habilitar el botón de "completar tarea",
   // solo si no se ha completado, y el usuario con sesión iniciada es el encargado
-  checkTaskOwner(idTarea){
+  /*checkTaskOwner(idTarea){
     var taskId = new IdBringer(idTarea);
 
     this._homeService.checkTaskOwner(taskId).subscribe(
@@ -446,7 +446,7 @@ export class TeamViewComponent implements OnInit {
         }
       }
     )
-  }
+  }*/
 
   // Función para habilitar el botón de "completar tarea",
   // solo si no se ha completado, y el usuario con sesión iniciada es el encargado
@@ -457,6 +457,28 @@ export class TeamViewComponent implements OnInit {
       data => {
         console.log(data);
         alert("Tarea marcada como completada!");
+        setTimeout(() => 
+        {
+          this.router.navigate(['/uwu']);
+        },
+        500);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log(error);
+      }
+    )
+  }
+
+  // Función para habilitar el botón de "completar tarea",
+  // solo si no se ha completado, y el usuario con sesión iniciada es el encargado
+  setNoCompletado(idTarea){
+    var taskId = new IdBringer(idTarea);
+
+    this._homeService.setNoCompletado(taskId).subscribe(
+      data => {
+        console.log(data);
+        alert("Tarea marcada como no completada!");
         setTimeout(() => 
         {
           this.router.navigate(['/uwu']);

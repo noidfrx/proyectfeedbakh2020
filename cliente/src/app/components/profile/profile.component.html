@@ -39,46 +39,46 @@
                 <div class="col-md-1"></div>
                 <div class="col-md-5 text-center" id="cuadro">
                     <div class="row">
-                        <div class="col-md-6 " *ngIf="amistad[0]" >
+                        <div class="col-md-6 " *ngIf="amistades[0]" >
                             <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                 <div class="card-body">
-                                    <img  src="{{ProfileService.fotoPerfil(amistad[0].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
+                                    <img  src="{{ProfileService.fotoPerfil(amistades[0].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                 </div>  
                                 <div class="card-header">
-                                    <a href="/perfiles/{{amistad[0].idColaborador}}" > {{amistad[0].nombre}} </a>
+                                    <a href="/perfiles/{{amistades[0].idColaborador}}" > {{amistades[0].nombre}} </a>
                                 </div> 
                             </div>
                         </div>
-                        <div class="col-md-6" *ngIf="amistad[1]">
+                        <div class="col-md-6" *ngIf="amistades[1]">
                             <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                 <div class="card-body">
-                                    <img  src="{{ProfileService.fotoPerfil(amistad[1].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
+                                    <img  src="{{ProfileService.fotoPerfil(amistades[1].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                 </div>  
                             <div class="card-header">
-                                <a href="/perfiles/{{amistad[1].idColaborador}}" > {{amistad[1].nombre}} </a>
+                                <a href="/perfiles/{{amistades[1].idColaborador}}" > {{amistades[1].nombre}} </a>
                             </div> 
                         </div>
                         </div>
                     </div>
         
                     <div class="row">
-                        <div class="col-md-6" *ngIf="amistad[2]">
+                        <div class="col-md-6" *ngIf="amistades[2]">
                             <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                 <div class="card-body">
-                                    <img  src="{{ProfileService.fotoPerfil(amistad[2].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
+                                    <img  src="{{ProfileService.fotoPerfil(amistades[2].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                 </div>  
                                 <div class="card-header">  
-                                    <a href="/perfiles/{{amistad[2].idColaborador}}" > {{amistad[2].nombre}} </a>
+                                    <a href="/perfiles/{{amistades[2].idColaborador}}" > {{amistades[2].nombre}} </a>
                                 </div> 
                             </div>
                         </div>
-                        <div class="col-md-6" *ngIf="amistad[3]">
+                        <div class="col-md-6" *ngIf="amistades[3]">
                             <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                 <div class="card-body">
-                                    <img  src="{{ProfileService.fotoPerfil(amistad[3].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
+                                    <img  src="{{ProfileService.fotoPerfil(amistades[3].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                 </div>  
                             <div class="card-header"> 
-                                <a href="/perfiles/{{amistad[3].idColaborador}}" > {{amistad[3].nombre}} </a>
+                                <a href="/perfiles/{{amistades[3].idColaborador}}" > {{amistades[3].nombre}} </a>
                             </div> 
                         </div>
                         </div>
