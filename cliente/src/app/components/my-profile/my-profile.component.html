@@ -20,41 +20,18 @@
                     </div>
                     <div class= "col-md-6" id="espacio" *ngIf="!modoEdicion">
                     </div>
-                    <!--muestra la primera danda de imágenes, cuando se está en modo edición-->
-                    <div class= "col-md-6" id="espacio" *ngIf="modoEdicion" style="margin-top: 50px;" >
-                        <p>Seleccione una imágen de perfil.</p>
-                       <div class="row">
-                           <div class="col-md-6 " (click)="cambiarFoto(0)">
-                                <div class="card text-center" style="max-width: 130px; max-height: 140px;">
-                                    <div class="card-body">
-                                        <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
-                                    </div>  
-                                </div>
-                            </div>
-                            <div class="col-md-6 " (click)="cambiarFoto(1)">
-                                <div class="card text-center" style="max-width: 130px; max-height: 140px;">
-                                    <div class="card-body">
-                                        <img  src="../../../assets/bicycle-5.svg" width="70px" height="70px" class="img-fluid">
-                                    </div>  
-                                </div>
-                            </div>
-                       </div>
-                       <div class="row">
-                        <div class="col-md-6 " (click)="cambiarFoto(2)">
-                             <div class="card text-center" style="max-width: 130px; max-height: 140px;">
-                                 <div class="card-body">
-                                     <img  src="../../../assets/cat-3.svg" width="70px" height="70px" class="img-fluid">
-                                 </div>  
-                             </div>
-                         </div>
-                         <div class="col-md-6 " (click)="cambiarFoto(3)">
-                             <div class="card text-center" style="max-width: 130px; max-height: 140px;">
-                                 <div class="card-body">
-                                     <img  src="../../../assets/customer-4.svg" width="70px" height="70px" class="img-fluid">
-                                 </div>  
-                             </div>
-                         </div>
-                        </div>    
+                    <!--muestra la primera tanda de imágenes, cuando se está en modo edición-->
+                    <div class= "col-md-6 text-bottom" id="espacio" *ngIf="modoEdicion" >
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <p>Seleccione una imágen de perfil.</p>  
                     </div>
                 </div> 
                 <!--termino de mostrar la imagen de perfil y comienzo a mostrar los datos--> 
@@ -70,27 +47,49 @@
                             <p class="tabulacion">{{nuevosDatos.email}}</p>
 
                         </ul>
-                        <button [disabled]="false" class="btn btn-primary"(click)="editar()" id="botonEditar">Editar</button>
+                        <button id="boton" [disabled]="false" class="btn btn-primary"(click)="editar()" id="botonEditar">Editar</button>
                     </div>
                     <!--al entrar  a modo edicion se activa este formulario-->
                     <div class="col-md-5" *ngIf="modoEdicion" id="margenbottom">
-                        <form (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate>
+                        
+                        <form (ngSubmit)="onSubmit()" #editForm="ngForm" novalidate>
+                            
                             <div class="form-group">
                               <label for="nombre">Nombre</label> 
-                              <input id="nombre" name="nombre" [(ngModel)]="nuevosDatos.nombre"  type="text" required="true" class="form-control">
+                              <input id="nombre" name="nombre" [(ngModel)]="nuevosDatos.nombre" #nombre="ngModel"  type="text" required nombre class="form-control" [class.is-invalid]="nombre.invalid && nombre.touched">
+                              <small
+                              class="text-danger"
+                              [class.d-none]="nombre.valid || nombre.untouched"
+                              >Por favor, ingrese nombre</small>
                             </div>
+
                             <div class="form-group">
                               <label for="apellidos">Apellidos</label> 
-                              <input id="apellidos" name="apellidos" [(ngModel)]="nuevosDatos.apellidos" type="text" class="form-control">
+                              <input id="apellidos" name="apellidos" [(ngModel)]="nuevosDatos.apellidos" #apellidos="ngModel" type="text" required apellidos class="form-control" [class.is-invalid]="apellidos.invalid && apellidos.touched">
+                              <small class="text-danger"
+                                    [class.d-none]="apellidos.valid || apellidos.untouched"
+                                    >Por favor, ingrese apellidos</small>
                             </div>
+
                             <div class="form-group">
                               <label for="email">Email</label> 
-                              <input id="email" name="email" [(ngModel)]="nuevosDatos.email" type="text" required="true" class="form-control">
+                              <input id="email" name="email" [(ngModel)]="nuevosDatos.email" required email type="email" #email = "ngModel" required="true" class="form-control" [class.is-invalid]="email.invalid && email.touched" >
+                              
+                              <small
+                              class="text-danger"
+                              *ngIf="email.errors && email.errors.required && email.touched"
+                              >Por favor, ingrese correo electrónico</small>
+                            <!-- No valido -->
+                            <small
+                              class="text-danger"
+                              *ngIf="email.errors && email.errors.email && email.touched"
+                              >El correo ingresado no es válido</small
+                            >
                             </div> 
                             <div class="form-group">
-                              <button name="submit" type="submit" class="btn btn-primary">Aceptar</button>
+                              <button id="boton" name="submit" [disabled]="editForm.form.invalid" type="submit" class="btn btn-primary">Aceptar</button>
                               
-                              <button name="Cancelar" class="btn btn-primary" (click)="cancelar()">Cancelar</button>
+                              <button id="boton" name="Cancelar" class="btn btn-primary" (click)="cancelar()">Cancelar</button>
                             </div>
                           </form>
                     </div>
@@ -158,36 +157,87 @@
                     <!-- muestra la segunda tanda de imágenes, cuando se está en modo edicion-->
                     <div class="col-md-6" *ngIf="modoEdicion">
                         <div class="row">
-                            <div class="col-md-6 " (click)="cambiarFoto(4)">
-                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
-                                     <div class="card-body">
-                                         <img  src="../../../assets/turtle.svg" width="70px" height="70px" class="img-fluid">
-                                     </div>  
-                                 </div>
-                             </div>
-                             <div class="col-md-6 " (click)="cambiarFoto(5)">
-                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
-                                     <div class="card-body">
-                                         <img  src="../../../assets/horse-24.svg" width="70px" height="70px" class="img-fluid">
-                                     </div>  
-                                 </div>
-                             </div>
+                            <div class="col-md-3 " (click)="cambiarFoto(0)">
+                                <div class="card text-center" >
+                                    <div class="card-body">
+                                        <img  src="../../../assets/easter-bunny.png" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="col-md-3 " (click)="cambiarFoto(1)">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/bicycle-5.svg" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="col-md-3 " (click)="cambiarFoto(2)">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/cat-3.svg" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="col-md-3 " (click)="cambiarFoto(3)">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/customer-4.svg" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
-                         <div class="col-md-6 " (click)="cambiarFoto(6)">
-                              <div class="card text-center" style="max-width: 130px; max-height: 140px;">
-                                  <div class="card-body">
-                                      <img  src="../../../assets/iconmonstr-easter-19.svg" width="70px" height="70px" class="img-fluid">
-                                  </div>  
-                              </div>
-                          </div>
-                          <div class="col-md-6 " (click)="cambiarFoto(7)">
-                              <div class="card text-center" style="max-width: 130px; max-height: 140px;">
-                                  <div class="card-body">
-                                      <img  src="../../../assets/school-26.svg" width="70px" height="70px" class="img-fluid">
-                                  </div>  
-                              </div>
-                          </div>
+                            <div class="col-md-3 " (click)="cambiarFoto(4)">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/turtle.svg" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="col-md-3 " (click)="cambiarFoto(5)">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/horse-24.svg" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="col-md-3 " (click)="cambiarFoto(6)">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/iconmonstr-easter-19.svg" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="col-md-3 " (click)="cambiarFoto(7)">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/school-26.svg" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
+                         </div>
+                         <div class="row">
+                            <div class="col-md-3 " (click)="cambiarFoto(8)">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/school-27.svg" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="col-md-3 " (click)="cambiarFoto(9)">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/tree-8.svg" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
+                            <div class="col-md-3 " (click)="cambiarFoto(10)">
+                                <div class="card text-center">
+                                    <div class="card-body">
+                                        <img  src="../../../assets/fish-2.svg" width="70px" height="70px" class="img-fluid">
+                                    </div>  
+                                </div>
+                            </div>
                          </div>
                 
                     </div>

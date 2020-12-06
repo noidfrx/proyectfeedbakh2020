@@ -2,8 +2,9 @@
 <div id="todoContenido" class="container-fluid">
     <div class="row" style="margin-top: 20px;">
         <div class="col-md-8 offset-2" style="position: static;">
-            <form (ngSubmit)="onSubmit()" #registerForm="ngForm" novalidate>
-                <div class="form-group row">
+            <form (ngSubmit)="onSubmit()" #buscarForm="ngForm" novalidate>
+                
+              <div class="form-group row">
                   <label class="col-3 col-form-label " id="letritas" for="text">Buscar colaborador</label> 
                   <div class="col-4">
                     <div class="input-group">
@@ -12,14 +13,19 @@
                           <i class="fa fa-address-card"></i>
                         </div>
                       </div> 
-                      <input id="nombre" name="text" [(ngModel)]="busqueda.nombre" placeholder="Ingrese un nombre o Correo" type="text" class="form-control" required="required">
+                      <input id="nombre" [(ngModel)]="busqueda.nombre" placeholder="Ingrese un nombre o Correo" type="text" class="form-control" required text name="text" #text="ngModel" [class.is-invalid]="text.invalid && text.touched">
+                      <small
+                        class="text-danger"
+                        *ngIf="text.errors && text.errors.required && text.touched"
+                        >Debe ingresar un nombre de usuario o un mail</small
+                      >
                     </div>
                   </div>
                   <div class="form-group">
-                    <button name="submit" type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+                    <button [disabled]="buscarForm.form.invalid" name="submit" type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                   </div>
                 </div> 
-              </form>
+            </form>
         </div>
     </div>
 
@@ -41,13 +47,11 @@
                     </ul>
                 </div>
 
-                <div class="col-md 1 text-right" id="espacio">
+                <div class="col-md 2 text-right" id="espacio">
                     <br>
-                    <button name="perfil"  routerLink="/perfiles/{{datos.idColaborador}}" class="btn btn-primary">Ir al perfil</button>
-                </div>
-                <div class="col-md 1 text-right">
-
-                </div>
+                    <button name="perfil" *ngIf="datos.idColaborador !=idUser " routerLink="/perfiles/{{datos.idColaborador}}" class="btn btn-primary">Ir al perfil</button>
+                    <button name="perfil" *ngIf="datos.idColaborador ==idUser "  routerLink="/my-profile" class="btn btn-primary">Ir a mi perfil</button>
+                  </div>
             </div>
         </div>
     </div>

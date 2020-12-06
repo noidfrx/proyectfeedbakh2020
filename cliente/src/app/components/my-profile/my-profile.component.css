@@ -53,3 +53,13 @@ li{
 #todoContenido{
     min-height: 78vh;
 }
+#boton{
+    margin-left: 10px;
+}
+
+.card{
+    max-width: 70px;
+    max-height: 70px;
+    margin-bottom: 10px;
+    margin-left: 10;
+}

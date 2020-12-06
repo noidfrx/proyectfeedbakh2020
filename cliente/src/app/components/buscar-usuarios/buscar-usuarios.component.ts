@@ -18,10 +18,18 @@ export class BuscarUsuariosComponent implements OnInit {
     email:null,
   };
   usuarios: any = [];
+  idUser: any;
   errorMsg: string;
   mostrar:number=0;
 
   ngOnInit(): void {
+    this.buscar.datosUsuario().subscribe(
+      data =>{
+        this.idUser=data[0].idColaborador;
+      }, error => {
+        this.errorMsg = error.statusText;
+      }
+    )
   }
 
   onSubmit(){
@@ -41,11 +49,11 @@ export class BuscarUsuariosComponent implements OnInit {
 
   queMuestro(){
     if(!this.usuarios){
-      
         this.mostrar=2;
     }else{
       this.mostrar=1
     }
+    console.log("que muestro", this.mostrar);
   }
 
 }
