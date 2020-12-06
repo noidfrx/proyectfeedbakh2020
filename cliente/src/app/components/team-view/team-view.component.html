@@ -22,7 +22,7 @@
                             class="custom-select col-md-4 offset-md-4"
                             [(ngModel)]="selectedTeam"
                         >
-                            <option selected value="0">Todos los equipos</option>
+                            <!--option selected value="0">Seleccione un equipo</option-->
                             <option *ngFor="let equipo of equipos" value={{equipo.nombreEquipo[0].idEquipo}}>
                                 {{equipo.nombreEquipo[0].nombre}}
                             </option>

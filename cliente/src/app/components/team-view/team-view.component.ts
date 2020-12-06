@@ -96,10 +96,13 @@ export class TeamViewComponent implements OnInit {
     }
     
     console.log("TEAMID: ", this.teamId);
-
-    this.checkTeamOwner();
-    this.getTareasTeam();
-    this.getEventosTeam();
+    
+    if(this.selectedTeam != 0){
+      this.checkTeamOwner();
+      this.getTareasTeam();
+      this.getEventosTeam();
+    }
+    
     
     /*this._homeService.getTareasTeam(this.teamId).subscribe(
       data => {
