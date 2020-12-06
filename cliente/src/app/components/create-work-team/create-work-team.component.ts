@@ -68,5 +68,9 @@ export class CreateWorkTeamComponent implements OnInit {
 
   }
 
+  cancelar(){
+    this.route.navigate(['/home']);
+  }
+
 
 }

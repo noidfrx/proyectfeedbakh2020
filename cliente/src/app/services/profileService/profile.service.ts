@@ -114,6 +114,9 @@ export class ProfileService {
     if(foto==9){
       return "../../../assets/tree-8.svg";
     }
+    if(foto==10){
+      return "../../../assets/fish-2.svg";
+    }
   }
 
 
