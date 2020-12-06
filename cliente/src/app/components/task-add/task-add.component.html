@@ -32,7 +32,7 @@
                     >
                 </div>
                 
-                <label for='inputEncargadoTarea' class='col-md-12'>Integrante</label>
+                <label for='inputEncargadoTarea' class='col-md-12'>Integrante encargado</label>
                 <div class='form-group col-md-12'>
                     <select 
                         class='custom-select'
@@ -42,7 +42,7 @@
                         [(ngModel)]='taskModel.encargado' 
                         #encargado="ngModel"
                     >
-                        <option selected value="0">Seleccione un encargado</option>
+                        <option selected value="0">Yo</option>
                         <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador[0].idColaborador}}'>
                             {{colaborador.nombreColaborador[0].nombre}} {{colaborador.apellidosColaborador[0].apellidos}} 
                         </option>

@@ -22,7 +22,7 @@ export class TaskAddComponent implements OnInit {
 
   teamId = new IdBringer(null);
   nombreteam = '';
-  taskModel = new Task('',0,0,null,0,null,0,'',null);
+  taskModel = new Task('',0,0,null,0,null,0,'',null,0);
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getColaboradoresUser();
@@ -70,9 +70,9 @@ export class TaskAddComponent implements OnInit {
 
   onSubmit(){
     this.taskModel.equipo = this.teamId.id;
-    if(this.taskModel.encargado == 0){
+    /*if(this.taskModel.encargado == 0){
       alert("Debe seleccionar un integrante");
-    }else{
+    }else{*/
       this._homeService.addTask(this.taskModel)
       .subscribe(
         data => {
@@ -81,14 +81,14 @@ export class TaskAddComponent implements OnInit {
           setTimeout(() => 
           {
               this._homeService.setMostrarEquipo(this.teamId.id);
-              this.router.navigate(['/teamview']);
+              this.router.navigate(['/teamview']); 
           },
           500);
         },
         error => {this.errorMsg = error.statusText}
         // Manejo de errores ^
       )
-    }
+    //}
     
     
   }

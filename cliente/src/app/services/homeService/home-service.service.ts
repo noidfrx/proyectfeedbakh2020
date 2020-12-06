@@ -25,27 +25,30 @@ export class HomeServiceService {
 
   _urlObtenerId         = 'http://localhost:3000/idUser';
 
-  _urlCategorias        = 'http://localhost:3000/categorias'
-  _urlColaboradores     = 'http://localhost:3000/colaboradores'
-  _urlColaboradoresUser = 'http://localhost:3000/colaboradoresusuario'
-  _urlTareas            = 'http://localhost:3000/tasks'
-  _urlTareasUser        = 'http://localhost:3000/tasksusuario'
-  _urlTareasTeam        = 'http://localhost:3000/tasksequipo'
-  _urlAgregarTarea      = 'http://localhost:3000/insertTask'
-  _urlModificarTarea    = 'http://localhost:3000/modifyTask'
-  _urlEventos           = 'http://localhost:3000/events'
-  _urlEventosUser       = 'http://localhost:3000/eventsusuario'
-  _urlEventosTeam       = 'http://localhost:3000/eventsequipo'
-  _urlAgregarEvento     = 'http://localhost:3000/insertEvent'
-  _urlModificarEvento   = 'http://localhost:3000/modifyEvent'
-  _urlLastTeam          = 'http://localhost:3000/ultimoequipo'
-  _urlTarea             = 'http://localhost:3000/liltask'
-  _urlEvento            = 'http://localhost:3000/lilevent'
-  _urlBanTarea          = 'http://localhost:3000/bantask'
-  _urlBanEvento         = 'http://localhost:3000/banevent'
+  _urlCategorias        = 'http://localhost:3000/categorias';
+  _urlColaboradores     = 'http://localhost:3000/colaboradores';
+  _urlColaboradoresUser = 'http://localhost:3000/colaboradoresusuario';
+  _urlTareas            = 'http://localhost:3000/tasks';
+  _urlTareasUser        = 'http://localhost:3000/tasksusuario';
+  _urlTareasTeam        = 'http://localhost:3000/tasksequipo';
+  _urlAgregarTarea      = 'http://localhost:3000/insertTask';
+  _urlModificarTarea    = 'http://localhost:3000/modifyTask';
+  _urlEventos           = 'http://localhost:3000/events';
+  _urlEventosUser       = 'http://localhost:3000/eventsusuario';
+  _urlEventosTeam       = 'http://localhost:3000/eventsequipo';
+  _urlAgregarEvento     = 'http://localhost:3000/insertEvent';
+  _urlModificarEvento   = 'http://localhost:3000/modifyEvent';
+  _urlLastTeam          = 'http://localhost:3000/ultimoequipo';
+  _urlTarea             = 'http://localhost:3000/liltask';
+  _urlEvento            = 'http://localhost:3000/lilevent';
+  _urlBanTarea          = 'http://localhost:3000/bantask';
+  _urlBanEvento         = 'http://localhost:3000/banevent';
 
   // Vista equipo
-  _urlCheckTeamOwner    = 'http://localhost:3000/checkteamowner'
+  _urlCheckTeamOwner    = 'http://localhost:3000/checkteamowner';
+  //_urlNombreEncargado   = 'http://localhost:3000/getnomencargado';
+  _urlCheckTaskOwner    = 'http://localhost:3000/checktaskowner'
+  _urlSetCompletado     = 'http://localhost:3000/setcompletado'
 
   constructor(private _http: HttpClient) {}
 
@@ -120,10 +123,6 @@ export class HomeServiceService {
   }
 
 
-  
-
-  
-
 
   /*////////
   // POST //
@@ -136,22 +135,22 @@ export class HomeServiceService {
   }
 
   addTask(task:Task){
-    return this._http.post<any>(this._urlAgregarTarea,task)
+    return this._http.post<any>(this._urlAgregarTarea,task, {withCredentials:true})
     .pipe(catchError(this.errorHandler))
   }
 
   modTask(task:Task){
-    return this._http.post<any>(this._urlModificarTarea,task)
+    return this._http.post<any>(this._urlModificarTarea,task, {withCredentials:true})
     .pipe(catchError(this.errorHandler))
   }
 
   addEvent(event:Event){
-    return this._http.post<any>(this._urlAgregarEvento,event)
+    return this._http.post<any>(this._urlAgregarEvento,event, {withCredentials:true})
     .pipe(catchError(this.errorHandler))
   }
 
   modEvent(event:Event){
-    return this._http.post<any>(this._urlModificarEvento,event)
+    return this._http.post<any>(this._urlModificarEvento,event, {withCredentials:true})
     .pipe(catchError(this.errorHandler))
   }
 
@@ -193,6 +192,21 @@ export class HomeServiceService {
     return this._http.post<any>(this._urlCheckTeamOwner, id, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
   }
+
+  checkTaskOwner(id:IdBringer){
+    return this._http.post<any>(this._urlCheckTaskOwner, id, {withCredentials:true})
+      .pipe(catchError(this.errorHandler));
+  }
+
+  setCompletado(id:IdBringer){
+    return this._http.post<any>(this._urlSetCompletado, id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  /*getNombreEncargado(id:number){
+    return this._http.post<any>(this._urlNombreEncargado, id)
+      .pipe(catchError(this.errorHandler));
+  }*/
 
   
 

@@ -82,6 +82,9 @@ class IndexRoutes {
         this.router.post("/bantask", indexController_1.indexController.ban_tarea);
         this.router.post("/banevent", indexController_1.indexController.ban_evento);
         this.router.post("/checkteamowner", indexController_1.indexController.equipo_owner);
+        this.router.post("/checktaskowner", indexController_1.indexController.tarea_owner);
+        this.router.post("/setcompletado", indexController_1.indexController.set_completado);
+        //this.router.post("/getnomencargado", indexController.nombre_encargado);
         // this.router.get('/sesion', (req:Request,res:Response)=>{
         //     res.send("Inició sesion como: "+req!.session!.sesion);
         // } );

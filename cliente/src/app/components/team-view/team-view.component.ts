@@ -1,12 +1,14 @@
 import { Component, OnInit,  } from '@angular/core';
 import { Router } from '@angular/router';
 import { IdBringer } from '../../models/IdBringer';
+import { Task } from 'src/app/models/Task';
 import { HomeServiceService } from 'src/app/services/homeService/home-service.service';
 import { EquipoService } from 'src/app/services/equipoService/equipo.service';
 
 //Para validación de formulario
 import {FormControl,FormGroup,Validators} from '@angular/forms';
 import { listaEquipo } from 'src/app/models/listaEquipo';
+
 
 
 
@@ -19,15 +21,27 @@ export class TeamViewComponent implements OnInit {
 
   errorMsg='';                    // Mensaje que notifica un error
   categorias = null;              // Categorías de las tareas y eventos
+  categorias_map = null;          // Mapa reordenado de las categorias
   colaboradores = null;           // Colaboradores del usuario con sesión iniciada
+  colaboradores_map = null;       // Mapa reordenado de los colaboradores adquiridos
   equipos=[];                     // Equipos en los que pertenece el usuario con sesión iniciada
   tareas=null;                    // Tareas del equipo seleccionado
   eventos=null;                   // Eventos del equipo seleccionado
 
   teamData=null;
-  selectedTeam = null;            // ID del equipo seleccionado
-  teamId = new IdBringer(null);   // Modelo que posee el ID y el nombre del equipo seleccionado
-                                  // utilizado para realizar querys a la base de datos
+  selectedTeam = null;                  // ID del equipo seleccionado
+
+  teamId = new IdBringer(null);         // Modelo que posee el ID y el nombre del equipo seleccionado,
+                                        // utilizado para realizar querys a la base de datos
+
+  encargadoId = new IdBringer(null);    // Modelo que posee el ID del encargado seleccionado,
+                                        // utilizado para realizar querys a la base de datos
+
+  taskId = new IdBringer(null);         // Modelo que posee el ID de la tarea seleccionada,
+                                        // utilizado para realizar querys a la base de datos
+
+  _tarea = new Task('',0,0,0,0,0,0,'',0,0); // Modelo creado para adquirir datos de una tarea
+
   nombre_team='';
   member_selector = 0;            // ID del miembro seleccionado
   team_owner_checker = 0;         // Verificador si es miembro de un equipo
@@ -60,7 +74,10 @@ export class TeamViewComponent implements OnInit {
     this._homeService.getCategorias().subscribe(
       data => {
         (this.categorias = data)
-        console.log("Categorias recibidas");
+        // Luego de adquirir las categorias, se reordenaran en un mapa para su facil acceso
+        // (para tomar el nombre de las categorias a traves del ID)
+        this.reordenarCategorias();
+        console.log("Categorias recibidas: ", data);
       },
       error => {
         this.errorMsg=error.statusText;
@@ -74,7 +91,10 @@ export class TeamViewComponent implements OnInit {
     this._homeService.getColaboradoresUser().subscribe(
       data => {
         (this.colaboradores = data)
-        console.log("Colaboradores recibidos");
+        // Luego de adquirir los colaboradores, se reordenaran en un mapa para su facil acceso
+        // (para tomar el nombre de los encargados a traves del ID)
+        this.reordenarColaboradores();
+        console.log("Colaboradores recibidos: ", data);
       },
       error => {
         this.errorMsg=error.statusText;
@@ -96,7 +116,7 @@ export class TeamViewComponent implements OnInit {
     }
     
     console.log("TEAMID: ", this.teamId);
-    
+
     if(this.selectedTeam != 0){
       this.checkTeamOwner();
       this.getTareasTeam();
@@ -133,13 +153,13 @@ export class TeamViewComponent implements OnInit {
     this._homeService.getTareasTeam(this.teamId).subscribe(
       data => {
         (this.tareas = data)
-        console.log("Tareas del usuario recibidas");
+        console.log("Tareas del equipo recibidas");
         console.log(data);
       },
       error => {
         (this.tareas = null)
         this.errorMsg=error.statusText;
-        console.log("Error al recibir las tareas del usuario");
+        console.log("Error al recibir las tareas del equipo");
       }
     )
   }
@@ -148,12 +168,12 @@ export class TeamViewComponent implements OnInit {
     this._homeService.getEventosTeam(this.teamId).subscribe(
       data => {
         (this.eventos = data)
-        console.log("Eventos del usuario recibidos");
+        console.log("Eventos del equipo recibidos");
         console.log(data);
       },
       error => {
         this.errorMsg=error.statusText;
-        console.log("Error al recibir los eventos del usuario");
+        console.log("Error al recibir los eventos del equipo");
       }
     )
   }
@@ -308,7 +328,6 @@ export class TeamViewComponent implements OnInit {
         }else{
           this.team_owner_checker = 0;
         }
-        console.log("checkTeamOwner(data): ", data);
         console.log("team_owner_checker: ", this.team_owner_checker);
       },
       error => {
@@ -319,6 +338,137 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
+  // Función para reordenar los colaboradores en un mapa para adquirir sus nombres completos directamente desde su ID
+  reordenarColaboradores(){
+    let colab_map = new Map<number, string>();
+    let id;
+    let nombre;
+    let apellidos;
+    let nombre_completo;
+    
+    for(let elem of this.colaboradores){
+      id = elem.idColaborador[0].idColaborador;
+      nombre = elem.nombreColaborador[0].nombre;
+      apellidos = elem.apellidosColaborador[0].apellidos;
+      nombre_completo = nombre + " " + apellidos;
+      colab_map.set(id, nombre_completo.toString());
+    }
+    console.log("this.colaboradores", colab_map);
+    this.colaboradores_map = colab_map;
+  }
+
+  // Función para reordenar los colaboradores en un mapa para adquirir sus nombres completos directamente desde su ID
+  reordenarCategorias(){
+    let cat_map = new Map<number, string>();
+    let id;
+    let nombre;
+    
+    for(let elem of this.categorias){
+      id = elem.idCategoria[0].idCategoria;
+      nombre = elem.nombreCategoria[0].nombreCategoria;
+      cat_map.set(id, nombre);
+    }
+    console.log("this.categorias: ", cat_map);
+    this.categorias_map = cat_map;
+  }
+
+  // Función para obtener el nombre de una categoria
+  getNombreCategoria(idCategoria){
+    return this.categorias_map.get(idCategoria);
+  }
+
+  // Función para obtener el nombre del encargado de una tarea
+  getNombreEncargado(idEncargado){
+    console.log("idEncargado: ", idEncargado);
+    console.log(this.colaboradores_map.get(idEncargado));
+    return this.colaboradores_map.get(idEncargado);
+  }
+
+  // Función para obtener la fecha en formato día/mes/año
+  getFecha(notFecha){
+    if(notFecha != null && notFecha != ''){
+      var dia = this.getDia(notFecha);
+      var mes = this.getMes(notFecha);
+      var anio = this.getAnio(notFecha);
+
+      var yesFecha = dia + "/" + mes + "/" + anio;
+
+      return yesFecha.toString();
+    }
+    return '';
+  }
+
+  ////////// Funciones auxiliarea para getFecha /////////////
+
+  getDia(dat){
+    var date = String(dat);
+    var fecha = date.split('T',2);
+    var fecha2 = fecha[0].split('-',3);
+    var dia = fecha2[2];
+
+    return dia;
+  }
+
+  getMes(dat){
+    var date = String(dat);
+    var fecha = date.split('T',2);
+    var fecha2 = fecha[0].split('-',3);
+    var dia = fecha2[1];
+
+    return dia;
+  }
+
+  getAnio(dat){
+    var date = String(dat);
+    var fecha = date.split('T',2);
+    var fecha2 = fecha[0].split('-',3);
+    var dia = fecha2[0];
+
+    return dia;
+  }
+
+  ////////////////////////////////////////////////////////////////
+
+  // Función para habilitar el botón de "completar tarea",
+  // solo si no se ha completado, y el usuario con sesión iniciada es el encargado
+  checkTaskOwner(idTarea){
+    var taskId = new IdBringer(idTarea);
+
+    this._homeService.checkTaskOwner(taskId).subscribe(
+      data => {
+        console.log("checkTaskOwner(idTarea): ", taskId.id);
+        if(data == null || data.length == 0){
+          console.log("false");
+          return false;
+        }else{
+          console.log("true");
+          return true;
+        }
+      }
+    )
+  }
+
+  // Función para habilitar el botón de "completar tarea",
+  // solo si no se ha completado, y el usuario con sesión iniciada es el encargado
+  setCompletado(idTarea){
+    var taskId = new IdBringer(idTarea);
+
+    this._homeService.setCompletado(taskId).subscribe(
+      data => {
+        console.log(data);
+        alert("Tarea marcada como completada!");
+        setTimeout(() => 
+        {
+          this.router.navigate(['/uwu']);
+        },
+        500);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log(error);
+      }
+    )
+  }
 
 
   ///////////////////////

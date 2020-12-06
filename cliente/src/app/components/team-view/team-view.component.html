@@ -29,6 +29,7 @@
                         </select>
                         <button (click)="getTeamData()">Filtrar</button>
                     </div>
+                    <div class="text-center" *ngIf="team_owner_checker != 0">Usted es encargado de este equipo</div>
                 <!--/form-->
 
                 <br/>
@@ -55,26 +56,30 @@
             <h2 class='text-center'>Tareas <button *ngIf="team_owner_checker != 0" (click)="addTask()">+</button></h2> 
             <div id="sec_tareas">
                 <div id='sec_tareas2'>
+                    
+                    <div *ngIf="tareas == null" class="text-center">Este equipo aún no tiene tareas asignadas :c</div>
 
                     <div *ngFor="let tarea of tareas" value='{{tarea.idTarea}}'>
                         <div id="sec_tareas3">
                             <div class="text-center" id="nombre_tarea">{{tarea.nombre}}</div>
                             <br/>
+                            <div><b>Categoría:</b> {{getNombreCategoria(tarea.idCategoria)}}</div>
                             <div><b>Descripción:</b> {{tarea.descripcion}}</div>
-                            <br/>
-                            <div *ngIf="tarea.fecha != null"> <b>Fecha finalización:</b> {{tarea.fecha}} </div> 
+                            <div *ngIf="tarea.fecha != null"> <b>Fecha finalización:</b> {{getFecha(tarea.fecha)}} </div> 
                             <div *ngIf="tarea.fecha == null"> <b>Fecha finalización:</b> Sin fecha limite </div>
                             <br/>
-                            <!--div><b>Encargado tarea:</b>{{tarea.encargado}}</div-->
-                            <!--div><b>Estado tarea:</b>{{tarea.estado}}</div-->
+                            <!--div><b>Encargado:</b> {{ getNombreEncargado(tarea.idEncargado) }} </div-->
+                            <div *ngIf="tarea.completado == 0"> <b>Estado: </b>Pendiente </div>
+                            <div *ngIf="tarea.completado == 1"> <b>Estado: </b>Completado :D </div>
+                                
                             <div *ngIf="team_owner_checker != 0">
-                                <!--button>Completado</button--> <button class="btn btn-primary" (click)="modTask(tarea.idTarea)">Editar</button> <button class="btn btn-danger" (click)="banTask(tarea.idTarea)">Eliminar</button>
+                                <!--button *ngIf="tarea.completado == 0 && checkTaskOwner(tarea.idTarea)" (click)="setCompletado(tarea.idTarea)">Marcar como completado</button--> 
+                                <button class="btn btn-primary" (click)="modTask(tarea.idTarea)">Editar</button> <button class="btn btn-danger" (click)="banTask(tarea.idTarea)">Eliminar</button>
                             </div>
                         </div>
                         <br/>
                     </div>
                     
-
                 </div>
             </div>
 
@@ -102,6 +107,8 @@
         <div id="sec_eventos">
             <div id='sec_eventos2'>
 
+                <div *ngIf="eventos == null" class="text-center">Este equipo aún no tiene eventos futuros :c</div>
+
                 <div *ngFor="let evento of eventos" value='{{evento.idEvento}}'>
                     <div id="sec_eventos3">
                         <div id="nombre">{{evento.nombre}}</div>
@@ -109,9 +116,10 @@
                         <div><b>Link: </b><a href={{evento.enlaceVideoconferencia}} style="color: blue">{{evento.enlaceVideoconferencia}}</a></div>
                         <br/>
                         <div><b>Descripción:</b> {{evento.descripcion}}</div>
-                        <br/>
-                        <div *ngIf="evento.fecha != null"> <b>Fecha finalización:</b>  {{evento.fecha}} </div>
-                        <div *ngIf="evento.fecha == null"> <b>Fecha finalización:</b>  Sin fecha limite </div>
+                        <div *ngIf="evento.fecha != null"> <b>Fecha:</b>  {{getFecha(evento.fecha)}} </div>
+                        <div *ngIf="evento.fecha == null"> <b>Fecha:</b>  Sin fecha </div>
+                        <!--div *ngIf="evento.hora != null && evento.hora != ''"> <b>Hora:</b>  {{getHora(evento.hora)}} </div-->
+                        <!--div *ngIf="evento.hora == null || evento.hora == ''"> <b>Hora:</b>  Sin hora </div-->
                         <br/>
                         <div *ngIf="team_owner_checker != 0">
                             <button class="btn btn-primary" (click)="modEvent(evento.idEvento)">Editar</button> <button class="btn btn-danger" (click)="banEvent(evento.idEvento)">Eliminar</button>

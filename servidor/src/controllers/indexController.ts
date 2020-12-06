@@ -173,13 +173,23 @@ class IndexController {
     );
     
     if(idTareaQuery.length >= 1){
-      await pool.query(
-        "INSERT INTO listatareas (idTarea, idColaborador) VALUES (?,?)",
-        [
-          idTareaQuery[0].idTarea,
-          req.body.encargado
-        ]
-      );
+      if(req.body.encargado == 0){
+        await pool.query(
+          "INSERT INTO listatareas (idTarea, idColaborador) VALUES (?,?)",
+          [
+            idTareaQuery[0].idTarea,
+            req!.session!.idUserIniciado
+          ]
+        );
+      }else{
+        await pool.query(
+          "INSERT INTO listatareas (idTarea, idColaborador) VALUES (?,?)",
+          [
+            idTareaQuery[0].idTarea,
+            req.body.encargado
+          ]
+        );
+      }
     }else{
       console.log("idTareaQuery esta vacio");
     }
@@ -689,18 +699,52 @@ class IndexController {
     const check = await pool.query("SELECT encargado FROM listaequipo WHERE idEquipo=? AND idColaborador=? AND encargado=1",
     [req.body.id, req!.session!.idUserIniciado]);
 
-    // Si el usuario es el admin, se considera instantáneamente como propietario del equipo
+    // Si el usuario es el admin, se considera instantaneamente como propietario de todos los equipos
     if(req!.session!.idUserIniciado == 1){
-      const check = 1;
-    }
-
-    if(check.length > 0){
-      res.status(200).json(check);
+      res.status(200).json("1");
     }else{
-      res.status(204).json(check);
+      res.status(200).json(check);
     }
   }
   
+
+
+  // Query para verificar si el usuario es el encargado de una tarea
+
+  public async tarea_owner(req: Request, res: Response): Promise<any>{
+
+    const check = await pool.query("SELECT idColaborador FROM listatareas WHERE idTarea=? AND idColaborador=?",
+    [req.body.id, req!.session!.idUserIniciado]);
+
+    // Si el usuario es el admin, se considera instantaneamente como propietario de todas las tareas
+    if(req!.session!.idUserIniciado == 1){
+      res.status(200).json("1");
+    }else{
+      res.status(200).json(check);
+    }
+  }
+
+
+
+  // Query para marcar una tarea como completada
+
+  public async set_completado(req: Request, res: Response): Promise<any>{
+
+    await pool.query("UPDATE tarea SET completado = '1' WHERE tarea.idTarea = ?", req.body.id);
+
+    res.status(200).json({ message: "Tarea marcada como completada" });
+  }
+  
+  
+  
+  /*public async nombre_encargado(req: Request, res: Response): Promise<any>{
+    console.log("NOMBRE_ENCARGADO");
+    console.log("id: ", req.body.id);
+    const nombre = await pool.query("SELECT nombre, apellidos FROM colaborador WHERE idColaborador=?",
+    [req.body.id]);
+
+    res.status(200).json(nombre);
+  }*/
 
   
 }

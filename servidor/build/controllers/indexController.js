@@ -140,10 +140,18 @@ class IndexController {
                 req.body.equipo,
             ]);
             if (idTareaQuery.length >= 1) {
-                yield database_1.default.query("INSERT INTO listatareas (idTarea, idColaborador) VALUES (?,?)", [
-                    idTareaQuery[0].idTarea,
-                    req.body.encargado
-                ]);
+                if (req.body.encargado == 0) {
+                    yield database_1.default.query("INSERT INTO listatareas (idTarea, idColaborador) VALUES (?,?)", [
+                        idTareaQuery[0].idTarea,
+                        req.session.idUserIniciado
+                    ]);
+                }
+                else {
+                    yield database_1.default.query("INSERT INTO listatareas (idTarea, idColaborador) VALUES (?,?)", [
+                        idTareaQuery[0].idTarea,
+                        req.body.encargado
+                    ]);
+                }
             }
             else {
                 console.log("idTareaQuery esta vacio");
@@ -558,16 +566,33 @@ class IndexController {
     equipo_owner(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const check = yield database_1.default.query("SELECT encargado FROM listaequipo WHERE idEquipo=? AND idColaborador=? AND encargado=1", [req.body.id, req.session.idUserIniciado]);
-            // Si el usuario es el admin, se considera instantáneamente como propietario del equipo
+            // Si el usuario es el admin, se considera instantaneamente como propietario de todos los equipos
             if (req.session.idUserIniciado == 1) {
-                const check = 1;
-            }
-            if (check.length > 0) {
-                res.status(200).json(check);
+                res.status(200).json("1");
             }
             else {
-                res.status(204).json(check);
+                res.status(200).json(check);
             }
+        });
+    }
+    // Query para verificar si el usuario es el encargado de una tarea
+    tarea_owner(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const check = yield database_1.default.query("SELECT idColaborador FROM listatareas WHERE idTarea=? AND idColaborador=?", [req.body.id, req.session.idUserIniciado]);
+            // Si el usuario es el admin, se considera instantaneamente como propietario de todas las tareas
+            if (req.session.idUserIniciado == 1) {
+                res.status(200).json("1");
+            }
+            else {
+                res.status(200).json(check);
+            }
+        });
+    }
+    // Query para marcar una tarea como completada
+    set_completado(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield database_1.default.query("UPDATE tarea SET completado = '1' WHERE tarea.idTarea = ?", req.body.id);
+            res.status(200).json({ message: "Tarea marcada como completada" });
         });
     }
 }

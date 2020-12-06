@@ -17,14 +17,14 @@ import {FormControl,FormGroup,Validators} from '@angular/forms';
 export class TaskModComponent implements OnInit {
   errorMsg='';
   categorias = null;
-  _tarea = new Task('',0,0,0,0,0,0,'',0);
+  _tarea = new Task('',0,0,0,0,0,0,'',0,0);
   equipos=null;
   taskId = new IdBringer(null);
   teamId = new IdBringer(null);
   nombreteam='';
   colaboradores = null;
 
-  taskModel = new Task('',0,0,null,null,null,null,'',null);
+  taskModel = new Task('',0,0,null,null,null,null,'',null,0);
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
     this.getCategorias();
