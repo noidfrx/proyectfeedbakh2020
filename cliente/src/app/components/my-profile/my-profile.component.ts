@@ -87,6 +87,7 @@ export class MyProfileComponent implements OnInit {
     this.nuevosDatos.apellidos=this.datos.apellidos;
     this.nuevosDatos.email=this.datos.email;
     this.nuevosDatos.fotoPerfil=this.datos.fotoPerfil;
+    this.foto = this.ProfileService.fotoPerfil(this.nuevosDatos.fotoPerfil);
      
    }
    editar(){
