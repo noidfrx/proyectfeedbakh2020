@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-12-2020 a las 11:02:12
+-- Tiempo de generación: 07-12-2020 a las 02:23:53
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.2.34
 
@@ -101,6 +101,7 @@ CREATE TABLE `categoria` (
 --
 
 INSERT INTO `categoria` (`idCategoria`, `nombreCategoria`) VALUES
+(0, 'Sin categoria'),
 (1, 'Trabajo importante'),
 (2, 'Area administrativa'),
 (3, 'Area comercial'),
@@ -281,7 +282,8 @@ INSERT INTO `listaequipo` (`idListaEquipo`, `idEquipo`, `idColaborador`, `encarg
 (7, 2, 1, 0, '2020-11-12 18:38:16.083678'),
 (8, 23, 57, 1, '2020-12-06 04:13:57.062250'),
 (9, 1, 57, 0, '2020-12-06 04:13:57.062250'),
-(10, 2, 57, 0, '2020-12-06 04:13:57.062250');
+(10, 2, 57, 0, '2020-12-06 04:13:57.062250'),
+(11, 23, 4, 0, '2020-12-06 04:13:57.062250');
 
 -- --------------------------------------------------------
 
@@ -440,7 +442,7 @@ ALTER TABLE `amigo`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idCategoria` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idCategoria` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `colaborador`
@@ -464,7 +466,7 @@ ALTER TABLE `evento`
 -- AUTO_INCREMENT de la tabla `listaequipo`
 --
 ALTER TABLE `listaequipo`
-  MODIFY `idListaEquipo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `idListaEquipo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `listaeventos`
