@@ -107,13 +107,30 @@ export class TeamViewComponent implements OnInit {
   // para adquirir las tareas y eventos de un equipo seleccionado y saber si es encargado, respectivamente
   getTeamData(){
     this.teamId.id = this.selectedTeam;
+    //this.nombre_team = this.teamData.nombre;
+    console.log("teamData -> ", this.teamData);
     if (this.teamData == null){
       this.equipos.forEach(equipo => {
         if (equipo.nombreEquipo[0].idEquipo == this.selectedTeam){
           this.teamData = equipo.nombreEquipo[0];
+          console.log("equipo.nombreEquipo[0", this.teamData);
         }
       });
     }
+
+    // Query para actualizar el objeto teamData
+    this._homeService.getTeamData(this.teamId).subscribe(
+      data => {
+        (this.teamData = data)
+        console.log("Datos del equipo: ", data);
+        this.selectedTeam = this.teamData[0].idEquipo;
+        this.nombre_team = this.teamData[0].nombre;
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir los datos del equipo");
+      }
+    )
     
     console.log("TEAMID: ", this.teamId);
 
@@ -188,13 +205,14 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
+
   // Función para agregar una tarea, redirigiendo hacia el formulario correspondiente
   addTask(){
     if (this.teamData == null){
       this.getTeamData();
     }
-    let idteam = this.teamId.id;
-    let nombreteam = this.teamData.nombre;
+    let idteam = this.selectedTeam;
+    let nombreteam = this.nombre_team;
     this.router.navigate(['/taskadd'], { state: {idteam, nombreteam} });
   }
 
@@ -203,8 +221,8 @@ export class TeamViewComponent implements OnInit {
     if (this.teamData == null){
       this.getTeamData();
     }
-    let idteam = this.teamId.id;
-    let nombreteam = this.teamData.nombre;
+    let idteam = this.selectedTeam;
+    let nombreteam = this.nombre_team;
     this.router.navigate(['/taskmod'], { state: {idtask,idteam,nombreteam} });
   }
 
@@ -236,9 +254,8 @@ export class TeamViewComponent implements OnInit {
     if (this.teamData == null){
       this.getTeamData();
     }
-    let idteam = this.teamId.id;
-    console.log("ID  TEAM:",idteam);
-    let nombreteam = this.teamData.nombre;
+    let idteam = this.selectedTeam;
+    let nombreteam = this.nombre_team;
     this.router.navigate(['/eventadd'], { state: {idteam, nombreteam} });
   }
 
@@ -247,8 +264,8 @@ export class TeamViewComponent implements OnInit {
     if (this.teamData == null){
       this.getTeamData();
     }
-    let idteam = this.teamId.id;
-    let nombreteam = this.teamData.nombre;
+    let idteam = this.selectedTeam;
+    let nombreteam = this.nombre_team;
     this.router.navigate(['/eventmod'], { state: {idevent, idteam, nombreteam} });
   }
 
@@ -324,40 +341,6 @@ export class TeamViewComponent implements OnInit {
     return false;
   }
 
-  /*
-  // Funcion para adquirir los colaboradores que no pertenecen al equipo (parte 1)
-  checkTeamMember1(){
-    var colab = new IdBringer(this.selectedTeam, this.member_selector);
-
-    this._homeService.checkTeamMember(colab).subscribe(
-      data => {
-        if(data != null && data.length > 0){
-          console.log("Pertenece al equipo", data);
-          this.team_member_checker = 1;
-        }else{
-          console.log("No pertenece al equipo", data);
-          this.team_member_checker = 0;
-        }
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("Error al verificar");
-        this.team_member_checker = 0;
-      }
-    )
-  }
-
-  // Funcion para adquirir los colaboradores que no pertenecen al equipo (parte 2)
-  checkTeamMember2(): boolean{
-    if(this.team_member_checker == 1){
-      console.log("this.team_member_checker(true): ", this.team_member_checker);
-      return true;
-    }else{
-      console.log("this.team_member_checker(false): ", this.team_member_checker);
-      return false;
-    }
-  }
-  */
 
 
   // Función para verificar si el usuario con sesión iniciada es el encargado del equipo seleccionado
@@ -452,6 +435,12 @@ export class TeamViewComponent implements OnInit {
         console.log("Error al recibir los colaboradores (team)");
       }
     )
+  }
+
+
+  // Funcion que redirigire al formulario de creacion de equipos
+  crearEquipo(){
+    this.router.navigate(['/crearEquipo']);
   }
 
 

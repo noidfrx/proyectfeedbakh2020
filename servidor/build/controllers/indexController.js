@@ -171,6 +171,10 @@ class IndexController {
                 req.body.equipo,
                 req.body.tarea,
             ]);
+            yield database_1.default.query("UPDATE listatareas SET idColaborador=? WHERE idTarea=?", [
+                req.body.encargado,
+                req.body.tarea
+            ]);
             res.status(200).json({ message: "Tarea modificada" });
         });
     }
@@ -623,6 +627,30 @@ class IndexController {
             }
             else {
                 res.status(204).send({ message: "No se adquirieron colaboradores" });
+            }
+        });
+    }
+    // Query para obtener los datos de un equipo
+    datos_equipo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const datos = yield database_1.default.query("SELECT DISTINCT * FROM equipo WHERE idEquipo=?", [req.body.id]);
+            if (datos.length >= 1) {
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).send({ message: "No se adquirieron datos de equipo" });
+            }
+        });
+    }
+    // Query para obtener los datos de un equipo
+    encargado_tarea(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const datos = yield database_1.default.query("SELECT DISTINCT idColaborador FROM listatareas WHERE idTarea=?", [req.body.id]);
+            if (datos.length >= 1) {
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).send({ message: "No se adquirieron datos de equipo" });
             }
         });
     }

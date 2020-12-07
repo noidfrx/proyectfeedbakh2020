@@ -54,7 +54,7 @@ export class TaskModComponent implements OnInit {
     console.log("tarea usada para form: ", this._tarea);
     this.taskModel.tarea = this.taskId.id;
     this.taskModel.nombre = this._tarea[0].nombre;
-    this.taskModel.encargado = this._tarea[0].idEncargado;
+    this.setEncargadoTarea(this.taskId);
     this.taskModel.equipo = this._tarea[0].idEquipo;
     this.taskModel.dia = this.getDia(this._tarea[0].fecha);
     this.taskModel.mes = this.getMes(this._tarea[0].fecha);
@@ -114,7 +114,6 @@ export class TaskModComponent implements OnInit {
   //////////
 
   getColaboradoresTeam(){
-    console.log("getColaboradoresTeam: ", this.teamId);
     this._homeService.getColaboradoresTeam(this.teamId).subscribe(
       data => {
         this.colaboradores = data;
@@ -127,8 +126,22 @@ export class TaskModComponent implements OnInit {
     )
   }
 
+  setEncargadoTarea(taskId){
+    this._homeService.getEncargadoTarea(taskId).subscribe(
+      data => {
+        this.taskModel.encargado = data[0].idColaborador;
+        console.log("Colaborador adquirido (ID): ", data);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir el colaborador");
+      }
+    )
+  }
+
   onSubmit(){
     this.taskModel.equipo = this.teamId.id;
+    console.log("formulario enviado -> ", this.taskModel);
     this._homeService.modTask(this.taskModel)
     .subscribe(
       data => {

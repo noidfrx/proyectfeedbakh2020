@@ -101,6 +101,8 @@ class IndexRoutes {
     this.router.post("/setnocompletado", indexController.set_nocompletado);
     this.router.post("/colaboradoresequipo", indexController.colaboradores_equipo);
     this.router.post("/colaboradoresnoequipo", indexController.colaboradores_noequipo);
+    this.router.post("/teamdata", indexController.datos_equipo);
+    this.router.post("/taskencargado", indexController.encargado_tarea);
     //this.router.post("/checkteammember", indexController.revisar_miembro_equipo);
 
 

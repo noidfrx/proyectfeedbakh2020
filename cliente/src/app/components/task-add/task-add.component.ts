@@ -38,6 +38,8 @@ export class TaskAddComponent implements OnInit {
     if(this.teamId.id == null){
       this.router.navigate(['/teamview']);
     }
+    console.log("idteam: ", this.teamId.id);
+    console.log("nombreteam: ", this.nombreteam);
   }
 
   /////////
