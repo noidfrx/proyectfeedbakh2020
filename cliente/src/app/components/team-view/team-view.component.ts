@@ -55,7 +55,7 @@ export class TeamViewComponent implements OnInit {
 
   ngOnInit(): void {
 
-    /* Lo que hace este código es ver si desde otro lugar se apretó algún equipo para mostrar
+    /* Lo que hace esta parte es ver si desde otro lugar se apretó algún equipo para mostrar
        Si es cero o null, mostrará el último equipo creado 
        Si es algún número, se mostrará el equipo con esa id (número)*/
        let mostrarEquipo = this._homeService.getMostrarEquipo();
@@ -290,6 +290,7 @@ export class TeamViewComponent implements OnInit {
             alert("Miembro agregado al equipo");
             setTimeout(() => 
             {
+                this._homeService.setMostrarEquipo(this.selectedTeam);
                 this.router.navigate(['/uwu']);
             },
             500);
