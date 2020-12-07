@@ -8,7 +8,7 @@ import {ProfileService} from '../../services/profileService/profile.service';
 })
 export class MyProfileComponent implements OnInit {
   errorMsg='';
-  amigos: any[];
+  amigos: any;
   foto="";
   modoEdicion=false;
   datos: Profile ={
@@ -47,8 +47,14 @@ export class MyProfileComponent implements OnInit {
 
     this.ProfileService.amigos().subscribe(
       res => { console.log(res);
-        this.amigos= res;
-        console.log("mi foto es:", this.amigos[0].fotoPerfil);
+        if(res){
+          this.amigos= res;
+        }else{
+          this.amigos= false;
+          console.log("no hay amigos");
+
+        }
+        
       },
       err => {
         this.errorMsg=err.statusText;
