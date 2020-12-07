@@ -40,6 +40,7 @@ import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usu
 import { UwuComponent } from './components/uwu/uwu.component';
 import { VistaSolicitudesComponent } from './components/vista-solicitudes/vista-solicitudes.component';
 import { AmigosComponent } from './components/amigos/amigos.component';
+import { PasswordOlvidadaComponent } from './components/password-olvidada/password-olvidada.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { AmigosComponent } from './components/amigos/amigos.component';
     BuscarUsuariosComponent,
     UwuComponent,
     VistaSolicitudesComponent,
-    AmigosComponent
+    AmigosComponent,
+    PasswordOlvidadaComponent
   ],
   imports: [
     BrowserModule,
