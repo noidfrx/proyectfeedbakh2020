@@ -13,6 +13,7 @@ export class ProfileComponent implements OnInit {
   errorMsg='';
   amigoId;
   amigos;
+  idUser: any;
   boton: number;
   amistad:Amistad = {
     idColaborador1: 0,
@@ -43,22 +44,28 @@ export class ProfileComponent implements OnInit {
       },
       error => {
         this.errorMsg=error.statusText;
-        console.log("no se pueden obtener los datos")
+        console.log("no se pueden obtener los datos", error.statusText)
       }
     )
 
     this.ProfileService.amigos2(this.amigoId).subscribe(
       data => { 
         this.amistades = data;
-        console.log("los amigos de esta persona son",data)
+        console.log("los amigos son",data);
 
       },
       error => {
         this.errorMsg=error.statusText;
-        console.log("no se pueden obtener los datos")
+        console.log("no se pueden obtener los datos", error.statusText)
       }
     )
-
+    this.ProfileService.datosUsuario().subscribe(
+      data =>{
+        this.idUser=data[0].idColaborador;
+      }, error => {
+        this.errorMsg = error.statusText;
+      }
+    )
     
   }
 
@@ -88,7 +95,6 @@ export class ProfileComponent implements OnInit {
   }
 
   agregarAmigo() {
-    console.log("id 2 ", this.amigoId);
     this.ProfileService.anadirAmigo(this.amistad).subscribe(
       data => { 
         console.log(data);

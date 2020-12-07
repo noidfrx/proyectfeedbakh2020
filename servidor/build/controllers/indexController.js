@@ -626,18 +626,6 @@ class IndexController {
             }
         });
     }
-    // Query para verificar si un colaborador pertenece a un equipo
-    revisar_miembro_equipo(req, res) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const datos = yield database_1.default.query("SELECT idColaborador FROM listaequipo WHERE idEquipo=? AND idColaborador=?", [req.body.id, req.body.colaborador]);
-            if (datos.length >= 1) {
-                res.status(200).json(datos);
-            }
-            else {
-                res.status(204).send({ message: "No se adquirieron colaboradores" });
-            }
-        });
-    }
 }
 //Instanciamos y exportamos toda la clase
 exports.indexController = new IndexController();

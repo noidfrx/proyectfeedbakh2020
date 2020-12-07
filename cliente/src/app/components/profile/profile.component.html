@@ -47,7 +47,8 @@
                                     <img  src="{{ProfileService.fotoPerfil(amistades[0].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                 </div>  
                                 <div class="card-header">
-                                    <a href="/perfiles/{{amistades[0].idColaborador}}" > {{amistades[0].nombre}} </a>
+                                    <a *ngIf="amistades[0].idColaborador != idUser"  href="/perfiles/{{amistades[0].idColaborador}}" > {{amistades[0].nombre}} </a>
+                                    <a *ngIf="amistades[0].idColaborador == idUser" href="/my-profile" > {{amistades[0].nombre}} </a>
                                 </div> 
                             </div>
                         </div>
@@ -57,7 +58,8 @@
                                     <img  src="{{ProfileService.fotoPerfil(amistades[1].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                 </div>  
                             <div class="card-header">
-                                <a href="/perfiles/{{amistades[1].idColaborador}}" > {{amistades[1].nombre}} </a>
+                                <a *ngIf="amistades[1].idColaborador != idUser"  href="/perfiles/{{amistades[1].idColaborador}}" > {{amistades[1].nombre}} </a>
+                                <a *ngIf="amistades[1].idColaborador == idUser"  href="/my-profile" > {{amistades[1].nombre}} </a>
                             </div> 
                         </div>
                         </div>
@@ -70,7 +72,8 @@
                                     <img  src="{{ProfileService.fotoPerfil(amistades[2].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                 </div>  
                                 <div class="card-header">  
-                                    <a href="/perfiles/{{amistades[2].idColaborador}}" > {{amistades[2].nombre}} </a>
+                                    <a *ngIf="amistades[2].idColaborador != idUser"  href="/perfiles/{{amistades[2].idColaborador}}" > {{amistades[2].nombre}} </a>
+                                    <a *ngIf="amistades[2].idColaborador == idUser"  href="/my-profile" > {{amistades[2].nombre}} </a>
                                 </div> 
                             </div>
                         </div>
@@ -80,7 +83,8 @@
                                     <img  src="{{ProfileService.fotoPerfil(amistades[3].fotoPerfil)}}" width="70px" height="70px" class="img-fluid">
                                 </div>  
                             <div class="card-header"> 
-                                <a href="/perfiles/{{amistades[3].idColaborador}}" > {{amistades[3].nombre}} </a>
+                                <a *ngIf="amistades[3].idColaborador != idUser"  href="/perfiles/{{amistades[3].idColaborador}}" > {{amistades[3].nombre}} </a>
+                                <a *ngIf="amistades[3].idColaborador == idUser"  href="/my-profile" > {{amistades[3].nombre}} </a>
                             </div> 
                         </div>
                         </div>
