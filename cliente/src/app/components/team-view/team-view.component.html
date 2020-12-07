@@ -1,130 +1,229 @@
 <app-navigation-home></app-navigation-home>
 
 <div class="container-fluid" id="todoContenido">
+  <!-- Lado izquierdo -->
 
-
-    <!-- Lado izquierdo -->
-
-    <section id="izq">
-        <aside id="izq2">
-
-            <!-- Equipos -->
-            <div>
-                <h2 class='text-center'>Equipos <button id="espacioBoton" class="btn btn-primary"><i class="fas fa-plus"></i></button></h2>
-                <div class='form-group'>
-                    <select 
-                        class="custom-select col-md-4 offset-md-4"
-                        [(ngModel)]="selectedTeam"
-                    >
-                        <option *ngFor="let equipo of equipos" value={{equipo.nombreEquipo[0].idEquipo}}>
-                            {{equipo.nombreEquipo[0].nombre}}
-                        </option>
-                    </select>
-                    <button class="btn btn-primary" (click)="getTeamData() " id="espacioBoton">Filtrar</button>
-                </div>
-                <div class="text-center" *ngIf="team_owner_checker != 0">Usted es encargado de este equipo</div>
-
-                <br/>
-
-                <div class='form-group' *ngIf="team_owner_checker != 0">
-                    <h2 class='text-center'>Añadir miembro</h2>
-                    <select class="custom-select col-md-4 offset-md-4"[(ngModel)]="member_selector">
-                        
-                        <option selected value="0">Seleccione un miembro</option>
-                        <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador[0].idColaborador}}'>
-                            {{colaborador.nombreColaborador[0].nombre}} {{colaborador.apellidosColaborador[0].apellidos}} 
-                        </option>
-                    </select>
-                    <button class="btn btn-primary" (click)="addMember()" id="espacioBoton">Añadir</button>
-                </div>
-
-                <br/>
-
-            </div>
-
-            <!-- Tareas -->
-            <h2 class='text-center'>Tareas <button class="btn btn-primary" *ngIf="team_owner_checker != 0" (click)="addTask()" id="espacioBoton" ><i class="fas fa-plus"></i></button></h2> 
-            <div id="sec_tareas">
-                <div id='sec_tareas2'>
-                    
-                    <div *ngIf="tareas == null" class="text-center">Este equipo aún no tiene tareas asignadas</div>
-
-                    <div *ngFor="let tarea of tareas" value='{{tarea.idTarea}}'>
-                        <div id="sec_tareas3">
-                            <div class="text-center" id="nombre_tarea">{{tarea.nombre}}</div>
-                            <br/>
-                            <div><b>Categoría:</b> {{getNombreCategoria(tarea.idCategoria)}}</div>
-                            <div><b>Descripción:</b> {{tarea.descripcion}}</div>
-                            <div *ngIf="tarea.fecha != null"> <b>Fecha finalización:</b> {{getFecha(tarea.fecha)}} </div> 
-                            <div *ngIf="tarea.fecha == null"> <b>Fecha finalización:</b> Sin fecha limite </div>
-                            <br/>
-                            <!--div><b>Encargado:</b> {{ getNombreEncargado(tarea.idEncargado) }} </div-->
-                            <div *ngIf="tarea.completado == 0"> <b>Estado: </b>Pendiente </div>
-                            <div *ngIf="tarea.completado == 1"> <b>Estado: </b>Completado</div>
-                            <br>
-                                
-                            <div *ngIf="team_owner_checker != 0">
-                                <button *ngIf="tarea.completado == 0" class="btn btn-success" (click)="setCompletado(tarea.idTarea)">Completar</button>
-                                <button *ngIf="tarea.completado == 1" class="btn btn-warning" (click)="setNoCompletado(tarea.idTarea)">Deshacer</button> 
-                                <button class="btn btn-info" id="espacioBoton" (click)="modTask(tarea.idTarea)">Editar</button> <button class="btn btn-danger" (click)="banTask(tarea.idTarea)" id="espacioBoton">Eliminar</button>
-                            </div>
-                        </div>
-                        <br/>
-                    </div>
-                    
-                </div>
-            </div>
-
-        </aside>
-        
-
-    </section>
-    
-    <!-- Separación -->
-    <div class="col-md-1"></div>
-
-    <!-- Lado derecho -->
-
-    <aside id="der">
-        <!-- Miembros equipo -->
-        <h2 class='text-center'>Miembros del equipo</h2>
-        <div *ngFor="let miembro of colaboradores_team" value='{{miembro.idColaborador}}'>
-            <div class="text-center">{{miembro.nombre}} {{miembro.apellidos}}</div>
+  <section id="izq">
+    <aside id="izq2">
+      <!-- Equipos -->
+      <div>
+        <h2 class="text-center">
+          Equipos
+          <button id="espacioBoton" class="btn btn-primary">
+            <i class="fas fa-plus"></i>
+          </button>
+        </h2>
+        <div class="form-group">
+          <select
+            class="custom-select col-md-4 offset-md-4"
+            [(ngModel)]="selectedTeam"
+          >
+            <option
+              *ngFor="let equipo of equipos"
+              value="{{ equipo.nombreEquipo[0].idEquipo }}"
+            >
+              {{ equipo.nombreEquipo[0].nombre }}
+            </option>
+          </select>
+          <button
+            class="btn btn-primary"
+            (click)="getTeamData()"
+            id="espacioBoton"
+          >
+            Filtrar
+          </button>
         </div>
-        
-        <br/>
-
-        <!-- Eventos -->
-        <h2 class='text-center'>Eventos <button class="btn btn-primary" *ngIf="team_owner_checker != 0" (click)="addEvent()" id="espacioBoton"><i class="fas fa-plus"></i></button></h2>
-        <div id="sec_eventos">
-            <div id='sec_eventos2'>
-
-                <div *ngIf="eventos == null" class="text-center">Este equipo no tiene eventos futuros</div>
-
-                <div *ngFor="let evento of eventos" value='{{evento.idEvento}}'>
-                    <div id="sec_eventos3">
-                        <div id="nombre">{{evento.nombre}}</div>
-                        <br/>
-                        <div><b>Link: </b><a href={{evento.enlaceVideoconferencia}} style="color: blue">{{evento.enlaceVideoconferencia}}</a></div>
-                        <br/>
-                        <div><b>Descripción:</b> {{evento.descripcion}}</div>
-                        <div *ngIf="evento.fecha != null"> <b>Fecha:</b>  {{getFecha(evento.fecha)}} </div>
-                        <div *ngIf="evento.fecha == null"> <b>Fecha:</b>  Sin fecha </div>
-                        <!--div *ngIf="evento.hora != null && evento.hora != ''"> <b>Hora:</b>  {{getHora(evento.hora)}} </div-->
-                        <!--div *ngIf="evento.hora == null || evento.hora == ''"> <b>Hora:</b>  Sin hora </div-->
-                        <br/>
-                        <div *ngIf="team_owner_checker != 0">
-                            <button class="btn btn-info" (click)="modEvent(evento.idEvento)" id="espacioBoton" >Editar</button> <button class="btn btn-danger" (click)="banEvent(evento.idEvento)" id="espacioBoton">Eliminar</button>
-                        </div>
-                    </div>
-                    <br/>
-                </div>
-                
-
-            </div>
+        <div class="text-center" *ngIf="team_owner_checker != 0">
+          Usted es encargado de este equipo
         </div>
+
+        <br />
+
+        <div class="form-group" *ngIf="team_owner_checker != 0">
+          <h2 class="text-center">Añadir miembro</h2>
+          <select
+            class="custom-select col-md-4 offset-md-4"
+            [(ngModel)]="member_selector"
+          >
+            <option selected value="0">Seleccione un amigo</option>
+            <option
+              *ngFor="let colaborador of colaboradores"
+              value="{{ colaborador.idColaborador[0].idColaborador }}"
+            >
+              {{ colaborador.nombreColaborador[0].nombre }}
+              {{ colaborador.apellidosColaborador[0].apellidos }}
+            </option>
+          </select>
+          <button
+            class="btn btn-primary"
+            (click)="addMember()"
+            id="espacioBoton"
+          >
+            Añadir
+          </button>
+        </div>
+
+        <br />
+      </div>
+
+      <!-- Tareas -->
+      <h2 class="text-center">
+        Tareas
+        <button
+          class="btn btn-primary"
+          *ngIf="team_owner_checker != 0"
+          (click)="addTask()"
+          id="espacioBoton"
+        >
+          <i class="fas fa-plus"></i>
+        </button>
+      </h2>
+      <div id="sec_tareas">
+        <div id="sec_tareas2">
+          <div *ngIf="tareas == null" class="text-center">
+            Este equipo aún no tiene tareas asignadas
+          </div>
+
+          <div *ngFor="let tarea of tareas" value="{{ tarea.idTarea }}">
+            <div id="sec_tareas3">
+              <div class="text-center" id="nombre_tarea">
+                {{ tarea.nombre }}
+              </div>
+              <br />
+              <div>
+                <b>Categoría:</b> {{ getNombreCategoria(tarea.idCategoria) }}
+              </div>
+              <div><b>Descripción:</b> {{ tarea.descripcion }}</div>
+              <div *ngIf="tarea.fecha != null">
+                <b>Fecha finalización:</b> {{ getFecha(tarea.fecha) }}
+              </div>
+              <div *ngIf="tarea.fecha == null">
+                <b>Fecha finalización:</b> Sin fecha limite
+              </div>
+              <br />
+              <!--div><b>Encargado:</b> {{ getNombreEncargado(tarea.idEncargado) }} </div-->
+              <div *ngIf="tarea.completado == 0"><b>Estado: </b>Pendiente</div>
+              <div *ngIf="tarea.completado == 1"><b>Estado: </b>Completado</div>
+              <br />
+
+              <div *ngIf="team_owner_checker != 0">
+                <button
+                  *ngIf="tarea.completado == 0"
+                  class="btn btn-success"
+                  (click)="setCompletado(tarea.idTarea)"
+                >
+                  Completar
+                </button>
+                <button
+                  *ngIf="tarea.completado == 1"
+                  class="btn btn-warning"
+                  (click)="setNoCompletado(tarea.idTarea)"
+                >
+                  Deshacer
+                </button>
+                <button
+                  class="btn btn-info"
+                  id="espacioBoton"
+                  (click)="modTask(tarea.idTarea)"
+                >
+                  Editar
+                </button>
+                <button
+                  class="btn btn-danger"
+                  (click)="banTask(tarea.idTarea)"
+                  id="espacioBoton"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+            <br />
+          </div>
+        </div>
+      </div>
     </aside>
+  </section>
 
+  <!-- Separación -->
+  <div class="col-md-1"></div>
+
+  <!-- Lado derecho -->
+
+  <aside id="der">
+    <!-- Miembros equipo -->
+    <h2 class="text-center">Miembros del equipo</h2>
+    <div
+      *ngFor="let miembro of colaboradores_team"
+      value="{{ miembro.idColaborador }}"
+    >
+      <div class="text-center">
+        {{ miembro.nombre }} {{ miembro.apellidos }}
+      </div>
+    </div>
+
+    <br />
+
+    <!-- Eventos -->
+    <h2 class="text-center">
+      Eventos
+      <button
+        class="btn btn-primary"
+        *ngIf="team_owner_checker != 0"
+        (click)="addEvent()"
+        id="espacioBoton"
+      >
+        <i class="fas fa-plus"></i>
+      </button>
+    </h2>
+    <div id="sec_eventos">
+      <div id="sec_eventos2">
+        <div *ngIf="eventos == null" class="text-center">
+          Este equipo no tiene eventos futuros
+        </div>
+
+        <div *ngFor="let evento of eventos" value="{{ evento.idEvento }}">
+          <div id="sec_eventos3">
+            <div id="nombre">{{ evento.nombre }}</div>
+            <br />
+            <div>
+              <b>Link: </b
+              ><a
+                href="{{ evento.enlaceVideoconferencia }}"
+                style="color: blue"
+                >{{ evento.enlaceVideoconferencia }}</a
+              >
+            </div>
+            <br />
+            <div><b>Descripción:</b> {{ evento.descripcion }}</div>
+            <div *ngIf="evento.fecha != null">
+              <b>Fecha:</b> {{ getFecha(evento.fecha) }}
+            </div>
+            <div *ngIf="evento.fecha == null"><b>Fecha:</b> Sin fecha</div>
+            <!--div *ngIf="evento.hora != null && evento.hora != ''"> <b>Hora:</b>  {{getHora(evento.hora)}} </div-->
+            <!--div *ngIf="evento.hora == null || evento.hora == ''"> <b>Hora:</b>  Sin hora </div-->
+            <br />
+            <div *ngIf="team_owner_checker != 0">
+              <button
+                class="btn btn-info"
+                (click)="modEvent(evento.idEvento)"
+                id="espacioBoton"
+              >
+                Editar
+              </button>
+              <button
+                class="btn btn-danger"
+                (click)="banEvent(evento.idEvento)"
+                id="espacioBoton"
+              >
+                Eliminar
+              </button>
+            </div>
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+  </aside>
 </div>
 
 <app-footer></app-footer>
