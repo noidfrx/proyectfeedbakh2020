@@ -48,11 +48,10 @@ export class HomeServiceService {
 
   // Vista equipo
   _urlCheckTeamOwner    = 'http://localhost:3000/checkteamowner';
-  //_urlCheckTeamMember    = 'http://localhost:3000/checkteammember';
-  //_urlNombreEncargado   = 'http://localhost:3000/getnomencargado';
   _urlCheckTaskOwner    = 'http://localhost:3000/checktaskowner'
   _urlSetCompletado     = 'http://localhost:3000/setcompletado'
-  _urlSetNoCompletado     = 'http://localhost:3000/setnocompletado'
+  _urlSetNoCompletado   = 'http://localhost:3000/setnocompletado'
+  _urlTeamData          = 'http://localhost:3000/teamdata'
 
   constructor(private _http: HttpClient) {}
 
@@ -224,6 +223,11 @@ export class HomeServiceService {
 
   getColaboradoresNoTeam(id:IdBringer){
     return this._http.post<any>(this._urlColaboradoresNoTeam, id, {withCredentials:true})
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getTeamData(id:IdBringer){
+    return this._http.post<any>(this._urlTeamData, id, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
   }
 

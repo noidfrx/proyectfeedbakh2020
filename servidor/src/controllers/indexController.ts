@@ -775,6 +775,21 @@ class IndexController {
 
 
 
+
+  // Query para obtener los datos de un equipo
+
+  public async datos_equipo(req: Request, res: Response): Promise<any> {
+    const datos = await pool.query("SELECT * FROM equipo WHERE idEquipo=?", [req.body.id]);
+
+    if (datos.length >= 1) {
+      res.status(200).json(datos);
+    } else {
+      res.status(204).send({ message: "No se adquirieron datos de equipo" });
+    }
+  }
+
+
+
   // Query para verificar si un colaborador pertenece a un equipo
 
   /*public async revisar_miembro_equipo(req: Request, res: Response): Promise<any> {

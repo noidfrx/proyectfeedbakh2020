@@ -626,6 +626,18 @@ class IndexController {
             }
         });
     }
+    // Query para obtener los datos de un equipo
+    datos_equipo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const datos = yield database_1.default.query("SELECT * FROM equipo WHERE idEquipo=?", [req.body.id]);
+            if (datos.length >= 1) {
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).send({ message: "No se adquirieron datos de equipo" });
+            }
+        });
+    }
 }
 //Instanciamos y exportamos toda la clase
 exports.indexController = new IndexController();
