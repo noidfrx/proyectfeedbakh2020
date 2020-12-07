@@ -19,7 +19,6 @@
             <div class='card-body'>
                 <label for='inputNombreTarea' class="col-md-12">Nombre de tarea</label>
                 <div id="static" class='input-group col-md-12'>
-                    
                     <div class="input-group-prepend">
                         <div class="input-group-text">
                             <i class="fa fa-clipboard"></i>
@@ -133,8 +132,8 @@
                 <!--Separador--> <br/>
         
                 <label for='inputCategoria' class='col-md-12'>Categoría</label>
-                <div class='row offset-md-0' id='inputCategoria'>
-                    <div class='input group col-md-9'>
+                <div id='inputCategoria'>
+                    <div class='input-group col-md-12'>
                         <div class="input-group-prepend">
                             <div class="input-group-text">
                               <i class="fa fa-cubes"></i>
@@ -153,36 +152,25 @@
                             </option>
                         </select>
                     </div>
-                    
-                    <!-- HACER FUNCIONAL ESTE SWITCH!! --> 
-                    <!--div class="custom-control custom-switch col-md-3 mt-2">
-                        <input 
-                            type="checkbox" 
-                            class="custom-control-input" 
-                            id="inputSinCategoria"
-                        >
-                        <label class="custom-control-label" for="inputSinCategoria">Sin categoría</label>
-                    </div-->
                 </div>
         
                 <!--Separador--> <br/>
                 
-                <label for='inputDescripcionTarea'>Descripción de tarea</label>
+                <label for='inputDescripcionTarea' class="col-md-12">Descripción de tarea</label>
                 <div class='input-group col-md-12'>
                     <div class="input-group-prepend">
                         <div class="input-group-text">
-                          <i class="fa fa-align-justify"></i>
+                          <i class="fa fa-bars"></i>
                         </div>
                     </div> 
                     <input 
                         type='text' 
-                        class='form-control mb-3' 
+                        class='form-control' 
                         id='inputDescripcionTarea'
                         name='descripcion' 
                         [(ngModel)]='taskModel.descripcion' 
                         #descripcion="ngModel"
                         placeholder='(Opcional)'
-                        rows="3"
                     >
                 </div>
                 

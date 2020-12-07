@@ -18,8 +18,13 @@
 
             <div class='card-body'>
 
-                <div id="static" class='form-group col-md-12'>
-                    <label for='inputNombreTarea'>Nombre de tarea</label>
+                <label for='inputNombreTarea' class="col">Nombre de tarea</label>
+                <div id="static" class='input-group col-md-12'>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fa fa-clipboard"></i>
+                        </div>
+                    </div>
                     <input 
                         type='text'
                         class='form-control' 
@@ -34,7 +39,12 @@
                 </div>
                 
                 <label for='inputEncargadoTarea' class='col-md-12'>Integrante</label>
-                <div class='form-group col-md-12'>
+                <div class='input-group col-md-12'>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-user"></i>
+                        </div>
+                    </div>
                     <select 
                         class='custom-select'
                         id='inputEncargadoTarea'
@@ -49,6 +59,8 @@
                         </option>
                     </select>
                 </div>
+
+                <br/>
                 
                 <label for='inputFechaTarea' class='col-md-12'>Fecha de finalización</label>
                 <div class='row offset-md-0' id='inputFechaTarea'>
@@ -117,8 +129,13 @@
                 </div>
         
                 <label for='inputCategoria' class='col-md-12'>Categoría</label>
-                <div class='row offset-md-0' id='inputCategoria'>
-                    <div class='col-md-9'>
+                <div id='inputCategoria'>
+                    <div class='input-group col-md-12'>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <i class="fa fa-cubes"></i>
+                            </div>
+                        </div>
                         <select 
                             class='custom-select'
                             id='inputTipoCategoria'
@@ -131,31 +148,25 @@
                             </option>
                         </select>
                     </div>
-                    
-                    <!-- HACER FUNCIONAL ESTE SWITCH!! --> 
-                    <div class="custom-control custom-switch col-md-3 mt-2">
-                        <input 
-                            type="checkbox" 
-                            class="custom-control-input" 
-                            id="inputSinCategoria"
-                        >
-                        <label class="custom-control-label" for="inputSinCategoria">Sin categoría</label>
-                    </div>
                 </div>
         
                 <br/>
         
-                <div class='form-group col-md-12'>
-                    <label for='inputDescripcionTarea'>Descripción de tarea</label>
+                <label for='inputDescripcionTarea' class="col">Descripción de tarea</label>
+                <div class='input-group col-md-12'>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-bars"></i>
+                        </div>
+                    </div>
                     <input 
                         type='text' 
-                        class='form-control mb-3' 
+                        class='form-control' 
                         id='inputDescripcionTarea'
                         name='descripcion' 
                         [(ngModel)]='taskModel.descripcion' 
                         #descripcion="ngModel"
                         placeholder='(Opcional)'
-                        rows="3"
                     >
                 </div>
                 
