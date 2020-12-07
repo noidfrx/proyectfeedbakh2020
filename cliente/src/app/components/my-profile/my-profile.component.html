@@ -104,7 +104,7 @@
                         <!-- lo que sigue, se generará solo una vez que tengamos conexion con el servidor, esto es solo un ejemplo\-->
                         <h1>Amigos</h1>
                         <br>
-                        <div class="row">
+                        <div class="row" *ngIf="amigos">
                             <div class="col-md-6 " *ngIf="amigos[0]" >
                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                     <div class="card-body">
@@ -127,7 +127,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" *ngIf="amigos">
                             <div class="col-md-6" *ngIf="amigos[2]">
                                 <div class="card text-center" style="max-width: 130px; max-height: 140px;">
                                     <div class="card-body">
@@ -149,10 +149,12 @@
                             </div>
                             </div>
                         </div>
-                       
+                        <div class="row" *ngIf="amigos">
                             <div class="col-md-12" *ngIf="amigos.length>=5">
                                 <a routerLink="/Amigos" class="float-right">Mostrar todos</a> 
                             </div>
+                        </div>
+                            
                     </div>
                     <!-- muestra la segunda tanda de imágenes, cuando se está en modo edicion-->
                     <div class="col-md-6" *ngIf="modoEdicion">
