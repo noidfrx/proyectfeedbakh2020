@@ -15,7 +15,6 @@ import { listaEquipo } from 'src/app/models/listaEquipo';
   styleUrls: ['./team-view.component.css']
 })
 export class TeamViewComponent implements OnInit {
-
   errorMsg='';                    // Mensaje que notifica un error
   categorias = null;              // Categorías de las tareas y eventos
   categorias_map = null;          // Mapa reordenado de las categorias

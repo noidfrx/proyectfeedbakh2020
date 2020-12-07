@@ -17,8 +17,14 @@
             <h5 class='text-center pt-3'>Equipo: {{nombreteam}}</h5>
 
             <div class='card-body'>
-                <div id="static" class='form-group col-md-12'>
-                    <label for='inputNombreTarea'>Nombre de tarea</label>
+                <label for='inputNombreTarea' class="col-md-12">Nombre de tarea</label>
+                <div id="static" class='input-group col-md-12'>
+                    
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <i class="fa fa-clipboard"></i>
+                        </div>
+                    </div> 
                     <input 
                         type='text'
                         class='form-control' 
@@ -31,9 +37,16 @@
                         placeholder="(Obligatorio)"
                     >
                 </div>
+
+                <!--Separador--> <br/>
                 
                 <label for='inputEncargadoTarea' class='col-md-12'>Integrante encargado</label>
-                <div class='form-group col-md-12'>
+                <div class='input-group col-md-12'>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-user"></i>
+                        </div>
+                    </div> 
                     <select 
                         class='custom-select'
                         id='inputEncargadoTarea'
@@ -48,6 +61,8 @@
                         </option>
                     </select>
                 </div>
+
+                <!--Separador--> <br/>
                 
                 <label for='inputFechaTarea' class='col-md-12'>Fecha de finalización</label>
                 <div class='row offset-md-0' id='inputFechaTarea'>
@@ -114,10 +129,17 @@
                         <label class="custom-control-label" for="inputSinFecha">Sin fecha</label>
                     </div-->
                 </div>
+
+                <!--Separador--> <br/>
         
                 <label for='inputCategoria' class='col-md-12'>Categoría</label>
                 <div class='row offset-md-0' id='inputCategoria'>
-                    <div class='col-md-9'>
+                    <div class='input group col-md-9'>
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <i class="fa fa-cubes"></i>
+                            </div>
+                        </div> 
                         <select 
                             class='custom-select'
                             id='inputTipoCategoria'
@@ -143,10 +165,15 @@
                     </div-->
                 </div>
         
-                <br/>
-        
-                <div class='form-group col-md-12'>
-                    <label for='inputDescripcionTarea'>Descripción de tarea</label>
+                <!--Separador--> <br/>
+                
+                <label for='inputDescripcionTarea'>Descripción de tarea</label>
+                <div class='input-group col-md-12'>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-align-justify"></i>
+                        </div>
+                    </div> 
                     <input 
                         type='text' 
                         class='form-control mb-3' 
@@ -159,7 +186,7 @@
                     >
                 </div>
                 
-                <br/>
+                <!--Separador--> <br/>
             </div>
 
             <div class='btn-group d-flex col-md-6 offset-md-3'>
