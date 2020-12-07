@@ -22,6 +22,8 @@ import { BuscarUsuariosComponent } from './components/buscar-usuarios/buscar-usu
 import { UwuComponent } from './components/uwu/uwu.component';
 import { VistaSolicitudesComponent } from './components/vista-solicitudes/vista-solicitudes.component';
 import { AmigosComponent } from './components/amigos/amigos.component';
+import {PasswordOlvidadaComponent} from './components/password-olvidada/password-olvidada.component'
+
 
 const routes: Routes = [
 
@@ -116,6 +118,11 @@ const routes: Routes = [
     path:'Amigos',
     component: AmigosComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path:'forgottenPassword',
+    component: PasswordOlvidadaComponent,
+    canActivate: [AuthWelcome]
   },
 
 ];

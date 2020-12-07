@@ -85,6 +85,8 @@ class IndexRoutes {
         this.router.post("/checktaskowner", indexController_1.indexController.tarea_owner);
         this.router.post("/setcompletado", indexController_1.indexController.set_completado);
         this.router.post("/setnocompletado", indexController_1.indexController.set_nocompletado);
+        this.router.post("/colaboradoresequipo", indexController_1.indexController.colaboradores_equipo);
+        this.router.post("/colaboradoresnoequipo", indexController_1.indexController.colaboradores_noequipo);
         //this.router.post("/getnomencargado", indexController.nombre_encargado);
         // this.router.get('/sesion', (req:Request,res:Response)=>{
         //     res.send("Inició sesion como: "+req!.session!.sesion);

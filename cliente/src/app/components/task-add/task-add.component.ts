@@ -25,9 +25,11 @@ export class TaskAddComponent implements OnInit {
   taskModel = new Task('',0,0,null,0,null,0,'',null,0);
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
-    this.getColaboradoresUser();
+    this.teamId.id=history.state.idteam;
+    this.nombreteam=history.state.nombreteam;
+    this.getColaboradoresTeam();
     this.getCategorias();
-    this.obtenerEquipoUsuario();
+    //this.obtenerEquipoUsuario();
    }
 
   ngOnInit(): void {
@@ -38,7 +40,9 @@ export class TaskAddComponent implements OnInit {
     }
   }
 
-  // GET
+  /////////
+  // GET //
+  /////////
 
   getCategorias(){
     this._homeService.getCategorias().subscribe(
@@ -53,11 +57,11 @@ export class TaskAddComponent implements OnInit {
     )
   }
 
-  getColaboradoresUser(){
-    this._homeService.getColaboradoresUser().subscribe(
+  getColaboradoresTeam(){
+    this._homeService.getColaboradoresTeam(this.teamId).subscribe(
       data => {
-        (this.colaboradores = data)
-        console.log("Colaboradores recibidos");
+        this.colaboradores = data;
+        console.log("Colaboradores recibidos: ", data);
       },
       error => {
         this.errorMsg=error.statusText;
@@ -66,13 +70,15 @@ export class TaskAddComponent implements OnInit {
     )
   }
 
-  // POST
+  //////////
+  // POST //
+  //////////
 
   onSubmit(){
     this.taskModel.equipo = this.teamId.id;
-    /*if(this.taskModel.encargado == 0){
+    if(this.taskModel.encargado == 0){
       alert("Debe seleccionar un integrante");
-    }else{*/
+    }else{
       this._homeService.addTask(this.taskModel)
       .subscribe(
         data => {
@@ -88,9 +94,7 @@ export class TaskAddComponent implements OnInit {
         error => {this.errorMsg = error.statusText}
         // Manejo de errores ^
       )
-    //}
-    
-    
+    }
   }
 
   ///////////////////////
@@ -98,7 +102,7 @@ export class TaskAddComponent implements OnInit {
   ///////////////////////
 
   
-  obtenerEquipoUsuario(){
+  /*obtenerEquipoUsuario(){
     this._homeService.obtenerEquiposUsuario()
     .subscribe(
       data => {(this.equipos = data)},
@@ -107,8 +111,6 @@ export class TaskAddComponent implements OnInit {
         console.log("Error al recibir los equipos");
       }
     )
-  }
+  }*/
   
-
-
 }

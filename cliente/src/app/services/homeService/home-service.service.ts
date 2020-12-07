@@ -28,6 +28,8 @@ export class HomeServiceService {
   _urlCategorias        = 'http://localhost:3000/categorias';
   _urlColaboradores     = 'http://localhost:3000/colaboradores';
   _urlColaboradoresUser = 'http://localhost:3000/colaboradoresusuario';
+  _urlColaboradoresTeam = 'http://localhost:3000/colaboradoresequipo';
+  _urlColaboradoresNoTeam = 'http://localhost:3000/colaboradoresnoequipo';
   _urlTareas            = 'http://localhost:3000/tasks';
   _urlTareasUser        = 'http://localhost:3000/tasksusuario';
   _urlTareasTeam        = 'http://localhost:3000/tasksequipo';
@@ -206,6 +208,16 @@ export class HomeServiceService {
 
   setNoCompletado(id:IdBringer){
     return this._http.post<any>(this._urlSetNoCompletado, id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getColaboradoresTeam(id:IdBringer){
+    return this._http.post<any>(this._urlColaboradoresTeam, id, {withCredentials:true})
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getColaboradoresNoTeam(id:IdBringer){
+    return this._http.post<any>(this._urlColaboradoresNoTeam, id, {withCredentials:true})
       .pipe(catchError(this.errorHandler));
   }
 

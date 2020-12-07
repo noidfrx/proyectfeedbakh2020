@@ -741,6 +741,37 @@ class IndexController {
     await pool.query("UPDATE tarea SET completado = '0' WHERE tarea.idTarea = ?", req.body.id);
     res.status(200).json({ message: "Tarea marcada como NO completada" });
   }
+
+
+
+
+  // Query para obtener una lista de colaboradores del equipo actual
+
+  public async colaboradores_equipo(req: Request, res: Response): Promise<any> {
+    const datos = await pool.query("SELECT DISTINCT colaborador.idColaborador, colaborador.nombre, colaborador.apellidos FROM colaborador INNER JOIN listaequipo ON listaequipo.idEquipo=? AND listaequipo.idColaborador=colaborador.idColaborador AND colaborador.idColaborador!=1",
+    [req.body.id]);
+
+    if (datos.length >= 1) {
+      res.status(200).json(datos);
+    } else {
+      res.status(204).send({ message: "No se adquirieron colaboradores" });
+    }
+  }
+
+
+
+   // Query para obtener una lista de colaboradores dela lista de amigos que no esten en el equipo
+
+  public async colaboradores_noequipo(req: Request, res: Response): Promise<any> {
+    const datos = await pool.query("SELECT DISTINCT colaborador.idColaborador, colaborador.nombre, colaborador.apellidos FROM colaborador INNER JOIN listaequipo ON listaequipo.idEquipo=? AND listaequipo.idColaborador=colaborador.idColaborador AND colaborador.idColaborador!=1",
+    [req.body.id]);
+
+    if (datos.length >= 1) {
+      res.status(200).json(datos);
+    } else {
+      res.status(204).send({ message: "No se adquirieron colaboradores" });
+    }
+  }
   
   
   

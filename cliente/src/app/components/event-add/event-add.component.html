@@ -5,7 +5,7 @@
     <div class='pt-3'></div>
 
     <div class='card' id='zona_maker'>
-        <h1 class='text-center pt-3'>Agregar nuevo evento</h1>
+        <h3 class='text-center pt-3'>Agregar nuevo evento</h3>
 
         <form
             class="pb-5 pl-3 pr-3"
@@ -14,7 +14,7 @@
             novalidate
         >
 
-            <!--h3 class='text-center pt-3'>Equipo: {{nombreteam}}</h3-->
+            <h5 class='text-center pt-3'>Equipo: {{nombreteam}}</h5>
             
             <div class='card-body'>
                 <div id="static" class='form-group col-md-12'>
@@ -43,8 +43,8 @@
                         #encargado="ngModel"
                     >
                         <option selected value="0">Seleccione un encargado</option>
-                        <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador[0].idColaborador}}'>
-                            {{colaborador.nombreColaborador[0].nombre}} {{colaborador.apellidosColaborador[0].apellidos}} 
+                        <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador}}'>
+                            {{colaborador.nombre}} {{colaboradorapellidos}} 
                         </option>
                     </select>
                 </div>

@@ -27,9 +27,11 @@ export class TaskModComponent implements OnInit {
   taskModel = new Task('',0,0,null,null,null,null,'',null,0);
 
   constructor(private _homeService:HomeServiceService, private router:Router) {
+    this.teamId.id=history.state.idteam;
+    this.nombreteam=history.state.nombreteam;
     this.getCategorias();
     this.obtenerEquipoUsuario();
-    //this.getColaboradoresUser();
+    this.getColaboradoresTeam();
    }
 
   ngOnInit(): void {
@@ -110,6 +112,20 @@ export class TaskModComponent implements OnInit {
   //////////
   // POST //
   //////////
+
+  getColaboradoresTeam(){
+    console.log("getColaboradoresTeam: ", this.teamId);
+    this._homeService.getColaboradoresTeam(this.teamId).subscribe(
+      data => {
+        this.colaboradores = data;
+        console.log("Colaboradores recibidos: ", data);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir los colaboradores");
+      }
+    )
+  }
 
   onSubmit(){
     this.taskModel.equipo = this.teamId.id;

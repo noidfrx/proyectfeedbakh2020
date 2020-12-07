@@ -10,28 +10,19 @@
 
             <!-- Equipos -->
             <div>
-                
-                <!--br/>
-                <h1 class="text-center" [(ngModel)]="nombre_team">{{nombre_team}}</h1>  
-                <br/-->
-                
-                
                 <h2 class='text-center'>Equipos <button id="espacioBoton" class="btn btn-primary"><i class="fas fa-plus"></i></button></h2>
-                <!--form (ngSubmit)="getTeamData()" #registerForm="ngForm"-->
-                    <div class='form-group'>
-                        <select 
-                            class="custom-select col-md-4 offset-md-4"
-                            [(ngModel)]="selectedTeam"
-                        >
-                            <!--option selected value="0">Seleccione un equipo</option-->
-                            <option *ngFor="let equipo of equipos" value={{equipo.nombreEquipo[0].idEquipo}}>
-                                {{equipo.nombreEquipo[0].nombre}}
-                            </option>
-                        </select>
-                        <button class="btn btn-primary" (click)="getTeamData() " id="espacioBoton">Filtrar</button>
-                    </div>
-                    <div class="text-center" *ngIf="team_owner_checker != 0">Usted es encargado de este equipo</div>
-                <!--/form-->
+                <div class='form-group'>
+                    <select 
+                        class="custom-select col-md-4 offset-md-4"
+                        [(ngModel)]="selectedTeam"
+                    >
+                        <option *ngFor="let equipo of equipos" value={{equipo.nombreEquipo[0].idEquipo}}>
+                            {{equipo.nombreEquipo[0].nombre}}
+                        </option>
+                    </select>
+                    <button class="btn btn-primary" (click)="getTeamData() " id="espacioBoton">Filtrar</button>
+                </div>
+                <div class="text-center" *ngIf="team_owner_checker != 0">Usted es encargado de este equipo</div>
 
                 <br/>
 
@@ -95,10 +86,10 @@
     <!-- Lado derecho -->
 
     <aside id="der">
-        <!-- Solicitudes -->
+        <!-- Miembros equipo -->
         <h2 class='text-center'>Miembros del equipo</h2>
-        <div>
-            <h1 class='text-center' id='solic_eventos'>--PROXIMAMENTE--</h1>
+        <div *ngFor="let miembro of colaboradores_team" value='{{miembro.idColaborador}}'>
+            <div class="text-center">{{miembro.nombre}} {{miembro.apellidos}}</div>
         </div>
         
         <br/>

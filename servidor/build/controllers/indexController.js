@@ -602,6 +602,30 @@ class IndexController {
             res.status(200).json({ message: "Tarea marcada como NO completada" });
         });
     }
+    // Query para obtener una lista de colaboradores del equipo actual
+    colaboradores_equipo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const datos = yield database_1.default.query("SELECT DISTINCT colaborador.idColaborador, colaborador.nombre, colaborador.apellidos FROM colaborador INNER JOIN listaequipo ON listaequipo.idEquipo=? AND listaequipo.idColaborador=colaborador.idColaborador AND colaborador.idColaborador!=1", [req.body.id]);
+            if (datos.length >= 1) {
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).send({ message: "No se adquirieron colaboradores" });
+            }
+        });
+    }
+    // Query para obtener una lista de colaboradores dela lista de amigos que no esten en el equipo
+    colaboradores_noequipo(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const datos = yield database_1.default.query("SELECT DISTINCT colaborador.idColaborador, colaborador.nombre, colaborador.apellidos FROM colaborador INNER JOIN listaequipo ON listaequipo.idEquipo=? AND listaequipo.idColaborador=colaborador.idColaborador AND colaborador.idColaborador!=1", [req.body.id]);
+            if (datos.length >= 1) {
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).send({ message: "No se adquirieron colaboradores" });
+            }
+        });
+    }
 }
 //Instanciamos y exportamos toda la clase
 exports.indexController = new IndexController();

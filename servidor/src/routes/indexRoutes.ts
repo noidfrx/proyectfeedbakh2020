@@ -99,6 +99,8 @@ class IndexRoutes {
     this.router.post("/checktaskowner", indexController.tarea_owner);
     this.router.post("/setcompletado", indexController.set_completado);
     this.router.post("/setnocompletado", indexController.set_nocompletado);
+    this.router.post("/colaboradoresequipo", indexController.colaboradores_equipo);
+    this.router.post("/colaboradoresnoequipo", indexController.colaboradores_noequipo);
     //this.router.post("/getnomencargado", indexController.nombre_encargado);
 
 

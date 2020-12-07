@@ -9,9 +9,6 @@ import { EquipoService } from 'src/app/services/equipoService/equipo.service';
 import {FormControl,FormGroup,Validators} from '@angular/forms';
 import { listaEquipo } from 'src/app/models/listaEquipo';
 
-
-
-
 @Component({
   selector: 'app-team-view',
   templateUrl: './team-view.component.html',
@@ -23,6 +20,8 @@ export class TeamViewComponent implements OnInit {
   categorias = null;              // Categorías de las tareas y eventos
   categorias_map = null;          // Mapa reordenado de las categorias
   colaboradores = null;           // Colaboradores del usuario con sesión iniciada
+  colaboradores_team = null;      // Colaboradores del equipo seleccionado
+  colaboradores_noteam = null;    // Colaboradores agregados que no pertenecen al equipo seleccionado
   colaboradores_map = null;       // Mapa reordenado de los colaboradores adquiridos
   equipos=[];                     // Equipos en los que pertenece el usuario con sesión iniciada
   tareas=null;                    // Tareas del equipo seleccionado
@@ -48,6 +47,7 @@ export class TeamViewComponent implements OnInit {
 
   constructor(private _homeService:HomeServiceService, private _equipoService:EquipoService, private router:Router) {
     this.getColaboradoresUser();
+    //this.getColaboradoresTeam();
     this.getCategorias();
     this.obtenerEquipoUsuario();
    }
@@ -103,8 +103,8 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
-  // Función que llama a las funciones "getTareasTeam" y  "getEventosTeam"
-  // para adquirir las tareas y eventos de un equipo seleccionado, respectivamente
+  // Función que llama a las funciones "getTareasTeam", "getEventosTeam" y "checkTeamOwner"
+  // para adquirir las tareas y eventos de un equipo seleccionado y saber si es encargado, respectivamente
   getTeamData(){
     this.teamId.id = this.selectedTeam;
     if (this.teamData == null){
@@ -121,31 +121,8 @@ export class TeamViewComponent implements OnInit {
       this.checkTeamOwner();
       this.getTareasTeam();
       this.getEventosTeam();
+      this.getColaboradoresTeam();
     }
-    
-    
-    /*this._homeService.getTareasTeam(this.teamId).subscribe(
-      data => {
-        (this.tareas = data)
-        console.log("Tareas del usuario recibidas. ID: ", this.teamData);
-        console.log(data);
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("Error al recibir las tareas del usuario");
-      }
-    )
-    this._homeService.getEventosTeam(this.teamId).subscribe(
-      data => {
-        (this.eventos = data)
-        console.log("Eventos del usuario recibidos");
-        console.log(data);
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("Error al recibir los eventos del usuario");
-      }
-    )*/
   }
 
   // Función para adquirir las tareas según el equipo seleccionado
@@ -227,7 +204,7 @@ export class TeamViewComponent implements OnInit {
       this.getTeamData();
     }
     let idteam = this.teamId.id;
-    let nombreteam = this.selectedTeam.nombre; //esto no funciona, selectedTeam es un número
+    let nombreteam = this.teamData.nombre;
     this.router.navigate(['/taskmod'], { state: {idtask,idteam,nombreteam} });
   }
 
@@ -396,6 +373,36 @@ export class TeamViewComponent implements OnInit {
       return yesFecha.toString();
     }
     return '';
+  }
+
+
+  // Funcion para adquirir los colaboradores de un equipo
+  getColaboradoresTeam(){
+    this._homeService.getColaboradoresTeam(this.teamId).subscribe(
+      data => {
+        this.colaboradores_team = data;
+        console.log("Colaboradores (team) recibidos: ", data);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir los colaboradores (team)");
+      }
+    )
+  }
+
+
+  // Funcion para adquirir los colaboradores que no pertenecen al equipo
+  getColaboradoresNoTeam(){
+    this._homeService.getColaboradoresNoTeam(this.teamId).subscribe(
+      data => {
+        this.colaboradores_noteam = data;
+        console.log("Colaboradores (no team) recibidos: ", data);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir los colaboradores (no team)");
+      }
+    )
   }
 
   ////////// Funciones auxiliarea para getFecha /////////////
