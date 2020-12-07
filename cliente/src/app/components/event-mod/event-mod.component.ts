@@ -24,8 +24,8 @@ export class EventModComponent implements OnInit {
   
   _evento = new Event('',0,0,0,0,0,0,0,0,0,'','',0);
   eventModel = new Event('',null,null,0,null,null,null,0,0,0,'','',null);
-  eventId = new IdBringer(null);
-  teamId = new IdBringer(null);
+  eventId = new IdBringer(null,null);
+  teamId = new IdBringer(null,null);
   nombreteam='';
 
   constructor(private _homeService:HomeServiceService, private router:Router) {

@@ -760,11 +760,26 @@ class IndexController {
 
 
 
-   // Query para obtener una lista de colaboradores dela lista de amigos que no esten en el equipo
+  // Query para obtener una lista de colaboradores dela lista de amigos que no esten en el equipo
 
   public async colaboradores_noequipo(req: Request, res: Response): Promise<any> {
     const datos = await pool.query("SELECT DISTINCT colaborador.idColaborador, colaborador.nombre, colaborador.apellidos FROM colaborador INNER JOIN listaequipo ON listaequipo.idEquipo=? AND listaequipo.idColaborador=colaborador.idColaborador AND colaborador.idColaborador!=1",
     [req.body.id]);
+
+    if (datos.length >= 1) {
+      res.status(200).json(datos);
+    } else {
+      res.status(204).send({ message: "No se adquirieron colaboradores" });
+    }
+  }
+
+
+
+  // Query para verificar si un colaborador pertenece a un equipo
+
+  public async revisar_miembro_equipo(req: Request, res: Response): Promise<any> {
+    const datos = await pool.query("SELECT idColaborador FROM listaequipo WHERE idEquipo=? AND idColaborador=?",
+    [req.body.id,req.body.colaborador]);
 
     if (datos.length >= 1) {
       res.status(200).json(datos);

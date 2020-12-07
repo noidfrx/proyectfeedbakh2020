@@ -19,8 +19,8 @@ export class TaskModComponent implements OnInit {
   categorias = null;
   _tarea = new Task('',0,0,0,0,0,0,'',0,0);
   equipos=null;
-  taskId = new IdBringer(null);
-  teamId = new IdBringer(null);
+  taskId = new IdBringer(null,null);
+  teamId = new IdBringer(null,null);
   nombreteam='';
   colaboradores = null;
 

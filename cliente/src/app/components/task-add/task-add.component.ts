@@ -20,7 +20,7 @@ export class TaskAddComponent implements OnInit {
 
   equipos=null;
 
-  teamId = new IdBringer(null);
+  teamId = new IdBringer(null,null);
   nombreteam = '';
   taskModel = new Task('',0,0,null,0,null,0,'',null,0);
 

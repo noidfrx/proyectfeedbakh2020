@@ -48,6 +48,7 @@ export class HomeServiceService {
 
   // Vista equipo
   _urlCheckTeamOwner    = 'http://localhost:3000/checkteamowner';
+  _urlCheckTeamMember    = 'http://localhost:3000/checkteammember';
   //_urlNombreEncargado   = 'http://localhost:3000/getnomencargado';
   _urlCheckTaskOwner    = 'http://localhost:3000/checktaskowner'
   _urlSetCompletado     = 'http://localhost:3000/setcompletado'
@@ -189,6 +190,11 @@ export class HomeServiceService {
 
   setMostrarEquipo(id:number){
     this.mostrarEquipo = id;
+  }
+
+  checkTeamMember(id:IdBringer){
+    return this._http.post<any>(this._urlCheckTeamMember, id)
+      .pipe(catchError(this.errorHandler));
   }
 
   checkTeamOwner(id:IdBringer){

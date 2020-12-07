@@ -20,7 +20,7 @@ export class EventAddComponent implements OnInit {
 
   equipos=null;
 
-  teamId = new IdBringer(null);
+  teamId = new IdBringer(null,null);
   nombreteam = '';
   eventModel = new Event('',0,null,0,null,null,null,0,0,0,'','',null);
 

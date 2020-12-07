@@ -30,20 +30,21 @@ export class TeamViewComponent implements OnInit {
   teamData=null;
   selectedTeam = null;                  // ID del equipo seleccionado
 
-  teamId = new IdBringer(null);         // Modelo que posee el ID y el nombre del equipo seleccionado,
+  teamId = new IdBringer(null,null);         // Modelo que posee el ID y el nombre del equipo seleccionado,
                                         // utilizado para realizar querys a la base de datos
 
-  encargadoId = new IdBringer(null);    // Modelo que posee el ID del encargado seleccionado,
+  encargadoId = new IdBringer(null,null);    // Modelo que posee el ID del encargado seleccionado,
                                         // utilizado para realizar querys a la base de datos
 
-  taskId = new IdBringer(null);         // Modelo que posee el ID de la tarea seleccionada,
+  taskId = new IdBringer(null,null);         // Modelo que posee el ID de la tarea seleccionada,
                                         // utilizado para realizar querys a la base de datos
 
   _tarea = new Task('',0,0,0,0,0,0,'',0,0); // Modelo creado para adquirir datos de una tarea
 
   nombre_team='';
   member_selector = 0;            // ID del miembro seleccionado
-  team_owner_checker = 0;         // Verificador si es miembro de un equipo
+  team_owner_checker = 0;         // Verificador si es propietario de un equipo
+  team_member_checker = 0;        // Verificador si es miembro de un equipo
 
   constructor(private _homeService:HomeServiceService, private _equipoService:EquipoService, private router:Router) {
     this.getColaboradoresUser();
@@ -277,23 +278,63 @@ export class TeamViewComponent implements OnInit {
 
   // Función para agregar un miembro al equipo seleccionado
   addMember(){
-    let m = this.member_selector;
-    let relacion = new listaEquipo(0,m,this.selectedTeam);
-    this._equipoService.agregarIntegrante(relacion).subscribe(
+    let member = this.member_selector;
+    let relacion = new listaEquipo(0,member,this.selectedTeam);
+
+    if(this.member_selector == 0){
+      alert("Seleccione un colaborador para agregarlo")
+    }else{
+      if(!this.checkTeamMember()){
+        this._equipoService.agregarIntegrante(relacion).subscribe(
+          data => {
+            console.log("Miembro agregado con éxito ", this.member_selector);
+            alert("Miembro agregado al equipo");
+            setTimeout(() => 
+            {
+                this.router.navigate(['/uwu']);
+            },
+            500);
+          },
+          error => {
+            this.errorMsg=error.statusText;
+            console.log(error);
+          }
+        )
+      }else{
+        alert("El colaborador ya pertenece a este equipo!");
+      }
+    }
+
+  }
+
+  // Funcion para adquirir los colaboradores que no pertenecen al equipo
+  checkTeamMember(): boolean{
+    var colab = new IdBringer(this.selectedTeam, this.member_selector);
+    var dataGrabber = null;
+    this._homeService.checkTeamMember(colab).subscribe(
       data => {
-        console.log("Miembro agregado con éxito ", this.member_selector);
-        alert("Miembro agregado al equipo");
-        setTimeout(() => 
-        {
-            this.router.navigate(['/uwu']);
-        },
-        500);
+        if(data != null && data.length > 0){
+          console.log("Pertenece al equipo", data);
+          this.team_member_checker = 1;
+        }else{
+          console.log("No pertenece al equipo", data);
+          this.team_member_checker = 0;
+        }
       },
       error => {
         this.errorMsg=error.statusText;
-        console.log(error);
+        console.log("Error al verificar");
+        this.team_member_checker = 0;
       }
     )
+
+    if(this.team_member_checker == 0){
+      console.log("this.team_member_checker(true): ", this.team_member_checker);
+      return true;
+    }else{
+      console.log("this.team_member_checker(false): ", this.team_member_checker);
+      return false;
+    }
   }
 
   // Función para verificar si el usuario con sesión iniciada es el encargado del equipo seleccionado
@@ -391,19 +432,7 @@ export class TeamViewComponent implements OnInit {
   }
 
 
-  // Funcion para adquirir los colaboradores que no pertenecen al equipo
-  getColaboradoresNoTeam(){
-    this._homeService.getColaboradoresNoTeam(this.teamId).subscribe(
-      data => {
-        this.colaboradores_noteam = data;
-        console.log("Colaboradores (no team) recibidos: ", data);
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("Error al recibir los colaboradores (no team)");
-      }
-    )
-  }
+  
 
   ////////// Funciones auxiliarea para getFecha /////////////
 
@@ -458,7 +487,7 @@ export class TeamViewComponent implements OnInit {
   // Función para habilitar el botón de "completar tarea",
   // solo si no se ha completado, y el usuario con sesión iniciada es el encargado
   setCompletado(idTarea){
-    var taskId = new IdBringer(idTarea);
+    var taskId = new IdBringer(idTarea,null);
 
     this._homeService.setCompletado(taskId).subscribe(
       data => {
@@ -480,7 +509,7 @@ export class TeamViewComponent implements OnInit {
   // Función para habilitar el botón de "completar tarea",
   // solo si no se ha completado, y el usuario con sesión iniciada es el encargado
   setNoCompletado(idTarea){
-    var taskId = new IdBringer(idTarea);
+    var taskId = new IdBringer(idTarea,null);
 
     this._homeService.setNoCompletado(taskId).subscribe(
       data => {
