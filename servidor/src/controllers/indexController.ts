@@ -777,7 +777,7 @@ class IndexController {
 
   // Query para verificar si un colaborador pertenece a un equipo
 
-  public async revisar_miembro_equipo(req: Request, res: Response): Promise<any> {
+  /*public async revisar_miembro_equipo(req: Request, res: Response): Promise<any> {
     const datos = await pool.query("SELECT idColaborador FROM listaequipo WHERE idEquipo=? AND idColaborador=?",
     [req.body.id,req.body.colaborador]);
 
@@ -786,7 +786,7 @@ class IndexController {
     } else {
       res.status(204).send({ message: "No se adquirieron colaboradores" });
     }
-  }
+  }*/
   
   
   

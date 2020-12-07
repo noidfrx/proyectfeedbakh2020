@@ -101,7 +101,7 @@ class IndexRoutes {
     this.router.post("/setnocompletado", indexController.set_nocompletado);
     this.router.post("/colaboradoresequipo", indexController.colaboradores_equipo);
     this.router.post("/colaboradoresnoequipo", indexController.colaboradores_noequipo);
-    this.router.post("/checkteammember", indexController.revisar_miembro_equipo);
+    //this.router.post("/checkteammember", indexController.revisar_miembro_equipo);
 
 
     // this.router.get('/sesion', (req:Request,res:Response)=>{
