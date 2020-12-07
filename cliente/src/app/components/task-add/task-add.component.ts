@@ -99,6 +99,11 @@ export class TaskAddComponent implements OnInit {
     }
   }
 
+  cancelar(){
+    this._homeService.setMostrarEquipo(this.teamId.id);
+    this.router.navigate(['/teamview']); 
+  }
+
   ///////////////////////
   // home.component.ts //
   ///////////////////////

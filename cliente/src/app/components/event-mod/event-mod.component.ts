@@ -214,6 +214,11 @@ export class EventModComponent implements OnInit {
 
     return Number(dia);
   }
+
+  cancelar(){
+    this._homeService.setMostrarEquipo(this.teamId.id);
+    this.router.navigate(['/teamview']); 
+  }
   
 
 }
