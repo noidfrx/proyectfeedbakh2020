@@ -313,13 +313,16 @@ export class TeamViewComponent implements OnInit {
   checkTeamMember(idColab): boolean{
     var getColab = null;
 
-    for(let colaborador of this.colaboradores_team){
-      if(colaborador.idColaborador == idColab){
-        console.log("Colab encontrado!");
-        return true;
+    console.log("Colaboradores team: ",this.colaboradores_team);
+
+    if(this.colaboradores_team!=null){
+      for(let colaborador of this.colaboradores_team){
+        if(colaborador.idColaborador == idColab){
+          console.log("Colab encontrado!");
+          return true;
+        }
       }
     }
-
     console.log("Colab NO encontrado!");
     return false;
   }
