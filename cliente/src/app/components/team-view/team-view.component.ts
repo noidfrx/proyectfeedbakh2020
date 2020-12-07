@@ -44,7 +44,7 @@ export class TeamViewComponent implements OnInit {
   nombre_team='';
   member_selector = 0;            // ID del miembro seleccionado
   team_owner_checker = 0;         // Verificador si es propietario de un equipo
-  team_member_checker = 0;        // Verificador si es miembro de un equipo
+  team_member_checker = 1;        // Verificador si es miembro de un equipo
 
   constructor(private _homeService:HomeServiceService, private _equipoService:EquipoService, private router:Router) {
     this.getColaboradoresUser();
@@ -278,13 +278,12 @@ export class TeamViewComponent implements OnInit {
 
   // Función para agregar un miembro al equipo seleccionado
   addMember(){
-    let member = this.member_selector;
-    let relacion = new listaEquipo(0,member,this.selectedTeam);
+    let relacion = new listaEquipo(0,this.member_selector,this.selectedTeam);
 
     if(this.member_selector == 0){
       alert("Seleccione un colaborador para agregarlo")
     }else{
-      if(!this.checkTeamMember()){
+      if(!this.checkTeamMember(this.member_selector)){
         this._equipoService.agregarIntegrante(relacion).subscribe(
           data => {
             console.log("Miembro agregado con éxito ", this.member_selector);
@@ -302,15 +301,33 @@ export class TeamViewComponent implements OnInit {
         )
       }else{
         alert("El colaborador ya pertenece a este equipo!");
+        this.router.navigate(['/uwu']);
       }
     }
 
   }
 
+
   // Funcion para adquirir los colaboradores que no pertenecen al equipo
-  checkTeamMember(): boolean{
+  checkTeamMember(idColab): boolean{
+    var getColab = null;
+
+    for(let colaborador of this.colaboradores_team){
+      if(colaborador.idColaborador == idColab){
+        console.log("Colab encontrado!");
+        return true;
+      }
+    }
+
+    console.log("Colab NO encontrado!");
+    return false;
+  }
+
+  /*
+  // Funcion para adquirir los colaboradores que no pertenecen al equipo (parte 1)
+  checkTeamMember1(){
     var colab = new IdBringer(this.selectedTeam, this.member_selector);
-    var dataGrabber = null;
+
     this._homeService.checkTeamMember(colab).subscribe(
       data => {
         if(data != null && data.length > 0){
@@ -327,8 +344,11 @@ export class TeamViewComponent implements OnInit {
         this.team_member_checker = 0;
       }
     )
+  }
 
-    if(this.team_member_checker == 0){
+  // Funcion para adquirir los colaboradores que no pertenecen al equipo (parte 2)
+  checkTeamMember2(): boolean{
+    if(this.team_member_checker == 1){
       console.log("this.team_member_checker(true): ", this.team_member_checker);
       return true;
     }else{
@@ -336,6 +356,8 @@ export class TeamViewComponent implements OnInit {
       return false;
     }
   }
+  */
+
 
   // Función para verificar si el usuario con sesión iniciada es el encargado del equipo seleccionado
   checkTeamOwner(){
