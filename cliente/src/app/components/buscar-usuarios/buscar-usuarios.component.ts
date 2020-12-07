@@ -37,7 +37,6 @@ export class BuscarUsuariosComponent implements OnInit {
     this.buscar.buscarUsuario(this.busqueda).subscribe(
       data =>{
         this.usuarios=data;
-        console.log('data',data);
         this.queMuestro();
       }, error => {
         this.errorMsg = error.statusText;
@@ -53,7 +52,6 @@ export class BuscarUsuariosComponent implements OnInit {
     }else{
       this.mostrar=1
     }
-    console.log("que muestro", this.mostrar);
   }
 
 }

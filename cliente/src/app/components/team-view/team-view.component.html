@@ -9,8 +9,8 @@
       <div>
         <h2 class="text-center">
           Equipos
-          <button id="espacioBoton" class="btn btn-primary">
-            <i class="fas fa-plus"></i>
+          <button id=botonRedondo class="btn btn-primary text-center">
+            <i  class="fas fa-plus"></i>
           </button>
         </h2>
         <div class="form-group">
@@ -25,11 +25,7 @@
               {{ equipo.nombreEquipo[0].nombre }}
             </option>
           </select>
-          <button
-            class="btn btn-primary"
-            (click)="getTeamData()"
-            id="espacioBoton"
-          >
+          <button id="espacioBoton" class="btn btn-primary"(click)="getTeamData()">
             Filtrar
           </button>
         </div>
@@ -73,7 +69,7 @@
           class="btn btn-primary"
           *ngIf="team_owner_checker != 0"
           (click)="addTask()"
-          id="espacioBoton"
+          id="botonRedondo"
         >
           <i class="fas fa-plus"></i>
         </button>
@@ -170,7 +166,7 @@
         class="btn btn-primary"
         *ngIf="team_owner_checker != 0"
         (click)="addEvent()"
-        id="espacioBoton"
+        id="botonRedondo"
       >
         <i class="fas fa-plus"></i>
       </button>

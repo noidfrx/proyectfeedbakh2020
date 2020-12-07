@@ -44,7 +44,7 @@
                     >
                         <option selected value="0">Seleccione un encargado</option>
                         <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador}}'>
-                            {{colaborador.nombre}} {{colaboradorapellidos}} 
+                            {{colaborador.nombreColaborador[0].nombre}} {{colaborador.apellidosColaborador[0].apellidos}} 
                         </option>
                     </select>
                 </div>
