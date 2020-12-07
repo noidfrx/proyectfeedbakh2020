@@ -107,6 +107,11 @@ export class EventAddComponent implements OnInit {
       }
     )
   }
+
+  cancelar(){
+    this._homeService.setMostrarEquipo(this.teamId.id);
+    this.router.navigate(['/teamview']); 
+  }
   
 
 }

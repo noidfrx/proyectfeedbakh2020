@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Profile } from 'src/app/models/Profile';
 import { ProfileService } from 'src/app/services/profileService/profile.service';
 
@@ -9,7 +10,7 @@ import { ProfileService } from 'src/app/services/profileService/profile.service'
 })
 export class BuscarUsuariosComponent implements OnInit {
 
-  constructor( private buscar:ProfileService) {   }
+  constructor( private buscar:ProfileService, private route:Router) {   }
 
   busqueda:Profile = {
     id:null,
@@ -52,6 +53,10 @@ export class BuscarUsuariosComponent implements OnInit {
     }else{
       this.mostrar=1
     }
+  }
+
+  volver(){
+    this.route.navigate(['/my-profile']);
   }
 
 }

@@ -189,16 +189,14 @@
                 <!--Separador--> <br/>
             </div>
 
-            <div class='btn-group d-flex col-md-6 offset-md-3'>
+            <div class="form-group col-md-10 offset-3">
                 <button 
-                    type="submit" 
-                    class="btn btn-primary"
-                >Crear tarea</button>
-                <button 
-                    class="btn btn-secondary"
-                >Cancelar</button>
-            </div>
+                type="submit" 
+                class="btn btn-primary"
+            >Crear tarea</button>
 
+            <button style="margin-left: 20px;" (click)="cancelar()" class="btn btn-danger">Cancelar</button>
+           </div>
         </form>
     </div>
 
