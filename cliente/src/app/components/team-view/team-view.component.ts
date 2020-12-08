@@ -41,6 +41,7 @@ export class TeamViewComponent implements OnInit {
   _tarea = new Task('',0,0,0,0,0,0,'',0,0);   // Modelo creado para adquirir datos de una tarea
 
   nombre_team='';
+  objetivo_team='';
   member_selector = 0;            // ID del miembro seleccionado
   team_owner_checker = 0;         // Verificador si es propietario de un equipo
   team_member_checker = 1;        // Verificador si es miembro de un equipo
@@ -120,6 +121,7 @@ export class TeamViewComponent implements OnInit {
         console.log("Datos del equipo: ", data);
         this.selectedTeam = this.teamData[0].idEquipo;
         this.nombre_team = this.teamData[0].nombre;
+        this.objetivo_team = this.teamData[0].objetivo;
       },
       error => {
         this.errorMsg=error.statusText;
