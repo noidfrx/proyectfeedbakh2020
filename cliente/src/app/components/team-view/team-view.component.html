@@ -10,49 +10,18 @@
         <h5>
         <b>Equipo actual: </b> 
         {{nombre_team}}
-        <button 
-          id=botonRedondo 
-          class="btn btn-secondary" 
-          *ngIf="team_owner_checker != 0" 
-          (click)="eliminarEquipo()"
-        >
-          <i class="fa fa-trash"></i>
-        </button><br>
+          <i id="botonNoBoton" *ngIf="team_owner_checker != 0" 
+          (click)="eliminarEquipo()" class="fa fa-trash"></i><br>
         </h5>
         <div class="text-center" *ngIf="team_owner_checker != 0">
           <h6>Usted es encargado de este equipo
           </h6>
         </div>
-        
         {{objetivo_team}}
       </div>
       <br>
       <div>
-
-        <div class="form-group" *ngIf="team_owner_checker != 0">
-          <h4 class="text-center">Añadir miembro</h4>
-          <select
-            class="custom-select col-md-4 offset-md-4"
-            [(ngModel)]="member_selector"
-          >
-            <option selected value="0">Seleccione un colaborador</option>
-            <option
-              *ngFor="let colaborador of colaboradores"
-              value="{{ colaborador.idColaborador[0].idColaborador }}"
-            >
-              {{ colaborador.nombreColaborador[0].nombre }}
-              {{ colaborador.apellidosColaborador[0].apellidos }}
-            </option>
-          </select>
-          <button
-            class="btn btn-primary"
-            (click)="addMember()"
-            id="espacioBoton"
-          >
-            <i class="fa fa-user-plus"></i>
-          </button>
-        </div>
-        <br>
+        <!--ver otro equipo-->
         <h2 class="text-center">
           <h4>Ver otro equipo
             <button id=botonRedondo class="btn btn-primary text-center" (click)="crearEquipo()">
@@ -78,11 +47,27 @@
           </button>
           
         </div>
-        
-
-
-        
-
+        <br>
+        <div class="form-group" *ngIf="team_owner_checker != 0">
+          <h4 class="text-center">Añadir miembro</h4>
+          <select
+            class="custom-select col-md-4 offset-md-4"
+            [(ngModel)]="member_selector"
+          >
+            <option selected value="0">Seleccione un colaborador</option>
+            <option
+              *ngFor="let colaborador of colaboradores"
+              value="{{ colaborador.idColaborador[0].idColaborador }}"
+            >
+              {{ colaborador.nombreColaborador[0].nombre }}
+              {{ colaborador.apellidosColaborador[0].apellidos }}
+            </option>
+          </select>
+            <i class="btn btn-primary"
+            (click)="addMember()"
+            id="botonNoBoton"
+            class="fa fa-user-plus"></i>
+        </div>
         <br />
       </div>
 
@@ -179,15 +164,16 @@
       value="{{ miembro.idColaborador }}"
     >
       <div>
-        <button 
-          *ngIf="team_owner_checker != 0" 
-          id="botonRedondo" 
-          class="btn btn-secondary"
-          (click)=expulsarMiembro(miembro.idColaborador,miembro.nombre,miembro.apellidos)
-        >
-          <i class="fa fa-user-times"></i> 
-        </button>
-        {{ miembro.nombre }} {{ miembro.apellidos }}
+        <div *ngIf="team_owner_checker != 0; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+          <i id="botonNoBoton" (click)=expulsarMiembro(miembro.idColaborador,miembro.nombre,miembro.apellidos) class="fa fa-user-times"></i> 
+          {{ miembro.nombre }} {{ miembro.apellidos }}
+        </ng-template>
+        <ng-template #elseBlock>
+          <li style="margin-left: 10px;"> {{ miembro.nombre }} {{ miembro.apellidos }}</li>
+        </ng-template>
+          
+         
       </div>
     </div>
   </div>
