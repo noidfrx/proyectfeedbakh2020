@@ -25,11 +25,21 @@
               {{ equipo.nombreEquipo[0].nombre }}
             </option>
           </select>
-          <button id="espacioBoton" class="btn btn-primary"(click)="getTeamData()">
+          <button id="espacioBoton" class="btn btn-primary" (click)="getTeamData()">
             Filtrar
           </button>
-          <button class="btn btn-danger" *ngIf="team_owner_checker != 0">
-            Eliminar
+          
+        </div>
+        
+        <div class="text-center">
+          <b>Seleccionado: </b> {{nombre_team}}
+          <button 
+            id=botonRedondo 
+            class="btn btn-danger" 
+            *ngIf="team_owner_checker != 0" 
+            (click)="eliminarEquipo()"
+          >
+            <i class="fa fa-trash"></i>
           </button>
         </div>
         <div class="text-center" *ngIf="team_owner_checker != 0">

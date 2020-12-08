@@ -181,7 +181,7 @@ class IndexController {
     // Query para agregar una nuevo evento
     addEvent(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield database_1.default.query("INSERT INTO evento (nombre, fecha, hora, descripcion, idEquipo, enlaceVideoconferencia, privacidad) VALUES (?,?,?,?,?,?,?)", [
+            yield database_1.default.query("INSERT INTO evento (nombre, fecha, hora, descripcion, idEquipo, enlaceVideoconferencia, privacidad, idCategoria) VALUES (?,?,?,?,?,?,?,?)", [
                 req.body.nombre,
                 req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
                 req.body.hora + ":" + req.body.minuto,
@@ -189,6 +189,7 @@ class IndexController {
                 req.body.equipo,
                 req.body.enlace,
                 req.body.privacidad,
+                req.body.categoria
             ]);
             res.status(200).json({ message: "Evento guardado" });
         });
@@ -196,7 +197,6 @@ class IndexController {
     // Query para agregar los miembros correspondientes a un evento
     addEventMiembros(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log("---ADDEVENTMIEMBROS---");
             for (let integrante of req.body.encargados) {
                 yield database_1.default.query("INSERT INTO listaeventos(idEvento, idColaborador) VALUES (?,?)", [req.body.evento, integrante]);
             }
@@ -224,7 +224,7 @@ class IndexController {
     modEvent(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             console.log(req.body);
-            yield database_1.default.query("UPDATE evento SET nombre=?, fecha=?, hora=?, descripcion=?, idCategoria=?, idEquipo=?, enlaceVideoconferencia=?, privacidad=? WHERE idEvento=?", [
+            yield database_1.default.query("UPDATE evento SET nombre=?, fecha=?, hora=?, descripcion=?, idCategoria=?, idEquipo=?, enlaceVideoconferencia=?, privacidad=?, idCategoria=? WHERE idEvento=?", [
                 req.body.nombre,
                 req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
                 req.body.hora + ":" + req.body.minuto,
@@ -233,7 +233,8 @@ class IndexController {
                 req.body.equipo,
                 req.body.enlace,
                 req.body.privacidad,
-                req.body.evento,
+                req.body.categoria,
+                req.body.evento
             ]);
             res.status(200).json({ message: "Evento modificado" });
         });
@@ -659,6 +660,15 @@ class IndexController {
             }
         });
     }
+    addCategoria(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
+            yield database_1.default.query("INSERT INTO categoria (nombreCategoria) VALUES (?)", [
+                req.body.nombreCategoria
+            ]);
+            res.status(200).json({ message: "Categoría creada" });
+        });
+    }
     // Query para sacar un miembro de un equipo
     expulsar_miembro(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -669,13 +679,32 @@ class IndexController {
             else {
                 res.status(204).send({ message: "No se completo la operacion (expulsar)" });
             }
-    addCategoria(req, res) {
+        });
+    }
+    // Query para adqirir los encargados de un equipo
+    encargados_evento(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(req.body);
-            yield database_1.default.query("INSERT INTO categoria (nombreCategoria) VALUES (?)", [
-                req.body.nombreCategoria
-            ]);
-            res.status(200).json({ message: "Categoría creada" });
+            const datos = yield database_1.default.query("SELECT * FROM listaeventos WHERE idEvento = ?", [req.body.id]);
+            if (datos.length >= 1) {
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).send({ message: "No se completo la operacion (encargados_evento)" });
+            }
+        });
+    }
+    // Query para eliminar un equipo
+    ban_team(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const datos = yield database_1.default.query("DELETE FROM equipo WHERE idEquipo = ?", [req.body.id]);
+            res.json(datos);
+        });
+    }
+    // Query para eliminar los miembros de un evento
+    vaciar_evento(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const datos = yield database_1.default.query("DELETE FROM listaeventos WHERE idEvento = ?", [req.body.id]);
+            res.json(datos);
         });
     }
 }

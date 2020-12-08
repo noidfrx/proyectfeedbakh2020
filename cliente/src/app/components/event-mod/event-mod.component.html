@@ -16,23 +16,6 @@
             
 
             <div class='card-body'>
-                
-                <!--label for='inputEvento' class='col-md-12'>Evento</label>
-                <div class='form-group col-md-12'>
-                    <select 
-                        class='custom-select'
-                        id='inputEvento'
-                        required 
-                        name='evento' 
-                        [(ngModel)]='eventModel.evento' 
-                        #evento="ngModel"
-                    >
-                        <option selected value="0">Seleccione un evento</option>
-                        <option *ngFor="let evento of eventos" value='{{evento.idEvento}}'>
-                            {{evento.nombre}} (id: {{evento.idEvento}})
-                        </option>
-                    </select>
-                </div-->
 
                 <div id="static" class='form-group col-md-12'>
                     <label for='inputNombreEvento'>Nombre de evento</label>
@@ -48,24 +31,32 @@
                         placeholder='(Obligatorio)'
                     >
                 </div>
-
-                <!--label for='inputEquipo' class='col-md-12'>Equipo</label>
-                <div class='form-group col-md-12'>
-                    <select 
-                        class='custom-select'
-                        id='inputEquipo'
-                        required 
-                        name='equipo' 
-                        [(ngModel)]='eventModel.equipo' 
-                        #equipo="ngModel"
-                    >
-                        <option selected value="0">Seleccione un equipo</option>
-                        <option *ngFor="let equipo of equipos" value='{{equipo.nombreEquipo[0].idEquipo}}'>
-                            {{equipo.nombreEquipo[0].nombre}}
-                        </option>
-                    </select>
-                </div-->
         
+                <br/>
+
+                <label 
+                    for='inputEncargadoEvento' 
+                    class='col-md-12'
+                >
+                    Vuelva a seleccionar a los integrantes que participan del evento
+                </label>
+
+                
+                <div 
+                    id="inputEncargadoEvento" 
+                    class="col-md-12" 
+                >
+                    <div *ngFor="let colaborador of colaboradores">
+                        <input 
+                        type="checkbox"
+                        value="{{colaborador.idColaborador}}"
+                        name="{{colaborador.idColaborador}}"
+                        (change)="checkMiembros($event, colaborador.idColaborador)"
+                    >   {{colaborador.nombre}} {{colaborador.apellidos}}
+                    </div>
+                    
+                </div>
+
                 <br/>
                 
                 <label for='inputFechaTarea' class='col-md-12'>Fecha del evento</label>
@@ -238,7 +229,7 @@
                     >
                 </div>
         
-                <!--div class='form-group col-md-12 pt-2'>
+                <div class='form-group col-md-12 pt-2'>
                     <label for='inputEnlace'>Enlace de videoconferencia</label>
                     <input 
                         type='text' 
@@ -251,7 +242,7 @@
                         placeholder='Inserte aquí el link de la videoconferencia'
                         [class.is-invalid]="enlace.invalid && enlace.touched"
                     >
-                </div-->
+                </div>
 
                 <br/>
         

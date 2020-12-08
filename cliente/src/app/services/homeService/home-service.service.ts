@@ -46,17 +46,20 @@ export class HomeServiceService {
   _urlEvento            = 'http://localhost:3000/lilevent';
   _urlBanTarea          = 'http://localhost:3000/bantask';
   _urlBanEvento         = 'http://localhost:3000/banevent';
+  _urlBanEquipo         = 'http://localhost:3000/banteam';
 
   // Vista equipo
   _urlCheckTeamOwner    = 'http://localhost:3000/checkteamowner';
-  _urlCheckTaskOwner    = 'http://localhost:3000/checktaskowner'
-  _urlSetCompletado     = 'http://localhost:3000/setcompletado'
-  _urlSetNoCompletado   = 'http://localhost:3000/setnocompletado'
-  _urlTeamData          = 'http://localhost:3000/teamdata'
-  _urlEncargadoTarea    = 'http://localhost:3000/taskencargado'
-  _urlExpulsarMiembro   = 'http://localhost:3000/expulsarmiembro'
-  _urlBuscarEvento      = 'http://localhost:3000/buscarevento'
-  _urlAddCategoria = 'http://localhost:3000/addCategoria';
+  _urlCheckTaskOwner    = 'http://localhost:3000/checktaskowner';
+  _urlSetCompletado     = 'http://localhost:3000/setcompletado';
+  _urlSetNoCompletado   = 'http://localhost:3000/setnocompletado';
+  _urlTeamData          = 'http://localhost:3000/teamdata';
+  _urlEncargadoTarea    = 'http://localhost:3000/taskencargado';
+  _urlExpulsarMiembro   = 'http://localhost:3000/expulsarmiembro';
+  _urlBuscarEvento      = 'http://localhost:3000/buscarevento';
+  _urlAddCategoria      = 'http://localhost:3000/addCategoria';
+  _urlEncargadosEvento  = 'http://localhost:3000/encargadosevento'
+  _urlVaciarEvento      = 'http://localhost:3000/vaciarevento'
 
 
   constructor(private _http: HttpClient) {}
@@ -280,6 +283,24 @@ export class HomeServiceService {
   addCategoria(categoria: Categoria) {
     return this._http
       .post<any>(this._urlAddCategoria, categoria, { withCredentials: true })
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getEncargadosEvento(id: IdBringer) {
+    return this._http
+      .post<any>(this._urlEncargadosEvento, id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  banTeam(id: IdBringer) {
+    return this._http
+      .post<any>(this._urlBanEquipo, id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  vaciarEvento(id: IdBringer) {
+    return this._http
+      .post<any>(this._urlVaciarEvento, id)
       .pipe(catchError(this.errorHandler));
   }
 

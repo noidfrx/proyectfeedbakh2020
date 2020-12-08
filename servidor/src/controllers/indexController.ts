@@ -231,7 +231,7 @@ class IndexController {
 
   public async addEvent(req: Request, res: Response): Promise<any> {
     await pool.query(
-      "INSERT INTO evento (nombre, fecha, hora, descripcion, idEquipo, enlaceVideoconferencia, privacidad) VALUES (?,?,?,?,?,?,?)",
+      "INSERT INTO evento (nombre, fecha, hora, descripcion, idEquipo, enlaceVideoconferencia, privacidad, idCategoria) VALUES (?,?,?,?,?,?,?,?)",
       [
         req.body.nombre,
         req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
@@ -240,6 +240,7 @@ class IndexController {
         req.body.equipo,
         req.body.enlace,
         req.body.privacidad,
+        req.body.categoria
       ]
     );
 
@@ -290,7 +291,7 @@ class IndexController {
     console.log(req.body);
 
     await pool.query(
-      "UPDATE evento SET nombre=?, fecha=?, hora=?, descripcion=?, idCategoria=?, idEquipo=?, enlaceVideoconferencia=?, privacidad=? WHERE idEvento=?",
+      "UPDATE evento SET nombre=?, fecha=?, hora=?, descripcion=?, idCategoria=?, idEquipo=?, enlaceVideoconferencia=?, privacidad=?, idCategoria=? WHERE idEvento=?",
       [
         req.body.nombre,
         req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
@@ -300,7 +301,8 @@ class IndexController {
         req.body.equipo,
         req.body.enlace,
         req.body.privacidad,
-        req.body.evento,
+        req.body.categoria,
+        req.body.evento
       ]
     );
     res.status(200).json({ message: "Evento modificado" });
@@ -848,6 +850,42 @@ class IndexController {
     } else {
       res.status(204).send({ message: "No se completo la operacion (expulsar)" });
     }
+  }
+
+
+
+  // Query para adqirir los encargados de un equipo
+
+  public async encargados_evento(req: Request, res: Response): Promise<any> {
+    const datos = await pool.query("SELECT * FROM listaeventos WHERE idEvento = ?", [req.body.id]);
+
+    if (datos.length >= 1) {
+      res.status(200).json(datos);
+    } else {
+      res.status(204).send({ message: "No se completo la operacion (encargados_evento)" });
+    }
+  }
+
+
+
+
+   // Query para eliminar un equipo
+
+   public async ban_team(req: Request, res: Response): Promise<any> {
+    const datos = await pool.query("DELETE FROM equipo WHERE idEquipo = ?", [req.body.id]);
+
+    res.json(datos);
+  }
+
+
+
+
+  // Query para eliminar los miembros de un evento
+
+  public async vaciar_evento(req: Request, res: Response): Promise<any> {
+    const datos = await pool.query("DELETE FROM listaeventos WHERE idEvento = ?", [req.body.id]);
+
+    res.json(datos);
   }
 
 

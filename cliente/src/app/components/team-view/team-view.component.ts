@@ -265,7 +265,6 @@ export class TeamViewComponent implements OnInit {
 
 
 
-
   // Función para sacar a un miembro de un equipo
   expulsarMiembro(idColab, nombre, apellidos){
     var confirmar = confirm("Se sacará del equipo. ¿Continuar?");
@@ -276,6 +275,35 @@ export class TeamViewComponent implements OnInit {
         data => {
           console.log(data);
           alert("Miembro expulsado del equipo");
+          setTimeout(() => 
+          {
+            this.router.navigate(['/uwu']);
+          },
+          500);
+        },
+        error => {
+          this.errorMsg=error.statusText;
+          console.log(this.errorMsg);
+        }
+      )
+      
+    }
+  }
+
+
+
+
+  // Función para sacar a un miembro de un equipo
+  eliminarEquipo(){
+    var confirmar = confirm("Se eliminará el equipo. ¿Continuar?");
+    if(confirmar){
+
+      var taskBringer = new IdBringer(this.teamData[0].idEquipo,null);
+
+      this._homeService.banTeam(taskBringer).subscribe(
+        data => {
+          console.log(data);
+          alert("Equipo eliminado");
           setTimeout(() => 
           {
             this.router.navigate(['/uwu']);

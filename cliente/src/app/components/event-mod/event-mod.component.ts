@@ -28,7 +28,13 @@ export class EventModComponent implements OnInit {
   teamId = new IdBringer(null,null);
   nombreteam='';
 
+  integrantes_seleccionados: number[];
+
   constructor(private _homeService:HomeServiceService, private router:Router) {
+    this.eventId.id=history.state.idevent;
+    this.teamId.id=history.state.idteam;
+    this.nombreteam=history.state.nombreteam;
+    this.getColaboradoresTeam();
     this.getCategorias();
     this.obtenerEquipoUsuario();
    }
@@ -47,19 +53,21 @@ export class EventModComponent implements OnInit {
     }else{
       console.log("_evento es null");
     }
+
+    this.integrantes_seleccionados = new Array<number>();
   }
 
   setSuciusFormularius(){
-    console.log("tarea usada para form: ", this._evento);
+    console.log("evento usado para form: ", this._evento);
     this.eventModel.evento = this.eventId.id;
     this.eventModel.nombre = this._evento[0].nombre;
-    //this.eventModel.encargado = this._evento[0].idEncargado;
+    //this.setEncargados();
     this.eventModel.equipo = this._evento[0].idEquipo;
     this.eventModel.dia = this.getDia(this._evento[0].fecha);
     this.eventModel.mes = this.getMes(this._evento[0].fecha);
     this.eventModel.anio =this.getAnio(this._evento[0].fecha);
-    this.eventModel.hora = this.getHora(this._evento[0].fecha);
-    this.eventModel.minuto = this.getMinuto(this._evento[0].fecha);
+    this.eventModel.hora = this.getHora(this._evento[0].hora);
+    this.eventModel.minuto = this.getMinuto(this._evento[0].hora);
     this.eventModel.categoria = this._evento[0].idCategoria;
     this.eventModel.privacidad = this._evento[0].privacidad;
     this.eventModel.descripcion = this._evento[0].descripcion;
@@ -82,11 +90,11 @@ export class EventModComponent implements OnInit {
     )
   }
 
-  getColaboradores(){
-    this._homeService.getColaboradores().subscribe(
+  getColaboradoresTeam(){
+    this._homeService.getColaboradoresTeam(this.teamId).subscribe(
       data => {
-        (this.colaboradores = data)
-        console.log("Colaboradores recibidos");
+        this.colaboradores = data;
+        console.log("Colaboradores recibidos: ", data);
       },
       error => {
         this.errorMsg=error.statusText;
@@ -123,23 +131,92 @@ export class EventModComponent implements OnInit {
     )
   }
 
-  // POST
-  
+  // Función que detecta cambios en la lista de integrantes seleccionados
+  checkMiembros(ev:any, id:number){
+    if(ev.target.checked){
+      console.log("Seleccionado: " + id);
+      this.integrantes_seleccionados.push(id);
+    }else{
+      console.log("DeSeleccionado: " + id);
+      this.integrantes_seleccionados = this.integrantes_seleccionados.filter(m=>m!=id);
+    }
+
+    console.log("Lista actual: " + this.integrantes_seleccionados + "(cantidad: " + this.integrantes_seleccionados.length + ")");
+  }
+
+
+
+
+  // Función que vacia los integrantes de un evento en la base de datos para luego agregar los nuevos seleccionados
+  VaciarLuegoAgregarMiembros(){
+    this._homeService.vaciarEvento(this.eventId)
+    .subscribe(
+      data => {
+        console.log("Evento vaciado!", data);
+        this.agregarMiembrosEvento();
+      },
+      error => this.errorMsg = error.statusText
+      // Manejo de errores ^
+    )
+  }
+
+
+  // Función para agregar los nuevos miembros seleccionados
+  agregarMiembrosEvento(){
+    this._homeService.addEventMiembros(this.eventModel)
+      .subscribe(
+        data => {
+          console.log("Miembros agregados!", data);
+          alert("Evento modificado con éxito");
+          setTimeout(() => 
+          {
+              this._homeService.setMostrarEquipo(this.teamId.id);
+              this.router.navigate(['/teamview']);
+          },
+          500);
+        },
+        error => this.errorMsg = error.statusText
+        // Manejo de errores ^
+      )
+  }
+
+
+
+
+  // Función para inicializar los encargados
+  /*setEncargados(){
+    this._homeService.getEncargadosEvento(this.eventId).subscribe(
+      data => {
+        console.log("encargados -> ", data);
+        for(let encargado of data){
+          this.integrantes_seleccionados.push(encargado.idColaborador);
+        }
+        console.log("push listo");
+        console.log("Lista actual: " + this.integrantes_seleccionados + "(cantidad: " + this.integrantes_seleccionados.length + ")");
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir el evento de id ", this.eventId);
+      }
+    )
+  }*/
+
+
+  //////////
+  // POST //
+  //////////
+
   onSubmit(){
     console.log(this.teamId.id);
     console.log(this.eventModel.equipo);
     this.eventModel.equipo = this.teamId.id;
+    this.eventModel.encargados = this.integrantes_seleccionados;
+    
     this._homeService.modEvent(this.eventModel)
     .subscribe(
       data => {
         console.log("Evento modificado!", data);
-        alert("Evento modificado con éxito");
-        setTimeout(() => 
-        {
-            this._homeService.setMostrarEquipo(this.teamId.id);
-            this.router.navigate(['/teamview']);
-        },
-        500);
+        this.VaciarLuegoAgregarMiembros();
       },
       error => this.errorMsg = error.statusText
       // Manejo de errores ^
@@ -195,24 +272,16 @@ export class EventModComponent implements OnInit {
 
 
   // 2001-01-01T03:00:00.000Z 
-  getHora(dat) : number{
-    var date = String(dat);
-    var fecha = date.split('T',2);
-    var fechus = fecha[1].split('.',2);
-    var fecha2 = fechus[0].split(':',3);
-    var dia = fecha2[0];
+  getHora(hora) : number{
+    var hora_h = hora.split(':',2);
 
-    return Number(dia);
+    return Number(hora_h[0]);
   }
 
-  getMinuto(dat) : number{
-    var date = String(dat);
-    var fecha = date.split('T',2);
-    var fechus = fecha[1].split('.',2);
-    var fecha2 = fechus[0].split(':',3);
-    var dia = fecha2[1];
+  getMinuto(hora) : number{
+    var hora_m = hora.split(':',2);
 
-    return Number(dia);
+    return Number(hora_m[1]);
   }
 
   cancelar(){

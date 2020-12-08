@@ -92,8 +92,10 @@ class IndexRoutes {
         this.router.post("/taskencargado", indexController_1.indexController.encargado_tarea);
         this.router.post("/expulsarmiembro", indexController_1.indexController.expulsar_miembro);
         this.router.post("/buscarevento", indexController_1.indexController.buscar_evento);
-        //this.router.post("/checkteammember", indexController.revisar_miembro_equipo);
         this.router.post("/addCategoria", indexController_1.indexController.addCategoria);
+        this.router.post("/encargadosevento", indexController_1.indexController.encargados_evento);
+        this.router.post("/banteam", indexController_1.indexController.ban_team);
+        this.router.post("/vaciarevento", indexController_1.indexController.vaciar_evento);
         // this.router.get('/sesion', (req:Request,res:Response)=>{
         //     res.send("Inició sesion como: "+req!.session!.sesion);
         // } );

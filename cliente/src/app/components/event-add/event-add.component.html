@@ -38,29 +38,8 @@
                 >
                     Seleccione a los integrantes que participan del evento
                 </label>
-                <!--div class='input-group col-md-12'>
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="fa fa-users"></i>
-                        </div>
-                    </div>
-                    <select 
-                        class='custom-select'
-                        id='inputEncargadoEvento'
-                        required 
-                        name='encargado' 
-                        [(ngModel)]='eventModel.encargado' 
-                        #encargado="ngModel"
-                    >
-                        <option selected value="0">Seleccione encargados</option>
-                        <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador}}'>
-                            {{colaborador.nombreColaborador[0].nombre}} {{colaborador.apellidosColaborador[0].apellidos}} 
-                        </option>
-                    </select>
-                    <button class="btn btn-primary">
-                        <i class="fa fa-user-plus"></i>
-                    </button>
-                </div-->
+
+                
                 <div 
                     id="inputEncargadoEvento" 
                     class="col-md-12" 
