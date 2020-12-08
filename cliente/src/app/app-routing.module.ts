@@ -23,7 +23,7 @@ import { UwuComponent } from './components/uwu/uwu.component';
 import { VistaSolicitudesComponent } from './components/vista-solicitudes/vista-solicitudes.component';
 import { AmigosComponent } from './components/amigos/amigos.component';
 import {PasswordOlvidadaComponent} from './components/password-olvidada/password-olvidada.component'
-
+import {CategoriaAddComponent} from './components/categoria-add/categoria-add.component';
 
 const routes: Routes = [
 
@@ -123,6 +123,11 @@ const routes: Routes = [
     path:'forgottenPassword',
     component: PasswordOlvidadaComponent,
     canActivate: [AuthWelcome]
+  },
+  {
+    path:'categoriaAdd',
+    component:CategoriaAddComponent,
+    canActivate: [AuthGuard]
   },
 
 ];

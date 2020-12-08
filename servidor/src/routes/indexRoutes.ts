@@ -107,6 +107,7 @@ class IndexRoutes {
     this.router.post("/expulsarmiembro", indexController.expulsar_miembro);
     this.router.post("/buscarevento", indexController.buscar_evento);
     //this.router.post("/checkteammember", indexController.revisar_miembro_equipo);
+    this.router.post("/addCategoria", indexController.addCategoria);
 
 
     // this.router.get('/sesion', (req:Request,res:Response)=>{

@@ -251,7 +251,6 @@ class IndexController {
   // Query para agregar los miembros correspondientes a un evento
 
   public async addEventMiembros(req: Request, res: Response): Promise<any> {
-    console.log("---ADDEVENTMIEMBROS---");
       for(let integrante of req.body.encargados){
         await pool.query(
           "INSERT INTO listaeventos(idEvento, idColaborador) VALUES (?,?)",
@@ -824,6 +823,18 @@ class IndexController {
     } else {
       res.status(204).send({ message: "No se adquirieron datos de equipo" });
     }
+  }
+
+  public async addCategoria(req: Request, res: Response): Promise<any> {
+    console.log(req.body);
+
+    await pool.query(
+      "INSERT INTO categoria (nombreCategoria) VALUES (?)",
+      [
+        req.body.nombreCategoria
+      ]
+    );
+    res.status(200).json({ message: "Categoría creada" });
   }
 
 

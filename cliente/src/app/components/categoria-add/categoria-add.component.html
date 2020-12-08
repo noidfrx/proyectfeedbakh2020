@@ -1,0 +1,55 @@
+<app-navigation-home></app-navigation-home>
+
+<div id="todoContenido" class="col-md-4 offset-md-4">
+  <div class="card">
+    <h3 class="text-center pt-5">Agregar categoría</h3>
+
+    <div class="card-body">
+      <!-- Se exporta formulario como un ngForm -->
+      <form
+        class="pb-5 pl-3 pr-3"
+        (ngSubmit)="onSubmit()"
+        #categoriaForm="ngForm"
+        novalidate
+      >
+        <!-- Value se pasa en json, luego a cada input se le pone ngModel 
+          **Se requiere que cada input tenga un name="" **-->
+        <div class="form-group">
+          <label for="categoriaForm">Nombre de categoría</label>
+          <!-- El campo será invalido cuando no tiene nada, y cuando el usuario toca algo -->
+          <input
+            class="form-control"
+            id="categoria"
+            [(ngModel)]="categoriaModel.nombreCategoria"
+            required
+            name="categoria"
+            #nombreCategoria="ngModel"
+            [class.is-invalid]="
+              nombreCategoria.invalid && nombreCategoria.touched
+            "
+          />
+          <!-- ERRORES -->
+          <!-- No ingresado -->
+          <small
+            class="text-danger"
+            *ngIf="
+              nombreCategoria.errors &&
+              nombreCategoria.errors.required &&
+              nombreCategoria.touched
+            "
+            >Por favor, nombre de categoría</small
+          >
+        </div>
+        <button
+          [disabled]="categoriaForm.form.invalid"
+          type="submit"
+          class="btn btn-primary"
+        >
+          Crear nueva categoría
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
