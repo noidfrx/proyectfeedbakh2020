@@ -269,7 +269,7 @@ export class TeamViewComponent implements OnInit {
 
   // Función para sacar a un miembro de un equipo
   expulsarMiembro(idColab, nombre, apellidos){
-    var confirmar = confirm("Se sacará del equipo. ¿Continuar?");
+    var confirmar = confirm("Se eliminará al miembro seleccionado del equipo. ¿Desea continuar?");
     if(confirmar){
       var idBringer = new IdBringer(this.selectedTeam,idColab);
 
