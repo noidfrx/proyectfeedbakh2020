@@ -103,6 +103,7 @@ class IndexRoutes {
     this.router.post("/colaboradoresnoequipo", indexController.colaboradores_noequipo);
     this.router.post("/teamdata", indexController.datos_equipo);
     this.router.post("/taskencargado", indexController.encargado_tarea);
+    this.router.post("/expulsarmiembro", indexController.expulsar_miembro);
     //this.router.post("/checkteammember", indexController.revisar_miembro_equipo);
 
 

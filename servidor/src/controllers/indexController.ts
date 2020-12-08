@@ -813,6 +813,19 @@ class IndexController {
   }
 
 
+  // Query para sacar un miembro de un equipo
+
+  public async expulsar_miembro(req: Request, res: Response): Promise<any> {
+    const datos = await pool.query("DELETE FROM listaequipo WHERE idEquipo = ? AND idColaborador=?", [req.body.id,req.body.colaborador]);
+
+    if (datos.length >= 1) {
+      res.status(200).json(datos);
+    } else {
+      res.status(204).send({ message: "No se completo la operacion (expulsar)" });
+    }
+  }
+
+
 
   // Query para verificar si un colaborador pertenece a un equipo
 

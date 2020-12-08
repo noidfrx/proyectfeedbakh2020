@@ -33,7 +33,12 @@
                 </div>
 
                 <label for='inputEncargadoEvento' class='col-md-12'>Integrante</label>
-                <div class='form-group col-md-12'>
+                <div class='input-group col-md-12'>
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                          <i class="fa fa-users"></i>
+                        </div>
+                    </div>
                     <select 
                         class='custom-select'
                         id='inputEncargadoEvento'
@@ -42,12 +47,17 @@
                         [(ngModel)]='eventModel.encargado' 
                         #encargado="ngModel"
                     >
-                        <option selected value="0">Seleccione un encargado</option>
+                        <option selected value="0">Seleccione encargados</option>
                         <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador}}'>
                             {{colaborador.nombreColaborador[0].nombre}} {{colaborador.apellidosColaborador[0].apellidos}} 
                         </option>
                     </select>
+                    <button class="btn btn-primary">
+                        <i class="fa fa-user-plus"></i>
+                    </button>
                 </div>
+
+                
         
                 <br/>
                 

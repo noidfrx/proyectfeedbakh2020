@@ -654,6 +654,18 @@ class IndexController {
             }
         });
     }
+    // Query para sacar un miembro de un equipo
+    expulsar_miembro(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const datos = yield database_1.default.query("DELETE FROM listaequipo WHERE idEquipo = ? AND idColaborador=?", [req.body.id, req.body.colaborador]);
+            if (datos.length >= 1) {
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).send({ message: "No se completo la operacion (expulsar)" });
+            }
+        });
+    }
 }
 //Instanciamos y exportamos toda la clase
 exports.indexController = new IndexController();

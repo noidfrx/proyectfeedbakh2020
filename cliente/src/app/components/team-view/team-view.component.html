@@ -28,6 +28,9 @@
           <button id="espacioBoton" class="btn btn-primary"(click)="getTeamData()">
             Filtrar
           </button>
+          <button class="btn btn-danger" *ngIf="team_owner_checker != 0">
+            Eliminar
+          </button>
         </div>
         <div class="text-center" *ngIf="team_owner_checker != 0">
           Usted es encargado de este equipo
@@ -55,7 +58,7 @@
             (click)="addMember()"
             id="espacioBoton"
           >
-            Añadir
+            <i class="fa fa-user-plus"></i>
           </button>
         </div>
 
@@ -152,7 +155,15 @@
       *ngFor="let miembro of colaboradores_team"
       value="{{ miembro.idColaborador }}"
     >
-      <div class="text-center">
+      <div>
+        <button 
+          *ngIf="team_owner_checker != 0" 
+          id="botonRedondo" 
+          class="btn btn-danger"
+          (click)=expulsarMiembro(miembro.idColaborador,miembro.nombre,miembro.apellidos)
+        >
+          <i class="fa fa-user-times"></i> 
+        </button>
         {{ miembro.nombre }} {{ miembro.apellidos }}
       </div>
     </div>

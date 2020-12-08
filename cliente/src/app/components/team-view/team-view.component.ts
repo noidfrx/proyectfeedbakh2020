@@ -47,7 +47,7 @@ export class TeamViewComponent implements OnInit {
 
   constructor(private _homeService:HomeServiceService, private _equipoService:EquipoService, private router:Router) {
     this.getColaboradoresUser();
-    //this.getColaboradoresTeam();
+    this.getColaboradoresTeam();
     this.getCategorias();
     this.obtenerEquipoUsuario();
    }
@@ -68,23 +68,11 @@ export class TeamViewComponent implements OnInit {
     
   }
 
-
-  // Función para adquirir todas las categorías de la base de datos
-  getCategorias(){
-    this._homeService.getCategorias().subscribe(
-      data => {
-        (this.categorias = data)
-        // Luego de adquirir las categorias, se reordenaran en un mapa para su facil acceso
-        // (para tomar el nombre de las categorias a traves del ID)
-        this.reordenarCategorias();
-        console.log("Categorias recibidas: ", data);
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("Error al recibir las categorias");
-      }
-    )
-  }
+  ///////////////////////////////
+  //                           //
+  //    FUNCIONES DE EQUIPO    //
+  //                           //
+  ///////////////////////////////
 
   // Función para adquirir todos los colaboradores según el usuario con sesión iniciada
   getColaboradoresUser(){
@@ -103,6 +91,7 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
+
   // Función que llama a las funciones "getTareasTeam", "getEventosTeam" y "checkTeamOwner"
   // para adquirir las tareas y eventos de un equipo seleccionado y saber si es encargado, respectivamente
   getTeamData(){
@@ -117,6 +106,7 @@ export class TeamViewComponent implements OnInit {
         }
       });
     }
+
 
     // Query para actualizar el objeto teamData
     this._homeService.getTeamData(this.teamId).subscribe(
@@ -142,35 +132,45 @@ export class TeamViewComponent implements OnInit {
     }
   }
 
-  // Función para adquirir las tareas según el equipo seleccionado
-  getTareasTeam(){
-    this._homeService.getTareasTeam(this.teamId).subscribe(
+
+  // Función para adquirir el último equipo en el que pertenezca el usuario con sesión iniciada
+  getLastTeam(){
+    this._homeService.getLastTeam().subscribe(
       data => {
-        (this.tareas = data)
-        console.log("Tareas del equipo recibidas");
-        console.log(data);
+        (this.teamData = data)
+        //this.nombre_team = this.equipos[this.selectedTeam]
+        console.log("Ultimo equipo recibido: ", data);
+        this.selectedTeam = this.teamData.idEquipo;
+        this.getTeamData();
       },
       error => {
-        (this.tareas = null)
         this.errorMsg=error.statusText;
-        console.log("Error al recibir las tareas del equipo");
+        console.log("Error al recibir el ultimo equipo");
       }
     )
   }
 
-  getEventosTeam(){
-    this._homeService.getEventosTeam(this.teamId).subscribe(
+
+  // Funcion para adquirir los colaboradores de un equipo
+  getColaboradoresTeam(){
+    this._homeService.getColaboradoresTeam(this.teamId).subscribe(
       data => {
-        (this.eventos = data)
-        console.log("Eventos del equipo recibidos");
-        console.log(data);
+        this.colaboradores_team = data;
+        console.log("Colaboradores (team) recibidos: ", data);
       },
       error => {
         this.errorMsg=error.statusText;
-        console.log("Error al recibir los eventos del equipo");
+        console.log("Error al recibir los colaboradores (team)");
       }
     )
   }
+
+
+  // Funcion que redirigire al formulario de creacion de equipos
+  crearEquipo(){
+    this.router.navigate(['/crearEquipo']);
+  }
+
 
   // Función para adquirir los eventos según el equipo seleccionado
   getEventosUser(){
@@ -188,19 +188,144 @@ export class TeamViewComponent implements OnInit {
     )
   }
 
-  // Función para adquirir el último equipo en el que pertenezca el usuario con sesión iniciada
-  getLastTeam(){
-    this._homeService.getLastTeam().subscribe(
+
+  // Función para agregar un miembro al equipo seleccionado
+  addMember(){
+    let relacion = new listaEquipo(0,this.member_selector,this.selectedTeam);
+
+    if(this.member_selector == 0){
+      alert("Seleccione un colaborador para agregarlo")
+    }else{
+      if(!this.checkTeamMember(this.member_selector)){
+        this._equipoService.agregarIntegrante(relacion).subscribe(
+          data => {
+            console.log("Miembro agregado con éxito ", this.member_selector);
+            alert("Miembro agregado al equipo");
+            setTimeout(() => 
+            {
+                this._homeService.setMostrarEquipo(this.selectedTeam);
+                this.router.navigate(['/uwu']);
+            },
+            500);
+          },
+          error => {
+            this.errorMsg=error.statusText;
+            console.log(error);
+          }
+        )
+      }else{
+        alert("El colaborador ya pertenece a este equipo!");
+      }
+    }
+
+  }
+
+
+  // Funcion para adquirir los colaboradores que no pertenecen al equipo
+  checkTeamMember(idColab): boolean{
+    var getColab = null;
+
+    if(this.colaboradores_team!=null){
+      for(let colaborador of this.colaboradores_team){
+        if(colaborador.idColaborador == idColab){
+          console.log("Colab encontrado!");
+          return true;
+        }
+      }
+    }
+    console.log("Colab NO encontrado!");
+    return false;
+  }
+
+
+
+  // Función para verificar si el usuario con sesión iniciada es el encargado del equipo seleccionado
+  checkTeamOwner(){
+    this._homeService.checkTeamOwner(this.teamId).subscribe(
       data => {
-        (this.teamData = data)
-        //this.nombre_team = this.equipos[this.selectedTeam]
-        console.log("Ultimo equipo recibido: ", data);
-        this.selectedTeam = this.teamData.idEquipo;
-        this.getTeamData();
+        if(data != null && data.length > 0){
+          this.team_owner_checker = data[0].encargado;
+        }else{
+          this.team_owner_checker = 0;
+        }
+        console.log("team_owner_checker: ", this.team_owner_checker);
+      },
+      error => {
+        this.team_owner_checker = 0;
+        console.log("checkTeamOwner(error): ", error);
+        console.log("team_owner_checker: ", this.team_owner_checker);
+      }
+    )
+  }
+
+
+
+
+  // Función para sacar a un miembro de un equipo
+  expulsarMiembro(idColab, nombre, apellidos){
+    var confirmar = confirm("Se sacará del equipo. ¿Continuar?");
+    if(confirmar){
+      var idBringer = new IdBringer(this.selectedTeam,idColab);
+
+      this._homeService.expulsarMiembroEquipo(idBringer).subscribe(
+        data => {
+          console.log(data);
+          alert("Miembro expulsado del equipo");
+          setTimeout(() => 
+          {
+            this.router.navigate(['/uwu']);
+          },
+          500);
+        },
+        error => {
+          this.errorMsg=error.statusText;
+          console.log(this.errorMsg);
+        }
+      )
+      
+    }
+  }
+
+
+  ///////////////////////
+  // home.component.ts //
+  ///////////////////////
+
+  
+  obtenerEquipoUsuario(){
+    this._homeService.obtenerEquiposUsuario()
+    .subscribe(
+      data => {this.equipos = data;
       },
       error => {
         this.errorMsg=error.statusText;
-        console.log("Error al recibir el ultimo equipo");
+        console.log("Error al recibir los equipos");
+      }
+    )
+  }
+
+
+
+
+  
+  ///////////////////////////////
+  //                           //
+  //    FUNCIONES DE TAREAS    //
+  //                           //
+  ///////////////////////////////
+
+  // Función para adquirir las tareas según el equipo seleccionado
+  getTareasTeam(){
+    this._homeService.getTareasTeam(this.teamId).subscribe(
+      data => {
+        (this.tareas = data)
+        console.log("Tareas del equipo recibidas");
+        console.log(data);
+      },
+      error => {
+        (this.tareas = null)
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir las tareas del equipo");
       }
     )
   }
@@ -249,6 +374,79 @@ export class TeamViewComponent implements OnInit {
     }
   }
 
+
+
+  // Función para habilitar el botón de "completar tarea",
+  // solo si no se ha completado, y el usuario con sesión iniciada es el encargado
+  setCompletado(idTarea){
+    var taskId = new IdBringer(idTarea,null);
+
+    this._homeService.setCompletado(taskId).subscribe(
+      data => {
+        console.log(data);
+        alert("Tarea marcada como completada!");
+        setTimeout(() => 
+        {
+          this.router.navigate(['/uwu']);
+        },
+        500);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log(error);
+      }
+    )
+
+  }
+
+  // Función para habilitar el botón de "completar tarea",
+  // solo si no se ha completado, y el usuario con sesión iniciada es el encargado
+  setNoCompletado(idTarea){
+    var taskId = new IdBringer(idTarea,null);
+
+    this._homeService.setNoCompletado(taskId).subscribe(
+      data => {
+        console.log(data);
+        alert("Tarea marcada como no completada!");
+        setTimeout(() => 
+        {
+          this.router.navigate(['/uwu']);
+        },
+        500);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log(error);
+      }
+    )
+
+  }
+
+
+
+
+  ////////////////////////////////
+  //                            //
+  //    FUNCIONES DE EVENTOS    //
+  //                            //
+  ////////////////////////////////
+
+  // Función para adquirir los eventos de un equipo
+  getEventosTeam(){
+    this._homeService.getEventosTeam(this.teamId).subscribe(
+      data => {
+        (this.eventos = data)
+        console.log("Eventos del equipo recibidos");
+        console.log(data);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir los eventos del equipo");
+      }
+    )
+  }
+
+
   // Función para agregar un evento, redirigiendo hacia el formulario correspondiente
   addEvent(){
     if (this.teamData == null){
@@ -259,6 +457,7 @@ export class TeamViewComponent implements OnInit {
     this.router.navigate(['/eventadd'], { state: {idteam, nombreteam} });
   }
 
+
   // Función para modificar un evento, redirigiendo hacia el formulario correspondiente
   modEvent(idevent){
     if (this.teamData == null){
@@ -268,6 +467,7 @@ export class TeamViewComponent implements OnInit {
     let nombreteam = this.nombre_team;
     this.router.navigate(['/eventmod'], { state: {idevent, idteam, nombreteam} });
   }
+
 
   // Función para eliminar un evento
   banEvent(id){
@@ -292,75 +492,20 @@ export class TeamViewComponent implements OnInit {
     }
   }
 
-  // Función para agregar un miembro al equipo seleccionado
-  addMember(){
-    let relacion = new listaEquipo(0,this.member_selector,this.selectedTeam);
-
-    if(this.member_selector == 0){
-      alert("Seleccione un colaborador para agregarlo")
-    }else{
-      if(!this.checkTeamMember(this.member_selector)){
-        this._equipoService.agregarIntegrante(relacion).subscribe(
-          data => {
-            console.log("Miembro agregado con éxito ", this.member_selector);
-            alert("Miembro agregado al equipo");
-            setTimeout(() => 
-            {
-                this._homeService.setMostrarEquipo(this.selectedTeam);
-                this.router.navigate(['/uwu']);
-            },
-            500);
-          },
-          error => {
-            this.errorMsg=error.statusText;
-            console.log(error);
-          }
-        )
-      }else{
-        alert("El colaborador ya pertenece a este equipo!");
-        this.router.navigate(['/uwu']);
-      }
-    }
-
-  }
 
 
-  // Funcion para adquirir los colaboradores que no pertenecen al equipo
-  checkTeamMember(idColab): boolean{
-    var getColab = null;
+  
 
-    if(this.colaboradores_team!=null){
-      for(let colaborador of this.colaboradores_team){
-        if(colaborador.idColaborador == idColab){
-          console.log("Colab encontrado!");
-          return true;
-        }
-      }
-    }
-    console.log("Colab NO encontrado!");
-    return false;
-  }
+  
+  /////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-  // Función para verificar si el usuario con sesión iniciada es el encargado del equipo seleccionado
-  checkTeamOwner(){
-    this._homeService.checkTeamOwner(this.teamId).subscribe(
-      data => {
-        if(data != null && data.length > 0){
-          this.team_owner_checker = data[0].encargado;
-        }else{
-          this.team_owner_checker = 0;
-        }
-        console.log("team_owner_checker: ", this.team_owner_checker);
-      },
-      error => {
-        this.team_owner_checker = 0;
-        console.log("checkTeamOwner(error): ", error);
-        console.log("team_owner_checker: ", this.team_owner_checker);
-      }
-    )
-  }
+  ////////////////////////////////
+  //                            //
+  //    FUNCIONES AUXILIARES    //
+  //                            //
+  ////////////////////////////////
+  
 
   // Función para reordenar los colaboradores en un mapa para adquirir sus nombres completos directamente desde su ID
   reordenarColaboradores(){
@@ -422,31 +567,27 @@ export class TeamViewComponent implements OnInit {
     return '';
   }
 
-
-  // Funcion para adquirir los colaboradores de un equipo
-  getColaboradoresTeam(){
-    this._homeService.getColaboradoresTeam(this.teamId).subscribe(
+  // Función para adquirir todas las categorías de la base de datos
+  getCategorias(){
+    this._homeService.getCategorias().subscribe(
       data => {
-        this.colaboradores_team = data;
-        console.log("Colaboradores (team) recibidos: ", data);
+        (this.categorias = data)
+        // Luego de adquirir las categorias, se reordenaran en un mapa para su facil acceso
+        // (para tomar el nombre de las categorias a traves del ID)
+        this.reordenarCategorias();
+        console.log("Categorias recibidas: ", data);
       },
       error => {
         this.errorMsg=error.statusText;
-        console.log("Error al recibir los colaboradores (team)");
+        console.log("Error al recibir las categorias");
       }
     )
   }
 
 
-  // Funcion que redirigire al formulario de creacion de equipos
-  crearEquipo(){
-    this.router.navigate(['/crearEquipo']);
-  }
-
-
-  
-
-  ////////// Funciones auxiliarea para getFecha /////////////
+  ////////////////////////////////////////
+  // Funciones auxiliarea para getFecha //
+  ////////////////////////////////////////
 
   getDia(dat){
     var date = String(dat);
@@ -496,67 +637,10 @@ export class TeamViewComponent implements OnInit {
     )
   }*/
 
-  // Función para habilitar el botón de "completar tarea",
-  // solo si no se ha completado, y el usuario con sesión iniciada es el encargado
-  setCompletado(idTarea){
-    var taskId = new IdBringer(idTarea,null);
+  
 
-    this._homeService.setCompletado(taskId).subscribe(
-      data => {
-        console.log(data);
-        alert("Tarea marcada como completada!");
-        setTimeout(() => 
-        {
-          this.router.navigate(['/uwu']);
-        },
-        500);
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log(error);
-      }
-    )
-  }
-
-  // Función para habilitar el botón de "completar tarea",
-  // solo si no se ha completado, y el usuario con sesión iniciada es el encargado
-  setNoCompletado(idTarea){
-    var taskId = new IdBringer(idTarea,null);
-
-    this._homeService.setNoCompletado(taskId).subscribe(
-      data => {
-        console.log(data);
-        alert("Tarea marcada como no completada!");
-        setTimeout(() => 
-        {
-          this.router.navigate(['/uwu']);
-        },
-        500);
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log(error);
-      }
-    )
-  }
-
-
-  ///////////////////////
-  // home.component.ts //
-  ///////////////////////
 
   
-  obtenerEquipoUsuario(){
-    this._homeService.obtenerEquiposUsuario()
-    .subscribe(
-      data => {this.equipos = data;
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("Error al recibir los equipos");
-      }
-    )
-  }
 
 
 }

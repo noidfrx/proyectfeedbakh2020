@@ -53,6 +53,7 @@ export class HomeServiceService {
   _urlSetNoCompletado   = 'http://localhost:3000/setnocompletado'
   _urlTeamData          = 'http://localhost:3000/teamdata'
   _urlEncargadoTarea    = 'http://localhost:3000/taskencargado'
+  _urlExpulsarMiembro   = 'http://localhost:3000/expulsarmiembro'
 
   constructor(private _http: HttpClient) {}
 
@@ -229,6 +230,11 @@ export class HomeServiceService {
 
   getEncargadoTarea(id:IdBringer){
     return this._http.post<any>(this._urlEncargadoTarea, id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  expulsarMiembroEquipo(id:IdBringer){
+    return this._http.post<any>(this._urlExpulsarMiembro, id)
       .pipe(catchError(this.errorHandler));
   }
 
