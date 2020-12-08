@@ -26,19 +26,19 @@ export class TeamViewComponent implements OnInit {
   tareas=null;                    // Tareas del equipo seleccionado
   eventos=null;                   // Eventos del equipo seleccionado
 
-  teamData=null;
-  selectedTeam = null;                  // ID del equipo seleccionado
+  teamData=null;                  // Objeto que adquiere el nombre e ID del equipo
+  selectedTeam = null;            // ID del equipo seleccionado
 
-  teamId = new IdBringer(null,null);         // Modelo que posee el ID y el nombre del equipo seleccionado,
-                                        // utilizado para realizar querys a la base de datos
+  teamId = new IdBringer(null,null);          // Modelo que posee el ID y el nombre del equipo seleccionado,
+                                              // utilizado para realizar querys a la base de datos
 
-  encargadoId = new IdBringer(null,null);    // Modelo que posee el ID del encargado seleccionado,
-                                        // utilizado para realizar querys a la base de datos
+  encargadoId = new IdBringer(null,null);     // Modelo que posee el ID del encargado seleccionado,
+                                              // utilizado para realizar querys a la base de datos
 
-  taskId = new IdBringer(null,null);         // Modelo que posee el ID de la tarea seleccionada,
-                                        // utilizado para realizar querys a la base de datos
+  taskId = new IdBringer(null,null);          // Modelo que posee el ID de la tarea seleccionada,
+                                              // utilizado para realizar querys a la base de datos
 
-  _tarea = new Task('',0,0,0,0,0,0,'',0,0); // Modelo creado para adquirir datos de una tarea
+  _tarea = new Task('',0,0,0,0,0,0,'',0,0);   // Modelo creado para adquirir datos de una tarea
 
   nombre_team='';
   member_selector = 0;            // ID del miembro seleccionado
@@ -68,11 +68,16 @@ export class TeamViewComponent implements OnInit {
     
   }
 
-  ///////////////////////////////
-  //                           //
-  //    FUNCIONES DE EQUIPO    //
-  //                           //
-  ///////////////////////////////
+                              ///////////////////////////////
+                              //                           //
+////////////////////////////////    FUNCIONES DE EQUIPO    ////////////////////////////////
+                              //                           //
+                              ///////////////////////////////
+
+
+
+
+
 
   // Función para adquirir todos los colaboradores según el usuario con sesión iniciada
   getColaboradoresUser(){
@@ -308,11 +313,14 @@ export class TeamViewComponent implements OnInit {
 
 
   
-  ///////////////////////////////
-  //                           //
-  //    FUNCIONES DE TAREAS    //
-  //                           //
-  ///////////////////////////////
+                                ///////////////////////////////
+                                //                           //
+  ////////////////////////////////    FUNCIONES DE TAREAS    ////////////////////////////////
+                                //                           //
+                                ///////////////////////////////
+
+
+
 
   // Función para adquirir las tareas según el equipo seleccionado
   getTareasTeam(){
@@ -425,11 +433,18 @@ export class TeamViewComponent implements OnInit {
 
 
 
-  ////////////////////////////////
-  //                            //
-  //    FUNCIONES DE EVENTOS    //
-  //                            //
-  ////////////////////////////////
+
+
+                                ////////////////////////////////
+                                //                            //
+  ////////////////////////////////    FUNCIONES DE EVENTOS    ////////////////////////////////
+                                //                            //
+                                ////////////////////////////////
+
+
+
+
+
 
   // Función para adquirir los eventos de un equipo
   getEventosTeam(){
@@ -496,15 +511,23 @@ export class TeamViewComponent implements OnInit {
 
   
 
-  
-  /////////////////////////////////////////////////////////////////////////////////////////
 
 
-  ////////////////////////////////
-  //                            //
-  //    FUNCIONES AUXILIARES    //
-  //                            //
-  ////////////////////////////////
+
+
+
+
+                                ////////////////////////////////
+                                //                            //
+  ////////////////////////////////    FUNCIONES AUXILIARES    ////////////////////////////////
+                                //                            //
+                                ////////////////////////////////
+
+
+
+
+
+
   
 
   // Función para reordenar los colaboradores en un mapa para adquirir sus nombres completos directamente desde su ID

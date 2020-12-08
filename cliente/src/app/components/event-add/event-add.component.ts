@@ -4,7 +4,7 @@ import {HomeServiceService} from '../../services/homeService/home-service.servic
 import { Router } from '@angular/router';
 
 //Para validación de formulario
-import {FormControl,FormGroup,Validators} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { IdBringer } from 'src/app/models/IdBringer';
 
 
@@ -22,10 +22,14 @@ export class EventAddComponent implements OnInit {
 
   teamId = new IdBringer(null,null);
   nombreteam = '';
-  eventModel = new Event('',0,null,0,null,null,null,0,0,0,'','',null);
+  eventModel = new Event('',null,0,0,null,null,null,0,0,0,'','',null);
 
-  constructor(private _homeService:HomeServiceService, private router:Router) {
-    this.getColaboradoresUser();
+  integrantes_seleccionados: number[];
+
+  constructor(private _homeService:HomeServiceService, private router:Router, private fb:FormBuilder) {
+    this.teamId.id=history.state.idteam;
+    this.nombreteam=history.state.nombreteam;
+    this.getColaboradoresTeam();
     this.getCategorias();
     this.obtenerEquipoUsuario();
    }
@@ -36,6 +40,10 @@ export class EventAddComponent implements OnInit {
     if(this.teamId.id == null){
       this.router.navigate(['/teamview']);
     }
+    console.log("idteam: ", this.teamId.id);
+    console.log("nombreteam: ", this.nombreteam);
+
+    this.integrantes_seleccionados = new Array<number>();
   }
 
   // GET
@@ -53,7 +61,7 @@ export class EventAddComponent implements OnInit {
     )
   }
 
-  getColaboradoresUser(){
+  /*getColaboradoresUser(){
     this._homeService.getColaboradoresUser().subscribe(
       data => {
         (this.colaboradores = data)
@@ -64,6 +72,32 @@ export class EventAddComponent implements OnInit {
         console.log("Error al recibir los colaboradores");
       }
     )
+  }*/
+
+  getColaboradoresTeam(){
+    this._homeService.getColaboradoresTeam(this.teamId).subscribe(
+      data => {
+        this.colaboradores = data;
+        console.log("Colaboradores recibidos: ", data);
+      },
+      error => {
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir los colaboradores");
+      }
+    )
+  }
+
+  // Función que detecta cambios en la lista de integrantes seleccionados
+  checkMiembros(ev:any, id:number){
+    if(ev.target.checked){
+      console.log("Seleccionado: " + id);
+      this.integrantes_seleccionados.push(id);
+    }else{
+      console.log("DeSeleccionado: " + id);
+      this.integrantes_seleccionados = this.integrantes_seleccionados.filter(m=>m!=id);
+    }
+
+    console.log("Lista actual: " + this.integrantes_seleccionados + "(cantidad: " + this.integrantes_seleccionados.length + ")");
   }
   
 
@@ -71,14 +105,44 @@ export class EventAddComponent implements OnInit {
   
   onSubmit(){
     this.eventModel.equipo = this.teamId.id;
-    this.eventModel.enlace = '';
-    if(this.eventModel.encargado == 0){
-      alert("Seleccione un encargado");
+    this.eventModel.encargados = this.integrantes_seleccionados;
+    if(this.eventModel.encargados.length == 0){
+      alert("Seleccione integrantes que participaran");
     }else{
-      this._homeService.addEvent(this.eventModel)
+      this.addEvento();
+      console.log("this.addEvento");
+      /*this.buscarEvento();
+      console.log("this.buscarEvento");
+      this.completarAddEvent();
+      console.log("this.completarAddEvent");*/
+    }
+  }
+
+  addEvento(){
+    this._homeService.addEvent(this.eventModel)
       .subscribe(
         data => {
           console.log("Evento agregado!", data);
+          this.buscarEvento();
+          console.log("this.buscarEvento");
+        },
+        error => {
+          this.errorMsg = error.statusText;
+          alert("No se pudo agregar el evento");
+        }
+        
+        // Manejo de errores ^
+      );
+  }
+
+
+  // Funcion que asocia a los miembros seleccionados al evento
+  // (y asi terminar la creacion de forma completa)
+  completarAddEvent(){
+    this._homeService.addEventMiembros(this.eventModel)
+      .subscribe(
+        data => {
+          console.log("Miembros agregados!", data);
           alert("Evento creado con éxito");
           setTimeout(() => 
           {
@@ -90,7 +154,27 @@ export class EventAddComponent implements OnInit {
         error => this.errorMsg = error.statusText
         // Manejo de errores ^
       )
-    }
+  }
+
+
+  // Función auxiliar para adquirir el ID del evento segun los datos del evento
+  async buscarEvento(){
+    console.log("Buscar evento...");
+    this._homeService.buscarEvento(this.eventModel)
+      .subscribe(
+        data => {
+          console.log("Evento encontrado!", data);
+          this.eventModel.evento = data[0].idEvento;
+          this.completarAddEvent();
+          console.log("this.completarAddEvent");
+        },
+        error => {
+          this.errorMsg = error.statusText;
+          console.log(this.errorMsg);
+          alert("Error al buscar el evento");
+        }
+        // Manejo de errores ^
+      )
   }
 
   ///////////////////////

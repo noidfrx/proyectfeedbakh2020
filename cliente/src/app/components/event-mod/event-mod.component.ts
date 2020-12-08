@@ -22,7 +22,7 @@ export class EventModComponent implements OnInit {
   equipos=null;
   eventos=null;
   
-  _evento = new Event('',0,0,0,0,0,0,0,0,0,'','',0);
+  _evento = new Event('',null,0,0,0,0,0,0,0,0,'','',0);
   eventModel = new Event('',null,null,0,null,null,null,0,0,0,'','',null);
   eventId = new IdBringer(null,null);
   teamId = new IdBringer(null,null);
@@ -53,7 +53,7 @@ export class EventModComponent implements OnInit {
     console.log("tarea usada para form: ", this._evento);
     this.eventModel.evento = this.eventId.id;
     this.eventModel.nombre = this._evento[0].nombre;
-    this.eventModel.encargado = this._evento[0].idEncargado;
+    //this.eventModel.encargado = this._evento[0].idEncargado;
     this.eventModel.equipo = this._evento[0].idEquipo;
     this.eventModel.dia = this.getDia(this._evento[0].fecha);
     this.eventModel.mes = this.getMes(this._evento[0].fecha);

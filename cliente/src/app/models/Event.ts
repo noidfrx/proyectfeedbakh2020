@@ -1,7 +1,7 @@
 export class Event{
     constructor(
         public nombre: string,
-        public encargado: number,
+        public encargados: number[],
         public dia: number,
         public mes: number,
         public anio: number,

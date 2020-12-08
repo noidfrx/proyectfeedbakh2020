@@ -85,6 +85,7 @@ class IndexRoutes {
     this.router.post("/register", indexController.register);
     this.router.post("/insertTask", indexController.addTask);
     this.router.post("/insertEvent", indexController.addEvent);
+    this.router.post("/insertEventMiembros", indexController.addEventMiembros);
     this.router.post("/modifyTask", indexController.modTask);
     this.router.post("/modifyEvent", indexController.modEvent);
     this.router.post("/tasksequipo", indexController.tareas_equipo);
@@ -104,6 +105,7 @@ class IndexRoutes {
     this.router.post("/teamdata", indexController.datos_equipo);
     this.router.post("/taskencargado", indexController.encargado_tarea);
     this.router.post("/expulsarmiembro", indexController.expulsar_miembro);
+    this.router.post("/buscarevento", indexController.buscar_evento);
     //this.router.post("/checkteammember", indexController.revisar_miembro_equipo);
 
 

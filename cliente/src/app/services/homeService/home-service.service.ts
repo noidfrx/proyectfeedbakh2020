@@ -39,6 +39,7 @@ export class HomeServiceService {
   _urlEventosUser       = 'http://localhost:3000/eventsusuario';
   _urlEventosTeam       = 'http://localhost:3000/eventsequipo';
   _urlAgregarEvento     = 'http://localhost:3000/insertEvent';
+  _urlAgregarEventoMiembros     = 'http://localhost:3000/insertEventMiembros';
   _urlModificarEvento   = 'http://localhost:3000/modifyEvent';
   _urlLastTeam          = 'http://localhost:3000/ultimoequipo';
   _urlTarea             = 'http://localhost:3000/liltask';
@@ -54,6 +55,7 @@ export class HomeServiceService {
   _urlTeamData          = 'http://localhost:3000/teamdata'
   _urlEncargadoTarea    = 'http://localhost:3000/taskencargado'
   _urlExpulsarMiembro   = 'http://localhost:3000/expulsarmiembro'
+  _urlBuscarEvento      = 'http://localhost:3000/buscarevento'
 
   constructor(private _http: HttpClient) {}
 
@@ -154,6 +156,11 @@ export class HomeServiceService {
     .pipe(catchError(this.errorHandler))
   }
 
+  addEventMiembros(event:Event){
+    return this._http.post<any>(this._urlAgregarEventoMiembros,event)
+    .pipe(catchError(this.errorHandler))
+  }
+
   modEvent(event:Event){
     return this._http.post<any>(this._urlModificarEvento,event, {withCredentials:true})
     .pipe(catchError(this.errorHandler))
@@ -176,6 +183,11 @@ export class HomeServiceService {
 
   getEvento(id:IdBringer){
     return this._http.post<any>(this._urlEvento, id)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  buscarEvento(event:Event){
+    return this._http.post<any>(this._urlBuscarEvento, event)
       .pipe(catchError(this.errorHandler));
   }
 

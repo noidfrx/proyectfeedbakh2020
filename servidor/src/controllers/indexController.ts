@@ -230,8 +230,6 @@ class IndexController {
   // Query para agregar una nuevo evento
 
   public async addEvent(req: Request, res: Response): Promise<any> {
-    console.log(req.body);
-
     await pool.query(
       "INSERT INTO evento (nombre, fecha, hora, descripcion, idEquipo, enlaceVideoconferencia, privacidad) VALUES (?,?,?,?,?,?,?)",
       [
@@ -245,30 +243,46 @@ class IndexController {
       ]
     );
 
-    /*let idEventoQuery = await pool.query("SELECT idEvento FROM evento WHERE nombre=? AND idCategoria=? AND descripcion=? AND idEquipo=? AND enlaceVideoconferencia=?",
-      [
-        req.body.nombre,
-        req.body.categoria,
-        req.body.descripcion,
-        req.body.equipo,
-        req.body.enlace
-      ]
-    );
-    
-    if(idEventoQuery.length >= 1){
-      await pool.query(
-        "INSERT INTO listaeventos (idEvento, idColaborador) VALUES (?,?)",
-        [
-          idEventoQuery[0].idEvento,
-          req.body.encargado
-        ]
-      );
-    }else{
-      console.log("idEventoQuery esta vacio");
-    }*/
-
     res.status(200).json({ message: "Evento guardado" });
   }
+
+
+
+  // Query para agregar los miembros correspondientes a un evento
+
+  public async addEventMiembros(req: Request, res: Response): Promise<any> {
+    console.log("---ADDEVENTMIEMBROS---");
+      for(let integrante of req.body.encargados){
+        await pool.query(
+          "INSERT INTO listaeventos(idEvento, idColaborador) VALUES (?,?)",
+          [req.body.evento, integrante]
+        );
+      }
+    
+      res.status(200).json({ message: "Miembros guardado" });
+  }
+
+
+  // Query para retornar la ID un evento segun sus datos
+
+  public async buscar_evento(req: Request, res: Response): Promise<any> {
+    let query = await pool.query(
+      "SELECT idEvento FROM evento WHERE nombre=? AND descripcion=? AND idEquipo=? AND enlaceVideoconferencia=?",
+      [
+        req.body.nombre,
+        req.body.descripcion,
+        req.body.equipo,
+        req.body.enlace,
+      ]
+    );
+
+    if(query.length > 0){
+      res.json(query);
+    }else{
+      res.status(200).json({ message: "No se encontro el evento" });
+    }
+}
+
 
 
   //  Query para modificar un evento

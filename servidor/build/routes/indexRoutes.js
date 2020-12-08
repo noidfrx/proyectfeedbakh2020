@@ -71,6 +71,7 @@ class IndexRoutes {
         this.router.post("/register", indexController_1.indexController.register);
         this.router.post("/insertTask", indexController_1.indexController.addTask);
         this.router.post("/insertEvent", indexController_1.indexController.addEvent);
+        this.router.post("/insertEventMiembros", indexController_1.indexController.addEventMiembros);
         this.router.post("/modifyTask", indexController_1.indexController.modTask);
         this.router.post("/modifyEvent", indexController_1.indexController.modEvent);
         this.router.post("/tasksequipo", indexController_1.indexController.tareas_equipo);
@@ -90,6 +91,7 @@ class IndexRoutes {
         this.router.post("/teamdata", indexController_1.indexController.datos_equipo);
         this.router.post("/taskencargado", indexController_1.indexController.encargado_tarea);
         this.router.post("/expulsarmiembro", indexController_1.indexController.expulsar_miembro);
+        this.router.post("/buscarevento", indexController_1.indexController.buscar_evento);
         //this.router.post("/checkteammember", indexController.revisar_miembro_equipo);
         // this.router.get('/sesion', (req:Request,res:Response)=>{
         //     res.send("Inició sesion como: "+req!.session!.sesion);

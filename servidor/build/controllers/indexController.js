@@ -181,7 +181,6 @@ class IndexController {
     // Query para agregar una nuevo evento
     addEvent(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(req.body);
             yield database_1.default.query("INSERT INTO evento (nombre, fecha, hora, descripcion, idEquipo, enlaceVideoconferencia, privacidad) VALUES (?,?,?,?,?,?,?)", [
                 req.body.nombre,
                 req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
@@ -191,28 +190,34 @@ class IndexController {
                 req.body.enlace,
                 req.body.privacidad,
             ]);
-            /*let idEventoQuery = await pool.query("SELECT idEvento FROM evento WHERE nombre=? AND idCategoria=? AND descripcion=? AND idEquipo=? AND enlaceVideoconferencia=?",
-              [
+            res.status(200).json({ message: "Evento guardado" });
+        });
+    }
+    // Query para agregar los miembros correspondientes a un evento
+    addEventMiembros(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log("---ADDEVENTMIEMBROS---");
+            for (let integrante of req.body.encargados) {
+                yield database_1.default.query("INSERT INTO listaeventos(idEvento, idColaborador) VALUES (?,?)", [req.body.evento, integrante]);
+            }
+            res.status(200).json({ message: "Miembros guardado" });
+        });
+    }
+    // Query para retornar la ID un evento segun sus datos
+    buscar_evento(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let query = yield database_1.default.query("SELECT idEvento FROM evento WHERE nombre=? AND descripcion=? AND idEquipo=? AND enlaceVideoconferencia=?", [
                 req.body.nombre,
-                req.body.categoria,
                 req.body.descripcion,
                 req.body.equipo,
-                req.body.enlace
-              ]
-            );
-            
-            if(idEventoQuery.length >= 1){
-              await pool.query(
-                "INSERT INTO listaeventos (idEvento, idColaborador) VALUES (?,?)",
-                [
-                  idEventoQuery[0].idEvento,
-                  req.body.encargado
-                ]
-              );
-            }else{
-              console.log("idEventoQuery esta vacio");
-            }*/
-            res.status(200).json({ message: "Evento guardado" });
+                req.body.enlace,
+            ]);
+            if (query.length > 0) {
+                res.json(query);
+            }
+            else {
+                res.status(200).json({ message: "No se encontro el evento" });
+            }
         });
     }
     //  Query para modificar un evento
