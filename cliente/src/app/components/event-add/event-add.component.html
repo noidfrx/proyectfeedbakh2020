@@ -36,13 +36,13 @@
                     for='inputEncargadoEvento' 
                     class='col-md-12'
                 >
-                    Seleccione a los integrantes que participan del evento
+                    Seleccione los integrantes que participarán del evento:
                 </label>
 
                 
                 <div 
                     id="inputEncargadoEvento" 
-                    class="col-md-12" 
+                    class="col-md-12 card" 
                 >
                     <div *ngFor="let colaborador of colaboradores">
                         <input 
@@ -164,8 +164,8 @@
                 </div>
         
                 <div class="row col-md-12">
-                    <label for='inputCategoria' class='col-md-10 pt-2'>Categoría</label>
-                    <div class="col-md-2">
+                    <label for='inputCategoria' class='col-md-7 pt-2'>Categoría</label>
+                    <div class="col-md-5 pt-2">
                         <a href="/categoriaAdd">Nueva categoría</a>
                     </div>
                 </div>
