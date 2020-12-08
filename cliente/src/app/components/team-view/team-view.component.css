@@ -50,18 +50,16 @@ p{
     padding-bottom: 5%;
     border-style: solid;
     border-width: 1px;
-    border-color: black;
     border-radius: 10px;
 }
 
 #sec_tareas3{
-    background-color:#ffc5c5;
+    background-color:#ffc4d7 !important;
     float: center;
     color: black;
     text-decoration-color: black;
     border-style: solid;
     border-width: 1px;
-    border-color: black;
 }
 
 
@@ -93,18 +91,16 @@ p{
     padding-bottom: 5%;
     border-style: solid;
     border-width: 1px;
-    border-color: black;
     border-radius: 10px;
 }
 
 #sec_eventos3{
-    background-color:#ffc5c5;
+    background-color:#ffc4d7;
     float: center;
     color: black;
     text-decoration-color: black;
     border-style: solid;
     border-width: 1px;
-    border-color: black;
 }
 
 #todoContenido{

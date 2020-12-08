@@ -6,51 +6,31 @@
   <section id="izq">
     <aside id="izq2">
       <!-- Equipos -->
-      <div>
-        <h2 class="text-center">
-          Equipos
-          <button id=botonRedondo class="btn btn-primary text-center" (click)="crearEquipo()">
-            <i  class="fas fa-plus"></i>
-          </button>
-        </h2>
-        <div class="form-group">
-          <select
-            class="custom-select col-md-4 offset-md-4"
-            [(ngModel)]="selectedTeam"
-          >
-            <option
-              *ngFor="let equipo of equipos"
-              value="{{ equipo.nombreEquipo[0].idEquipo }}"
-            >
-              {{ equipo.nombreEquipo[0].nombre }}
-            </option>
-          </select>
-          <button id="espacioBoton" class="btn btn-primary" (click)="getTeamData()">
-            Filtrar
-          </button>
-          
+      <div class="text-center card p-4">
+        <h5>
+        <b>Equipo actual: </b> 
+        {{nombre_team}}
+        <button 
+          id=botonRedondo 
+          class="btn btn-secondary" 
+          *ngIf="team_owner_checker != 0" 
+          (click)="eliminarEquipo()"
+        >
+          <i class="fa fa-trash"></i>
+        </button><br>
+        </h5>
+        <div class="text-center" *ngIf="team_owner_checker != 0">
+          <h6>Usted es encargado de este equipo
+          </h6>
         </div>
         
-        <div class="text-center">
-          <b>Seleccionado: </b> {{nombre_team}}
-          <button 
-            id=botonRedondo 
-            class="btn btn-danger" 
-            *ngIf="team_owner_checker != 0" 
-            (click)="eliminarEquipo()"
-          >
-            <i class="fa fa-trash"></i>
-          </button><br>
-          <b>Objetivo: </b> {{objetivo_team}}
-        </div>
-        <div class="text-center" *ngIf="team_owner_checker != 0">
-          Usted es encargado de este equipo
-        </div>
-
-        <br />
+        {{objetivo_team}}
+      </div>
+      <br>
+      <div>
 
         <div class="form-group" *ngIf="team_owner_checker != 0">
-          <h2 class="text-center">Añadir miembro</h2>
+          <h4 class="text-center">Añadir miembro</h4>
           <select
             class="custom-select col-md-4 offset-md-4"
             [(ngModel)]="member_selector"
@@ -72,6 +52,36 @@
             <i class="fa fa-user-plus"></i>
           </button>
         </div>
+        <br>
+        <h2 class="text-center">
+          <h4>Ver otro equipo
+            <button id=botonRedondo class="btn btn-primary text-center" (click)="crearEquipo()">
+              <i  class="fas fa-plus"></i>
+            </button>
+          </h4>
+        </h2>
+        
+        <div class="form-group">
+          <select
+            class="custom-select col-md-4 offset-md-4"
+            [(ngModel)]="selectedTeam"
+          >
+            <option
+              *ngFor="let equipo of equipos"
+              value="{{ equipo.nombreEquipo[0].idEquipo }}"
+            >
+              {{ equipo.nombreEquipo[0].nombre }}
+            </option>
+          </select>
+          <button id="espacioBoton" class="btn btn-primary" (click)="getTeamData()">
+            Filtrar
+          </button>
+          
+        </div>
+        
+
+
+        
 
         <br />
       </div>
@@ -95,9 +105,10 @@
           </div>
 
           <div *ngFor="let tarea of tareas" value="{{ tarea.idTarea }}">
-            <div id="sec_tareas3">
+            <div class="card p-3" id="sec_tareas3">
               <div class="text-center" id="nombre_tarea">
-                {{ tarea.nombre }}
+                <h5>{{ tarea.nombre }}</h5>
+                
               </div>
               <br />
               <div>
@@ -116,7 +127,7 @@
               <div *ngIf="tarea.completado == 1"><b>Estado: </b>Completado</div>
               <br />
 
-              <div *ngIf="team_owner_checker != 0">
+              <div class="pt-4" *ngIf="team_owner_checker != 0">
                 <button
                   *ngIf="tarea.completado == 0"
                   class="btn btn-success"
@@ -139,7 +150,7 @@
                   Editar
                 </button>
                 <button
-                  class="btn btn-danger"
+                  class="btn btn-secondary"
                   (click)="banTask(tarea.idTarea)"
                   id="espacioBoton"
                 >
@@ -161,6 +172,7 @@
 
   <aside id="der">
     <!-- Miembros equipo -->
+    <div class="p-4">
     <h2 class="text-center">Miembros del equipo</h2>
     <div
       *ngFor="let miembro of colaboradores_team"
@@ -170,7 +182,7 @@
         <button 
           *ngIf="team_owner_checker != 0" 
           id="botonRedondo" 
-          class="btn btn-danger"
+          class="btn btn-secondary"
           (click)=expulsarMiembro(miembro.idColaborador,miembro.nombre,miembro.apellidos)
         >
           <i class="fa fa-user-times"></i> 
@@ -178,6 +190,7 @@
         {{ miembro.nombre }} {{ miembro.apellidos }}
       </div>
     </div>
+  </div>
 
     <br />
 
@@ -200,27 +213,30 @@
         </div>
 
         <div *ngFor="let evento of eventos" value="{{ evento.idEvento }}">
-          <div id="sec_eventos3">
-            <div id="nombre">{{ evento.nombre }}</div>
-            <br />
-            <div>
-              <b>Link: </b
-              ><a
-                href="{{ evento.enlaceVideoconferencia }}"
-                style="color: blue"
-                >{{ evento.enlaceVideoconferencia }}</a
-              >
+          <div class="card p-3" id="sec_eventos3">
+            <div id="nombre">
+              <h5>{{ evento.nombre }}</h5>
             </div>
+            <br />
+            
             <br />
             <div><b>Descripción:</b> {{ evento.descripcion }}</div>
             <div *ngIf="evento.fecha != null">
               <b>Fecha:</b> {{ getFecha(evento.fecha) }}
             </div>
+            <div>
+              <b>Link: </b
+              ><a
+                href="{{ evento.enlaceVideoconferencia }}"
+                style="color: #435eff"
+                >{{ evento.enlaceVideoconferencia }}</a
+              >
+            </div>
             <div *ngIf="evento.fecha == null"><b>Fecha:</b> Sin fecha</div>
             <!--div *ngIf="evento.hora != null && evento.hora != ''"> <b>Hora:</b>  {{getHora(evento.hora)}} </div-->
             <!--div *ngIf="evento.hora == null || evento.hora == ''"> <b>Hora:</b>  Sin hora </div-->
             <br />
-            <div *ngIf="team_owner_checker != 0">
+            <div class="pt-4" *ngIf="team_owner_checker != 0">
               <button
                 class="btn btn-info"
                 (click)="modEvent(evento.idEvento)"
@@ -229,7 +245,7 @@
                 Editar
               </button>
               <button
-                class="btn btn-danger"
+                class="btn btn-secondary"
                 (click)="banEvent(evento.idEvento)"
                 id="espacioBoton"
               >
