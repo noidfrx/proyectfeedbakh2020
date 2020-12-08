@@ -1,3 +1,7 @@
 #todoContenido{
     min-height: 78vh;
 }
+
+#todoContenido,#espacio{
+    position: static;
+}
