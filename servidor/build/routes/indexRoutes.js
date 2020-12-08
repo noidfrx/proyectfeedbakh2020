@@ -90,6 +90,7 @@ class IndexRoutes {
         this.router.post("/teamdata", indexController_1.indexController.datos_equipo);
         this.router.post("/taskencargado", indexController_1.indexController.encargado_tarea);
         //this.router.post("/checkteammember", indexController.revisar_miembro_equipo);
+        this.router.post("/addCategoria", indexController_1.indexController.addCategoria);
         // this.router.get('/sesion', (req:Request,res:Response)=>{
         //     res.send("Inició sesion como: "+req!.session!.sesion);
         // } );

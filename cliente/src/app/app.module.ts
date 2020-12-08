@@ -41,6 +41,7 @@ import { UwuComponent } from './components/uwu/uwu.component';
 import { VistaSolicitudesComponent } from './components/vista-solicitudes/vista-solicitudes.component';
 import { AmigosComponent } from './components/amigos/amigos.component';
 import { PasswordOlvidadaComponent } from './components/password-olvidada/password-olvidada.component';
+import { CategoriaAddComponent } from './components/categoria-add/categoria-add.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { PasswordOlvidadaComponent } from './components/password-olvidada/passwo
     UwuComponent,
     VistaSolicitudesComponent,
     AmigosComponent,
-    PasswordOlvidadaComponent
+    PasswordOlvidadaComponent,
+    CategoriaAddComponent
   ],
   imports: [
     BrowserModule,

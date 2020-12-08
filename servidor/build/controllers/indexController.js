@@ -654,6 +654,15 @@ class IndexController {
             }
         });
     }
+    addCategoria(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
+            yield database_1.default.query("INSERT INTO categoria (nombreCategoria) VALUES (?)", [
+                req.body.nombreCategoria
+            ]);
+            res.status(200).json({ message: "Categoría creada" });
+        });
+    }
 }
 //Instanciamos y exportamos toda la clase
 exports.indexController = new IndexController();

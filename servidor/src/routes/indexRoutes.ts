@@ -104,6 +104,7 @@ class IndexRoutes {
     this.router.post("/teamdata", indexController.datos_equipo);
     this.router.post("/taskencargado", indexController.encargado_tarea);
     //this.router.post("/checkteammember", indexController.revisar_miembro_equipo);
+    this.router.post("/addCategoria", indexController.addCategoria);
 
 
     // this.router.get('/sesion', (req:Request,res:Response)=>{

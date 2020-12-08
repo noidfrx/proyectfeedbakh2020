@@ -812,6 +812,18 @@ class IndexController {
     }
   }
 
+  public async addCategoria(req: Request, res: Response): Promise<any> {
+    console.log(req.body);
+
+    await pool.query(
+      "INSERT INTO categoria (nombreCategoria) VALUES (?)",
+      [
+        req.body.nombreCategoria
+      ]
+    );
+    res.status(200).json({ message: "Categoría creada" });
+  }
+
 
 
   // Query para verificar si un colaborador pertenece a un equipo
