@@ -627,6 +627,7 @@ export class TeamViewComponent implements OnInit {
   }
 
 
+  // Función que retorna a los participantes de un evento
   getNombresEncargadosEvento(idEvento){
 
     var encargadosId = [];
@@ -641,33 +642,24 @@ export class TeamViewComponent implements OnInit {
     }
 
     var nombres_encargados = [];
-    console.log("encargadosId: ", encargadosId);
-    
-    console.log("this.colabteam: ", this.colaboradores_team);
     for(let colab of this.colaboradores_team){
       for(let encId of encargadosId){
-        console.log("comparando: " + encId + " <==> " + colab.idColaborador);
         if(encId == colab.idColaborador){
           nombres_encargados.push(colab.nombre + " " + colab.apellidos); 
         }
       }
     }
-    console.log("nom encarg: ", nombres_encargados);
-
     var nombres_string = '';
-    //console.log("start nombres:", nombres_string);
 
     let i = 0;
     for(let nombre of nombres_encargados){
       if(i == 1){
         nombres_string = nombres_string.concat(", ");
       }
-      console.log("nombre a concat: " + nombre);
       nombres_string = nombres_string.concat(nombre);
       i = 1;
     }
 
-    console.log("nombresencargados: ", nombres_string);
     if(nombres_encargados.length > 0){
       return nombres_string;
     }else{
