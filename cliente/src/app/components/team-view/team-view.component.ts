@@ -18,16 +18,22 @@ export class TeamViewComponent implements OnInit {
   errorMsg='';                    // Mensaje que notifica un error
   categorias = null;              // Categorías de las tareas y eventos
   categorias_map = null;          // Mapa reordenado de las categorias
-  colaboradores = null;           // Colaboradores del usuario con sesión iniciada
+  colaboradores = null;           // Colaboradores del usuario (amigos)
   colaboradores_team = null;      // Colaboradores del equipo seleccionado
   colaboradores_noteam = null;    // Colaboradores agregados que no pertenecen al equipo seleccionado
   colaboradores_map = null;       // Mapa reordenado de los colaboradores adquiridos
+  //colaboradoresteam_map = null;   // Mapa reordenado de los colaboradores de un equipo
+  tareacolab_map = null;          // Mapa reordenado de los colaboradores de un equipo
   equipos=[];                     // Equipos en los que pertenece el usuario con sesión iniciada
   tareas=null;                    // Tareas del equipo seleccionado
   eventos=null;                   // Eventos del equipo seleccionado
 
   teamData=null;                  // Objeto que adquiere el nombre e ID del equipo
   selectedTeam = null;            // ID del equipo seleccionado
+  lista_tareas = [];              // Objeto para recibir datos de la tabla listatareas
+  lista_eventos = [];             // Objeto para recibir datos de la tabla listaeventos
+  lista_tareas_team = [];         // Objeto que contiene las tareas de un equipo
+  lista_eventos_team = [];        // Objeto que contiene los eventos de un equipo
 
   teamId = new IdBringer(null,null);          // Modelo que posee el ID y el nombre del equipo seleccionado,
                                               // utilizado para realizar querys a la base de datos
@@ -40,6 +46,7 @@ export class TeamViewComponent implements OnInit {
 
   _tarea = new Task('',0,0,0,0,0,0,'',0,0);   // Modelo creado para adquirir datos de una tarea
 
+  nombre_encargado = '';
   nombre_team='';
   objetivo_team='';
   member_selector = 0;            // ID del miembro seleccionado
@@ -47,6 +54,8 @@ export class TeamViewComponent implements OnInit {
   team_member_checker = 1;        // Verificador si es miembro de un equipo
 
   constructor(private _homeService:HomeServiceService, private _equipoService:EquipoService, private router:Router) {
+    this.getListaTareas();
+    this.getListaEventos();
     this.getColaboradoresUser();
     this.getColaboradoresTeam();
     this.getCategorias();
@@ -162,8 +171,9 @@ export class TeamViewComponent implements OnInit {
   getColaboradoresTeam(){
     this._homeService.getColaboradoresTeam(this.teamId).subscribe(
       data => {
-        this.colaboradores_team = data;
+        (this.colaboradores_team = data)
         console.log("Colaboradores (team) recibidos: ", data);
+        //this.reordenarColaboradoresTeam();
       },
       error => {
         this.errorMsg=error.statusText;
@@ -352,6 +362,25 @@ export class TeamViewComponent implements OnInit {
 
 
 
+
+  // Función para adquirir la tabla listatareas
+  getListaTareas(){
+    this._homeService.getListaTareas().subscribe(
+      data => {
+        (this.lista_tareas = data)
+        console.log("Tabla lista_tareas recibidas");
+      },
+      error => {
+        (this.lista_tareas = null)
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir la tabla lista_tareas");
+      }
+    )
+  }
+
+
+
+
   // Función para adquirir las tareas según el equipo seleccionado
   getTareasTeam(){
     this._homeService.getTareasTeam(this.teamId).subscribe(
@@ -460,6 +489,38 @@ export class TeamViewComponent implements OnInit {
 
   }
 
+  // Función para obtener el nombre de un encargado de una tarea
+  getNombreEncargadoTarea(idTarea){
+    var encargado = null;
+    for(let task of this.tareas){
+      if(task.idTarea == idTarea){
+        for(let task_lt of this.lista_tareas){
+          if(task.idTarea == task_lt.idTarea){
+            encargado = task_lt;
+          }
+        }
+      }
+    }
+
+    var nombre_encargado = null;
+    
+    for(let colab of this.colaboradores_team){
+      //console.log("intentando... ", colab);
+      if(encargado.idColaborador == colab.idColaborador){
+        nombre_encargado = colab.nombre + " " + colab.apellidos;
+        //console.log("colab.nombre: ", colab.nombre);
+      }
+    }
+
+    //console.log("nombreencargado: ", nombre_encargado);
+    if(nombre_encargado != null){
+      return nombre_encargado;
+    }else{
+      return null;
+    }
+    
+  }
+
 
 
 
@@ -472,6 +533,22 @@ export class TeamViewComponent implements OnInit {
                                 ////////////////////////////////
 
 
+
+
+  // Función para adquirir las tareas según el equipo seleccionado
+  getListaEventos(){
+    this._homeService.getListaEventos().subscribe(
+      data => {
+        (this.lista_eventos = data)
+        console.log("Tabla lista_eventos recibida");
+      },
+      error => {
+        (this.lista_eventos = null)
+        this.errorMsg=error.statusText;
+        console.log("Error al recibir la tabla lista_eventos");
+      }
+    )
+  }
 
 
 
@@ -537,7 +614,67 @@ export class TeamViewComponent implements OnInit {
     }
   }
 
+  // Función para obtener la hora de un evento
+  getHora(idEvento) : number{
+    let eventoHora;
+    for(let evento of this.eventos){
+      if(evento.idEvento == idEvento){
+        eventoHora = evento;
+      }
+    }
 
+    return eventoHora.hora;
+  }
+
+
+  getNombresEncargadosEvento(idEvento){
+
+    var encargadosId = [];
+    for(let event of this.eventos){
+      if(event.idEvento == idEvento){
+        for(let event_lt of this.lista_eventos){
+          if(event.idEvento == event_lt.idEvento){
+            encargadosId.push(event_lt.idColaborador);
+          }
+        }
+      }
+    }
+
+    var nombres_encargados = [];
+    console.log("encargadosId: ", encargadosId);
+    
+    console.log("this.colabteam: ", this.colaboradores_team);
+    for(let colab of this.colaboradores_team){
+      for(let encId of encargadosId){
+        console.log("comparando: " + encId + " <==> " + colab.idColaborador);
+        if(encId == colab.idColaborador){
+          nombres_encargados.push(colab.nombre + " " + colab.apellidos); 
+        }
+      }
+    }
+    console.log("nom encarg: ", nombres_encargados);
+
+    var nombres_string = '';
+    //console.log("start nombres:", nombres_string);
+
+    let i = 0;
+    for(let nombre of nombres_encargados){
+      if(i == 1){
+        nombres_string = nombres_string.concat(", ");
+      }
+      console.log("nombre a concat: " + nombre);
+      nombres_string = nombres_string.concat(nombre);
+      i = 1;
+    }
+
+    console.log("nombresencargados: ", nombres_string);
+    if(nombres_encargados.length > 0){
+      return nombres_string;
+    }else{
+      return "";
+    }
+    
+  }
 
   
 
@@ -579,6 +716,24 @@ export class TeamViewComponent implements OnInit {
     this.colaboradores_map = colab_map;
   }
 
+  // Función para reordenar los colaboradores de un equipo en un mapa para adquirir sus nombres completos directamente desde su ID
+  /*reordenarColaboradoresTeam(){
+    let colab_map = new Map<number, string>();
+    let id;
+    let nombre;
+    let apellidos;
+    let nombre_completo;
+    
+    for(let elem of this.colaboradores_team){
+      id = elem.idColaborador;
+      nombre = elem.nombre;
+      apellidos = elem.apellidos;
+      nombre_completo = nombre + " " + apellidos;
+      colab_map.set(id, nombre_completo.toString());
+    }
+    this.colaboradoresteam_map = colab_map;
+  }*/
+
   // Función para reordenar los colaboradores en un mapa para adquirir sus nombres completos directamente desde su ID
   reordenarCategorias(){
     let cat_map = new Map<number, string>();
@@ -594,17 +749,13 @@ export class TeamViewComponent implements OnInit {
     this.categorias_map = cat_map;
   }
 
+
   // Función para obtener el nombre de una categoria
   getNombreCategoria(idCategoria){
     return this.categorias_map.get(idCategoria);
   }
 
-  // Función para obtener el nombre del encargado de una tarea
-  getNombreEncargado(idEncargado){
-    console.log("idEncargado: ", idEncargado);
-    console.log(this.colaboradores_map.get(idEncargado));
-    return this.colaboradores_map.get(idEncargado);
-  }
+  
 
   // Función para obtener la fecha en formato día/mes/año
   getFecha(notFecha){

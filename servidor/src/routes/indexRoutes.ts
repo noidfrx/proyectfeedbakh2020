@@ -61,6 +61,8 @@ class IndexRoutes {
     this.router.get("/allTeams", indexController.getEquipos);
     this.router.get("/anadirIntegrante",indexController.agregarIntegranteEquipo);
     this.router.get("/ultimoequipo", indexController.equipo_ultimo);
+    this.router.get("/listatareas", indexController.lista_tareas);
+    this.router.get("/listaeventos", indexController.lista_eventos);
     
 
     this.router.get("/idUser", (req: Request, res: Response) => {

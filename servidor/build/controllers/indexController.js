@@ -707,6 +707,30 @@ class IndexController {
             res.json(datos);
         });
     }
+    // Query para adquirir la tabla listatareas
+    lista_tareas(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const datos = yield database_1.default.query("SELECT * FROM listatareas");
+            if (datos.length > 0) {
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).json({ message: "No se adquirio lista_tareas" });
+            }
+        });
+    }
+    // Query para adquirir la tabla listaeventos
+    lista_eventos(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const datos = yield database_1.default.query("SELECT * FROM listaeventos");
+            if (datos.length > 0) {
+                res.status(200).json(datos);
+            }
+            else {
+                res.status(204).json({ message: "No se adquirio lista_eventos" });
+            }
+        });
+    }
 }
 //Instanciamos y exportamos toda la clase
 exports.indexController = new IndexController();

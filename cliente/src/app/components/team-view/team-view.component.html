@@ -107,7 +107,12 @@
                 <b>Fecha finalización:</b> Sin fecha limite
               </div>
               <br />
-              <!--div><b>Encargado:</b> {{ getNombreEncargado(tarea.idEncargado) }} </div-->
+
+              
+              <div>
+                <b>Encargado:</b> {{ getNombreEncargadoTarea(tarea.idTarea) }} 
+              </div>
+
               <div *ngIf="tarea.completado == 0"><b>Estado: </b>Pendiente</div>
               <div *ngIf="tarea.completado == 1"><b>Estado: </b>Completado</div>
               <br />
@@ -219,9 +224,14 @@
               >
             </div>
             <div *ngIf="evento.fecha == null"><b>Fecha:</b> Sin fecha</div>
-            <!--div *ngIf="evento.hora != null && evento.hora != ''"> <b>Hora:</b>  {{getHora(evento.hora)}} </div-->
-            <!--div *ngIf="evento.hora == null || evento.hora == ''"> <b>Hora:</b>  Sin hora </div-->
+            <div *ngIf="evento.hora != null && evento.hora != ''"> <b>Hora:</b>  {{getHora(evento.idEvento)}} </div>
+            <div *ngIf="evento.hora == null || evento.hora == ''"> <b>Hora:</b>  Sin hora </div>
             <br />
+
+            <div>
+              <b>Participantes:</b> {{ getNombresEncargadosEvento(evento.idEvento) }} 
+            </div>
+
             <div class="pt-4" *ngIf="team_owner_checker != 0">
               <button
                 class="btn btn-info"

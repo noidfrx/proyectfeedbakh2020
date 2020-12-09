@@ -271,7 +271,6 @@ export class EventModComponent implements OnInit {
   }
 
 
-  // 2001-01-01T03:00:00.000Z 
   getHora(hora) : number{
     var hora_h = hora.split(':',2);
 

@@ -890,6 +890,34 @@ class IndexController {
 
 
 
+  // Query para adquirir la tabla listatareas
+
+  public async lista_tareas(req: Request, res: Response): Promise<any> {
+    const datos = await pool.query("SELECT * FROM listatareas");
+
+    if(datos.length > 0){
+      res.status(200).json(datos);
+    }else{
+      res.status(204).json({message: "No se adquirio lista_tareas"});
+    }
+  }
+
+
+
+  // Query para adquirir la tabla listaeventos
+
+  public async lista_eventos(req: Request, res: Response): Promise<any> {
+    const datos = await pool.query("SELECT * FROM listaeventos");
+
+    if(datos.length > 0){
+      res.status(200).json(datos);
+    }else{
+      res.status(204).json({message: "No se adquirio lista_eventos"});
+    }
+  }
+
+
+
   // Query para verificar si un colaborador pertenece a un equipo
 
   /*public async revisar_miembro_equipo(req: Request, res: Response): Promise<any> {

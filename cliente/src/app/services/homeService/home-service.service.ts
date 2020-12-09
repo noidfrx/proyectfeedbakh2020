@@ -60,6 +60,12 @@ export class HomeServiceService {
   _urlAddCategoria      = 'http://localhost:3000/addCategoria';
   _urlEncargadosEvento  = 'http://localhost:3000/encargadosevento'
   _urlVaciarEvento      = 'http://localhost:3000/vaciarevento'
+  _urlListaTareas       = 'http://localhost:3000/listatareas'
+  _urlListaEventos      = 'http://localhost:3000/listaeventos'
+
+  /*///////
+  // GET //
+  ///////*/
 
 
   constructor(private _http: HttpClient) {}
@@ -67,6 +73,11 @@ export class HomeServiceService {
   /*///////
   // GET //
   ///////*/
+
+
+  /*////////
+  // POST //
+  ////////*/
 
   logout() {
     return this._http
@@ -137,6 +148,18 @@ export class HomeServiceService {
   getLastTeam() {
     return this._http
       .get<any>(this._urlLastTeam, { withCredentials: true })
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getListaTareas() {
+    return this._http
+      .get<any>(this._urlListaTareas, { withCredentials: true })
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getListaEventos() {
+    return this._http
+      .get<any>(this._urlListaEventos, { withCredentials: true })
       .pipe(catchError(this.errorHandler));
   }
 
