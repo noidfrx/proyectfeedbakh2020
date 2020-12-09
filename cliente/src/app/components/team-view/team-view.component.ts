@@ -684,7 +684,7 @@ export class TeamViewComponent implements OnInit {
   }
 
   // Función para obtener la hora de un evento
-  getHora(idEvento) : number{
+  /*getHora(idEvento) : number{
     let eventoHora;
     for(let evento of this.eventos){
       if(evento.idEvento == idEvento){
@@ -693,7 +693,7 @@ export class TeamViewComponent implements OnInit {
     }
 
     return eventoHora.hora;
-  }
+  }*/
 
 
   // Función que retorna a los participantes de un evento
@@ -820,7 +820,11 @@ export class TeamViewComponent implements OnInit {
 
   // Función para obtener la fecha en formato día/mes/año
   getFecha(date){
-    return formatDate(date, 'dd/MM/yyyy', 'es-CL');
+    return formatDate(date, 'dd/MM/yyyy', 'en-US');
+  }
+
+  getHora(date){
+    return formatDate(date, 'H:mm', 'en-US');
   }
 
   // Función para adquirir todas las categorías de la base de datos

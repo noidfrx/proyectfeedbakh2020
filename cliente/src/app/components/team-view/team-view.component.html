@@ -218,7 +218,7 @@
             </div>
             
             <div *ngIf="evento.fecha == null"><b>Fecha:</b> Sin fecha</div>
-            <div *ngIf="evento.hora != null && evento.hora != ''"> <b>Hora:</b>  {{getHora(evento.idEvento)}} </div>
+            <div *ngIf="evento.hora != null && evento.hora != ''"> <b>Hora:</b>  {{getHora(evento.fecha)}} </div>
             <div *ngIf="evento.hora == null || evento.hora == ''"> <b>Hora:</b>  Sin hora </div>
             <br />
 

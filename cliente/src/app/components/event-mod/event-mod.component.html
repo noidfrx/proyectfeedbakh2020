@@ -59,62 +59,46 @@
 
                 <br/>
                 
-                <label for='inputFechaTarea' class='col-md-12'>Fecha del evento</label>
-                <mat-form-field class="col-md-6">
-                    <input 
-                        matInput 
-                        [matDatepicker]="dp" 
-                        [(ngModel)]="eventModel.fecha"
-                        name="fecha"
-                        id="inputFechaTarea"
-                        placeholder="Seleccione la fecha de finalización"
-                    >
-                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                    <mat-datepicker #dp></mat-datepicker>
-                </mat-form-field>
+                <div class="row col-md-12">
+                    <label for='inputFechaTarea' class='col-md-12'>Fecha del evento</label>
+                    <mat-form-field class="col-md-6">
+                        <input 
+                            matInput 
+                            [matDatepicker]="dp" 
+                            [(ngModel)]="eventModel.fecha"
+                            [disabled]="sinfechacheck"
+                            name="fecha"
+                            id="inputFechaTarea"
+                            placeholder="Seleccione la fecha de finalización"
+                        >
+                        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                        <mat-datepicker #dp></mat-datepicker>
+
+                    </mat-form-field>
+                    
+                    <!--div class="col-md-3 mt-4">
+                        <input 
+                        type="checkbox"
+                        value="sinfecha"
+                        name="sinfecha"
+                        (change)=checkSinFecha($event)
+                    >   Sin fecha
+                    </div-->
+                </div>
                     
                 
         
-                <label for='inputHoraEvento' class='col-md-12'>Hora del evento</label>
-                <div class='row offset-md-0' id='inputHoraEvento'>
-                    <div class='form-group col-md-2'>
-                        <input 
-                            type='text' 
-                            class='form-control' 
-                            id='inputHora' 
-                            required 
-                            name='hora' 
-                            [(ngModel)]='eventModel.hora' 
-                            #hora="ngModel"
-                            [class.is-invalid]="hora.invalid && hora.touched"
-                            placeholder='Hora'
-                        >
-                    </div>
-
-                    <div> : </div>
-                    
-                    <div class='form-group col-md-2'>
-                        <input 
-                            type='text' 
-                            class='form-control' 
-                            id='inputMinuto' 
-                            required 
-                            name='minuto' 
-                            [(ngModel)]='eventModel.minuto' 
-                            #minuto="ngModel"
-                            [class.is-invalid]="minuto.invalid && minuto.touched"
-                            placeholder='Minuto'
-                        >
-                    </div>
-                    
-                    <!--div class="custom-control custom-switch col-md-8 mt-2">
-                        <input 
-                            type="checkbox" 
-                            class="custom-control-input" 
-                            id="sinHora"
-                        >
-                        <label class="custom-control-label" for="sinHora">Sin Hora</label>
-                    </div-->
+                <label for='inputHoraEvento' class='col-md-12'>Seleccione nuevamente la hora</label>
+                <div class="col-md-12">
+                    <input 
+                        [ngxTimepicker]="picker" 
+                        [(ngModel)]="eventModel.hora" 
+                        [format]="24"
+                        name="hora" 
+                        id="inputHoraEvento"
+                        required
+                    >
+                    <ngx-material-timepicker #picker></ngx-material-timepicker>
                 </div>
         
 

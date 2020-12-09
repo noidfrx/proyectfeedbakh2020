@@ -13,6 +13,7 @@ import { formatDate } from '@angular/common';
 import { registerLocaleData } from '@angular/common';
 import localeCl from '@angular/common/locales/es-CL';
 registerLocaleData(localeCl);
+//import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 @Component({
   selector: 'app-event-add',
@@ -28,7 +29,8 @@ export class EventAddComponent implements OnInit {
 
   teamId = new IdBringer(null,null);
   nombreteam = '';
-  eventModel = new Event('',null,null,null,null,0,0,0,'','',null);
+  eventModel = new Event('',null,null,null,0,0,0,'','',null);
+  sinfechacheck:boolean;
 
   integrantes_seleccionados: number[];
 
@@ -43,7 +45,6 @@ export class EventAddComponent implements OnInit {
     this.getColaboradoresTeam();
     this.getCategorias();
     this.obtenerEquipoUsuario();
-    this.adapter.setLocale('cl');
   }
 
   ngOnInit(): void {
@@ -98,6 +99,16 @@ export class EventAddComponent implements OnInit {
 
     console.log("Lista actual: " + this.integrantes_seleccionados + "(cantidad: " + this.integrantes_seleccionados.length + ")");
   }
+
+
+  // Función que detecta cambios en el checkbox sinFecha
+  checkSinFecha(ev:any){
+    if(ev.target.checked){
+      this.sinfechacheck=true;
+    }else{
+      this.sinfechacheck=false;
+    }
+  }
   
   //////////
   // POST //
@@ -106,8 +117,11 @@ export class EventAddComponent implements OnInit {
   addEvent(){
     this.eventModel.equipo = this.teamId.id;
     this.eventModel.encargados = this.integrantes_seleccionados;
-    //this.eventModel.fecha = formatDate(this.eventModel.fecha, 'dd/MM/yyyy', 'es-CL');
-    //this.eventModel.fecha = formatDate(this.fecha, 'dd/MM/yyyy', 'es-CL')
+    this.eventModel.fecha = new Date(formatDate(this.eventModel.fecha, 'yyyy-MM-dd', 'es-CL') +"T"+ this.eventModel.hora);
+    console.log("FECHA A GUARDAR: ", this.eventModel.fecha);
+    /*if(this.sinfechacheck == true){
+      this.eventModel.fecha = null;
+    }*/
     
       this.addEvento();
       console.log("this.addEvento");

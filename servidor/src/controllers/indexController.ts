@@ -235,7 +235,7 @@ class IndexController {
       [
         req.body.nombre,
         req.body.fecha,
-        req.body.hora + ":" + req.body.minuto,
+        req.body.hora,
         req.body.descripcion,
         req.body.equipo,
         req.body.enlace,

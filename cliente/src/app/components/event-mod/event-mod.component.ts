@@ -28,11 +28,12 @@ export class EventModComponent implements OnInit {
   equipos=null;
   eventos=null;
   
-  _evento = new Event('',null,null,0,0,0,0,0,'','',0);
-  eventModel = new Event('',null,null,null,null,0,0,0,'','',null);
+  _evento = new Event('',null,null,null,0,0,0,'','',0);
+  eventModel = new Event('',null,null,null,0,0,0,'','',null);
   eventId = new IdBringer(null,null);
   teamId = new IdBringer(null,null);
   nombreteam='';
+  sinfechacheck:boolean;
 
   integrantes_seleccionados: number[];
 
@@ -71,8 +72,7 @@ export class EventModComponent implements OnInit {
     //this.setEncargados();
     this.eventModel.equipo = this._evento[0].idEquipo;
     this.eventModel.fecha = this._evento[0].fecha;
-    this.eventModel.hora = this.getHora(this._evento[0].hora);
-    this.eventModel.minuto = this.getMinuto(this._evento[0].hora);
+    this.eventModel.hora = null;
     this.eventModel.categoria = this._evento[0].idCategoria;
     this.eventModel.privacidad = this._evento[0].privacidad;
     this.eventModel.descripcion = this._evento[0].descripcion;
@@ -151,6 +151,17 @@ export class EventModComponent implements OnInit {
 
 
 
+  // Función que detecta cambios en el checkbox sinFecha
+  checkSinFecha(ev:any){
+    if(ev.target.checked){
+      this.sinfechacheck=true;
+    }else{
+      this.sinfechacheck=false;
+    }
+  }
+
+
+
 
   // Función que vacia los integrantes de un evento en la base de datos para luego agregar los nuevos seleccionados
   VaciarLuegoAgregarMiembros(){
@@ -196,6 +207,10 @@ export class EventModComponent implements OnInit {
     console.log(this.eventModel.equipo);
     this.eventModel.equipo = this.teamId.id;
     this.eventModel.encargados = this.integrantes_seleccionados;
+    this.eventModel.fecha = new Date(formatDate(this.eventModel.fecha, 'yyyy-MM-dd', 'es-CL') +"T"+ this.eventModel.hora);
+    /*if(this.sinfechacheck == true){
+      this.eventModel.fecha = null;
+    }*/
     //this.eventModel.fecha = formatDate(this.eventModel.fecha, 'dd/MM/yyyy', 'es-CL');
     
     this._homeService.modEvent(this.eventModel)
@@ -257,17 +272,10 @@ export class EventModComponent implements OnInit {
   }
 
 
-  getHora(hora) : number{
-    var hora_h = hora.split(':',2);
-
-    return Number(hora_h[0]);
+  getHora(fechahora){
+    return fechahora;
   }
 
-  getMinuto(hora) : number{
-    var hora_m = hora.split(':',2);
-
-    return Number(hora_m[1]);
-  }
 
   cancelar(){
     this._homeService.setMostrarEquipo(this.teamId.id);

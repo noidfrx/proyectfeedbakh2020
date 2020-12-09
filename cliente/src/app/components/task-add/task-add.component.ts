@@ -31,6 +31,8 @@ export class TaskAddComponent implements OnInit {
   nombreteam = '';
   taskModel = new Task('',null,0,null,0,'',null,0);
 
+  sinfechacheck:boolean;
+
   constructor(private _homeService:HomeServiceService, 
               private router:Router, 
               public alertAddTask:MatDialog, 
@@ -83,8 +85,13 @@ export class TaskAddComponent implements OnInit {
     )
   }
 
-  test(){
-    console.log(this.taskModel.fecha);
+  // Función que detecta cambios en el checkbox sinFecha
+  checkSinFecha(ev:any){
+    if(ev.target.checked){
+      this.sinfechacheck=true;
+    }else{
+      this.sinfechacheck=false;
+    }
   }
 
   //////////
@@ -93,6 +100,9 @@ export class TaskAddComponent implements OnInit {
 
   addTask(){
     this.taskModel.equipo = this.teamId.id;
+    /*if(this.sinfechacheck == true){
+      this.taskModel.fecha = null;
+    }*/
     //this.taskModel.fecha = formatDate(this.taskModel.fecha, 'dd/MM/yyyy', 'es-CL');
     
       this._homeService.addTask(this.taskModel)

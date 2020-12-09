@@ -6,9 +6,9 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
-//import { MatMomentDateModule } from '@angular/material-moment-adapter/adapter';
 import { MatInputModule } from '@angular/material/input';
-
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -127,8 +127,10 @@ import { AlertTaskUndoneComponent } from './components/box/alert-task-undone/ale
     MatDatepickerModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    //MatMomentDateModule,
-    MatInputModule
+    MatInputModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
+    NgxMaterialTimepickerModule
   ],
   providers: [
     LoginService,

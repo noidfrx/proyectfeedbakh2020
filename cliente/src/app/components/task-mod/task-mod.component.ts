@@ -33,6 +33,8 @@ export class TaskModComponent implements OnInit {
 
   taskModel = new Task('',0,0,null,null,'',null,0);
 
+  sinfechacheck:boolean;
+
   constructor(private _homeService:HomeServiceService, private router:Router, public alertModTask:MatDialog, private adapter: DateAdapter<any>) {
     this.teamId.id=history.state.idteam;
     this.nombreteam=history.state.nombreteam;
@@ -147,6 +149,9 @@ export class TaskModComponent implements OnInit {
 
   modTask(){
     this.taskModel.equipo = this.teamId.id;
+    if(this.sinfechacheck == true){
+      this.taskModel.fecha = null;
+    }
     //this.taskModel.fecha = formatDate(this.taskModel.fecha, 'dd/MM/yyyy', 'es-CL');
     console.log("formulario enviado -> ", this.taskModel);
     this._homeService.modTask(this.taskModel)
@@ -170,6 +175,15 @@ export class TaskModComponent implements OnInit {
   ///////////////////////
   // home.component.ts //
   ///////////////////////
+
+  // Función que detecta cambios en el checkbox sinFecha
+  checkSinFecha(ev:any){
+    if(ev.target.checked){
+      this.sinfechacheck=true;
+    }else{
+      this.sinfechacheck=false;
+    }
+  }
 
   
   obtenerEquipoUsuario(){
