@@ -7,6 +7,8 @@ import {HomeServiceService} from '../../services/homeService/home-service.servic
 
 //Para validación de formulario
 import {FormControl,FormGroup,Validators} from '@angular/forms';
+import { AlertModTaskComponent } from '../box/alert-mod-task/alert-mod-task.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -26,7 +28,7 @@ export class TaskModComponent implements OnInit {
 
   taskModel = new Task('',0,0,null,null,null,null,'',null,0);
 
-  constructor(private _homeService:HomeServiceService, private router:Router) {
+  constructor(private _homeService:HomeServiceService, private router:Router, public alertModTask:MatDialog) {
     this.teamId.id=history.state.idteam;
     this.nombreteam=history.state.nombreteam;
     this.getCategorias();
@@ -146,7 +148,8 @@ export class TaskModComponent implements OnInit {
     .subscribe(
       data => {
         console.log("Tarea modificada!", data);
-        alert("Tarea modificada con éxito");
+        //alert("Tarea modificada con éxito");
+        this.alertModTask.open(AlertModTaskComponent);
         setTimeout(() => 
         {
             this._homeService.setMostrarEquipo(this.teamId.id);

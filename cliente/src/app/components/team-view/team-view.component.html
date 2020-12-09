@@ -113,9 +113,10 @@
                 <b>Encargado:</b> {{ getNombreEncargadoTarea(tarea.idTarea) }} 
               </div>
 
-              <div *ngIf="tarea.completado == 0"><b>Estado: </b>Pendiente</div>
-              <div *ngIf="tarea.completado == 1"><b>Estado: </b>Completado</div>
+              <div *ngIf="tarea.completado == 0"><br/><b>Estado: </b>Pendiente</div>
+              <div *ngIf="tarea.completado == 1"><br/><b>Estado: </b>Completado</div>
               <br />
+              
 
               <div class="pt-4" *ngIf="team_owner_checker != 0">
                 <button

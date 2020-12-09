@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 //Para validación de formulario
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { IdBringer } from 'src/app/models/IdBringer';
+import { AlertAddEventComponent } from '../box/alert-add-event/alert-add-event.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -26,7 +28,7 @@ export class EventAddComponent implements OnInit {
 
   integrantes_seleccionados: number[];
 
-  constructor(private _homeService:HomeServiceService, private router:Router, private fb:FormBuilder) {
+  constructor(private _homeService:HomeServiceService, private router:Router, private fb:FormBuilder, public alertAddEvent:MatDialog) {
     this.teamId.id=history.state.idteam;
     this.nombreteam=history.state.nombreteam;
     this.getColaboradoresTeam();
@@ -131,7 +133,8 @@ export class EventAddComponent implements OnInit {
       .subscribe(
         data => {
           console.log("Miembros agregados!", data);
-          alert("Evento creado con éxito");
+          //alert("Evento creado con éxito");
+          this.alertAddEvent.open(AlertAddEventComponent);
           setTimeout(() => 
           {
               this._homeService.setMostrarEquipo(this.teamId.id);

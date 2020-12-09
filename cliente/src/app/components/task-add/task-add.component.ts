@@ -6,6 +6,8 @@ import { IdBringer } from 'src/app/models/IdBringer';
 
 //Para validación de formulario
 import {FormControl,FormGroup,Validators} from '@angular/forms';
+import { AlertAddTaskComponent } from '../box/alert-add-task/alert-add-task.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -22,9 +24,9 @@ export class TaskAddComponent implements OnInit {
 
   teamId = new IdBringer(null,null);
   nombreteam = '';
-  taskModel = new Task('',0,0,null,0,null,0,'',null,0);
+  taskModel = new Task('',null,0,null,0,null,0,'',null,0);
 
-  constructor(private _homeService:HomeServiceService, private router:Router) {
+  constructor(private _homeService:HomeServiceService, private router:Router, public alertAddTask:MatDialog) {
     this.teamId.id=history.state.idteam;
     this.nombreteam=history.state.nombreteam;
     this.getColaboradoresTeam();
@@ -78,14 +80,13 @@ export class TaskAddComponent implements OnInit {
 
   onSubmit(){
     this.taskModel.equipo = this.teamId.id;
-    if(this.taskModel.encargado == 0){
-      alert("Debe seleccionar un integrante");
-    }else{
+    
       this._homeService.addTask(this.taskModel)
       .subscribe(
         data => {
           console.log("Tarea agregada!", data);
-          alert("Tarea creada con éxito");
+          //alert("Tarea creada con éxito");
+          this.alertAddTask.open(AlertAddTaskComponent);
           setTimeout(() => 
           {
               this._homeService.setMostrarEquipo(this.teamId.id);
@@ -96,7 +97,7 @@ export class TaskAddComponent implements OnInit {
         error => {this.errorMsg = error.statusText}
         // Manejo de errores ^
       )
-    }
+    
   }
 
   cancelar(){

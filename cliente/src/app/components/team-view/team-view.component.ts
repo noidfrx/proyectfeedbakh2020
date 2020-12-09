@@ -5,9 +5,24 @@ import { Task } from 'src/app/models/Task';
 import { HomeServiceService } from 'src/app/services/homeService/home-service.service';
 import { EquipoService } from 'src/app/services/equipoService/equipo.service';
 
-//Para validación de formulario
-import {FormControl,FormGroup,Validators} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+
 import { listaEquipo } from 'src/app/models/listaEquipo';
+
+import { AlertAddMemberComponent } from '../box/alert-add-member/alert-add-member.component';
+import { AlertMemberExistsComponent } from '../box/alert-member-exists/alert-member-exists.component';
+import { AlertBanMemberComponent } from '../box/alert-ban-member/alert-ban-member.component';
+import { AlertBanTeamComponent } from '../box/alert-ban-team/alert-ban-team.component';
+import { AlertBanTaskComponent } from '../box/alert-ban-task/alert-ban-task.component';
+import { AlertTaskDoneComponent } from '../box/alert-task-done/alert-task-done.component';
+import { AlertTaskUndoneComponent } from '../box/alert-task-undone/alert-task-undone.component';
+import { AlertBanEventComponent } from '../box/alert-ban-event/alert-ban-event.component';
+import { ConfirmBanEventComponent } from '../box/confirm-ban-event/confirm-ban-event.component';
+import { ConfirmBanMemberComponent } from '../box/confirm-ban-member/confirm-ban-member.component';
+import { ConfirmBanTeamComponent } from '../box/confirm-ban-team/confirm-ban-team.component';
+import { ConfirmBanTaskComponent } from '../box/confirm-ban-task/confirm-ban-task.component';
+
+
 
 @Component({
   selector: 'app-team-view',
@@ -53,7 +68,23 @@ export class TeamViewComponent implements OnInit {
   team_owner_checker = 0;         // Verificador si es propietario de un equipo
   team_member_checker = 1;        // Verificador si es miembro de un equipo
 
-  constructor(private _homeService:HomeServiceService, private _equipoService:EquipoService, private router:Router) {
+  constructor(private _homeService:HomeServiceService, 
+              private _equipoService:EquipoService, 
+              private router:Router, 
+              public alertAddMember:MatDialog,
+              public alertAddTeam:MatDialog,
+              public alertBanEvent:MatDialog,
+              public alertBanMember:MatDialog,
+              public alertBanTeam:MatDialog,
+              public alertBanTask:MatDialog,
+              public alertTaskDone:MatDialog,
+              public alertTaskUndone:MatDialog,
+              public alertMemberExists:MatDialog,
+              public confirmBanEvent:MatDialog,
+              public confirmBanMember:MatDialog,
+              public confirmBanTask:MatDialog,
+              public confirmBanTeam:MatDialog) 
+  {
     this.getListaTareas();
     this.getListaEventos();
     this.getColaboradoresUser();
@@ -210,30 +241,29 @@ export class TeamViewComponent implements OnInit {
   addMember(){
     let relacion = new listaEquipo(0,this.member_selector,this.selectedTeam);
 
-    if(this.member_selector == 0){
-      alert("Seleccione un colaborador para agregarlo")
-    }else{
-      if(!this.checkTeamMember(this.member_selector)){
-        this._equipoService.agregarIntegrante(relacion).subscribe(
-          data => {
-            console.log("Miembro agregado con éxito ", this.member_selector);
-            alert("Miembro agregado al equipo");
-            setTimeout(() => 
-            {
-                this._homeService.setMostrarEquipo(this.selectedTeam);
-                this.router.navigate(['/uwu']);
-            },
-            500);
+    if(!this.checkTeamMember(this.member_selector)){
+      this._equipoService.agregarIntegrante(relacion).subscribe(
+        data => {
+          console.log("Miembro agregado con éxito ", this.member_selector);
+          //alert("Miembro agregado al equipo");
+          this.alertAddMember.open(AlertAddMemberComponent);
+          setTimeout(() => 
+          {
+              this._homeService.setMostrarEquipo(this.selectedTeam);
+              this.router.navigate(['/uwu']);
           },
-          error => {
-            this.errorMsg=error.statusText;
-            console.log(error);
-          }
-        )
-      }else{
-        alert("El colaborador ya pertenece a este equipo!");
-      }
+          500);
+        },
+        error => {
+          this.errorMsg=error.statusText;
+          console.log(error);
+        }
+      )
+    }else{
+      //alert("El colaborador ya pertenece a este equipo!");
+      this.alertMemberExists.open(AlertMemberExistsComponent);
     }
+    
 
   }
 
@@ -279,27 +309,36 @@ export class TeamViewComponent implements OnInit {
 
   // Función para sacar a un miembro de un equipo
   expulsarMiembro(idColab, nombre, apellidos){
-    var confirmar = confirm("Se eliminará al miembro seleccionado del equipo. ¿Desea continuar?");
-    if(confirmar){
-      var idBringer = new IdBringer(this.selectedTeam,idColab);
+    //var confirmar = confirm("Se eliminará al miembro seleccionado del equipo. ¿Desea continuar?");
+    var confirmar = false;
+    let confirmarBox = this.confirmBanMember.open(ConfirmBanMemberComponent);
+    confirmarBox.afterClosed().subscribe(result =>{
+      confirmar = result;
 
-      this._homeService.expulsarMiembroEquipo(idBringer).subscribe(
-        data => {
-          console.log(data);
-          alert("Miembro expulsado del equipo");
-          setTimeout(() => 
-          {
-            this.router.navigate(['/uwu']);
+      console.log("after " + confirmar);
+      if(confirmar){
+        var idBringer = new IdBringer(this.selectedTeam,idColab);
+
+        this._homeService.expulsarMiembroEquipo(idBringer).subscribe(
+          data => {
+            console.log(data);
+            //alert("Miembro expulsado del equipo");
+            this.alertBanMember.open(AlertBanMemberComponent);
+            setTimeout(() => 
+            {
+              this.router.navigate(['/uwu']);
+            },
+            500);
           },
-          500);
-        },
-        error => {
-          this.errorMsg=error.statusText;
-          console.log(this.errorMsg);
-        }
-      )
-      
-    }
+          error => {
+            this.errorMsg=error.statusText;
+            console.log(this.errorMsg);
+          }
+        )
+        
+      }
+
+    });
   }
 
 
@@ -307,28 +346,37 @@ export class TeamViewComponent implements OnInit {
 
   // Función para sacar a un miembro de un equipo
   eliminarEquipo(){
-    var confirmar = confirm("Se eliminará el equipo. ¿Continuar?");
-    if(confirmar){
+    //var confirmar = confirm("Se eliminará el equipo. ¿Continuar?");
+    var confirmar = false;
+    let confirmarBox = this.confirmBanTeam.open(ConfirmBanTeamComponent);
+    confirmarBox.afterClosed().subscribe(result => {
+      confirmar = result;
 
-      var taskBringer = new IdBringer(this.teamData[0].idEquipo,null);
-
-      this._homeService.banTeam(taskBringer).subscribe(
-        data => {
-          console.log(data);
-          alert("Equipo eliminado");
-          setTimeout(() => 
-          {
-            this.router.navigate(['/uwu']);
+      if(confirmar){
+        var taskBringer = new IdBringer(this.teamData[0].idEquipo,null);
+  
+        this._homeService.banTeam(taskBringer).subscribe(
+          data => {
+            console.log(data);
+            //alert("Equipo eliminado");
+            this.alertBanTeam.open(AlertBanTeamComponent);
+            setTimeout(() => 
+            {
+              this.router.navigate(['/uwu']);
+            },
+            500);
           },
-          500);
-        },
-        error => {
-          this.errorMsg=error.statusText;
-          console.log(this.errorMsg);
-        }
-      )
-      
-    }
+          error => {
+            this.errorMsg=error.statusText;
+            console.log(this.errorMsg);
+          }
+        )
+        
+      }
+    });
+
+
+    
   }
 
 
@@ -420,25 +468,34 @@ export class TeamViewComponent implements OnInit {
 
   // Función para eliminar una tarea
   banTask(id){
-    let c = confirm("¿Está seguro que desea eliminar la tarea seleccionada?");
-    if(c){
-      this.teamId.id=id;
-      this._homeService.banTask(this.teamId).subscribe(
-        data => {
-          console.log(data);
-          alert("Tarea eliminada con éxito");
-          setTimeout(() => 
-          {
-              this.router.navigate(['/uwu']);
+    //let c = confirm("¿Está seguro que desea eliminar la tarea seleccionada?");
+    var confirmar = false;
+    let confirmarBox = this.confirmBanTask.open(ConfirmBanTaskComponent);
+    confirmarBox.afterClosed().subscribe(result =>{
+      confirmar = result;
+
+      if(confirmar){
+        this.teamId.id=id;
+        this._homeService.banTask(this.teamId).subscribe(
+          data => {
+            console.log(data);
+            //alert("Tarea eliminada con éxito");
+            this.alertBanTask.open(AlertBanTaskComponent);
+            setTimeout(() => 
+            {
+                this.router.navigate(['/uwu']);
+            },
+            500);
           },
-          500);
-        },
-        error => {
-          this.errorMsg=error.statusText;
-          console.log(error);
-        }
-      )
-    }
+          error => {
+            this.errorMsg=error.statusText;
+            console.log(error);
+          }
+        )
+      }
+    });
+
+    
   }
 
 
@@ -451,7 +508,8 @@ export class TeamViewComponent implements OnInit {
     this._homeService.setCompletado(taskId).subscribe(
       data => {
         console.log(data);
-        alert("Tarea marcada como completada!");
+        //alert("Tarea marcada como completada!");
+        this.alertTaskDone.open(AlertTaskDoneComponent);
         setTimeout(() => 
         {
           this.router.navigate(['/uwu']);
@@ -474,7 +532,8 @@ export class TeamViewComponent implements OnInit {
     this._homeService.setNoCompletado(taskId).subscribe(
       data => {
         console.log(data);
-        alert("Tarea marcada como no completada!");
+        //alert("Tarea marcada como no completada!");
+        this.alertTaskUndone.open(AlertTaskUndoneComponent);
         setTimeout(() => 
         {
           this.router.navigate(['/uwu']);
@@ -593,25 +652,34 @@ export class TeamViewComponent implements OnInit {
 
   // Función para eliminar un evento
   banEvent(id){
-    let c = confirm("¿Está seguro que desea eliminar el evento seleccionado?");
-    if(c){
-      this.teamId.id=id;
-      this._homeService.banEvent(this.teamId).subscribe(
-        data => {
-          console.log(data);
-          alert("Evento eliminado con éxito");
-          setTimeout(() => 
-          {
-            this.router.navigate(['/uwu']);
+    //let c = confirm("¿Está seguro que desea eliminar el evento seleccionado?");
+    var confirmar = false;
+    let confirmarBox = this.confirmBanEvent.open(ConfirmBanEventComponent);
+    confirmarBox.afterClosed().subscribe(result =>{
+      confirmar = result;
+
+      if(confirmar){
+        this.teamId.id=id;
+        this._homeService.banEvent(this.teamId).subscribe(
+          data => {
+            console.log(data);
+            //alert("Evento eliminado con éxito");
+            this.alertBanEvent.open(AlertBanEventComponent);
+            setTimeout(() => 
+            {
+              this.router.navigate(['/uwu']);
+            },
+            500);
           },
-          500);
-        },
-        error => {
-          this.errorMsg=error.statusText;
-          console.log(error);
-        }
-      )
-    }
+          error => {
+            this.errorMsg=error.statusText;
+            console.log(error);
+          }
+        )
+      }
+    });
+
+    
   }
 
   // Función para obtener la hora de un evento

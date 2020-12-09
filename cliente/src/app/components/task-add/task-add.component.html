@@ -54,7 +54,6 @@
                         [(ngModel)]='taskModel.encargado' 
                         #encargado="ngModel"
                     >
-                        <option selected value="0">Seleccione un encargado</option>
                         <option *ngFor="let colaborador of colaboradores" value='{{colaborador.idColaborador}}'>
                             {{colaborador.nombre}} {{colaborador.apellidos}} 
                         </option>

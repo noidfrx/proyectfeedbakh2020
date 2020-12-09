@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 
 //Para validación de formulario
 import {FormControl,FormGroup,Validators} from '@angular/forms';
+import { AlertModEventComponent } from '../box/alert-mod-event/alert-mod-event.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -30,7 +32,7 @@ export class EventModComponent implements OnInit {
 
   integrantes_seleccionados: number[];
 
-  constructor(private _homeService:HomeServiceService, private router:Router) {
+  constructor(private _homeService:HomeServiceService, private router:Router, public alertModEvent:MatDialog) {
     this.eventId.id=history.state.idevent;
     this.teamId.id=history.state.idteam;
     this.nombreteam=history.state.nombreteam;
@@ -167,7 +169,8 @@ export class EventModComponent implements OnInit {
       .subscribe(
         data => {
           console.log("Miembros agregados!", data);
-          alert("Evento modificado con éxito");
+          //alert("Evento modificado con éxito");
+          this.alertModEvent.open(AlertModEventComponent);
           setTimeout(() => 
           {
               this._homeService.setMostrarEquipo(this.teamId.id);
@@ -179,27 +182,6 @@ export class EventModComponent implements OnInit {
         // Manejo de errores ^
       )
   }
-
-
-
-
-  // Función para inicializar los encargados
-  /*setEncargados(){
-    this._homeService.getEncargadosEvento(this.eventId).subscribe(
-      data => {
-        console.log("encargados -> ", data);
-        for(let encargado of data){
-          this.integrantes_seleccionados.push(encargado.idColaborador);
-        }
-        console.log("push listo");
-        console.log("Lista actual: " + this.integrantes_seleccionados + "(cantidad: " + this.integrantes_seleccionados.length + ")");
-      },
-      error => {
-        this.errorMsg=error.statusText;
-        console.log("Error al recibir el evento de id ", this.eventId);
-      }
-    )
-  }*/
 
 
   //////////
