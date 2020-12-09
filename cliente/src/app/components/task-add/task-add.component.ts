@@ -8,6 +8,11 @@ import { IdBringer } from 'src/app/models/IdBringer';
 import {FormControl,FormGroup,Validators} from '@angular/forms';
 import { AlertAddTaskComponent } from '../box/alert-add-task/alert-add-task.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DateAdapter } from '@angular/material/core';
+import { formatDate } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localeCl from '@angular/common/locales/es-CL';
+registerLocaleData(localeCl);
 
 
 @Component({
@@ -24,15 +29,19 @@ export class TaskAddComponent implements OnInit {
 
   teamId = new IdBringer(null,null);
   nombreteam = '';
-  taskModel = new Task('',null,0,null,0,null,0,'',null,0);
+  taskModel = new Task('',null,0,null,0,'',null,0);
 
-  constructor(private _homeService:HomeServiceService, private router:Router, public alertAddTask:MatDialog) {
-    this.teamId.id=history.state.idteam;
-    this.nombreteam=history.state.nombreteam;
-    this.getColaboradoresTeam();
-    this.getCategorias();
-    //this.obtenerEquipoUsuario();
-   }
+  constructor(private _homeService:HomeServiceService, 
+              private router:Router, 
+              public alertAddTask:MatDialog, 
+              private adapter: DateAdapter<any>) 
+    {
+      this.teamId.id=history.state.idteam;
+      this.nombreteam=history.state.nombreteam;
+      this.getColaboradoresTeam();
+      this.getCategorias();
+      this.adapter.setLocale('cl');
+    }
 
   ngOnInit(): void {
     this.teamId.id=history.state.idteam;
@@ -74,12 +83,17 @@ export class TaskAddComponent implements OnInit {
     )
   }
 
+  test(){
+    console.log(this.taskModel.fecha);
+  }
+
   //////////
   // POST //
   //////////
 
-  onSubmit(){
+  addTask(){
     this.taskModel.equipo = this.teamId.id;
+    //this.taskModel.fecha = formatDate(this.taskModel.fecha, 'dd/MM/yyyy', 'es-CL');
     
       this._homeService.addTask(this.taskModel)
       .subscribe(

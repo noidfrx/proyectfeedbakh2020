@@ -216,14 +216,7 @@
             <div *ngIf="evento.fecha != null">
               <b>Fecha:</b> {{ getFecha(evento.fecha) }}
             </div>
-            <div>
-              <b>Link: </b
-              ><a
-                href="{{ evento.enlaceVideoconferencia }}"
-                style="color: #435eff"
-                >{{ evento.enlaceVideoconferencia }}</a
-              >
-            </div>
+            
             <div *ngIf="evento.fecha == null"><b>Fecha:</b> Sin fecha</div>
             <div *ngIf="evento.hora != null && evento.hora != ''"> <b>Hora:</b>  {{getHora(evento.idEvento)}} </div>
             <div *ngIf="evento.hora == null || evento.hora == ''"> <b>Hora:</b>  Sin hora </div>
@@ -231,6 +224,16 @@
 
             <div>
               <b>Participantes:</b> {{ getNombresEncargadosEvento(evento.idEvento) }} 
+            </div>
+
+            <div>
+              <br/>
+              <b>Link: </b
+              ><a
+                href="{{ evento.enlaceVideoconferencia }}"
+                style="color: #435eff"
+                >{{ evento.enlaceVideoconferencia }}</a
+              >
             </div>
 
             <div class="pt-4" *ngIf="team_owner_checker != 0">

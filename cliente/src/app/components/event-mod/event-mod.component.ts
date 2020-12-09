@@ -8,7 +8,11 @@ import { Router } from '@angular/router';
 import {FormControl,FormGroup,Validators} from '@angular/forms';
 import { AlertModEventComponent } from '../box/alert-mod-event/alert-mod-event.component';
 import { MatDialog } from '@angular/material/dialog';
-
+import { DateAdapter } from '@angular/material/core';
+import { formatDate } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localeCl from '@angular/common/locales/es-CL';
+registerLocaleData(localeCl);
 
 
 @Component({
@@ -24,21 +28,22 @@ export class EventModComponent implements OnInit {
   equipos=null;
   eventos=null;
   
-  _evento = new Event('',null,0,0,0,0,0,0,0,0,'','',0);
-  eventModel = new Event('',null,null,0,null,null,null,0,0,0,'','',null);
+  _evento = new Event('',null,null,0,0,0,0,0,'','',0);
+  eventModel = new Event('',null,null,null,null,0,0,0,'','',null);
   eventId = new IdBringer(null,null);
   teamId = new IdBringer(null,null);
   nombreteam='';
 
   integrantes_seleccionados: number[];
 
-  constructor(private _homeService:HomeServiceService, private router:Router, public alertModEvent:MatDialog) {
+  constructor(private _homeService:HomeServiceService, private router:Router, public alertModEvent:MatDialog,private adapter: DateAdapter<any>) {
     this.eventId.id=history.state.idevent;
     this.teamId.id=history.state.idteam;
     this.nombreteam=history.state.nombreteam;
     this.getColaboradoresTeam();
     this.getCategorias();
     this.obtenerEquipoUsuario();
+    this.adapter.setLocale('cl');
    }
 
   ngOnInit(): void {
@@ -65,9 +70,7 @@ export class EventModComponent implements OnInit {
     this.eventModel.nombre = this._evento[0].nombre;
     //this.setEncargados();
     this.eventModel.equipo = this._evento[0].idEquipo;
-    this.eventModel.dia = this.getDia(this._evento[0].fecha);
-    this.eventModel.mes = this.getMes(this._evento[0].fecha);
-    this.eventModel.anio =this.getAnio(this._evento[0].fecha);
+    this.eventModel.fecha = this._evento[0].fecha;
     this.eventModel.hora = this.getHora(this._evento[0].hora);
     this.eventModel.minuto = this.getMinuto(this._evento[0].hora);
     this.eventModel.categoria = this._evento[0].idCategoria;
@@ -188,11 +191,12 @@ export class EventModComponent implements OnInit {
   // POST //
   //////////
 
-  onSubmit(){
+  addEvent(){
     console.log(this.teamId.id);
     console.log(this.eventModel.equipo);
     this.eventModel.equipo = this.teamId.id;
     this.eventModel.encargados = this.integrantes_seleccionados;
+    //this.eventModel.fecha = formatDate(this.eventModel.fecha, 'dd/MM/yyyy', 'es-CL');
     
     this._homeService.modEvent(this.eventModel)
     .subscribe(

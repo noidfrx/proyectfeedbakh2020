@@ -9,6 +9,11 @@ import {HomeServiceService} from '../../services/homeService/home-service.servic
 import {FormControl,FormGroup,Validators} from '@angular/forms';
 import { AlertModTaskComponent } from '../box/alert-mod-task/alert-mod-task.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DateAdapter } from '@angular/material/core';
+import { formatDate } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localeCl from '@angular/common/locales/es-CL';
+registerLocaleData(localeCl);
 
 
 @Component({
@@ -19,21 +24,22 @@ import { MatDialog } from '@angular/material/dialog';
 export class TaskModComponent implements OnInit {
   errorMsg='';
   categorias = null;
-  _tarea = new Task('',0,0,0,0,0,0,'',0,0);
+  _tarea = new Task('',0,0,null,0,'',0,0);
   equipos=null;
   taskId = new IdBringer(null,null);
   teamId = new IdBringer(null,null);
   nombreteam='';
   colaboradores = null;
 
-  taskModel = new Task('',0,0,null,null,null,null,'',null,0);
+  taskModel = new Task('',0,0,null,null,'',null,0);
 
-  constructor(private _homeService:HomeServiceService, private router:Router, public alertModTask:MatDialog) {
+  constructor(private _homeService:HomeServiceService, private router:Router, public alertModTask:MatDialog, private adapter: DateAdapter<any>) {
     this.teamId.id=history.state.idteam;
     this.nombreteam=history.state.nombreteam;
     this.getCategorias();
     this.obtenerEquipoUsuario();
     this.getColaboradoresTeam();
+    this.adapter.setLocale('cl');
    }
 
   ngOnInit(): void {
@@ -58,9 +64,7 @@ export class TaskModComponent implements OnInit {
     this.taskModel.nombre = this._tarea[0].nombre;
     this.setEncargadoTarea(this.taskId);
     this.taskModel.equipo = this._tarea[0].idEquipo;
-    this.taskModel.dia = this.getDia(this._tarea[0].fecha);
-    this.taskModel.mes = this.getMes(this._tarea[0].fecha);
-    this.taskModel.anio = this.getAnio(this._tarea[0].fecha);
+    this.taskModel.fecha = this._tarea[0].fecha;
     this.taskModel.categoria = this._tarea[0].idCategoria;
     this.taskModel.descripcion = this._tarea[0].descripcion;
   }
@@ -141,8 +145,9 @@ export class TaskModComponent implements OnInit {
     )
   }
 
-  onSubmit(){
+  modTask(){
     this.taskModel.equipo = this.teamId.id;
+    //this.taskModel.fecha = formatDate(this.taskModel.fecha, 'dd/MM/yyyy', 'es-CL');
     console.log("formulario enviado -> ", this.taskModel);
     this._homeService.modTask(this.taskModel)
     .subscribe(

@@ -6,6 +6,7 @@ import { HomeServiceService } from 'src/app/services/homeService/home-service.se
 import { EquipoService } from 'src/app/services/equipoService/equipo.service';
 
 import {MatDialog} from '@angular/material/dialog';
+import { formatDate } from '@angular/common';
 
 import { listaEquipo } from 'src/app/models/listaEquipo';
 
@@ -59,7 +60,7 @@ export class TeamViewComponent implements OnInit {
   taskId = new IdBringer(null,null);          // Modelo que posee el ID de la tarea seleccionada,
                                               // utilizado para realizar querys a la base de datos
 
-  _tarea = new Task('',0,0,0,0,0,0,'',0,0);   // Modelo creado para adquirir datos de una tarea
+  _tarea = new Task('',0,0,null,0,'',0,0);   // Modelo creado para adquirir datos de una tarea
 
   nombre_encargado = '';
   nombre_team='';
@@ -818,17 +819,8 @@ export class TeamViewComponent implements OnInit {
   
 
   // Función para obtener la fecha en formato día/mes/año
-  getFecha(notFecha){
-    if(notFecha != null && notFecha != ''){
-      var dia = this.getDia(notFecha);
-      var mes = this.getMes(notFecha);
-      var anio = this.getAnio(notFecha);
-
-      var yesFecha = dia + "/" + mes + "/" + anio;
-
-      return yesFecha.toString();
-    }
-    return '';
+  getFecha(date){
+    return formatDate(date, 'dd/MM/yyyy', 'es-CL');
   }
 
   // Función para adquirir todas las categorías de la base de datos
@@ -853,7 +845,7 @@ export class TeamViewComponent implements OnInit {
   // Funciones auxiliarea para getFecha //
   ////////////////////////////////////////
 
-  getDia(dat){
+  /*getDia(dat){
     var date = String(dat);
     var fecha = date.split('T',2);
     var fecha2 = fecha[0].split('-',3);
@@ -878,7 +870,7 @@ export class TeamViewComponent implements OnInit {
     var dia = fecha2[0];
 
     return dia;
-  }
+  }*/
 
   ////////////////////////////////////////////////////////////////
 

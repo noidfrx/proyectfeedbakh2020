@@ -3,6 +3,12 @@ import { NgModule } from '@angular/core';
 import { YouTubePlayerModule } from "@angular/youtube-player";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatButtonModule } from "@angular/material/button";
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
+//import { MatMomentDateModule } from '@angular/material-moment-adapter/adapter';
+import { MatInputModule } from '@angular/material/input';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -61,6 +67,8 @@ import { AlertMemberExistsComponent } from './components/box/alert-member-exists
 import { AlertTaskDoneComponent } from './components/box/alert-task-done/alert-task-done.component';
 import { AlertTaskUndoneComponent } from './components/box/alert-task-undone/alert-task-undone.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -115,7 +123,12 @@ import { AlertTaskUndoneComponent } from './components/box/alert-task-undone/ale
     YouTubePlayerModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDatepickerModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    //MatMomentDateModule,
+    MatInputModule
   ],
   providers: [
     LoginService,

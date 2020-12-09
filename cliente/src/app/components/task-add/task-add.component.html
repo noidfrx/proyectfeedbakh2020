@@ -9,7 +9,6 @@
 
         <form
             class="pb-5 pl-3 pr-3"
-            (ngSubmit)="onSubmit()"
             #registerForm="ngForm"
             novalidate
         >
@@ -63,70 +62,19 @@
                 <!--Separador--> <br/>
                 
                 <label for='inputFechaTarea' class='col-md-12'>Fecha de finalización</label>
-                <div class='row offset-md-0' id='inputFechaTarea'>
-                    <div class='form-group col-md-3'>
-                        <input 
-                            type='text' 
-                            class='form-control' 
-                            id='inputDiaTarea' 
-                            required 
-                            name='dia' 
-                            [(ngModel)]='taskModel.dia' 
-                            #dia="ngModel"
-                            placeholder='Día'
-                        >
-                    </div>
-                    
-                    <div class="col-md-3">
-                        <select 
-                            class="custom-select"
-                            id='inputMesTarea'
-                            required 
-                            name='mes' 
-                            [(ngModel)]='taskModel.mes' 
-                            #mes="ngModel"
-                        >
-                            <option selected value="0">Mes</option>
-                            <option value="1">Enero</option>
-                            <option value="2">Febrero</option>
-                            <option value="3">Marzo</option>
-                            <option value="4">Abril</option>
-                            <option value="5">Mayo</option>
-                            <option value="6">Junio</option>
-                            <option value="7">Julio</option>
-                            <option value="8">Agosto</option>
-                            <option value="9">Septiembre</option>
-                            <option value="10">Octubre</option>
-                            <option value="11">Noviembre</option>
-                            <option value="12">Diciembre</option>
-                        </select>
-                    </div>
-            
-                    <div class='form-group col-md-3'>
-                        <input 
-                            type='text' 
-                            class='form-control' 
-                            id='inputAnioTarea' 
-                            required 
-                            name='anio' 
-                            [(ngModel)]='taskModel.anio' 
-                            #anio="ngModel"
-                            [class.is-invalid]="anio.invalid && anio.touched"
-                            placeholder='Año'
-                        >
-                    </div>
-                    
-                    <!-- HACER FUNCIONAL ESTE SWITCH!! --> 
-                    <!--div class="custom-control custom-switch col-md-3 mt-2">
-                        <input 
-                            type="checkbox" 
-                            class="custom-control-input" 
-                            id="inputSinFecha"
-                            [(ngModel)]='sinFecha'
-                        >
-                        <label class="custom-control-label" for="inputSinFecha">Sin fecha</label>
-                    </div-->
-                </div>
+                <mat-form-field class="col-md-6">
+                    <input 
+                        matInput 
+                        [matDatepicker]="dp" 
+                        [(ngModel)]="taskModel.fecha"
+                        name="fecha"
+                        id="inputFechaTarea"
+                        placeholder="Seleccione la fecha de finalización"
+                    >
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp></mat-datepicker>
+                </mat-form-field>
+
 
                 <!--Separador--> <br/>
         
@@ -187,7 +135,7 @@
 
             <div class="form-group col-md-10 offset-3">
                 <button 
-                type="submit" 
+                (click)="addTask()"
                 class="btn btn-primary"
             >Crear tarea</button>
 

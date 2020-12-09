@@ -8,7 +8,11 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { IdBringer } from 'src/app/models/IdBringer';
 import { AlertAddEventComponent } from '../box/alert-add-event/alert-add-event.component';
 import { MatDialog } from '@angular/material/dialog';
-
+import { DateAdapter } from '@angular/material/core';
+import { formatDate } from '@angular/common';
+import { registerLocaleData } from '@angular/common';
+import localeCl from '@angular/common/locales/es-CL';
+registerLocaleData(localeCl);
 
 @Component({
   selector: 'app-event-add',
@@ -24,17 +28,23 @@ export class EventAddComponent implements OnInit {
 
   teamId = new IdBringer(null,null);
   nombreteam = '';
-  eventModel = new Event('',null,0,0,null,null,null,0,0,0,'','',null);
+  eventModel = new Event('',null,null,null,null,0,0,0,'','',null);
 
   integrantes_seleccionados: number[];
 
-  constructor(private _homeService:HomeServiceService, private router:Router, private fb:FormBuilder, public alertAddEvent:MatDialog) {
+  constructor(private _homeService:HomeServiceService, 
+              private router:Router, 
+              private fb:FormBuilder, 
+              public alertAddEvent:MatDialog,
+              private adapter: DateAdapter<any>) 
+  {
     this.teamId.id=history.state.idteam;
     this.nombreteam=history.state.nombreteam;
     this.getColaboradoresTeam();
     this.getCategorias();
     this.obtenerEquipoUsuario();
-   }
+    this.adapter.setLocale('cl');
+  }
 
   ngOnInit(): void {
     this.teamId.id=history.state.idteam;
@@ -93,19 +103,15 @@ export class EventAddComponent implements OnInit {
   // POST //
   //////////
   
-  onSubmit(){
+  addEvent(){
     this.eventModel.equipo = this.teamId.id;
     this.eventModel.encargados = this.integrantes_seleccionados;
-    if(this.eventModel.encargados.length == 0){
-      alert("Seleccione integrantes que participaran");
-    }else{
+    //this.eventModel.fecha = formatDate(this.eventModel.fecha, 'dd/MM/yyyy', 'es-CL');
+    //this.eventModel.fecha = formatDate(this.fecha, 'dd/MM/yyyy', 'es-CL')
+    
       this.addEvento();
       console.log("this.addEvento");
-      /*this.buscarEvento();
-      console.log("this.buscarEvento");
-      this.completarAddEvent();
-      console.log("this.completarAddEvent");*/
-    }
+    
   }
 
   addEvento(){

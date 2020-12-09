@@ -128,7 +128,7 @@ class IndexController {
             console.log(req.body);
             yield database_1.default.query("INSERT INTO tarea (nombre, fecha, descripcion, idCategoria, idEquipo) VALUES (?,?,?,?,?)", [
                 req.body.nombre,
-                req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
+                req.body.fecha,
                 req.body.descripcion,
                 req.body.categoria,
                 req.body.equipo,
@@ -165,7 +165,7 @@ class IndexController {
             console.log(req.body);
             yield database_1.default.query("UPDATE tarea SET nombre=?, fecha=?, descripcion=?, idCategoria=?, idEquipo=? WHERE idTarea=?", [
                 req.body.nombre,
-                req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
+                req.body.fecha,
                 req.body.descripcion,
                 req.body.categoria,
                 req.body.equipo,
@@ -183,7 +183,7 @@ class IndexController {
         return __awaiter(this, void 0, void 0, function* () {
             yield database_1.default.query("INSERT INTO evento (nombre, fecha, hora, descripcion, idEquipo, enlaceVideoconferencia, privacidad, idCategoria) VALUES (?,?,?,?,?,?,?,?)", [
                 req.body.nombre,
-                req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
+                req.body.fecha,
                 req.body.hora + ":" + req.body.minuto,
                 req.body.descripcion,
                 req.body.equipo,
@@ -226,7 +226,7 @@ class IndexController {
             console.log(req.body);
             yield database_1.default.query("UPDATE evento SET nombre=?, fecha=?, hora=?, descripcion=?, idCategoria=?, idEquipo=?, enlaceVideoconferencia=?, privacidad=?, idCategoria=? WHERE idEvento=?", [
                 req.body.nombre,
-                req.body.anio + "-" + req.body.mes + "-" + req.body.dia,
+                req.body.fecha,
                 req.body.hora + ":" + req.body.minuto,
                 req.body.descripcion,
                 req.body.categoria,

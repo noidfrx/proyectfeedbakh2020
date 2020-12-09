@@ -9,7 +9,6 @@
 
         <form
             class="pb-5 pl-3 pr-3"
-            (ngSubmit)="onSubmit()"
             #registerForm="ngForm"
             novalidate
         >
@@ -58,70 +57,18 @@
                 <br/>
                 
                 <label for='inputFechaTarea' class='col-md-12'>Fecha del evento</label>
-                <div class='row offset-md-0' id='inputFechaTarea'>
-                    <div class='form-group col-md-3'>
-                        <input 
-                            type='text' 
-                            class='form-control' 
-                            id='inputDiaTarea' 
-                            required 
-                            name='dia' 
-                            [(ngModel)]='eventModel.dia' 
-                            #dia="ngModel"
-                            [class.is-invalid]="dia.invalid && dia.touched"
-                            placeholder='Día'
-                        >
-                    </div>
-                    
-                    <div class="col-md-3">
-                        <select 
-                            class="custom-select"
-                            id='inputMesTarea'
-                            name='mes' 
-                            [(ngModel)]='eventModel.mes' 
-                            #mes="ngModel"
-                        >
-                            <option selected value="0">Mes</option>
-                            <option value="1">Enero</option>
-                            <option value="2">Febrero</option>
-                            <option value="3">Marzo</option>
-                            <option value="4">Abril</option>
-                            <option value="5">Mayo</option>
-                            <option value="6">Junio</option>
-                            <option value="7">Julio</option>
-                            <option value="8">Agosto</option>
-                            <option value="9">Septiembre</option>
-                            <option value="10">Octubre</option>
-                            <option value="11">Noviembre</option>
-                            <option value="12">Diciembre</option>
-                        </select>
-                    </div>
-            
-                    <div class='form-group col-md-3'>
-                        <input 
-                            type='text' 
-                            class='form-control' 
-                            id='inputAnioTarea' 
-                            required 
-                            name='anio' 
-                            [(ngModel)]='eventModel.anio' 
-                            #anio="ngModel"
-                            [class.is-invalid]="anio.invalid && anio.touched"
-                            placeholder='Año'
-                        >
-                    </div>
-                    
-        
-                    <!--div class="custom-control custom-switch col-md-3 mt-2">
-                        <input 
-                            type="checkbox" 
-                            class="custom-control-input" 
-                            id="sinFecha"
-                        >
-                        <label class="custom-control-label" for="sinFecha">Sin fecha</label>
-                    </div-->
-
-                </div>
+                <mat-form-field class="col-md-6">
+                    <input 
+                        matInput 
+                        [matDatepicker]="dp" 
+                        [(ngModel)]="eventModel.fecha"
+                        name="fecha"
+                        id="inputFechaTarea"
+                        placeholder="Seleccione la fecha de finalización"
+                    >
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp></mat-datepicker>
+                </mat-form-field>
         
                 <label for='inputHoraEvento' class='col-md-12'>Hora del evento</label>
                 <div class='row offset-md-0' id='inputHoraEvento'>
@@ -235,7 +182,7 @@
         
                 <div class="form-group col-md-12 text-center">
                     <button 
-                        type="submit" 
+                        (click)=addEvent()
                         class="btn btn-primary"
                     >Crear evento</button>
                     <button style="margin-left: 20px;" (click)="cancelar()" class="btn btn-danger">Cancelar</button>
