@@ -824,7 +824,7 @@ export class TeamViewComponent implements OnInit {
   }
 
   getHora(date){
-    return formatDate(date, 'H:mm', 'en-US');
+    return formatDate(date, 'H:mm', 'en-US'); //no tiene la hora, la hora esta guardada en un campo específico.
   }
 
   // Función para adquirir todas las categorías de la base de datos

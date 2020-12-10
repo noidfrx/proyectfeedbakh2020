@@ -288,14 +288,13 @@ class IndexController {
   //  Query para modificar un evento
 
   public async modEvent(req: Request, res: Response): Promise<any> {
-    console.log(req.body);
 
     await pool.query(
       "UPDATE evento SET nombre=?, fecha=?, hora=?, descripcion=?, idCategoria=?, idEquipo=?, enlaceVideoconferencia=?, privacidad=?, idCategoria=? WHERE idEvento=?",
       [
         req.body.nombre,
         req.body.fecha,
-        req.body.hora + ":" + req.body.minuto,
+        req.body.hora,
         req.body.descripcion,
         req.body.categoria,
         req.body.equipo,

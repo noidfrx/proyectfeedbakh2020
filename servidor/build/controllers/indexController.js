@@ -223,11 +223,10 @@ class IndexController {
     //  Query para modificar un evento
     modEvent(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(req.body);
             yield database_1.default.query("UPDATE evento SET nombre=?, fecha=?, hora=?, descripcion=?, idCategoria=?, idEquipo=?, enlaceVideoconferencia=?, privacidad=?, idCategoria=? WHERE idEvento=?", [
                 req.body.nombre,
                 req.body.fecha,
-                req.body.hora + ":" + req.body.minuto,
+                req.body.hora,
                 req.body.descripcion,
                 req.body.categoria,
                 req.body.equipo,
