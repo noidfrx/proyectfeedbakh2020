@@ -485,6 +485,7 @@ export class TeamViewComponent implements OnInit {
             this.alertBanTask.open(AlertBanTaskComponent);
             setTimeout(() => 
             {
+              this._homeService.setMostrarEquipo(this.selectedTeam);
                 this.router.navigate(['/uwu']);
             },
             500);
@@ -669,6 +670,7 @@ export class TeamViewComponent implements OnInit {
             this.alertBanEvent.open(AlertBanEventComponent);
             setTimeout(() => 
             {
+              this._homeService.setMostrarEquipo(this.selectedTeam);
               this.router.navigate(['/uwu']);
             },
             500);
