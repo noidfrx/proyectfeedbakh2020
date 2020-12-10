@@ -212,6 +212,7 @@
             <br />
             
             <br />
+            <div><b>Categoría:</b> {{ getNombreCategoria(evento.idCategoria) }}</div>
             <div><b>Descripción:</b> {{ evento.descripcion }}</div>
             <div *ngIf="evento.fecha != null">
               <b>Fecha:</b> {{ getFecha(evento.fecha) }}
