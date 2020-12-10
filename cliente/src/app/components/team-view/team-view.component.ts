@@ -363,6 +363,7 @@ export class TeamViewComponent implements OnInit {
             this.alertBanTeam.open(AlertBanTeamComponent);
             setTimeout(() => 
             {
+              this._homeService.setMostrarEquipo(0);
               this.router.navigate(['/uwu']);
             },
             500);
