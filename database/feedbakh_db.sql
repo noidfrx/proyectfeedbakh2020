@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-12-2020 a las 02:23:53
--- Versión del servidor: 10.4.14-MariaDB
--- Versión de PHP: 7.2.34
+-- Tiempo de generación: 10-12-2020 a las 16:59:04
+-- Versión del servidor: 10.4.11-MariaDB
+-- Versión de PHP: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -39,51 +39,17 @@ CREATE TABLE `amigo` (
 --
 
 INSERT INTO `amigo` (`idAmigo`, `idColaborador1`, `idColaborador2`, `aceptado`) VALUES
-(1, 4, 30, 1),
-(2, 14, 38, 0),
-(3, 14, 52, 0),
-(4, 5, 48, 0),
-(5, 12, 40, 0),
-(6, 23, 36, 0),
-(7, 6, 50, 0),
-(8, 27, 49, 0),
-(9, 18, 38, 0),
-(10, 23, 34, 0),
-(11, 6, 28, 0),
-(12, 15, 45, 0),
-(13, 17, 50, 0),
-(14, 4, 43, 1),
-(15, 22, 36, 0),
-(16, 4, 52, 1),
-(17, 20, 51, 0),
-(18, 24, 28, 0),
-(19, 9, 47, 0),
-(20, 20, 51, 0),
-(21, 6, 47, 0),
-(22, 9, 33, 0),
-(23, 27, 32, 0),
-(24, 6, 38, 0),
-(25, 26, 53, 0),
-(26, 4, 46, 1),
-(27, 16, 53, 0),
-(28, 5, 41, 0),
-(29, 16, 43, 0),
-(30, 4, 35, 1),
-(35, 1, 28, 1),
-(36, 1, 30, 1),
-(39, 3, 16, 1),
-(41, 3, 16, 1),
-(42, 1, 31, 1),
-(47, 3, 31, 1),
-(48, 3, 15, 1),
-(49, 1, 13, 1),
-(50, 3, 47, 1),
-(51, 1, 3, 1),
-(52, 1, 4, 1),
-(53, 57, 3, 1),
-(54, 57, 4, 1),
-(55, 57, 5, 1),
-(56, 57, 6, 1);
+(1, 4, 3, 1),
+(2, 4, 5, 1),
+(3, 4, 6, 1),
+(4, 4, 7, 1),
+(11, 2, 4, 1),
+(12, 8, 2, 1),
+(13, 7, 2, 1),
+(14, 6, 2, 1),
+(15, 3, 2, 1),
+(16, 5, 2, 1),
+(18, 11, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -101,12 +67,15 @@ CREATE TABLE `categoria` (
 --
 
 INSERT INTO `categoria` (`idCategoria`, `nombreCategoria`) VALUES
-(0, 'Sin categoria'),
-(1, 'Trabajo importante'),
-(2, 'Area administrativa'),
-(3, 'Area comercial'),
-(4, 'categoria 4'),
-(5, 'categoria 5');
+(0, 'Sin Categoría'),
+(1, 'Prioridad Alta'),
+(2, 'Prioridad Media'),
+(3, 'Prioridad Baja'),
+(4, 'Administración'),
+(5, 'Economía'),
+(6, 'Diseño'),
+(7, 'Programación'),
+(8, 'Análisis');
 
 -- --------------------------------------------------------
 
@@ -130,62 +99,20 @@ CREATE TABLE `colaborador` (
 --
 
 INSERT INTO `colaborador` (`idColaborador`, `nombre`, `apellidos`, `fotoPerfil`, `email`, `password`, `fechaCreacion`, `tutorial`) VALUES
-(1, 'admin', 'admin', '0', 'admin@admin.com', '$2b$10$YXk8UvQsGQNQCf/cWQnouO4PuJA.6tpBirYSRzsuQN5Os4PrgIIim', '2020-10-31 17:40:06.000000', 1),
-(3, 'Karina', 'Hermosilla Moraga', '0', 'kari@kari.com', '$2b$10$WzPjXN.XQuIkn4kf9NHJoOwVFrNdcUd76P9O8N6HAdpkn0MJPBYfe', '2020-11-03 02:15:33.655545', 0),
-(4, 'Felipe', 'Javier', '0', 'Ad@ad.com', '$2b$10$ujnlirWYpFyRJuLHAxmmTOxtdO2BFJG3GqozdMfOQ2kOVkOzMHdB6', '2020-11-04 20:42:24.519724', 0),
-(5, 'Omar', 'Valdés', '0', 'venenatis@elementum.ca', 'Nki98MN', '2021-02-11 01:37:01.000000', 0),
-(6, 'Adela', 'Sepúlveda', '0', 'tempor.diam@felispurusac.net', 'Zce68OY', '2020-01-31 12:48:08.000000', 0),
-(7, 'Pilar', 'Campos', '0', 'tempus.non.lacinia@ullamcorpermagnaSed.net', 'Mkg27FP', '2019-12-21 18:54:18.000000', 0),
-(8, 'Eugenio', 'Muñoz', '0', 'risus.odio.auctor@tortorNunccommodo.com', 'Xrk40OK', '2021-10-10 04:54:03.000000', 0),
-(9, 'Miley', 'Figueroa', '0', 'vitae.sodales.at@placerateget.co.uk', 'Rxd56IA', '2021-02-23 10:42:18.000000', 0),
-(10, 'Yeremy', 'Silva', '0', 'Nulla.eget.metus@arcuac.net', 'Jrz65DT', '2019-11-29 21:02:13.000000', 0),
-(11, 'Isaias', 'Araya', '0', 'cubilia.Curae@etpede.com', 'Etx46JQ', '2021-01-09 12:44:55.000000', 0),
-(12, 'Patrick', 'Sepúlveda', '0', 'dui@rutrumeuultrices.ca', 'Nba93HV', '2019-12-15 01:38:44.000000', 0),
-(13, 'Ademir', 'Jiménez', '0', 'cursus.diam@mattis.edu', 'Mod02XD', '2021-04-21 07:24:06.000000', 0),
-(14, 'Joao', 'Martínez', '0', 'aliquet.libero@eutellusPhasellus.org', 'Rub72FA', '2020-07-30 15:43:58.000000', 0),
-(15, 'Cristián', 'Ortega', '0', 'ut.nisi@senectus.co.uk', 'Qec12PZ', '2021-02-04 18:15:29.000000', 0),
-(16, 'Yanira', 'Vega', '0', 'nec@magnis.co.uk', 'Nty25JM', '2020-11-10 20:13:12.000000', 0),
-(17, 'Lorenzo', 'Vásquez', '0', 'Nullam@Nuncquisarcu.net', 'Bit58TU', '2020-09-07 23:15:00.000000', 0),
-(18, 'Maria', 'Muñoz', '0', 'augue.ut.lacus@sapien.edu', 'Wnz15IA', '2021-05-26 03:49:12.000000', 0),
-(19, 'Thiago', 'Alvarado', '0', 'nulla@ultriciesligulaNullam.ca', 'Tsd73VK', '2020-08-02 06:44:49.000000', 0),
-(20, 'Jean', 'Silva', '0', 'Donec.felis@sollicitudincommodo.co.uk', 'Lqy79KE', '2020-01-02 18:45:26.000000', 0),
-(21, 'Michelle', 'Carvajal', '0', 'Suspendisse@Morbi.org', 'Wqs37IT', '2020-11-11 21:17:06.000000', 0),
-(22, 'Amaru', 'Salazar', '0', 'lobortis.quis@viverraDonectempus.co.uk', 'Pcj28YX', '2021-03-24 12:56:21.000000', 0),
-(23, 'Allison', 'Valdés', '0', 'sit.amet.orci@Sedmalesuadaaugue.net', 'Ujj33AE', '2021-04-30 05:28:12.000000', 0),
-(24, 'Lucca', 'Gallardo', '0', 'dignissim.lacus.Aliquam@intempuseu.net', 'Mjg47XI', '2020-10-22 05:17:10.000000', 0),
-(25, 'Thayra', 'García', '0', 'tempor.arcu@et.org', 'Bej33TA', '2020-11-06 21:12:20.000000', 0),
-(26, 'Lucio', 'Campos', '0', 'consectetuer.adipiscing@scelerisque.org', 'Htc34ZR', '2021-10-20 05:47:54.000000', 0),
-(27, 'Jade', 'Medina', '0', 'sodales.Mauris@arcuet.edu', 'Vgv36LY', '2020-05-09 09:33:04.000000', 0),
-(28, 'Renato', 'Sáez', '0', 'sagittis@lectusantedictum.co.uk', 'Fps58BV', '2020-02-13 04:34:21.000000', 0),
-(29, 'Ashly', 'Garrido', '0', 'Quisque@eumetusIn.net', 'Duz90VA', '2020-03-22 07:45:41.000000', 0),
-(30, 'Andrew', 'Pérez', '0', 'posuere.vulputate.lacus@diam.com', 'Uvo05XL', '2021-06-19 00:25:57.000000', 0),
-(31, 'Fernando', 'Riquelme', '0', 'eu@Maurisquis.co.uk', 'Hma73QJ', '2020-05-19 06:07:14.000000', 0),
-(32, 'Rosita', 'Moreno', '0', 'viverra.Maecenas.iaculis@pellentesquetellussem.ca', 'Lvu19UR', '2021-01-04 16:58:43.000000', 0),
-(33, 'Chriss', 'San Martín', '0', 'ornare.lectus.ante@erat.com', 'Jyv84PU', '2021-04-06 05:09:05.000000', 0),
-(34, 'Maytte', 'Cortés', '0', 'eget@sem.edu', 'Fid49KZ', '2019-12-11 22:39:47.000000', 0),
-(35, 'Loreto', 'Palma', '0', 'malesuada.Integer.id@volutpatNulladignissim.edu', 'Fnu22FO', '2020-12-22 09:05:32.000000', 0),
-(36, 'Lesly', 'Vega', '0', 'non@facilisisfacilisismagna.org', 'Qsd49GF', '2021-08-17 15:49:56.000000', 0),
-(37, 'Cecilia', 'Ramírez', '0', 'Nulla.interdum.Curabitur@fringillacursus.edu', 'Gcf29ZA', '2020-08-29 01:27:04.000000', 0),
-(38, 'Jeans', 'Farías', '0', 'non@acfeugiatnon.net', 'Yha55EE', '2020-11-16 17:34:28.000000', 0),
-(39, 'Marthyna', 'Donoso', '0', 'vestibulum.lorem@NullaaliquetProin.ca', 'Ilt28DL', '2020-12-12 06:15:22.000000', 0),
-(40, 'Celso', 'Guerrero', '0', 'adipiscing.enim.mi@ultriciesdignissim.co.uk', 'Nfj13EG', '2020-02-20 12:32:23.000000', 0),
-(41, 'Giorgio', 'Morales', '0', 'laoreet@temporaugueac.ca', 'Lvj19LZ', '2021-06-28 06:11:00.000000', 0),
-(42, 'Ninoska', 'Pérez', '0', 'ipsum@asollicitudinorci.com', 'Pqf40SP', '2021-01-15 10:53:52.000000', 0),
-(43, 'Paola', 'Navarrete', '0', 'diam@nislelementumpurus.edu', 'Fgb45DS', '2020-03-01 22:25:25.000000', 0),
-(44, 'Adonis', 'Vidal', '0', 'nec.quam@Duisat.net', 'Thd68UU', '2020-12-09 05:31:02.000000', 0),
-(45, 'Andrés', 'Ortiz', '0', 'et.risus@erosProinultrices.co.uk', 'Kbo38EG', '2020-07-26 21:26:46.000000', 0),
-(46, 'Nahir', 'Salazar', '0', 'molestie.Sed@ac.ca', 'Xqt25HJ', '2020-04-06 09:24:06.000000', 0),
-(47, 'Joakin', 'Vargas', '0', 'ornare.lectus.ante@ametmetus.ca', 'Tel02WJ', '2020-03-17 18:55:54.000000', 0),
-(48, 'Karina', 'Miranda', '0', 'sit@bibendumfermentummetus.ca', 'Gsv36UO', '2021-01-07 06:55:06.000000', 0),
-(49, 'Dilan', 'Pérez', '0', 'iaculis.nec.eleifend@Donecnibh.edu', 'Utx58FO', '2021-02-08 07:40:14.000000', 0),
-(50, 'Rosita', 'Ramírez', '0', 'massa.Vestibulum@infaucibusorci.org', 'Qku61PO', '2020-11-10 12:49:43.000000', 0),
-(51, 'Jared', 'Jiménez', '0', 'enim.Etiam.imperdiet@ornareelitelit.org', 'Joq18LP', '2021-01-01 00:54:49.000000', 0),
-(52, 'Carolaine', 'Leiva', '0', 'eget@consequat.com', 'Xzy66LZ', '2020-01-25 05:59:49.000000', 0),
-(53, 'Rosita', 'Garrido', '0', 'tellus@Duis.edu', 'Nrz35IO', '2020-03-08 03:19:26.000000', 0),
-(54, 'Jahir', 'Flores', '0', 'lobortis.ultrices@enimnislelementum.org', 'Cjc08DE', '2020-04-17 02:50:56.000000', 0),
-(55, 'Mateo', 'Castro Matus', '0', 'p@p.com', '$2b$10$hTODep1Bl0HXCEua9EFby.YLVKAA6j2VI.FLwqegAaP9TEeFwJwEi', '2020-11-24 21:14:40.377509', 1),
-(56, 'a', 'a a', '0', 'aaaa@www.cl', '$2b$10$A2ehs2qL9Ir29fJ3yVhS7u/lmJTriWfjCgH6E2e6FVL4Kvc1i5yOu', '2020-11-24 22:28:51.531884', 1),
-(57, 'Tester', 'testeanding testerizing', '0', '2@2.2', '$2b$10$53kyQjM21zAm2Edh6gS4iOstUWF4DMDMZoWJ4XGPp.ZkBjsOZfpdq', '2020-12-06 04:10:05.066162', 1);
+(1, 'admin', 'admin admin', '0', 'admin@admin.com', '$2b$10$EPMY/FTULzK/6rlw68RrQOok6spT.tWpSZpLOHzXtTrKEptYtAMcO', '2020-12-07 22:24:15.947766', 1),
+(2, 'Kharinna', 'Hermosilla Moraga', '4', 'kharinna.hermosilla.m@mail.pucv.cl', '$2b$10$A/5n5KnLK3Q437/IJ3aoaedOZxcIWDl6taVb9QNL2t/2F32KFSTQq', '2020-12-08 01:23:46.765253', 1),
+(3, 'Eduardo', 'Ibacache Gonzalez', '0', 'eduardo.ibacache.g@mail.pucv.cl', '$2b$10$8QPEybwzFAUsQLecvgjtx.ezOb9u2KvGYmVL7hkDolk83RbSsz4gC', '2020-12-08 02:10:49.547309', 1),
+(4, 'Nicolás', 'Lara Medina', '0', 'nicolas.lara.m@gmail.com', '$2b$10$faQeo5rO2ZJy79jlpzHZuuzdR5LdVR/FwkkpmxgULbV0kWLi6DY7a', '2020-12-08 02:11:57.925598', 1),
+(5, 'Nelson', 'Polo Giraldo', '0', 'nelson.polo.g@gmail.com', '$2b$10$w1oW0dI2E9C7S4vo6IWo2.4394mUSAkweFuPk4ZdY00PPL0.JJnhG', '2020-12-08 02:12:27.998221', 1),
+(6, 'Evangelina', 'Soriano De La Torre', '0', 'evangelina.soriano@gmail.com', '$2b$10$cw6tDeVievPITHDF1DTGFerImzGh63VCFIN6WhKONaHDsZ/Bo0ar6', '2020-12-08 02:13:04.446285', 1),
+(7, 'Sergio', 'Acuña Canovas', '0', 'sergioac@gmail.com', '$2b$10$RedXqM8ZNwkjiFR/dnb74u.F4ZyHODRJBzlfTcxveoPSytDioTnDa', '2020-12-08 02:13:48.064899', 1),
+(8, 'Ricardo', 'Velasco Grau', '0', 'ricardo.velasco.g@gmail.com', '$2b$10$Kx14F0FN7swEdanQXKFlFOBJ7Aw/PbZ.D.9v9.Wm5BLcH0Qng4StG', '2020-12-08 02:14:24.817347', 1),
+(9, 'Nicolás', 'Colomer Rojas', '0', 'nicolas.colomer@gmail.com', '$2b$10$jllwUcwwjZ0hAVfIxkbp3uH5F8RKm40w5GDLsYoRfGryJbjyLoq1i', '2020-12-08 02:15:28.522149', 0),
+(10, 'Nicolás', 'Pellicer Barrio', '0', 'nicolas.pellicer@gmail.com', '$2b$10$XmdDLR./cJvnRDX5opwlp.J9BvBZA2cSbxA/wqouBbWQCDkYwOQM2', '2020-12-08 02:16:01.748424', 1),
+(11, 'Felipe', 'Barraza Salazar', '0', 'felipe.barraza.s@mail.pucv.cl', '$2b$10$BB6QGwB2rPgg7Zy1wx6xXOFu/fXT89WdIZlUgOeEn25D1eifGtjsm', '2020-12-09 20:01:51.194295', 1),
+(12, 'Eduardo', 'Barrio Huertas', '0', 'eduardo.barrio.h@gmail.com', '$2b$10$khsLgxjnQiHqyPhzayHueucEeRQoYvE99wDtnA0LviyXeyuX/S8Rm', '2020-12-10 15:45:58.099750', 0),
+(13, 'Eduardo', 'Carpio Sierra', '0', 'eduardo.carpio.s@gmail.com', '$2b$10$qpK/oJgpCvkyLnzWgTlGBOJk9O9jFKADLt7nR2utEimh4chuMrBHm', '2020-12-10 15:46:45.296131', 0),
+(14, 'Eduardo', 'Palomo Amor', '0', 'eduardo.palomo.a@gmail.com', '$2b$10$vGFqp1ZnQlV3LjEiQIuXXukRneN5maf1iNpJPiLVzK9ID3lYsdTHy', '2020-12-10 15:47:17.109140', 0);
 
 -- --------------------------------------------------------
 
@@ -205,29 +132,10 @@ CREATE TABLE `equipo` (
 --
 
 INSERT INTO `equipo` (`idEquipo`, `nombre`, `objetivo`, `fechaCreacion`) VALUES
-(1, 'Los chanchitos', 'La idea del grupo los chanchitos es comer lo que más pueda en el menor tiempo posible.', '2020-11-04 19:44:09.000000'),
-(2, 'sapien', 'Lorem ipsum dolor sit amet, consectetuer adipiscing', '2020-04-18 15:35:10.000000'),
-(3, 'mattis', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur', '2020-12-26 12:27:21.000000'),
-(4, 'tempor bibendum.', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec', '2020-04-09 09:10:11.000000'),
-(5, 'senectus', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus.', '2020-04-14 17:08:49.000000'),
-(6, 'amet metus. Aliquam', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit.', '2021-04-05 10:38:53.000000'),
-(7, 'ac risus. Morbi metus. Vivamus', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis', '2020-04-29 02:52:45.000000'),
-(8, 'faucibus orci luctus et', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam', '2020-04-24 12:56:08.000000'),
-(9, 'ac tellus.', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer', '2020-08-31 18:51:27.000000'),
-(10, 'sagittis felis.', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu', '2020-04-29 09:45:47.000000'),
-(11, 'diam luctus lobortis.', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus', '2021-05-03 21:31:22.000000'),
-(12, 'Morbi', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper.', '2021-01-05 09:51:41.000000'),
-(13, 'justo. Praesent', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor.', '2020-04-23 06:34:03.000000'),
-(14, 'ipsum. Curabitur', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus', '2021-10-06 05:38:09.000000'),
-(15, 'nec tempus scelerisque, lorem', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus.', '2020-05-02 03:46:32.000000'),
-(16, 'congue. In scelerisque scelerisque', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque', '2020-10-09 12:15:04.000000'),
-(17, 'Phasellus nulla. Integer', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec', '2020-04-10 06:31:07.000000'),
-(18, 'vel,', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec', '2020-12-07 16:29:40.000000'),
-(19, 'facilisis', 'Lorem ipsum dolor sit amet, consectetuer adipiscing', '2020-03-15 09:48:31.000000'),
-(20, 'ante. Nunc mauris sapien,', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus.', '2019-12-25 18:03:36.000000'),
-(21, 'sit', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor.', '2019-12-28 23:47:38.000000'),
-(22, 'Equipo maravilla', 'Realizar buenas tareas', '2020-11-24 21:27:29.802181'),
-(23, 'TesTeam', 'testear todo lo testeable testeriozamente', '2020-12-06 04:13:56.946743');
+(8, 'Proyecto Final', 'Crear un proyecto que nos permita finalizar el semestre.', '2020-12-08 20:51:38.911048'),
+(9, 'Espacio Personal', 'Organizar todas las tareas para mi bienestar físico y emocional.', '2020-12-09 20:06:54.696267'),
+(10, 'Tareas IO', 'Organización para las tareas de investigación de operaciones.', '2020-12-10 01:48:04.152784'),
+(11, 'Tareas de Redes', 'Organización para las últimas tareas de redes.', '2020-12-10 01:52:29.071850');
 
 -- --------------------------------------------------------
 
@@ -253,8 +161,8 @@ CREATE TABLE `evento` (
 --
 
 INSERT INTO `evento` (`idEvento`, `nombre`, `descripcion`, `fecha`, `hora`, `fechaCreacion`, `enlaceVideoconferencia`, `idCategoria`, `idEquipo`, `privacidad`) VALUES
-(1, 'Sabiduria', 'Sesion para adquirir sabiduria y respirar por el oido medio jeje xd', '2020-11-20', '0', '0000-00-00 00:00:00.000000', 'https://www.youtube.com/watch?v=D-UmfqFjpl0', 1, 1, 0),
-(3, 'Recojer Shrek chiquito', 'Van a dejar a Shrek chiquito a la casa. Atentis para recibirlo uwu', '2020-11-21', '0', '0000-00-00 00:00:00.000000', 'https://www.youtube.com/watch?v=oCij5Kx5av0', 2, 1, 0);
+(7, 'Definir parámetros', 'Sin descripción.', '2020-12-16', '15:30', '2020-12-10 01:55:42.965116', 'https://meet.google.com/jix-dmaj-upy', 1, 11, 0),
+(8, 'Definir roles', 'Definir los roles para el proyecto.', '2020-12-10', '17:30', '2020-12-10 01:58:20.421985', 'https://meet.google.com/dzf-rowt-tzc', 1, 8, 0);
 
 -- --------------------------------------------------------
 
@@ -275,15 +183,16 @@ CREATE TABLE `listaequipo` (
 --
 
 INSERT INTO `listaequipo` (`idListaEquipo`, `idEquipo`, `idColaborador`, `encargado`, `fechaAsignacionEquipo`) VALUES
-(1, 1, 3, 0, '2020-11-12 18:38:16.083678'),
-(3, 1, 4, 0, '2020-11-12 18:38:16.083678'),
-(5, 22, 1, 1, '2020-11-24 21:27:29.987015'),
-(6, 1, 1, 0, '2020-11-12 18:38:16.083678'),
-(7, 2, 1, 0, '2020-11-12 18:38:16.083678'),
-(8, 23, 57, 1, '2020-12-06 04:13:57.062250'),
-(9, 1, 57, 0, '2020-12-06 04:13:57.062250'),
-(10, 2, 57, 0, '2020-12-06 04:13:57.062250'),
-(11, 23, 4, 0, '2020-12-06 04:13:57.062250');
+(10, 8, 2, 1, '2020-12-08 20:51:39.110054'),
+(15, 8, 3, 0, '2020-12-09 19:51:09.293812'),
+(16, 8, 4, 0, '2020-12-09 20:00:48.108148'),
+(17, 8, 11, 0, '2020-12-09 20:04:11.055865'),
+(18, 9, 2, 1, '2020-12-09 20:06:54.830837'),
+(19, 10, 3, 1, '2020-12-10 01:48:04.268310'),
+(20, 10, 4, 0, '2020-12-10 01:48:27.484284'),
+(21, 10, 2, 0, '2020-12-10 01:48:40.000123'),
+(22, 11, 4, 1, '2020-12-10 01:52:29.256040'),
+(23, 11, 2, 0, '2020-12-10 01:52:44.981383');
 
 -- --------------------------------------------------------
 
@@ -303,8 +212,12 @@ CREATE TABLE `listaeventos` (
 --
 
 INSERT INTO `listaeventos` (`idListaEventos`, `idEvento`, `idColaborador`, `fechaAsignacionEvento`) VALUES
-(1, 1, 1, '0000-00-00 00:00:00.000000'),
-(2, 3, 3, '0000-00-00 00:00:00.000000');
+(43, 7, 4, '2020-12-10 01:55:43.088118'),
+(44, 7, 2, '2020-12-10 01:55:43.143611'),
+(45, 8, 2, '2020-12-10 01:58:20.633885'),
+(46, 8, 3, '2020-12-10 01:58:20.814980'),
+(47, 8, 4, '2020-12-10 01:58:20.914519'),
+(48, 8, 11, '2020-12-10 01:58:21.069044');
 
 -- --------------------------------------------------------
 
@@ -324,11 +237,17 @@ CREATE TABLE `listatareas` (
 --
 
 INSERT INTO `listatareas` (`idListaTareas`, `idTarea`, `idColaborador`, `fechaAsignacionTarea`) VALUES
-(1, 1, 3, '2020-11-12 18:39:07.113936'),
-(2, 2, 3, '2020-11-12 18:39:07.113936'),
-(3, 3, 1, '2020-11-12 18:39:07.113936'),
-(5, 4, 1, '2020-11-12 18:39:07.113936'),
-(7, 14, 57, '2020-12-06 09:57:11.467840');
+(3, 3, 3, '2020-12-09 20:45:55.553856'),
+(4, 4, 2, '2020-12-09 20:46:45.907545'),
+(5, 5, 11, '2020-12-09 20:47:27.165151'),
+(6, 6, 11, '2020-12-09 21:24:40.207401'),
+(7, 7, 2, '2020-12-09 23:14:23.173054'),
+(8, 8, 2, '2020-12-09 23:15:53.111199'),
+(9, 9, 2, '2020-12-09 23:16:33.485765'),
+(10, 10, 2, '2020-12-10 01:49:21.584712'),
+(11, 11, 2, '2020-12-10 01:50:12.826662'),
+(12, 12, 2, '2020-12-10 01:53:24.756629'),
+(13, 13, 4, '2020-12-10 01:53:53.776130');
 
 -- --------------------------------------------------------
 
@@ -352,11 +271,17 @@ CREATE TABLE `tarea` (
 --
 
 INSERT INTO `tarea` (`idTarea`, `nombre`, `fecha`, `fechaCreacion`, `descripcion`, `idCategoria`, `idEquipo`, `completado`) VALUES
-(1, 'Comer mucho', '2020-11-26', '2020-11-05 02:33:03.000000', 'La idea es comer mucho', 1, 1, 0),
-(2, 'Comer poco', '2020-11-06', '2020-11-20 06:36:14.000000', 'Comer poco xq si', 1, 1, 0),
-(3, 'VERY NOISE', '2020-11-17', '0000-00-00 00:00:00.000000', 'https://www.youtube.com/watch?v=Osqf4oIK0E8', 2, 1, 1),
-(4, 'Ra Ra Rasputin', NULL, '0000-00-00 00:00:00.000000', 'https://www.youtube.com/watch?v=WhPvJOnHotE', 3, 2, 1),
-(14, 'tarea test', '2121-06-12', '2020-12-06 09:57:11.403786', 'dest23', 5, 23, 0);
+(3, 'Redactar descripción general', '2020-12-11', '2020-12-09 20:45:55.356744', 'Escribir en el informe la descripción general del problema.', 1, 8, 0),
+(4, 'Redactar gestión de riesgos', '2020-12-12', '2020-12-09 20:46:45.645526', 'Escribir en el informe la gestión de riesgos.', 2, 8, 0),
+(5, 'Redactar estudio de factibilidad', '2020-12-11', '2020-12-09 20:47:27.074966', 'Escribir en el informe el estudio de factibilidad.', 1, 8, 0),
+(6, 'Redactar introducción', '2020-12-09', '2020-12-09 21:24:40.092611', 'Escribir en el informe la introducción.', 3, 8, 1),
+(7, 'Meditar', '2020-12-10', '2020-12-09 23:14:22.859976', 'Sin descripción.', 0, 9, 0),
+(8, 'Hacer ejercicio', '2020-12-10', '2020-12-09 23:15:52.739167', 'Sin descripción.', 0, 9, 0),
+(9, 'Dormir 8 horas', '2020-12-10', '2020-12-09 23:16:33.342018', 'Sin descripción.', 0, 9, 0),
+(10, 'Avanzar en el código', '2020-12-16', '2020-12-10 01:49:21.400367', 'Agregar las estructuras de datos.', 2, 10, 0),
+(11, 'Avanzar en el informe', '2020-12-16', '2020-12-10 01:50:12.682804', 'Completar introducción y desarrollo.', 2, 10, 0),
+(12, 'Terminar tarea 3a', '2020-12-23', '2020-12-10 01:53:24.675338', 'Terminar el código de la tarea 3a', 3, 11, 0),
+(13, 'Terminar tarea 3b', '2020-12-23', '2020-12-10 01:53:53.517360', 'Terminar de escribir el informe.', 2, 11, 0);
 
 --
 -- Índices para tablas volcadas
@@ -436,55 +361,55 @@ ALTER TABLE `tarea`
 -- AUTO_INCREMENT de la tabla `amigo`
 --
 ALTER TABLE `amigo`
-  MODIFY `idAmigo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `idAmigo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `idCategoria` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idCategoria` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `colaborador`
 --
 ALTER TABLE `colaborador`
-  MODIFY `idColaborador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `idColaborador` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `equipo`
 --
 ALTER TABLE `equipo`
-  MODIFY `idEquipo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `idEquipo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `evento`
 --
 ALTER TABLE `evento`
-  MODIFY `idEvento` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idEvento` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `listaequipo`
 --
 ALTER TABLE `listaequipo`
-  MODIFY `idListaEquipo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `idListaEquipo` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT de la tabla `listaeventos`
 --
 ALTER TABLE `listaeventos`
-  MODIFY `idListaEventos` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idListaEventos` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT de la tabla `listatareas`
 --
 ALTER TABLE `listatareas`
-  MODIFY `idListaTareas` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idListaTareas` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `tarea`
 --
 ALTER TABLE `tarea`
-  MODIFY `idTarea` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idTarea` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- Restricciones para tablas volcadas
