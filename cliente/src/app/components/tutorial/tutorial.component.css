@@ -5,3 +5,8 @@ div{
 #inicio{
     padding-left: 24px;
 }
+
+#todoContenido{
+    min-height: 78vh;
+    margin-bottom: 1rem;
+}
